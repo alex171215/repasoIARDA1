@@ -1,1485 +1,1856 @@
 <!DOCTYPE html>
-<html lang="es">
+<html lang="es" class="h-full">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Simulador de Examen de Inteligencia Artificial - PUCE</title>
+    <title>Simulador de Examen: Fundamentos y Evolución de la IA</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap"
+        rel="stylesheet">
+    <script>
+        tailwind.config = {
+            darkMode: 'class',
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Inter', 'sans-serif'],
+                        mono: ['JetBrains Mono', 'monospace'],
+                    },
+                    colors: {
+                        brand: {
+                            50: '#eef2ff',
+                            100: '#e0e7ff',
+                            500: '#6366f1',
+                            600: '#4f46e5',
+                            700: '#4338ca',
+                            800: '#3730a3',
+                            900: '#312e81',
+                        }
+                    }
+                }
+            }
+        }
+    </script>
     <style>
-        :root {
-            --primary: #1e3a8a;
-            --primary-light: #3b82f6;
-            --primary-dark: #172554;
-            --bg: #f8fafc;
-            --surface: #ffffff;
-            --text: #0f172a;
-            --text-muted: #64748b;
-            --border: #e2e8f0;
-            --success: #15803d;
-            --success-bg: #f0fdf4;
-            --danger: #b91c1c;
-            --danger-bg: #fef2f2;
-            --warning: #b45309;
-            --warning-bg: #fffbeb;
-            --flagged: #d97706;
-            --flagged-bg: #fef3c7;
-            --radius: 12px;
-            --shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+        /* Transiciones suaves y soporte de barra de desplazamiento estilizada */
+        ::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
         }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-        }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            line-height: 1.5;
-            padding-bottom: 80px;
-        }
-
-        header {
-            background: linear-gradient(135deg, var(--primary-dark), var(--primary));
-            color: white;
-            padding: 2rem 1rem;
-            text-align: center;
-            box-shadow: var(--shadow);
-            position: sticky;
-            top: 0;
-            z-index: 50;
-        }
-
-        .header-content {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        h1 {
-            font-size: 1.6rem;
-            margin-bottom: 0.5rem;
-            font-weight: 700;
-        }
-
-        p.subtitle {
-            font-size: 0.95rem;
-            opacity: 0.9;
-            margin-bottom: 1rem;
-        }
-
-        .storage-banner {
-            display: inline-flex;
-            align-items: center;
-            gap: 0.5rem;
-            background: rgba(255, 255, 255, 0.15);
-            backdrop-filter: blur(4px);
-            padding: 0.35rem 0.85rem;
-            border-radius: 20px;
-            font-size: 0.8rem;
-            font-weight: 500;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 1.5rem auto;
-            padding: 0 1rem;
-        }
-
-        /* Barra de Progreso y Estadísticas */
-        .dashboard {
-            background: var(--surface);
-            border-radius: var(--radius);
-            padding: 1.25rem;
-            margin-bottom: 1.5rem;
-            box-shadow: var(--shadow);
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 1rem;
-            text-align: center;
-        }
-
-        .stat-card {
-            padding: 0.5rem;
-            border-radius: 8px;
-            background: #f1f5f9;
-        }
-
-        .stat-val {
-            font-size: 1.4rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .stat-label {
-            font-size: 0.75rem;
-            color: var(--text-muted);
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-        }
-
-        /* Filtros y Controles */
-        .controls {
-            background: var(--surface);
-            border-radius: var(--radius);
-            padding: 1rem;
-            margin-bottom: 1.5rem;
-            box-shadow: var(--shadow);
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.75rem;
-            justify-content: space-between;
-            align-items: center;
-        }
-
-        .filter-group {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 0.5rem;
-        }
-
-        .btn {
-            background: #f1f5f9;
-            border: 1px solid var(--border);
-            color: var(--text);
-            padding: 0.45rem 0.85rem;
-            border-radius: 8px;
-            font-size: 0.85rem;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .btn:hover {
-            background: #e2e8f0;
-        }
-
-        .btn.active {
-            background: var(--primary);
-            color: white;
-            border-color: var(--primary);
-        }
-
-        .btn-action {
-            background: #e0e7ff;
-            color: var(--primary);
-            border-color: #c7d2fe;
-        }
-
-        .btn-action:hover {
-            background: #c7d2fe;
-        }
-
-        .btn-danger-outline {
+        ::-webkit-scrollbar-track {
             background: transparent;
-            color: var(--danger);
-            border-color: #fecaca;
         }
 
-        .btn-danger-outline:hover {
-            background: var(--danger-bg);
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 9999px;
         }
 
-        /* Tarjeta de Pregunta */
-        .question-card {
-            background: var(--surface);
-            border-radius: var(--radius);
-            padding: 1.5rem;
-            margin-bottom: 1.25rem;
-            box-shadow: var(--shadow);
-            border: 1px solid var(--border);
-            transition: border-color 0.2s;
+        .dark ::-webkit-scrollbar-thumb {
+            background: #334155;
         }
 
-        .question-card.flagged {
-            border: 2px solid var(--flagged);
-            background-color: #fffdfa;
+        .glass {
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
         }
 
-        .q-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 0.75rem;
-        }
+        @keyframes pulse-subtle {
 
-        .q-badge {
-            font-size: 0.75rem;
-            font-weight: 700;
-            padding: 0.25rem 0.6rem;
-            border-radius: 6px;
-            background: #e0f2fe;
-            color: #0369a1;
-            text-transform: uppercase;
-        }
-
-        .flag-btn {
-            background: transparent;
-            border: none;
-            cursor: pointer;
-            font-size: 0.85rem;
-            font-weight: 600;
-            color: var(--text-muted);
-            display: inline-flex;
-            align-items: center;
-            gap: 0.35rem;
-            padding: 0.3rem 0.6rem;
-            border-radius: 6px;
-            transition: all 0.2s;
-        }
-
-        .flag-btn:hover {
-            background: #f1f5f9;
-            color: var(--text);
-        }
-
-        .flag-btn.active {
-            background: var(--flagged-bg);
-            color: var(--flagged);
-        }
-
-        .q-text {
-            font-size: 1.05rem;
-            font-weight: 600;
-            margin-bottom: 1.2rem;
-            color: var(--text);
-        }
-
-        /* Opciones Simétricas */
-        .options-grid {
-            display: flex;
-            flex-direction: column;
-            gap: 0.65rem;
-        }
-
-        .option-item {
-            display: flex;
-            align-items: flex-start;
-            gap: 0.75rem;
-            padding: 0.85rem 1rem;
-            border: 1.5px solid var(--border);
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 0.95rem;
-            line-height: 1.4;
-            background: #ffffff;
-            transition: all 0.15s ease-in-out;
-        }
-
-        .option-item:hover:not(.disabled) {
-            border-color: var(--primary-light);
-            background: #f8fafc;
-        }
-
-        .option-item.selected {
-            border-color: var(--primary);
-            background: #eff6ff;
-        }
-
-        .option-item.correct {
-            border-color: var(--success);
-            background: var(--success-bg);
-            color: var(--success);
-            font-weight: 600;
-        }
-
-        .option-item.incorrect {
-            border-color: var(--danger);
-            background: var(--danger-bg);
-            color: var(--danger);
-        }
-
-        .opt-letter {
-            font-weight: 700;
-            min-width: 24px;
-            height: 24px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            border-radius: 4px;
-            background: #e2e8f0;
-            font-size: 0.8rem;
-        }
-
-        .option-item.selected .opt-letter {
-            background: var(--primary);
-            color: white;
-        }
-
-        .option-item.correct .opt-letter {
-            background: var(--success);
-            color: white;
-        }
-
-        .option-item.incorrect .opt-letter {
-            background: var(--danger);
-            color: white;
-        }
-
-        /* Retroalimentación */
-        .feedback-box {
-            margin-top: 1rem;
-            padding: 1rem;
-            border-radius: 8px;
-            font-size: 0.9rem;
-            line-height: 1.45;
-            display: none;
-        }
-
-        .feedback-box.show {
-            display: block;
-        }
-
-        .feedback-box.correct {
-            background: var(--success-bg);
-            border-left: 4px solid var(--success);
-            color: #14532d;
-        }
-
-        .feedback-box.incorrect {
-            background: var(--danger-bg);
-            border-left: 4px solid var(--danger);
-            color: #7f1d1d;
-        }
-
-        .feedback-title {
-            font-weight: 700;
-            margin-bottom: 0.35rem;
-        }
-
-        /* Modal de Resultados */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(15, 23, 42, 0.6);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            padding: 1rem;
-            z-index: 100;
-            display: none;
-        }
-
-        .modal {
-            background: white;
-            padding: 2rem;
-            border-radius: var(--radius);
-            max-width: 500px;
-            width: 100%;
-            text-align: center;
-            box-shadow: var(--shadow);
-        }
-
-        .modal-score {
-            font-size: 3rem;
-            font-weight: 800;
-            color: var(--primary);
-            margin: 1rem 0;
-        }
-
-        .modal-actions {
-            display: flex;
-            gap: 0.75rem;
-            justify-content: center;
-            margin-top: 1.5rem;
-        }
-
-        .empty-state {
-            text-align: center;
-            padding: 3rem 1rem;
-            background: white;
-            border-radius: var(--radius);
-            color: var(--text-muted);
-        }
-
-        @media (max-width: 640px) {
-            .controls {
-                flex-direction: column;
-                align-items: stretch;
+            0%,
+            100% {
+                opacity: 1;
             }
 
-            .filter-group {
-                justify-content: center;
+            50% {
+                opacity: 0.7;
             }
+        }
+
+        .pulse-glow {
+            animation: pulse-subtle 3s infinite ease-in-out;
         }
     </style>
 </head>
 
-<body>
+<body
+    class="h-full bg-slate-950 text-slate-100 font-sans antialiased flex flex-col selection:bg-indigo-500 selection:text-white">
 
-    <header>
-        <div class="header-content">
-            <h1>Simulador Oficial de Inteligencia Artificial</h1>
-            <p class="subtitle">Entrenamiento y Consolidación Conceptual · Examen Parcial</p>
-            <div class="storage-banner">
-                <span>💾 Persistencia local activada:</span>
-                <span id="storage-status">Tus preguntas marcadas están guardadas</span>
+    <!-- Encabezado Superior -->
+    <header class="border-b border-slate-800 bg-slate-900/80 sticky top-0 z-30 glass">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <div class="flex items-center space-x-3">
+                <div
+                    class="w-10 h-10 rounded-xl bg-gradient-to-tr from-indigo-600 to-violet-500 flex items-center justify-center shadow-lg shadow-indigo-500/20 text-white font-bold text-lg">
+                    AI
+                </div>
+                <div>
+                    <h1 class="text-base sm:text-lg font-bold tracking-tight text-white flex items-center gap-2">
+                        Simulador de Examen de IA
+                        <span
+                            class="text-xs font-semibold px-2 py-0.5 rounded-full bg-indigo-950 text-indigo-300 border border-indigo-800">PUCE</span>
+                    </h1>
+                    <p class="text-xs text-slate-400 hidden sm:block">Unidades 01 y 02 · Historia, Clasificación y
+                        Aplicaciones</p>
+                </div>
+            </div>
+
+            <!-- Controles de cabecera -->
+            <div class="flex items-center space-x-2 sm:space-x-4">
+                <!-- Modo de Audio -->
+                <button id="soundToggleBtn" title="Activar/Desactivar efectos de audio"
+                    class="p-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 transition-colors">
+                    <svg id="soundIconOn" class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M15.536 8.464a5 5 0 010 7.072m2.828-9.9a9 9 0 010 12.728M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15z" />
+                    </svg>
+                    <svg id="soundIconOff" class="w-5 h-5 hidden" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M5.586 15H4a1 1 0 01-1-1v-4a1 1 0 011-1h1.586l4.707-4.707C10.923 3.663 12 4.109 12 5v14c0 .891-1.077 1.337-1.707.707L5.586 15zM17 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2" />
+                    </svg>
+                </button>
+
+                <!-- Botón Añadir Preguntas -->
+                <button id="openAddModalBtn"
+                    class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-medium border border-slate-700 transition">
+                    <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                    </svg>
+                    <span class="hidden md:inline">Añadir Pregunta</span>
+                </button>
+
+                <!-- Botón Reiniciar Test -->
+                <button id="restartBtn"
+                    class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white text-xs sm:text-sm font-semibold shadow-md shadow-indigo-600/20 transition">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    <span>Reiniciar</span>
+                </button>
             </div>
         </div>
     </header>
 
-    <div class="container">
-        <!-- Métricas Rápidas -->
-        <div class="dashboard">
-            <div class="stat-card">
-                <div class="stat-val" id="stat-total">50</div>
-                <div class="stat-label">Preguntas Visibles</div>
+    <div class="bg-slate-900 border-b border-slate-800 py-2.5 px-4 sm:px-6">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center justify-between gap-3 text-xs sm:text-sm">
+            <!-- Filtros y Opciones -->
+            <div class="flex flex-wrap items-center gap-2">
+                <label class="text-slate-400 font-medium">Tema:</label>
+                <select id="categoryFilter"
+                    class="bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1 text-slate-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    <option value="all">Todas las Unidades (50+)</option>
+                    <option value="u1_historia">U1: Historia y Orígenes (1943-1980)</option>
+                    <option value="u1_inviernos">U1: Inviernos y ML (1986-2010)</option>
+                    <option value="u1_deep_llm">U1: Deep Learning & LLMs (2012-2026)</option>
+                    <option value="u2_definiciones">U2: Definiciones y Agentes</option>
+                    <option value="u2_clasificacion">U2: Clasificación (Narrow, Fuerte, AGI)</option>
+                    <option value="u2_ml_tipos">U2: Disciplinas y Tipos de ML</option>
+                    <option value="ecuador">Contexto y Casos Ecuador</option>
+                    <option value="bookmarked">Marcadas para Duda</option>
+                </select>
+
+                <div class="h-4 w-px bg-slate-700 hidden sm:block"></div>
+
+                <!-- Modo de Examen vs Práctica Inmediata -->
+                <label
+                    class="flex items-center gap-1.5 cursor-pointer text-slate-300 text-xs bg-slate-800/80 px-2.5 py-1 rounded-lg border border-slate-700 hover:bg-slate-800">
+                    <input type="checkbox" id="immediateFeedbackToggle"
+                        class="rounded bg-slate-900 border-slate-600 text-indigo-600 focus:ring-indigo-500" checked>
+                    <span>Explicación Inmediata</span>
+                </label>
             </div>
-            <div class="stat-card">
-                <div class="stat-val" id="stat-answered">0</div>
-                <div class="stat-label">Respondidas</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-val" id="stat-correct">0</div>
-                <div class="stat-label">Aciertos</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-val" id="stat-flagged">0</div>
-                <div class="stat-label">Marcadas Guardadas</div>
-            </div>
-            <div class="stat-card">
-                <div class="stat-val" id="stat-score">- / 10</div>
-                <div class="stat-label">Calificación Actual</div>
+
+            <!-- Métricas en Vivo -->
+            <div class="flex items-center gap-4 text-xs font-mono">
+                <div class="flex items-center gap-1 text-slate-400">
+                    <span>Pregunta:</span>
+                    <span id="statCurrentQuestion" class="font-bold text-white">1</span>
+                    <span>/</span>
+                    <span id="statTotalQuestions" class="text-slate-400">50</span>
+                </div>
+                <div class="flex items-center gap-1 text-emerald-400">
+                    <span>✓</span>
+                    <span id="statCorrect" class="font-bold">0</span>
+                </div>
+                <div class="flex items-center gap-1 text-rose-400">
+                    <span>✗</span>
+                    <span id="statIncorrect" class="font-bold">0</span>
+                </div>
+                <div class="flex items-center gap-1 text-amber-400">
+                    <span>★</span>
+                    <span id="statBookmarked" class="font-bold">0</span>
+                </div>
             </div>
         </div>
-
-        <!-- Barra de Herramientas y Filtros -->
-        <div class="controls">
-            <div class="filter-group">
-                <button class="btn active" onclick="setFilter('all')">Todas (50)</button>
-                <button class="btn" onclick="setFilter('u1')">Unidad 1: Historia</button>
-                <button class="btn" onclick="setFilter('u2')">Unidad 2: Fundamentos</button>
-                <button class="btn" onclick="setFilter('ec')">Casos Ecuador</button>
-                <button class="btn" id="btn-filter-flagged" onclick="setFilter('flagged')">Marcadas (0)</button>
-                <button class="btn" id="btn-filter-errors" onclick="setFilter('errors')">Errores (0)</button>
-            </div>
-            <div style="display: flex; gap: 0.5rem; flex-wrap: wrap;">
-                <button class="btn btn-action" onclick="shuffleQuiz()">🔀 Barajar Todo</button>
-                <button class="btn btn-action" onclick="resetAnswers()">🔄 Reiniciar Intento</button>
-                <button class="btn btn-danger-outline" onclick="clearAllStoredFlags()">🗑️ Limpiar Marcas</button>
-            </div>
-        </div>
-
-        <!-- Contenedor Dinámico de Preguntas -->
-        <div id="quiz-container"></div>
     </div>
 
-    <!-- Modal de Resumen Final -->
-    <div class="modal-overlay" id="results-modal">
-        <div class="modal">
-            <h2>Simulacro Concluido</h2>
-            <p>Has respondido todas las preguntas de la sección seleccionada.</p>
-            <div class="modal-score" id="final-score">0.0 / 10</div>
-            <p id="final-details">Correctas: 0 | Incorrectas: 0</p>
-            <div class="modal-actions">
-                <button class="btn btn-action" onclick="reviewErrors()">Revisar Solo Errores</button>
-                <button class="btn" onclick="closeModal()">Seguir Practicando</button>
+    <main class="flex-1 max-w-7xl w-full mx-auto p-4 sm:p-6 grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+
+        <!-- Columna Principal: Área de Pregunta -->
+        <section class="lg:col-span-8 flex flex-col space-y-4">
+
+            <!-- Tarjeta de Pregunta -->
+            <div
+                class="bg-slate-900/90 border border-slate-800 rounded-2xl p-6 sm:p-8 shadow-2xl relative overflow-hidden transition-all duration-300">
+
+                <!-- Indicador de Categoría y Marcador de Duda -->
+                <div class="flex items-center justify-between mb-4">
+                    <span id="qBadge"
+                        class="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-900/50 text-indigo-300 border border-indigo-700/50 uppercase tracking-wider">
+                        Unidad 01 · Historia
+                    </span>
+                    <button id="bookmarkBtn"
+                        class="flex items-center gap-1 text-xs font-medium text-slate-400 hover:text-amber-400 transition-colors p-1.5 rounded-lg hover:bg-slate-800">
+                        <svg id="bookmarkIcon" class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor"
+                            viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                        </svg>
+                        <span id="bookmarkText">Marcar duda</span>
+                    </button>
+                </div>
+
+                <!-- Enunciado -->
+                <div class="mb-6">
+                    <p id="qNumber" class="text-xs font-mono font-medium text-indigo-400 mb-1">PREGUNTA 01 DE 50</p>
+                    <h2 id="qText" class="text-lg sm:text-xl font-semibold text-slate-100 leading-relaxed">
+                        Cargando pregunta...
+                    </h2>
+                </div>
+
+                <!-- Opciones de Respuesta -->
+                <div id="optionsContainer" class="space-y-3">
+                    <!-- Se inyectan dinámicamente con JS -->
+                </div>
+
+                <!-- Caja de Retroalimentación Explicativa -->
+                <div id="feedbackBox" class="hidden mt-6 p-5 rounded-xl border transition-all duration-300">
+                    <div class="flex items-start gap-3">
+                        <div id="feedbackIconContainer"
+                            class="mt-0.5 flex-shrink-0 w-6 h-6 rounded-full flex items-center justify-center text-xs font-bold font-mono">
+                            <!-- Icono dinámico -->
+                        </div>
+                        <div class="flex-1 text-sm">
+                            <h4 id="feedbackTitle" class="font-bold mb-1">Retroalimentación Conceptual</h4>
+                            <p id="feedbackText" class="text-slate-300 leading-relaxed"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Navegación Inferior -->
+                <div class="flex items-center justify-between mt-8 pt-6 border-t border-slate-800">
+                    <button id="prevBtn"
+                        class="flex items-center gap-2 px-4 py-2 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm font-medium transition disabled:opacity-30 disabled:cursor-not-allowed">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+                        </svg>
+                        Anterior
+                    </button>
+
+                    <div class="flex items-center gap-2">
+                        <button id="clearChoiceBtn"
+                            class="text-xs text-slate-500 hover:text-slate-300 px-3 py-1.5 rounded-lg hover:bg-slate-800/60 transition">
+                            Desmarcar
+                        </button>
+                        <button id="nextBtn"
+                            class="flex items-center gap-2 px-5 py-2 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold shadow-lg shadow-indigo-600/25 transition">
+                            Siguiente
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M9 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </div>
+                </div>
+
             </div>
+
+        </section>
+
+        <aside class="lg:col-span-4 flex flex-col space-y-4">
+
+            <!-- Cuadrícula de Preguntas -->
+            <div class="bg-slate-900/90 border border-slate-800 rounded-2xl p-5 shadow-xl">
+                <div class="flex items-center justify-between mb-3">
+                    <h3 class="text-sm font-semibold text-slate-200">Mapa del Examen</h3>
+                    <span id="answeredCount"
+                        class="text-xs font-mono text-indigo-400 bg-indigo-950/60 px-2 py-0.5 rounded border border-indigo-800/50">0/50
+                        Resp.</span>
+                </div>
+
+                <p class="text-xs text-slate-400 mb-3">Haz clic en cualquier número para saltar directamente:</p>
+
+                <!-- Contenedor del Grid -->
+                <div id="questionsGrid"
+                    class="grid grid-cols-5 sm:grid-cols-10 lg:grid-cols-5 gap-2 max-h-64 overflow-y-auto pr-1">
+                    <!-- Generado dinámicamente -->
+                </div>
+
+                <!-- Leyenda -->
+                <div class="mt-4 pt-3 border-t border-slate-800 flex flex-wrap gap-2 text-[11px] text-slate-400">
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-indigo-600"></span>
+                        Actual</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-emerald-700"></span>
+                        Correcta</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-rose-700"></span>
+                        Incorrecta</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-amber-600"></span>
+                        Duda</span>
+                    <span class="flex items-center gap-1.5"><span
+                            class="w-2.5 h-2.5 rounded-sm bg-slate-800 border border-slate-700"></span> Pendiente</span>
+                </div>
+            </div>
+
+            <!-- Tarjeta de Acciones y Finalización -->
+            <div
+                class="bg-gradient-to-br from-slate-900 to-indigo-950/40 border border-slate-800 rounded-2xl p-5 shadow-xl space-y-3">
+                <h3 class="text-sm font-semibold text-slate-200">Finalizar y Diagnóstico</h3>
+                <p class="text-xs text-slate-400 leading-relaxed">
+                    Al completar el cuestionario, obtendrás una calificación ponderada, desglose por unidades temáticas
+                    y recomendaciones de repaso.
+                </p>
+                <button id="finishExamBtn"
+                    class="w-full py-2.5 px-4 rounded-xl bg-gradient-to-r from-emerald-600 to-teal-600 hover:from-emerald-500 hover:to-teal-500 text-white text-sm font-bold shadow-lg shadow-emerald-600/20 transition flex items-center justify-center gap-2">
+                    <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
+                    </svg>
+                    Calificar y Ver Resultados
+                </button>
+                <button id="shuffleAllBtn"
+                    class="w-full py-2 px-3 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300 text-xs font-medium border border-slate-700 transition flex items-center justify-center gap-1.5">
+                    <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M4 4v5h.582m15.356 2A8.001 8.001 0 004.582 9m0 0H9m11 11v-5h-.581m0 0a8.003 8.003 0 01-15.357-2m15.357 2H15" />
+                    </svg>
+                    Barajar Preguntas y Opciones
+                </button>
+            </div>
+
+        </aside>
+
+    </main>
+
+    <div id="resultsModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 glass hidden">
+        <div
+            class="bg-slate-900 border border-slate-800 rounded-3xl max-w-2xl w-full p-6 sm:p-8 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="text-center pb-6 border-b border-slate-800">
+                <div id="resultScoreBadge"
+                    class="inline-flex items-center justify-center w-20 h-20 rounded-full bg-indigo-900/50 border-2 border-indigo-500 text-3xl font-extrabold text-indigo-300 font-mono mb-3">
+                    0/50
+                </div>
+                <h3 id="resultTitle" class="text-2xl font-bold text-white mb-1">¡Diagnóstico Completado!</h3>
+                <p id="resultSubtitle" class="text-sm text-slate-400">Revisión profunda según los estándares de la
+                    Facultad de Ingeniería</p>
+            </div>
+
+            <!-- Resumen Cuantitativo -->
+            <div class="grid grid-cols-3 gap-3 my-6 text-center font-mono">
+                <div class="bg-slate-800/60 p-3 rounded-xl border border-slate-700">
+                    <span class="text-xs text-slate-400 block">Aciertos</span>
+                    <span id="modalCorrectCount" class="text-xl font-bold text-emerald-400">0</span>
+                </div>
+                <div class="bg-slate-800/60 p-3 rounded-xl border border-slate-700">
+                    <span class="text-xs text-slate-400 block">Errores</span>
+                    <span id="modalIncorrectCount" class="text-xl font-bold text-rose-400">0</span>
+                </div>
+                <div class="bg-slate-800/60 p-3 rounded-xl border border-slate-700">
+                    <span class="text-xs text-slate-400 block">Puntaje /10</span>
+                    <span id="modalGrade10" class="text-xl font-bold text-indigo-400">0.0</span>
+                </div>
+            </div>
+
+            <!-- Desglose por Unidades -->
+            <div class="space-y-3 mb-6">
+                <h4 class="text-xs font-semibold uppercase tracking-wider text-slate-300">Desempeño por Eje Temático
+                </h4>
+                <div id="categoryBreakdown" class="space-y-2 text-xs">
+                    <!-- Inyectado dinámicamente -->
+                </div>
+            </div>
+
+            <!-- Opciones de Continuación -->
+            <div class="flex flex-col sm:flex-row gap-3 pt-4 border-t border-slate-800">
+                <button id="reviewErrorsBtn"
+                    class="flex-1 py-2.5 px-4 rounded-xl bg-rose-900/40 hover:bg-rose-900/60 border border-rose-700/50 text-rose-200 text-sm font-medium transition">
+                    Reintentar solo errores
+                </button>
+                <button id="modalRestartAllBtn"
+                    class="flex-1 py-2.5 px-4 rounded-xl bg-indigo-600 hover:bg-indigo-500 text-white text-sm font-semibold transition">
+                    Reiniciar todo barajado
+                </button>
+                <button id="closeResultsModalBtn"
+                    class="py-2.5 px-4 rounded-xl bg-slate-800 hover:bg-slate-700 text-slate-300 text-sm transition">
+                    Cerrar
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div id="addModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 glass hidden">
+        <div
+            class="bg-slate-900 border border-slate-800 rounded-3xl max-w-xl w-full p-6 shadow-2xl max-h-[90vh] overflow-y-auto">
+            <div class="flex items-center justify-between mb-4 pb-3 border-b border-slate-800">
+                <h3 class="text-lg font-bold text-white">Añadir Pregunta al Simulador</h3>
+                <button id="closeAddModalBtn" class="text-slate-400 hover:text-white text-xl font-bold">&times;</button>
+            </div>
+
+            <form id="addQuestionForm" class="space-y-4 text-xs sm:text-sm">
+                <div>
+                    <label class="block font-medium text-slate-300 mb-1">Eje Temático / Categoría:</label>
+                    <select id="newCat"
+                        class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-slate-200">
+                        <option value="u1_historia">U1: Historia y Orígenes (1943-1980)</option>
+                        <option value="u1_inviernos">U1: Inviernos y ML (1986-2010)</option>
+                        <option value="u1_deep_llm">U1: Deep Learning & LLMs (2012-2026)</option>
+                        <option value="u2_definiciones">U2: Definiciones y Agentes</option>
+                        <option value="u2_clasificacion">U2: Clasificación (Narrow, Fuerte, AGI)</option>
+                        <option value="u2_ml_tipos">U2: Disciplinas y Tipos de ML</option>
+                        <option value="ecuador">Contexto y Casos Ecuador</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="block font-medium text-slate-300 mb-1">Enunciado de la Pregunta:</label>
+                    <textarea id="newText" rows="3" required
+                        placeholder="Redacta la pregunta exigiendo razonamiento conceptual..."
+                        class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2.5 text-slate-100 placeholder-slate-500"></textarea>
+                </div>
+
+                <div class="space-y-2">
+                    <label class="block font-medium text-slate-300">Opciones (Cuida que tengan longitud
+                        simétrica):</label>
+                    <div class="flex items-center gap-2">
+                        <input type="radio" name="newCorrectIdx" value="0" checked class="text-indigo-600">
+                        <input type="text" id="newOpt0" required placeholder="Opción A (marca radio si es correcta)"
+                            class="flex-1 bg-slate-800 border border-slate-700 rounded-lg p-2 text-slate-200 text-xs">
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <input type="radio" name="newCorrectIdx" value="1" class="text-indigo-600">
+                        <input type="text" id="newOpt1" required placeholder="Opción B"
+                            class="flex-1 bg-slate-800 border border-slate-700 rounded-lg p-2 text-slate-200 text-xs">
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <input type="radio" name="newCorrectIdx" value="2" class="text-indigo-600">
+                        <input type="text" id="newOpt2" required placeholder="Opción C"
+                            class="flex-1 bg-slate-800 border border-slate-700 rounded-lg p-2 text-slate-200 text-xs">
+                    </div>
+                    <div class="flex items-center gap-2">
+                        <input type="radio" name="newCorrectIdx" value="3" class="text-indigo-600">
+                        <input type="text" id="newOpt3" required placeholder="Opción D"
+                            class="flex-1 bg-slate-800 border border-slate-700 rounded-lg p-2 text-slate-200 text-xs">
+                    </div>
+                </div>
+
+                <div>
+                    <label class="block font-medium text-slate-300 mb-1">Retroalimentación Conceptual
+                        Explicativa:</label>
+                    <textarea id="newFeedback" rows="2" required
+                        placeholder="Explica por qué la opción correcta es la adecuada y cuál es la lógica de fondo..."
+                        class="w-full bg-slate-800 border border-slate-700 rounded-lg p-2 text-slate-100 placeholder-slate-500"></textarea>
+                </div>
+
+                <div class="pt-2 flex justify-end gap-2">
+                    <button type="button" id="cancelAddBtn"
+                        class="px-4 py-2 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-300">Cancelar</button>
+                    <button type="submit"
+                        class="px-5 py-2 rounded-lg bg-indigo-600 hover:bg-indigo-500 text-white font-medium">Guardar
+                        Pregunta</button>
+                </div>
+            </form>
         </div>
     </div>
 
     <script>
-        // ==========================================
-        // BANCO RIGUROSO DE 50 PREGUNTAS SIMÉTRICAS
-        // ==========================================
-        const rawQuestions = [
+        // Sistema de Audio Sintetizado Web Audio API (Sin dependencias externas)
+        class SoundFX {
+            constructor() {
+                this.ctx = null;
+                this.enabled = true;
+            }
+            init() {
+                if (!this.ctx) {
+                    const AudioContext = window.AudioContext || window.webkitAudioContext;
+                    if (AudioContext) this.ctx = new AudioContext();
+                }
+            }
+            playCorrect() {
+                if (!this.enabled) return;
+                this.init();
+                if (!this.ctx) return;
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sine';
+                osc.frequency.setValueAtTime(523.25, now); // C5
+                osc.frequency.exponentialRampToValueAtTime(783.99, now + 0.15); // G5
+                gain.gain.setValueAtTime(0.12, now);
+                gain.gain.linearRampToValueAtTime(0, now + 0.25);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.25);
+            }
+            playWrong() {
+                if (!this.enabled) return;
+                this.init();
+                if (!this.ctx) return;
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'sawtooth';
+                osc.frequency.setValueAtTime(220, now);
+                osc.frequency.linearRampToValueAtTime(140, now + 0.2);
+                gain.gain.setValueAtTime(0.1, now);
+                gain.gain.linearRampToValueAtTime(0, now + 0.25);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.25);
+            }
+            playClick() {
+                if (!this.enabled) return;
+                this.init();
+                if (!this.ctx) return;
+                const now = this.ctx.currentTime;
+                const osc = this.ctx.createOscillator();
+                const gain = this.ctx.createGain();
+                osc.type = 'triangle';
+                osc.frequency.setValueAtTime(440, now);
+                gain.gain.setValueAtTime(0.04, now);
+                gain.gain.linearRampToValueAtTime(0, now + 0.05);
+                osc.connect(gain);
+                gain.connect(this.ctx.destination);
+                osc.start(now);
+                osc.stop(now + 0.05);
+            }
+        }
+
+        const sound = new SoundFX();
+
+        // BANCO COMPLETO DE 50 PREGUNTAS RIGUROSAMENTE EQUILIBRADAS
+        const MASTER_QUESTIONS = [
             {
                 id: 1,
-                category: "u1",
-                categoryName: "Historia (1943-1956)",
-                text: "El modelo de neurona artificial introducido por Warren McCulloch y Walter Pitts en 1943 opera mediante tres fases formales. ¿Cuál de las siguientes describe con exactitud matemática su funcionamiento interno?",
+                category: "u1_historia",
+                categoryName: "U1: Orígenes e IA Simbólica",
+                text: "¿Cuál es el principio operacional básico en el modelo formal de neurona artificial propuesto por McCulloch y Pitts (1943)?",
                 options: [
-                    "Acepta entradas ponderadas, calcula su combinación lineal y activa su salida binaria únicamente si el valor resultante iguala o supera un umbral fijado.",
-                    "Descarga una señal continua no acotada, aplica una diferenciación automática y ajusta de inmediato los pesos de las sinapsis mediante descenso de gradiente.",
-                    "Genera secuencias recurrentes de retroalimentación estocástica, normaliza los canales de transmisión y calcula la probabilidad conjunta de activación.",
-                    "Almacena representaciones simbólicas en una memoria direccionable, evalúa reglas lógicas deductivas y emite un veredicto según tablas de consistencia."
+                    "Generar datos sintéticos iterativos para almacenar memoria estática continua.",
+                    "Suma ponderada de señales comparada frente a un umbral binario de activación.",
+                    "Calcular el gradiente hacia atrás actualizando automáticamente su propio umbral.",
+                    "Tokenizar símbolos de texto secuencial ponderando la atención estocástica."
                 ],
-                correct: 0,
-                feedback: "El modelo McCulloch-Pitts (1943) formaliza la activación como una suma ponderada de entradas comparada contra un umbral: si supera el umbral emite 1 (disparo), de lo contrario 0. Carecía de algoritmo de aprendizaje dinámico, pero sentó la base matemática de todas las redes neuronales modernas."
+                correct: 1,
+                feedback: "El modelo de McCulloch-Pitts recibe entradas binarias ponderadas por pesos sinápticos, calcula su suma aritmética y la compara contra un umbral (θ): si lo supera emite un 1 ('disparo'), si no permanece en 0. Es la raíz formal de las redes neuronales."
             },
             {
                 id: 2,
-                category: "u1",
-                categoryName: "Historia (1943-1956)",
-                text: "Alan Turing planteó en 1950 el conocido 'Juego de Imitación' (Test de Turing). Desde una perspectiva metodológica rigurosa, ¿cuál fue la razón fundamental de esta formulación?",
+                category: "u1_historia",
+                categoryName: "U1: Orígenes e IA Simbólica",
+                text: "En su artículo seminal de 1950, ¿de qué manera reformuló Alan Turing la pregunta sobre si las máquinas pueden pensar?",
                 options: [
-                    "Sustituir una interrogante abstracta e indemostrable sobre el pensar por una prueba empírica y conductual basada en el intercambio lingüístico indistinguible.",
-                    "Demostrar formalmente que los sistemas de cómputo universal poseen autoconciencia y capacidad para experimentar emociones análogas a las humanas.",
-                    "Validar experimentalmente que los circuitos basados en válvulas de vacío superaban la velocidad de cómputo del cerebro humano en cualquier tarea formal.",
-                    "Establecer un estándar de evaluación para comprobar si los programas informáticos eran capaces de resolver demostraciones matemáticas de forma deductiva."
+                    "Diseñando un algoritmo capaz de resolver ecuaciones diferenciales en tiempo real.",
+                    "Mediante un juego de imitación conversacional por texto evaluado por un juez.",
+                    "Creando un comité que mida la expresión de emociones orgánicas en la máquina.",
+                    "Verificando la demostración formal de teoremas en lógica matemática pura."
                 ],
-                correct: 0,
-                feedback: "Turing reformuló la pregunta filosófica indemostrable '¿pueden pensar las máquinas?' en una prueba operacional: evaluar si una máquina puede imitar el comportamiento conversacional humano de modo que un evaluador a ciegas no pueda diferenciarla."
+                correct: 1,
+                feedback: "Turing reemplazó la pregunta filosófica ambigua por una operacional medible: si en un juego de imitación por texto un juez humano no puede distinguir de forma consistente al humano de la máquina, se considera que la máquina supera la prueba."
             },
             {
                 id: 3,
-                category: "u1",
-                categoryName: "Historia (1943-1956)",
-                text: "John Searle propuso en 1980 el argumento del 'Cuarto Chino' como refutación conceptual al Test de Turing. ¿Cuál es la implicación directa de este argumento para los modelos de IA?",
+                category: "u1_historia",
+                categoryName: "U1: Orígenes e IA Simbólica",
+                text: "¿Qué argumento central sostiene John Searle en el experimento mental del Cuarto Chino (1980) frente al Test de Turing?",
                 options: [
-                    "La manipulación sintáctica y estadística de símbolos formales según un catálogo de reglas no constituye ni garantiza una comprensión semántica genuina.",
-                    "Ninguna arquitectura informática será capaz de mantener una conversación coherente si no es programada en la lengua nativa del operador humano.",
-                    "El procesamiento de datos textuales mediante reglas estáticas siempre resultará más eficiente que las aproximaciones estadísticas contemporáneas.",
-                    "Los sistemas computacionales requieren necesariamente de un cuerpo robótico físico para interpretar el contexto del lenguaje natural en el mundo real."
+                    "El procesamiento sintáctico de símbolos no garantiza comprensión semántica.",
+                    "Ningún ordenador digital alcanzará la velocidad requerida para traducir idiomas.",
+                    "El Test de Turing solo resulta aplicable a alfabetos basados en escritura fonética.",
+                    "Las máquinas cometen errores gramaticales porque carecen de bases de conocimiento."
                 ],
                 correct: 0,
-                feedback: "Searle demostró que un operador que sigue instrucciones sintácticas para emparejar símbolos chinos puede pasar el Test de Turing sin entender el significado real de las palabras. Manipular sintaxis no equivale a poseer comprensión semántica."
+                feedback: "Searle demostró que manipular símbolos mediante un manual de reglas (sintaxis) produce respuestas perfectas hacia el exterior sin que exista comprensión real del significado (semántica). Superar el Test de Turing prueba imitación, no conciencia ni entendimiento."
             },
             {
                 id: 4,
-                category: "u1",
-                categoryName: "Historia (1943-1956)",
-                text: "El programa Logic Theorist, desarrollado en 1955 por Allen Newell y Herbert Simon, marcó un hito fundacional porque:",
+                category: "u1_historia",
+                categoryName: "U1: Orígenes e IA Simbólica",
+                text: "¿Cuál fue el logro histórico fundamental del programa Logic Theorist (1955) desarrollado por Newell y Simon?",
                 options: [
-                    "Demostró de manera formal que una máquina era capaz de ejecutar razonamiento deductivo y manipular símbolos, no únicamente computar operaciones numéricas.",
-                    "Entrenó la primera arquitectura multicapa mediante el cálculo recursivo del gradiente del error para clasificar patrones geométricos simples.",
-                    "Implementó el primer algoritmo de aprendizaje por refuerzo capaz de descubrir estrategias óptimas jugando de forma autónoma al ajedrez.",
-                    "Construyó la primera base de conocimiento médico con factores de certidumbre para emitir diagnósticos clínicos de infecciones bacterianas en sangre."
+                    "Demostró que una máquina podía ejecutar deducciones lógicas formales.",
+                    "Comprobó que las redes neuronales convergían sin supervisión de datos.",
+                    "Permitió la traducción automática de lenguajes de alto nivel a código binario.",
+                    "Superó al campeón de ajedrez mundial evaluando millones de nodos por turno."
                 ],
                 correct: 0,
-                feedback: "El Logic Theorist demostró 38 de 52 teoremas del Principia Mathematica mediante manipulación simbólica y búsqueda heurística, probando que las computadoras podían razonar formalmente y no solo procesar cálculos numéricos."
+                feedback: "El Logic Theorist probó 38 de los 52 teoremas del Principia Mathematica de Russell y Whitehead. Rompió la idea de que las computadoras solo calculaban números, demostrando que podían realizar razonamiento simbólico formal."
             },
             {
                 id: 5,
-                category: "u1",
-                categoryName: "Historia (1943-1956)",
-                text: "En la Conferencia de Dartmouth (1956), considerada el acto formal de nacimiento del campo, ¿qué acontecimiento histórico singular tuvo lugar?",
+                category: "u1_historia",
+                categoryName: "U1: Orígenes e IA Simbólica",
+                text: "¿Quién acuñó formalmente el término 'Inteligencia Artificial' durante la propuesta de la Conferencia de Dartmouth en 1956?",
                 options: [
-                    "John McCarthy propuso y oficializó por primera vez el término formal 'Inteligencia Artificial' en el proyecto de investigación que reunió a los fundadores.",
-                    "Marvin Minsky presentó la demostración matemática formal de que los perceptrones multicapa podían resolver problemas de clasificación no lineal.",
-                    "Fei-Fei Li presentó el primer repositorio masivo de imágenes etiquetadas manualmente para entrenar clasificadores de visión por computadora.",
-                    "Edward Feigenbaum desplegó el primer sistema experto comercialmente viable aplicado al análisis de compuestos en química orgánica experimental."
+                    "Claude Shannon.",
+                    "John McCarthy.",
+                    "Marvin Minsky.",
+                    "Herbert Simon."
                 ],
-                correct: 0,
-                feedback: "John McCarthy organizó el seminario de investigación de verano de 1956 en Dartmouth College y redactó la propuesta donde acuñó formalmente el término 'Artificial Intelligence', reuniendo a figuras como Minsky, Shannon, Newell y Simon."
+                correct: 1,
+                feedback: "John McCarthy organizó el taller de investigación de verano en Dartmouth College y propuso el término 'Artificial Intelligence' para bautizar la nueva disciplina científica orientada a construir máquinas inteligentes."
             },
             {
                 id: 6,
-                category: "u1",
-                categoryName: "IA Simbólica (1956-1980)",
-                text: "La Inteligencia Artificial Simbólica (GOFAI) dominó el campo durante tres décadas. ¿Cuál de las siguientes propiedades define su paradigma epistémico?",
+                category: "u1_historia",
+                categoryName: "U1: Orígenes e IA Simbólica",
+                text: "En el paradigma de la IA Simbólica (GOFAI), ¿cómo se incorpora el conocimiento al sistema?",
                 options: [
-                    "El conocimiento es formalizado y programado explícitamente por expertos humanos en forma de reglas lógicas, sin que el sistema aprenda de datos.",
-                    "El modelo induce representaciones latentes abstractas a partir de un flujo continuo de observaciones sensoriales sin supervisión externa alguna.",
-                    "Las decisiones se adoptan evaluando distribuciones continuas de probabilidad obtenidas mediante la optimización estocástica de matrices de pesos.",
-                    "El sistema genera su propia base de reglas de inferencia a partir de señales de retroalimentación escalar recibidas del entorno donde opera."
+                    "Es inducido automáticamente a partir de millones de datos no etiquetados.",
+                    "Es codificado manualmente por especialistas humanos en forma de reglas.",
+                    "Es optimizado en el espacio latente mediante algoritmos de retropropagación.",
+                    "Es extraído de sensores físicos mediante agrupamiento por aprendizaje profundo."
                 ],
-                correct: 0,
-                feedback: "En la IA Simbólica el conocimiento es externo y deductivo: expertos humanos codifican manualmente reglas 'IF-THEN'. El sistema no descubre patrones por sí mismo ni aprende empíricamente de conjuntos de datos."
+                correct: 1,
+                feedback: "En la IA Simbólica, el conocimiento no emerge de datos: expertos humanos formulan directamente cadenas de reglas lógicas IF-THEN. Esto hace al sistema transparente y verificable, pero estático y rígido ante cambios del dominio."
             },
             {
                 id: 7,
-                category: "u1",
-                categoryName: "Sistemas Expertos (1956-1980)",
-                text: "Tanto DENDRAL (1965) como MYCIN (1972) demostraron la aplicabilidad de los sistemas expertos. ¿En qué se diferenciaron sustancialmente sus dominios funcionales?",
+                category: "u1_historia",
+                categoryName: "U1: Orígenes e IA Simbólica",
+                text: "¿En qué dominio científico demostró DENDRAL (1965) por primera vez el potencial de los sistemas expertos?",
                 options: [
-                    "DENDRAL analizaba datos de espectrometría de masas para deducir estructuras químicas, mientras MYCIN diagnosticaba infecciones bacterianas en sangre.",
-                    "DENDRAL optimizaba la asignación de recursos logísticos militares, mientras MYCIN automatizaba la traducción entre lenguajes naturales estructurados.",
-                    "DENDRAL clasificaba radiografías torácicas mediante filtros de convolución, mientras MYCIN ejecutaba demostraciones automáticas en álgebra booleana.",
-                    "DENDRAL calculaba políticas de despacho eléctrico en embalses, mientras MYCIN predecía el riesgo crediticio en carteras financieras comerciales."
+                    "Identificación de estructuras moleculares orgánicas en espectrometría.",
+                    "Optimización de rutas logísticas y control de tráfico en telecomunicación.",
+                    "Detección y clasificación de infecciones bacterianas en muestras de sangre.",
+                    "Cálculo estocástico de precios y mitigación de riesgo en mercados bursátiles."
                 ],
                 correct: 0,
-                feedback: "DENDRAL (Stanford, 1965) analizó datos químicos de espectrometría de masas para determinar estructuras moleculares, mientras que MYCIN (Stanford, 1972) formuló diagnósticos bacteriológicos y recomendó antibióticos basados en reglas médicas."
+                feedback: "DENDRAL (Stanford, 1965) analizó datos de espectrometría de masas para deducir estructuras químicas moleculares. Fue el primer sistema experto de la historia en igualar a especialistas en una tarea científica real."
             },
             {
                 id: 8,
-                category: "u1",
-                categoryName: "Sistemas Expertos (1956-1980)",
-                text: "En sistemas como MYCIN o en el ejemplo de reglas agrícolas, una regla indica: 'IF color=amarillo AND manchas=negras THEN patologia=monilia (0.90)'. ¿Qué representa exactamente el 0.90?",
+                category: "u1_historia",
+                categoryName: "U1: Orígenes e IA Simbólica",
+                text: "En sistemas expertos como MYCIN (1972), ¿qué función cumplía un factor de certeza (CF)?",
                 options: [
-                    "Un factor de certidumbre subjetivo codificado por el experto humano que refleja el grado de confianza en la inferencia si se satisfacen las premisas.",
-                    "La frecuencia empírica normalizada de acierto calculada sobre un conjunto de validación independiente de diez mil cultivos analizados en producción.",
-                    "La probabilidad bayesiana a posteriori obtenida tras calcular la matriz de covarianza de las variables agroclimáticas observadas en tiempo real.",
-                    "El porcentaje de neuronas artificiales de la capa de salida que se activaron durante la inferencia feedforward del modelo entrenado."
+                    "Establecer la probabilidad gaussiana rigurosa calculada mediante teorema de Bayes.",
+                    "Cuantificar el grado de confianza asignado por el experto a la regla.",
+                    "Monitorear la velocidad computacional del motor de inferencia en milisegundos.",
+                    "Determinar el número total de pacientes evaluados exitosamente en el hospital."
                 ],
-                correct: 0,
-                feedback: "El valor 0.90 es un factor de certeza (Certainty Factor - CF). En los sistemas expertos, estos valores los asignaba el experto del dominio para reflejar confianza heurística, diferenciándose de las probabilidades bayesianas formales derivadas de datos."
+                correct: 1,
+                feedback: "Un factor de certeza (por ejemplo, CF = 0.90) representa la confianza subjetiva que el especialista clínico asigna a una deducción ante ciertas condiciones. Permitía manejar incertidumbre sin requerir distribuciones probabilísticas completas."
             },
             {
                 id: 9,
-                category: "u1",
-                categoryName: "Inviernos de la IA (1974-1993)",
-                text: "El libro 'Perceptrons' de Marvin Minsky y Seymour Papert (1969) provocó un estancamiento prolongado de las redes neuronales. ¿Cuál fue el argumento matemático irrebatible que plantearon?",
+                category: "u1_historia",
+                categoryName: "U1: Orígenes e IA Simbólica",
+                text: "¿Cuál fue la limitación estructural decisiva que causó la decadencia de los sistemas expertos en los años 80?",
                 options: [
-                    "Un perceptrón simple de una sola capa es intrínsecamente incapaz de resolver funciones no separables linealmente, como la compuerta XOR.",
-                    "Las redes neuronales requieren matrices con almacenamiento superior a la memoria direccionable existente en los procesadores comerciales de la época.",
-                    "El entrenamiento mediante retropropagación converge siempre hacia infinitos puntos de ensilladura que anulan el gradiente de optimización.",
-                    "La acumulación de capas intermedias produce necesariamente una degeneración exponencial en la precisión de los cálculos de punto flotante."
+                    "Su incapacidad para aprender y el alto costo de actualizar reglas a mano.",
+                    "La escasez de memorias RAM para almacenar más de 100 caracteres por regla.",
+                    "La prohibición legal internacional sobre el uso de computadoras en medicina.",
+                    "Su naturaleza de caja negra matemática que impedía auditar las deducciones."
                 ],
                 correct: 0,
-                feedback: "Minsky y Papert probaron que un perceptrón monocapa únicamente traza hiperplanos lineales, imposibilitando clasificar problemas no linealmente separables como XOR. La comunidad asumió que las redes neuronales eran un callejón sin salida durante casi dos décadas."
+                feedback: "Los sistemas expertos eran rígidos: cualquier cambio en el entorno (nuevas bacterias o fármacos) obligaba a especialistas a reprogramar y conciliar cientos de reglas a mano. El mantenimiento manual resultó económicamente insostenible."
             },
             {
                 id: 10,
-                category: "u1",
-                categoryName: "Inviernos de la IA (1974-1993)",
-                text: "El Informe Lighthill, encargado en 1973 por el gobierno del Reino Unido, desencadenó el Primer Invierno de la IA al concluir formalmente que:",
+                category: "u1_inviernos",
+                categoryName: "U1: Inviernos y ML",
+                text: "¿Qué conclusión del Informe Lighthill (1973) desencadenó el Primer Invierno de la IA en el Reino Unido?",
                 options: [
-                    "Los avances concretos logrados por la IA eran marginales en contraste con sus promesas grandilocuentes, justificando el recorte casi total de fondos.",
-                    "El progreso en procesamiento de imágenes representaba una amenaza inmediata para los empleos industriales que debía restringirse de inmediato.",
-                    "Los sistemas conexionistas basados en redes neuronales debían recibir la totalidad de los fondos que previamente se asignaban a la IA simbólica.",
-                    "La investigación debía concentrarse exclusivamente en el desarrollo de microprocesadores para estaciones de trabajo con arquitectura LISP."
+                    "Que los sistemas expertos superaban ya la capacidad cognitiva de los científicos.",
+                    "Que la IA no había cumplido sus promesas y requería recortar fondos.",
+                    "Que las redes neuronales eran la única tecnología viable a nivel militar.",
+                    "Que la computación cuántica debía sustituir a los lenguajes de alto nivel."
                 ],
-                correct: 0,
-                feedback: "James Lighthill evaluó el estado del arte y concluyó que los investigadores habían prometido soluciones generales imposibles sin entregar resultados tangibles. El gobierno británico y luego DARPA en EE.UU. cortaron masivamente el financiamiento."
+                correct: 1,
+                feedback: "James Lighthill concluyó que los resultados obtenidos en laboratorio eran insignificantes frente a las promesas iniciales. Su informe justificó el cese de financiamiento estatal en Reino Unido y aceleró el recorte de fondos de DARPA en EE.UU."
             },
             {
                 id: 11,
-                category: "u1",
-                categoryName: "Inviernos de la IA (1974-1993)",
-                text: "El Segundo Invierno de la IA (1987-1993) no fue producto de debates filosóficos, sino de un quiebre de mercado. ¿Qué causó el colapso del ecosistema de las 'Lisp Machines'?",
+                category: "u1_inviernos",
+                categoryName: "U1: Inviernos y ML",
+                text: "¿Por qué un perceptrón simple de una sola capa es matemáticamente incapaz de aprender la función lógica XOR?",
                 options: [
-                    "La aparición de computadoras personales de propósito general mucho más económicas y veloces que superaron la relación costo-beneficio del hardware propietario.",
-                    "El descubrimiento de fallas criptográficas estructurales en el compilador del lenguaje LISP que comprometieron los sistemas militares clasificados.",
-                    "La promulgación de directivas internacionales que prohibieron el uso comercial de sistemas basados en motores de inferencia deductivos.",
-                    "La adopción obligatoria de lenguajes orientados a objetos en la nube que impidieron la conectividad física de dichas terminales especializadas."
+                    "Porque requiere más de un millón de datos etiquetados para calcular el sesgo.",
+                    "Porque XOR es una función linealmente no separable en el espacio bidimensional.",
+                    "Porque las compuertas lógicas operan exclusivamente con aritmética de punto flotante.",
+                    "Porque el algoritmo original de Rosenblatt carecía de entradas sinápticas binarias."
                 ],
-                correct: 0,
-                feedback: "Empresas como Symbolics vendían Lisp Machines a costos de decenas de miles de dólares. En 1987, PCs convencionales con chips estándar de Intel o Motorola alcanzaron potencia superior a una fracción del costo, pulverizando la viabilidad de ese mercado."
+                correct: 1,
+                feedback: "Minsky y Papert (1969) probaron que un perceptrón monocapa solo traza una frontera de decisión hiperplana (línea recta en 2D). XOR requiere separar (0,1) y (1,0) de (0,0) y (1,1), lo cual es imposible con una única recta continua."
             },
             {
                 id: 12,
-                category: "u1",
-                categoryName: "Inviernos de la IA (1974-1993)",
-                text: "A lo largo de la historia de la disciplina se ha documentado un ciclo recurrente denominado 'Ciclo de Hype'. ¿Cuál es el orden cronológico estricto de sus cinco etapas?",
+                category: "u1_inviernos",
+                categoryName: "U1: Inviernos y ML",
+                text: "¿Cuál fue el motivo de DARPA para retirar masivamente el financiamiento a la IA en 1974?",
                 options: [
-                    "Hype (promesas e inversión) → Expectativas irreales (plazos imposibles) → Invierno (desilusión y recorte) → Investigación silenciosa → Breakthrough.",
-                    "Breakthrough → Investigación silenciosa → Invierno (desilusión) → Expectativas irreales → Hype (inversión especulativa desmedida).",
-                    "Investigación silenciosa → Hype (promesas) → Breakthrough → Expectativas irreales (plazos imposibles) → Invierno (recorte presupuestario).",
-                    "Expectativas irreales → Hype (promesas) → Invierno (recorte) → Breakthrough → Investigación silenciosa en laboratorios académicos."
+                    "El descubrimiento de que las máquinas Lisp vulneraban protocolos de cifrado.",
+                    "La falta de aplicaciones prácticas inmediatas frente a lo prometido.",
+                    "El traslado de presupuestos de defensa hacia el desarrollo de computación cuántica.",
+                    "La presión sindical de ingenieros que temían el reemplazo por software simbólico."
                 ],
-                correct: 0,
-                feedback: "El patrón clásico es: 1. Hype (entusiasmo desmedido e inversión), 2. Expectativas irreales (promesas incumplidas), 3. Invierno (desilusión y corte de fondos), 4. Investigación silenciosa (avances reales sin prensa), y 5. Breakthrough (resultado empírico sólido que reinicia el ciclo)."
+                correct: 1,
+                feedback: "DARPA había financiado la IA con promesas de traducción automática y comprensión del habla en pocos años. Al constatar que el avance real era sumamente modesto, canceló los proyectos masivos, consolidando el Primer Invierno."
             },
             {
                 id: 13,
-                category: "u1",
-                categoryName: "Resurgimiento ML (1986-2010)",
-                text: "La popularización de la retropropagación (backpropagation) en 1986 por Rumelhart, Hinton y Williams resolvió el gran cuello de botella del conexionismo al permitir:",
+                category: "u1_inviernos",
+                categoryName: "U1: Inviernos y ML",
+                text: "¿Cuál es la secuencia ordenada de fases que componen el ciclo histórico de Hype en la Inteligencia Artificial?",
                 options: [
-                    "Calcular con eficiencia el gradiente del error respecto a cada peso sináptico en capas ocultas aplicando sistemáticamente la regla de la cadena.",
-                    "Eliminar la necesidad de calcular derivadas parciales mediante técnicas de optimización evolutiva aplicadas sobre espacios no continuos.",
-                    "Configurar de manera determinista el número óptimo de neuronas y de capas ocultas necesarias para evitar cualquier tipo de sobreajuste empírico.",
-                    "Generar automáticamente anotaciones semánticas supervisadas a partir de colecciones masivas de archivos de audio y de vídeo sin procesar."
+                    "Investigación silenciosa, Expectativas irreales, Hype, Invierno, Breakthrough.",
+                    "Hype, Expectativas irreales, Invierno, Investigación silenciosa, Breakthrough.",
+                    "Breakthrough, Invierno, Hype, Investigación silenciosa, Expectativas irreales.",
+                    "Expectativas irreales, Hype, Breakthrough, Invierno, Investigación silenciosa."
                 ],
-                correct: 0,
-                feedback: "Antes de 1986 no se disponía de un método computacionalmente eficiente para propagar la señal de error a través de múltiples capas intermedias. Backpropagation aplicó la regla de la cadena del cálculo multivariable, superando la limitación del perceptrón simple."
+                correct: 1,
+                feedback: "El ciclo recurrente de la IA consta de: (1) Hype con entusiasmo e inversión; (2) Expectativas irreales con plazos imposibles; (3) Invierno por decepción y recortes; (4) Investigación silenciosa en laboratorios; y (5) Breakthrough concreto que reinicia la espiral."
             },
             {
                 id: 14,
-                category: "u1",
-                categoryName: "Resurgimiento ML (1986-2010)",
-                text: "En 1997, el sistema Deep Blue de IBM derrotó al campeón mundial Garry Kasparov. Desde el punto de vista arquitectónico, ¿cuál fue su principio de operación y su limitación?",
+                category: "u1_inviernos",
+                categoryName: "U1: Inviernos y ML",
+                text: "¿Cuál fue el detonante tecnológico y económico del Segundo Invierno de la IA entre 1987 y 1993?",
                 options: [
-                    "Operó mediante algoritmos de búsqueda heurística por fuerza bruta con poda alfa-beta, careciendo de capacidad de aprendizaje o transferencia a otro dominio.",
-                    "Entrenó redes convolucionales residuales mediante juego autónomo continuo, pero presentó una inestabilidad severa ante aperturas no documentadas.",
-                    "Utilizó modelos generativos probabilísticos para anticipar jugadas, pero requirió de supervisión humana remota para evaluar el tablero en los finales.",
-                    "Implementó aprendizaje por refuerzo profundo con retroalimentación humana, pero sus costos computacionales impidieron su reentrenamiento oportuno."
+                    "El colapso de las Lisp Machines ante PCs convencionales más rentables.",
+                    "El fallo del algoritmo backpropagation al no poder entrenar capas ocultas.",
+                    "La prohibición gubernamental del uso de bases de datos relacionales en ML.",
+                    "La saturación energética de los primeros centros de datos dedicados a GPUs."
                 ],
                 correct: 0,
-                feedback: "Deep Blue era IA simbólica combinada con hardware dedicado para búsqueda de fuerza bruta (200 millones de posiciones/segundo con poda minimax). No aprendía de experiencia y era completamente incapaz de generalizar fuera del tablero de ajedrez."
+                feedback: "Empresas como Symbolics vendían Lisp Machines a costos altísimos. En 1987, PCs y estaciones de trabajo generales de Apple, IBM y DEC ofrecieron mejor relación costo/desempeño, destruyendo el mercado del hardware especializado de IA."
             },
             {
                 id: 15,
-                category: "u1",
-                categoryName: "Resurgimiento ML (1986-2010)",
-                text: "En 2006, Geoffrey Hinton y Ruslan Salakhutdinov publicaron el hito que acuñó y revivió el concepto de 'Deep Learning'. ¿En qué consistió formalmente dicha propuesta?",
+                category: "u1_inviernos",
+                categoryName: "U1: Inviernos y ML",
+                text: "¿Qué problema algorítmico resolvió la retropropagación (Rumelhart, Hinton y Williams, 1986)?",
                 options: [
-                    "Un método de preentrenamiento no supervisado capa por capa usando Restricted Boltzmann Machines que permitió inicializar redes muy profundas.",
-                    "El diseño de circuitos integrados ASIC dedicados específicamente a optimizar la multiplicación matricial en arquitecturas de memoria compartida.",
-                    "Un algoritmo de agrupamiento no supervisado basado en densidades espaciales para estructurar bases de datos relacionales sin índices manuales.",
-                    "La formulación matemática del mecanismo de autoatención para procesar secuencias textuales completas sin recurrencia temporal previa."
+                    "Eliminar la necesidad de calcular derivadas numéricas en redes monocapa.",
+                    "Ajustar pesos en capas ocultas distribuyendo el error con la regla de la cadena.",
+                    "Permitir que los sistemas basados en reglas actualicen bases de conocimiento.",
+                    "Garantizar la interpretabilidad visual completa de cualquier red recurrente."
                 ],
-                correct: 0,
-                feedback: "Hinton y Salakhutdinov (Science, 2006) demostraron que era viable entrenar redes neuronales profundas con múltiples capas intermedias inicializándolas de forma generativa mediante RBMs (Restricted Boltzmann Machines), formalizando el término Deep Learning."
+                correct: 1,
+                feedback: "Antes de 1986 no se sabía cómo asignar la responsabilidad del error a las neuronas intermedias. Backpropagation aplica la regla de la cadena del cálculo multivariable para propagar el gradiente del error desde la salida hacia las capas iniciales."
             },
             {
                 id: 16,
-                category: "u1",
-                categoryName: "Revolución DL (2012-2020)",
-                text: "La victoria de AlexNet en el desafío ImageNet de 2012 transformó radicalmente la visión computacional al reducir el error del 26.2% al 15.3%. ¿Cuál fue la tríada de factores que la hizo posible?",
+                category: "u1_inviernos",
+                categoryName: "U1: Inviernos y ML",
+                text: "¿Cómo operaba internamente Deep Blue (1997) para superar al campeón mundial Garri Kaspárov?",
                 options: [
-                    "La convergencia de cómputo masivo en GPUs comerciales, la disponibilidad del dataset ImageNet con millones de imágenes y algoritmos como ReLU y Dropout.",
-                    "El reemplazo de la retropropagación por algoritmos genéticos, la reducción del volumen de parámetros del modelo y la supresión de capas ocultas.",
-                    "El empleo de unidades de procesamiento tensorial TPU, el enriquecimiento de imágenes con descripciones de audio y la poda exhaustiva de árboles.",
-                    "La integración de bases de conocimiento con reglas formales, el análisis de espectrogramas acústicos y la normalización por lotes en microchips LISP."
+                    "Aprendizaje auto-supervisado con redes neuronales convolucionales profundas.",
+                    "Búsqueda por fuerza bruta paralela combinada con reglas de apertura.",
+                    "Agrupamiento no supervisado sobre millones de jugadas extraídas de internet.",
+                    "Entrenamiento por refuerzo con recompensas continuas jugando contra sí misma."
                 ],
-                correct: 0,
-                feedback: "AlexNet triunfó por la conjunción simultánea de tres elementos: 1) Hardware (GPUs con NVIDIA CUDA), 2) Big Data masivo y etiquetado (ImageNet de Fei-Fei Li), y 3) Innovaciones algorítmicas clave (activación ReLU y regularización con Dropout)."
+                correct: 1,
+                feedback: "Deep Blue era IA simbólica acelerada por hardware: evaluaba hasta 200 millones de posiciones por segundo con búsqueda minimax, poda alfa-beta y tablas de aperturas humanas. No aprendía ni podía transferir su conocimiento fuera del tablero."
             },
             {
                 id: 17,
-                category: "u1",
-                categoryName: "Revolución DL (2012-2020)",
-                text: "¿Por qué la función de activación ReLU (Rectified Linear Unit) fue indispensable para viabilizar el entrenamiento de arquitecturas profundas en 2012?",
+                category: "u1_inviernos",
+                categoryName: "U1: Inviernos y ML",
+                text: "En 2006, Hinton y Salakhutdinov reintrodujeron el término Deep Learning apoyándose en:",
                 options: [
-                    "Porque su derivada es constante (igual a 1) para valores positivos, mitigando eficazmente el problema del gradiente que desaparece al propagarse.",
-                    "Porque acota estrictamente la activación entre valores de -1 y 1, evitando la saturación de los canales de comunicación física entre núcleos.",
-                    "Porque introduce una no linealidad periódica sinusoidal que permite reconstruir señales continuas de audio de alta frecuencia con precisión.",
-                    "Porque garantiza la convergencia matemática estricta de la función de pérdida hacia el mínimo global sin riesgo de quedar en óptimos locales."
+                    "El uso de transformadores generativos con billones de parámetros continuos.",
+                    "Preentrenamiento capa por capa con máquinas de Boltzmann restringidas.",
+                    "Modelos de árboles de decisión aleatorios ejecutados en tarjetas gráficas.",
+                    "Sistemas expertos difusos conectados a bases de datos en la nube pública."
                 ],
-                correct: 0,
-                feedback: "Las funciones sigmoidales saturaban y producían derivadas infinitesimales en redes profundas (vanishing gradient). ReLU (f(x)=max(0,x)) mantiene una derivada unitaria constante para cualquier valor positivo, permitiendo que el gradiente fluya sin degradarse."
+                correct: 1,
+                feedback: "Hinton y Salakhutdinov demostraron que apilar capas preentrenadas de forma no supervisada con Restricted Boltzmann Machines (RBM) permitía inicializar redes profundas y entrenar representaciones jerárquicas estables."
             },
             {
                 id: 18,
-                category: "u1",
-                categoryName: "Revolución DL (2012-2020)",
-                text: "Las Redes Generativas Antagónicas (GANs), propuestas por Ian Goodfellow en 2014, operan mediante una dinámica de teoría de juegos basada en:",
+                category: "u1_deep_llm",
+                categoryName: "U1: Deep Learning & LLMs",
+                text: "¿Qué exigencia metodológica del Machine Learning clásico fue superada por el Deep Learning?",
                 options: [
-                    "Una red generadora que sintetiza datos intentando engañar a una discriminadora, la cual se entrena simultáneamente para discernir lo real de lo falso.",
-                    "Una red codificadora que comprime datos hacia un espacio latente mientras una red decodificadora minimiza la divergencia de Kullback-Leibler.",
-                    "Un conjunto de clasificadores basados en árboles aleatorios que votan de manera balanceada para seleccionar la mejor hipótesis explicativa.",
-                    "Un agente por refuerzo que navega por estados estocásticos recibiendo penalizaciones cuadráticas cada vez que formula una predicción errónea."
+                    "La utilización de matrices numéricas en el cálculo de probabilidades.",
+                    "La necesidad del diseño manual de características relevantes.",
+                    "El requerimiento de contar con conjuntos de prueba para validar precisión.",
+                    "El empleo de funciones de pérdida continuas durante el entrenamiento."
                 ],
-                correct: 0,
-                feedback: "Las GANs enfrentan en un juego minimax a dos redes: el Generador (que produce instancias sintéticas convincentes) y el Discriminador (que intenta distinguir datos de entrenamiento reales frente a las muestras generadas artificialmente)."
+                correct: 1,
+                feedback: "En ML clásico, el ingeniero debía extraer artesanalmente las variables (feature engineering: filtros de bordes, histogramas). El Deep Learning extrae automáticamente representaciones jerárquicas desde datos crudos (píxeles, texto)."
             },
             {
                 id: 19,
-                category: "u1",
-                categoryName: "Revolución DL (2012-2020)",
-                text: "La arquitectura ResNet (Microsoft Research, 2015) superó la tasa de error estimada para humanos en ImageNet. ¿Cuál fue su innovación estructural central?",
+                category: "u1_deep_llm",
+                categoryName: "U1: Deep Learning & LLMs",
+                text: "¿Qué reducción de error alcanzó AlexNet en ImageNet (2012) para consolidar el Deep Learning?",
                 options: [
-                    "La incorporación de conexiones residuales (atajos) que suman la entrada directamente a la salida de un bloque para preservar el flujo del gradiente.",
-                    "El desacoplamiento de las convoluciones espaciales de las convoluciones temporales para procesar transmisiones de vídeo sin comprimir.",
-                    "La eliminación de todas las capas no lineales intermedias para formular la transformación matricial completa como un problema de regresión lineal.",
-                    "La sustitución del descenso de gradiente clásico por algoritmos de búsqueda metaheurística inspirados en colonias de hormigas en red."
+                    "Descendió el error de clasificación del 26.2% al 15.3%.",
+                    "Redujo el tiempo de entrenamiento de diez años a tres segundos.",
+                    "Disminuyó el consumo eléctrico de centros de datos en un 85%.",
+                    "Alcanzó una precisión perfecta con margen de error del 0.0%."
                 ],
                 correct: 0,
-                feedback: "ResNet introdujo 'skip connections' o atajos residuales (F(x) + x). Esto crea vías directas para que el gradiente viaje hacia atrás sin atenuación, permitiendo entrenar redes ultra profundas de 152 capas con un error de apenas 3.57%."
+                feedback: "AlexNet obtuvo una ventaja inédita en la competencia ImageNet, bajando el error top-5 de 26.2% a 15.3% en un único año. Esta brecha del 40% convenció a la comunidad científica internacional del poder de las CNNs profundas."
             },
             {
                 id: 20,
-                category: "u1",
-                categoryName: "Revolución DL (2012-2020)",
-                text: "El artículo 'Attention Is All You Need' (Vaswani et al., 2017) introdujo el Transformer. ¿Qué ventaja fundamental presentó sobre las redes recurrentes (RNNs)?",
+                category: "u1_deep_llm",
+                categoryName: "U1: Deep Learning & LLMs",
+                text: "¿Cuál fue el papel concreto de la plataforma CUDA y las GPUs en el logro de AlexNet (2012)?",
                 options: [
-                    "Procesar secuencias completas en paralelo ponderando la atención entre cualquier par de tokens, superando el cuello de botella del paso secuencial de las RNNs.",
-                    "Reducir a cero el volumen de memoria RAM requerido durante la inferencia mediante el reuso idéntico de los mismos pesos en todas sus capas.",
-                    "Prescindir de conjuntos masivos de entrenamiento al autogenerar su propio vocabulario mediante inferencia deductiva sobre gramáticas formales.",
-                    "Limitar la longitud de contexto a oraciones breves para evitar que la red dispersara el cómputo en relaciones sintácticas de largo alcance."
+                    "Reemplazar la retropropagación por un optimizador puramente analítico.",
+                    "Paralelizar masivamente las operaciones matriciales de convolución.",
+                    "Generar millones de imágenes sintéticas sin intervención de anotadores.",
+                    "Garantizar que los pesos de la red fueran completamente interpretables."
                 ],
-                correct: 0,
-                feedback: "Las RNNs procesaban secuencialmente palabra por palabra manteniendo un estado oculto vulnerable al olvido y sin capacidad de paralelismo. El Transformer calcula relaciones de atención global entre todos los tokens en paralelo, acelerando el entrenamiento a escala."
+                correct: 1,
+                feedback: "Las GPUs cuentan con miles de núcleos optimizados para paralelismo masivo. CUDA permitió ejecutar millones de multiplicaciones de matrices simultáneas, logrando que el entrenamiento de AlexNet durara una semana en vez de meses en CPU."
             },
             {
                 id: 21,
-                category: "u1",
-                categoryName: "LLMs y Era Generativa",
-                text: "¿Qué es estrictamente un 'token' en la arquitectura y procesamiento de un Large Language Model contemporáneo como GPT-4?",
+                category: "u1_deep_llm",
+                categoryName: "U1: Deep Learning & LLMs",
+                text: "¿Por qué el conjunto de datos ImageNet de Fei-Fei Li fue indispensable para la revolución de 2012?",
                 options: [
-                    "La unidad atómica de texto que puede corresponder a una palabra, una subpalabra o un símbolo, manejando el modelo un vocabulario finito de cerca de 100.000 unidades.",
-                    "Un valor numérico entero que representa la posición de memoria física en el disco sólido donde se encuentra almacenado el documento original.",
-                    "Una clave criptográfica privada generada aleatoriamente para verificar que la consulta del usuario proviene de una sesión web autenticada.",
-                    "El vector latente bidimensional resultante de aplicar un filtro de convolución sobre un segmento completo de audio antes de ser transcrito."
+                    "Porque demostró que los perceptrones monocapa resolvían funciones no lineales.",
+                    "Porque aportó millones de imágenes etiquetadas que permitieron generalizar.",
+                    "Porque reemplazó los algoritmos convolucionales por árboles de decisión óptimos.",
+                    "Porque redujo los requerimientos de memoria RAM en computadoras domésticas."
                 ],
-                correct: 0,
-                feedback: "Un token es la unidad mínima de entrada/salida (subpalabras vía BPE o WordPiece). GPT-4 maneja un vocabulario de ~100.000 tokens. Palabras frecuentes son 1 token; palabras raras o compuestas se dividen en fragmentos más pequeños."
+                correct: 1,
+                feedback: "Antes de ImageNet los conjuntos tenían apenas miles de muestras. Con 14 millones de imágenes etiquetadas en más de 20.000 categorías, las redes profundas dispusieron del volumen empírico indispensable para no sobreajustar."
             },
             {
                 id: 22,
-                category: "u1",
-                categoryName: "LLMs y Era Generativa",
-                text: "GPT-3 (2020) popularizó el 'few-shot learning' en modelos fundacionales. ¿Qué significa operacionalmente este concepto en dicho contexto?",
+                category: "u1_deep_llm",
+                categoryName: "U1: Deep Learning & LLMs",
+                text: "¿Qué problema del entrenamiento resolvió la introducción de ReLU frente a funciones sigmoideas?",
                 options: [
-                    "Inferir y ejecutar una tarea inédita a partir de 3 a 5 demostraciones provistas en el prompt, sin ajustar ni alterar los parámetros internos del modelo.",
-                    "Reentrenar la totalidad de las matrices de peso del modelo durante varias épocas usando un conjunto de validación de 3 a 5 registros anotados.",
-                    "Aislar las 3 a 5 variables estadísticas más determinantes del dataset de entrada para descartar el resto de dimensiones mediante análisis factorial.",
-                    "Configurar una restricción estricta en el decodificador para que la respuesta emitida contenga un máximo de 3 a 5 oraciones gramaticales completas."
+                    "La necesidad de inicializar los pesos sinápticos de forma aleatoria.",
+                    "El desvanecimiento del gradiente en capas profundas durante la propagación.",
+                    "El sobreajuste extremo derivado de datasets con millones de etiquetas.",
+                    "La pérdida de paralelismo en las unidades de procesamiento gráfico."
                 ],
-                correct: 0,
-                feedback: "Few-shot en LLMs es 'aprendizaje en contexto' (in-context learning). El modelo infiere el patrón a resolver directamente desde 3 a 5 ejemplos incluidos en el texto de entrada, manteniendo sus pesos congelados (sin backpropagation ni fine-tuning)."
+                correct: 1,
+                feedback: "La sigmoide satura para valores altos o bajos, haciendo que su derivada sea cercana a cero; al multiplicarse en capas profundas, el gradiente desaparece. ReLU f(x)=max(0,x) mantiene derivada constante (1) para x>0, permitiendo propagar la señal."
             },
             {
                 id: 23,
-                category: "u1",
-                categoryName: "LLMs y Era Generativa",
-                text: "¿Cuál es la diferencia metodológica fundamental entre un modelo de lenguaje preentrenado base (como GPT-3) y un asistente conversacional (como ChatGPT)?",
+                category: "u1_deep_llm",
+                categoryName: "U1: Deep Learning & LLMs",
+                text: "¿Cuál es el principio mediante el cual Dropout previene el sobreajuste en redes neuronales profundas?",
                 options: [
-                    "El asistente ha sido sometido a un proceso de alineación mediante RLHF para calibrar sus respuestas hacia la utilidad, veracidad y mitigación de daños.",
-                    "El asistente incluye una base de datos relacional externa con hechos verificados en tiempo real que anula cualquier posibilidad de predicción probabilística.",
-                    "El modelo base carece de capas de autoatención y únicamente procesa texto recurriendo a gramáticas libres de contexto programadas manualmente.",
-                    "El asistente sustituye la arquitectura de Transformers por un sistema experto basado en árboles de decisión para filtrar las respuestas del usuario."
+                    "Elimina permanentemente las conexiones sinápticas de menor magnitud numérica.",
+                    "Desactiva aleatoriamente neuronas durante el entrenamiento en cada paso.",
+                    "Modifica la tasa de aprendizaje adaptativamente según la pérdida acumulada.",
+                    "Normaliza las activaciones intermedias para fijar su media en cero."
                 ],
-                correct: 0,
-                feedback: "Un modelo base predice la continuación estadística de un texto. ChatGPT fue afinado con RLHF (Reinforcement Learning from Human Feedback), donde evaluadores humanos calificaron respuestas para guiar al modelo a ser útil, honesto y seguro."
+                correct: 1,
+                feedback: "Dropout 'apaga' estocásticamente una fracción de neuronas en cada iteración. Esto fuerza a la red a no depender de rutas fijas ni coadaptaciones espurias, aprendiendo representaciones redundantes y robustas."
             },
             {
                 id: 24,
-                category: "u1",
-                categoryName: "LLMs y Era Generativa",
-                text: "El modelo CLIP, desarrollado por OpenAI en 2021, representó un avance decisivo en aprendizaje multimodal porque:",
+                category: "u1_deep_llm",
+                categoryName: "U1: Deep Learning & LLMs",
+                text: "En una Red Generativa Antagónica (GAN, Goodfellow 2014), ¿cuál es la función de la red discriminadora?",
                 options: [
-                    "Entrenó redes para proyectar texto e imágenes dentro de un mismo espacio vectorial latente utilizando un objetivo de aprendizaje contrastivo.",
-                    "Permitió sintetizar archivos de vídeo de alta definición en tiempo real a partir de grabaciones de audio monofónicas de baja fidelidad.",
-                    "Combinó árboles de regresión lineal con detectores de bordes para clasificar fotografías satelitales sin consumir memoria de GPU.",
-                    "Desplegó un motor de búsqueda puramente simbólico capaz de traducir consultas en lenguaje formal directamente a esquemas de bases de datos relacionales."
+                    "Sintetizar muestras realistas a partir de un vector de ruido estocástico.",
+                    "Distinguir entre muestras reales y muestras sintéticas producidas.",
+                    "Alinear las respuestas del generador con instrucciones morales humanas.",
+                    "Reducir la dimensionalidad espacial mediante capas de submuestreo máximo."
                 ],
-                correct: 0,
-                feedback: "CLIP (Contrastive Language-Image Pre-training) proyecta pares de imagen y texto al mismo espacio vectorial, permitiendo clasificar imágenes en modo 'zero-shot' mediante descripciones textuales sin haber sido entrenado específicamente en esas categorías."
+                correct: 1,
+                feedback: "En las GANs coexisten dos redes en juego minimax: el Generador crea datos artificiales intentando engañar al Discriminador, mientras el Discriminador se optimiza para clasificar con exactitud si una muestra es real o falsificada."
             },
             {
                 id: 25,
-                category: "u1",
-                categoryName: "LLMs y Era Generativa",
-                text: "En la evolución de la IA hacia 2025-2026, la 'IA Agentiva' se distingue de un asistente conversacional clásico porque:",
+                category: "u1_deep_llm",
+                categoryName: "U1: Deep Learning & LLMs",
+                text: "¿Cómo facilitan las conexiones residuales de ResNet (2015) el entrenamiento de más de cien capas?",
                 options: [
-                    "Planifica secuencias de razonamiento complejas, convoca herramientas de software externas y ejecuta subtareas iterativas con autonomía supervisada.",
-                    "Opera exclusivamente en dispositivos físicos embebidos sin requerir conexión de red ni procesamiento en centros de datos especializados.",
-                    "Ha alcanzado la autoconciencia biológica y razona sobre su propia existencia de manera independiente a las instrucciones que recibe del operador.",
-                    "Ha sustituido por completo las arquitecturas basadas en Transformers para volver a modelos de búsqueda heurística por fuerza bruta en paralelo."
+                    "Comprimen la representación latente dividiendo entre dos las dimensiones.",
+                    "Crean atajos que permiten al gradiente propagarse sin atenuación multiplicativa.",
+                    "Reemplazan las operaciones de convolución por mecanismos de atención pura.",
+                    "Descartan capas redundantes mediante una poda selectiva de gradientes."
                 ],
-                correct: 0,
-                feedback: "La IA agentiva pasa de la respuesta conversacional estática a la acción orientada a objetivos: descompone metas en pasos, usa navegadores web o APIs para interactuar con el entorno y corrige sus acciones si detecta fallas."
+                correct: 1,
+                feedback: "ResNet introdujo conexiones de salto F(x)+x: el gradiente fluye directamente a través de la identidad x sin multiplicarse repetidamente por pesos pequeños. Esto permitió entrenar redes de 152 capas con error inferior al humano en ImageNet."
             },
             {
                 id: 26,
-                category: "u2",
-                categoryName: "Definiciones y Fundamentos",
-                text: "En el campo académico no existe una única definición de IA. ¿Por qué la definición de John McCarthy (1956) se cataloga como 'ingenieril'?",
+                category: "u1_deep_llm",
+                categoryName: "U1: Deep Learning & LLMs",
+                text: "¿Cuál es la ventaja central de la arquitectura Transformer (2017) frente a las redes recurrentes (RNN)?",
                 options: [
-                    "Porque se enfoca explícitamente en el objetivo práctico de crear y fabricar máquinas que resuelvan problemas propios de la inteligencia humana.",
-                    "Porque define a la inteligencia únicamente a través del modelado formal de agentes que maximizan funciones matemáticas de utilidad esperada.",
-                    "Porque establece los requisitos jurídicos para que los sistemas de cómputo puedan ser sometidos a auditorías y estándares de responsabilidad legal.",
-                    "Porque delimita el campo de estudio al diseño exclusivo de circuitos electrónicos y microprocesadores de silicio para el procesamiento masivo."
+                    "Elimina la necesidad de utilizar embeddings vectoriales en el vocabulario.",
+                    "Permite procesar secuencias en paralelo modelando dependencias lejanas.",
+                    "Garantiza que el modelo razone causalmente sin posibilidad de error.",
+                    "Funciona en tiempo real consumiendo menos de diez megabytes de memoria."
                 ],
-                correct: 0,
-                feedback: "McCarthy (1956) definió la IA como 'la ciencia e ingeniería de fabricar máquinas inteligentes', orientada al acto práctico de diseño y construcción, sin enredarse en disputas sobre si las máquinas piensan como los humanos."
+                correct: 1,
+                feedback: "Las RNNs procesaban token a token secuencialmente, perdiendo información a largo plazo y sin poder paralelizar en GPU. El mecanismo de auto-atención procesa toda la secuencia simultáneamente ponderando dinámicamente cada relación."
             },
             {
                 id: 27,
-                category: "u2",
-                categoryName: "Definiciones y Fundamentos",
-                text: "La definición moderna propuesta por Russell y Norvig (2020) concibe a la IA como:",
+                category: "u1_deep_llm",
+                categoryName: "U1: Deep Learning & LLMs",
+                text: "En el contexto de los Large Language Models, ¿cuál es la definición precisa de un token?",
                 options: [
-                    "El estudio y diseño de agentes computacionales racionales que perciben su entorno mediante sensores y actúan con actuadores para maximizar su éxito.",
-                    "La simulación computacional de las funciones biológicas del cerebro humano para replicar la conciencia en soporte de silicio.",
-                    "Cualquier sistema autónomo dotado de una base de datos relacional estructurada mediante reglas condicionales de deducción lógica.",
-                    "La disciplina encargada de regular las implicaciones éticas y contractuales de la automatización en el marco de la legislación europea."
+                    "Un vector binario que codifica el peso sináptico de una neurona.",
+                    "Una unidad mínima de texto que representa palabras, subpalabras o símbolos.",
+                    "Un archivo comprimido donde se almacena la función de pérdida del modelo.",
+                    "Una clave criptográfica que garantiza la privacidad del prompt de entrada."
                 ],
-                correct: 0,
-                feedback: "Russell y Norvig estructuran la IA como el estudio de agentes racionales: entidades que perciben (sensores), eligen la acción óptima según su historial y medidas de desempeño (función agente), y actúan sobre el entorno (actuadores)."
+                correct: 1,
+                feedback: "Un token es la unidad básica del vocabulario del modelo generada por algoritmos como Byte-Pair Encoding (BPE). Puede ser una palabra frecuente, fragmentos léxicos (subpalabras) o caracteres aislados (~100.000 tokens en GPT-4)."
             },
             {
                 id: 28,
-                category: "u2",
-                categoryName: "Definiciones y Fundamentos",
-                text: "¿En qué contexto institucional o profesional resulta mandatorio emplear la definición de IA contemplada en el Reglamento UE 2024/1689 (EU AI Act)?",
+                category: "u1_deep_llm",
+                categoryName: "U1: Deep Learning & LLMs",
+                text: "¿Cuál es la tarea fundamental ejecutada durante el preentrenamiento masivo de un modelo fundacional de lenguaje?",
                 options: [
-                    "En la redacción de cláusulas contractuales, procesos de homologación regulatoria, auditorías técnicas y evaluación de responsabilidades legales.",
-                    "En el cálculo formal de la convergencia asintótica del gradiente estocástico al entrenar redes convolucionales en entornos locales.",
-                    "En la selección empírica de hiperparámetros de regularización como la tasa de abandono (dropout) en modelos de lenguaje extenso.",
-                    "En la delimitación matemática de las fronteras de decisión de hiperplanos de separación para clasificadores de vectores de soporte."
+                    "Verificar la veracidad fáctica de cada afirmación con un motor de búsqueda.",
+                    "Predecir el siguiente token de texto a partir del contexto previo.",
+                    "Clasificar documentos exclusivamente en categorías predefinidas por humanos.",
+                    "Aprender a manipular actuadores mecánicos en entornos virtuales de física."
                 ],
-                correct: 0,
-                feedback: "La definición del AI Act es operativa y regulatoria: delimita cuándo un software queda sujeto a obligaciones de cumplimiento normativo, niveles de riesgo y auditorías legales en la Unión Europea."
+                correct: 1,
+                feedback: "El preentrenamiento es auto-supervisado con billones de tokens: el modelo optimiza la probabilidad condicional de predecir el siguiente token dado el historial. De este objetivo estadístico elemental emergen capacidades lingüísticas complejas."
             },
             {
                 id: 29,
-                category: "u2",
-                categoryName: "Definiciones y Fundamentos",
-                text: "La definición de trabajo adoptada para el perfil técnico de este curso de ingeniería se centra específicamente en:",
+                category: "u1_deep_llm",
+                categoryName: "U1: Deep Learning & LLMs",
+                text: "¿Qué define técnicamente al 'few-shot learning' en Large Language Models como GPT-3 (2020)?",
                 options: [
-                    "Algoritmos que aprenden patrones directamente a partir de datos empíricos para adoptar decisiones autónomas o sintetizar nuevo contenido.",
-                    "El desarrollo exhaustivo de sistemas mecánicos y servomotores para la construcción de androides con locomoción bípeda dinámica.",
-                    "La programación manual de árboles de inferencia deductiva para la resolución determinista de acertijos formales y juegos de tablero.",
-                    "El análisis sociológico del impacto del desempleo tecnológico en las cadenas de producción manufacturera a nivel latinoamericano."
+                    "Reentrenar la totalidad de capas durante varias épocas con GPUs dedicadas.",
+                    "Aprender a resolver una tarea mediante ejemplos en el prompt sin alterar pesos.",
+                    "Podar el noventa por ciento de los parámetros sin perder exactitud estadística.",
+                    "Generar respuestas ultra-cortas para minimizar la latencia de inferencia."
                 ],
-                correct: 0,
-                feedback: "La definición práctica del curso enfatiza la base técnica de Machine Learning: algoritmos que extraen patrones de datos para tomar decisiones, hacer predicciones o generar contenido, que es lo que los estudiantes construyen durante la carrera."
+                correct: 1,
+                feedback: "Few-shot en LLMs es aprendizaje en contexto (in-context learning): se presentan 3-5 demostraciones de la tarea directamente en el prompt. El modelo infiere la pauta y resuelve el nuevo caso sin actualizar un solo peso de sus matrices."
             },
             {
                 id: 30,
-                category: "u2",
-                categoryName: "Agente Racional",
-                text: "En el modelo formal del Agente Racional, ¿cuál es la responsabilidad específica atribuida a la 'Función Agente'?",
+                category: "u1_deep_llm",
+                categoryName: "U1: Deep Learning & LLMs",
+                text: "¿Cuál es la función metodológica del Aprendizaje por Refuerzo con Feedback Humano (RLHF) en ChatGPT?",
                 options: [
-                    "Mapear la secuencia de percepciones recolectada del entorno hacia la acción más adecuada que maximice su medida de rendimiento.",
-                    "Capturar la radiación lumínica y las ondas acústicas del entorno exterior para digitalizarlas en valores binarios legibles.",
-                    "Ejecutar físicamente la aceleración de los motores o desplegar las cadenas de texto resultantes en la interfaz visual de salida.",
-                    "Almacenar indefinidamente el historial íntegro de mediciones en una base relacional sin efectuar transformaciones matemáticas."
+                    "Aumentar el número bruto de parámetros para superar a los modelos fundacionales.",
+                    "Alinear las respuestas del modelo base con preferencias humanas de utilidad y seguridad.",
+                    "Traducir las salidas textuales a comandos de código binario ejecutables en CPU.",
+                    "Conectar directamente los pesos neuronales con fuentes de datos en tiempo real."
                 ],
-                correct: 0,
-                feedback: "La función agente es el 'cerebro' computacional: mapea el historial de percepciones (P*) hacia una acción concreta (A). En Machine Learning moderno, la función agente corresponde al modelo matemático entrenado."
+                correct: 1,
+                feedback: "Un modelo preentrenado genera continuaciones probabilísticas que pueden ser tóxicas o incoherentes. RLHF califica respuestas humanas, entrena un modelo de recompensa y optimiza el LLM para ser servicial, veraz e inofensivo."
             },
             {
                 id: 31,
-                category: "u2",
-                categoryName: "Agente Racional",
-                text: "Cuando interactúas con ChatGPT, ¿qué componente del modelo de agente racional desempeña la ventana del navegador que renderiza la respuesta escrita?",
+                category: "u1_deep_llm",
+                categoryName: "U1: Deep Learning & LLMs",
+                text: "En el estudio de modelos de lenguaje, ¿qué caracteriza a una 'capacidad emergente'?",
                 options: [
-                    "El actuador del sistema, pues constituye el mecanismo a través del cual el agente aplica su decisión y modifica el entorno del usuario.",
-                    "El sensor principal, ya que almacena internamente los parámetros fijos de las matrices de peso sináptico del Transformer.",
-                    "La función agente abstracta, dado que define la arquitectura matemática y la cantidad de bloques de autoatención del modelo.",
-                    "La medida de desempeño, puesto que cuantifica la tasa de pérdida de entropía cruzada calculada durante la inferencia estocástica."
+                    "Surge cuando el ingeniero inserta manualmente reglas de inferencia deductiva.",
+                    "Aparece de forma imprevista al escalar parámetros, datos y cómputo.",
+                    "Consiste en la reducción del consumo energético al estabilizar el gradiente.",
+                    "Es la habilidad de funcionar desconectado de internet en hardware limitado."
                 ],
-                correct: 0,
-                feedback: "En ChatGPT: los sensores capturan el texto del usuario, la función agente es el Transformer que calcula la salida, y los actuadores son los mecanismos de despliegue que proyectan el texto generado en la pantalla para modificar el entorno."
+                correct: 1,
+                feedback: "Las capacidades emergentes (como razonar en pasos lógicos o traducir idiomas poco representados) no están presentes en modelos pequeños ni fueron programadas explícitamente; emergen como transiciones de fase al superar ciertos umbrales de escala."
             },
             {
                 id: 32,
-                category: "u2",
-                categoryName: "Clasificación de la IA",
-                text: "En 2026, ¿cuál es el criterio técnico riguroso que determina que todos los sistemas existentes (incluyendo GPT-4 y AlphaGo) pertenecen a la 'IA Débil'?",
+                category: "u1_deep_llm",
+                categoryName: "U1: Deep Learning & LLMs",
+                text: "¿Qué innovación representó el modelo CLIP (OpenAI, 2021) en la representación del conocimiento?",
                 options: [
-                    "Su confinamiento estricto a un dominio de tarea particular, resultando completamente inútiles si se los extrae del ámbito para el que fueron entrenados.",
-                    "Su incapacidad matemática para ejecutarse en centros de datos que no dispongan de refrigeración líquida y unidades de procesamiento tensorial.",
-                    "Su necesidad imperativa de contar con un operador humano que supervise manualmente cada uno de los tokens que emite el modelo.",
-                    "Su baja precisión estadística cuando se los evalúa en competencias de juegos de mesa formales frente a grandes maestros internacionales."
+                    "Sustituir las funciones convolucionales por clasificadores de texto estático.",
+                    "Mapear imágenes y descripciones de texto en un mismo espacio vectorial latente.",
+                    "Garantizar la interpretabilidad de las reglas lógicas en sistemas expertos.",
+                    "Permitir que las redes neuronales operen sin funciones de activación continua."
                 ],
-                correct: 0,
-                feedback: "El criterio definitorio de la IA Débil (Narrow AI) es la especificidad de dominio. Un modelo como GPT-4 predice lenguaje pero no puede conducir un auto ni jugar al ajedrez sin interfaces especializadas; carece de versatilidad cognitiva general."
+                correct: 1,
+                feedback: "CLIP entrena un codificador de imagen y uno de texto de forma contrastiva, proyectando imágenes y sus descripciones semánticas hacia un espacio vectorial compartido donde conceptos similares quedan próximos matemáticamente."
             },
             {
                 id: 33,
-                category: "u2",
-                categoryName: "Clasificación de la IA",
-                text: "¿Cuál es la barrera epistemológica y técnica que impide catalogar a los grandes modelos de lenguaje actuales como 'IA Fuerte'?",
+                category: "u1_deep_llm",
+                categoryName: "U1: Deep Learning & LLMs",
+                text: "¿Cuál es la característica central que define a la IA agentiva proyectada para 2025–2026?",
                 options: [
-                    "Operan mediante correlaciones estadísticas en secuencias de tokens, careciendo de comprensión semántica genuina y razonamiento causal.",
-                    "No han logrado superar el número de parámetros sinápticos presentes en la corteza cerebral de un mamífero de orden superior.",
-                    "Requieren el suministro continuo de corriente alterna trifásica para mantener sus registros de memoria volátil sincronizados.",
-                    "Presentan incompatibilidad arquitectónica con los sistemas operativos abiertos utilizados mayoritariamente en la investigación universitaria."
+                    "Limitarse exclusivamente a devolver párrafos descriptivos en una interfaz de chat.",
+                    "La capacidad de planificar metas, invocar herramientas y ejecutar acciones en el entorno.",
+                    "La eliminación definitiva de cualquier arquitectura sustentada en Transformers.",
+                    "La obligatoriedad de que cada modelo se autoejecute en un único microcontrolador."
                 ],
-                correct: 0,
-                feedback: "La IA Fuerte exige comprensión semántica real y razonamiento causal (entender por qué suceden las cosas, no solo que A y B co-ocurren). Los LLMs procesan asociaciones estadísticas sin semántica genuina."
+                correct: 1,
+                feedback: "La transición agentiva convierte al modelo de un asistente pasivo de diálogo en una entidad que descompone metas complejas, utiliza navegadores, APIs y lenguajes de programación, e interactúa con el entorno digital con autonomía progresiva."
             },
             {
                 id: 34,
-                category: "u2",
-                categoryName: "Clasificación de la IA",
-                text: "A nivel teórico, ¿cuál es la distinción conceptual comúnmente aceptada entre la IA Fuerte y la Inteligencia Artificial General (AGI)?",
+                category: "u2_definiciones",
+                categoryName: "U2: Definiciones y Agentes",
+                text: "¿Cuál es el núcleo conceptual de la definición de Inteligencia Artificial propuesta por John McCarthy en 1956?",
                 options: [
-                    "La IA Fuerte equipara la competencia intelectual humana, mientras que la AGI suele plantearse como un sistema que la supera y se automodifica.",
-                    "La IA Fuerte se refiere a robots mecánicos con fuerza física, mientras que la AGI alude al software de procesamiento textual en servidores.",
-                    "La IA Fuerte es un paradigma implementado comercialmente hoy en día, mientras que la AGI fue descartada en la Conferencia de Dartmouth.",
-                    "La IA Fuerte solo procesa representaciones numéricas discretas, mientras que la AGI se basa en redes analógicas sin transistores de silicio."
+                    "El estudio formal de agentes que maximizan funciones de recompensa continua.",
+                    "La ciencia e ingeniería orientada a construir máquinas inteligentes.",
+                    "El marco legal regulatorio que previene riesgos en la toma de decisiones.",
+                    "El diseño de redes neuronales biológicamente idénticas al cerebro humano."
                 ],
-                correct: 0,
-                feedback: "Regla académica: IA Fuerte = equiparable a la mente humana en cualquier tarea intelectual con comprensión semántica. AGI = supera la capacidad intelectual humana y posee potencial de autoaprendizaje y automodificación recursiva."
+                correct: 1,
+                feedback: "La definición de McCarthy es de índole ingenieril y pragmática: define la disciplina como 'la ciencia e ingeniería de fabricar máquinas inteligentes', enfocada en la creación y desarrollo práctico de artefactos computacionales."
             },
             {
                 id: 35,
-                category: "u2",
-                categoryName: "Mapa de Disciplinas",
-                text: "¿Cuál es la relación de inclusión jerárquica canónica entre IA, Machine Learning, Deep Learning, NLP y Visión por Computadora?",
+                category: "u2_definiciones",
+                categoryName: "U2: Definiciones y Agentes",
+                text: "Según Russell y Norvig (2020), ¿cuál es la definición moderna y estándar de la Inteligencia Artificial?",
                 options: [
-                    "La IA contiene a Machine Learning, que contiene a Deep Learning; y este último sustenta de manera dominante a NLP y a Visión por Computadora.",
-                    "NLP y Visión por Computadora son disciplinas independientes que engloban a Deep Learning, el cual se encuentra completamente fuera de la IA.",
-                    "Machine Learning e Inteligencia Artificial son términos exactamente sinónimos que agrupan como componentes accesorios a Deep Learning.",
-                    "Deep Learning engloba jerárquicamente a la Inteligencia Artificial general, la cual utiliza al Machine Learning como una subrutina gráfica."
+                    "La automatización de tareas burocráticas mediante bases de datos relacionales.",
+                    "El estudio formal de agentes que perciben su entorno y actúan racionalmente.",
+                    "La programación manual de árboles de decisión en dominios médicos cerrados.",
+                    "La simulación computacional de emociones para el entretenimiento digital."
                 ],
-                correct: 0,
-                feedback: "La jerarquía formal es: IA ⊃ ML ⊃ Deep Learning ⊃ {NLP, Visión}. Cada nivel es una especialización metodológica más profunda del anterior."
+                correct: 1,
+                feedback: "La postura científica dominante de Russell y Norvig conceptualiza a la IA como el estudio de agentes que reciben percepciones a través de sensores y seleccionan acciones con actuadores para maximizar su medida de desempeño esperada."
             },
             {
                 id: 36,
-                category: "u2",
-                categoryName: "Mapa de Disciplinas",
-                text: "¿Cuál es la diferencia sustancial en la gestión de características (features) entre el Machine Learning clásico y el Deep Learning?",
+                category: "u2_definiciones",
+                categoryName: "U2: Definiciones y Agentes",
+                text: "¿En qué contexto profesional resulta primordial aplicar la definición de IA del Reglamento UE 2024/1689?",
                 options: [
-                    "El ML clásico depende de un diseño manual de atributos por parte de ingenieros, mientras que el Deep Learning los extrae automáticamente en jerarquías.",
-                    "El ML clásico solo admite datos estructurados en formato de imagen, mientras que el Deep Learning requiere exclusivamente tablas relacionales limpias.",
-                    "El Deep Learning exige que cada atributo sea etiquetado a mano píxel por píxel, mientras que el ML clásico prescinde totalmente de variables.",
-                    "El ML clásico utiliza millones de neuronas no lineales, mientras que el Deep Learning recurre a transformaciones puramente analíticas sin datos."
+                    "Al ajustar hiperparámetros de un modelo de aprendizaje profundo en PyTorch.",
+                    "En auditorías técnicas, redacción de contratos y cumplimiento normativo legal.",
+                    "Al momento de seleccionar entre una función de activación ReLU o LeakyReLU.",
+                    "Para demostrar la separabilidad lineal de un conjunto de datos en dos dimensiones."
                 ],
-                correct: 0,
-                feedback: "En ML clásico los humanos diseñan manualmente los descriptores (feature engineering, ej. bordes con Sobel, histogramas). El Deep Learning extrae representaciones jerárquicas directamente de los datos crudos (bordes → formas → conceptos)."
+                correct: 1,
+                feedback: "La definición del AI Act europeo es operativa y jurídica: clasifica sistemas según su nivel de riesgo con independencia de la técnica subyacente. Es la referencia obligatoria para contratos, homologaciones legales y auditorías de gobernanza."
             },
             {
                 id: 37,
-                category: "u2",
-                categoryName: "Mapa de Disciplinas",
-                text: "De acuerdo con el eje de transparencia e interpretabilidad técnica, ¿cómo se posicionan los enfoques de la IA de mayor a menor legibilidad humana?",
+                category: "u2_definiciones",
+                categoryName: "U2: Definiciones y Agentes",
+                text: "¿Cuál es la definición de trabajo técnica adoptada en este curso universitario de Inteligencia Artificial?",
                 options: [
-                    "IA Simbólica (alta: reglas explícitas legibles) → ML Clásico (media: modelos explicables) → Deep Learning (baja: caja negra paramétrica).",
-                    "Deep Learning (alta: visualización de capas) → IA Simbólica (media: lógica difusa) → ML Clásico (baja: representaciones en matrices ocultas).",
-                    "ML Clásico (alta: funciones lineales) → Deep Learning (media: tensores abiertos) → IA Simbólica (baja: reglas codificadas en ensamblador).",
-                    "Los tres enfoques presentan idéntico grado de inteligibilidad formal ante las auditorías de código fuente de los sistemas de software."
+                    "Construir réplicas mecánicas antropomórficas dotadas de sentido común.",
+                    "Algoritmos que aprenden patrones de datos para decidir o generar contenido.",
+                    "Sistemas basados en reglas que certifican la verdad absoluta de sus salidas.",
+                    "Software de optimización numérica que no utiliza inferencias probabilísticas."
                 ],
-                correct: 0,
-                feedback: "La IA Simbólica posee la máxima transparencia (puedes leer las reglas IF-THEN). El ML clásico tiene transparencia media (árboles, regresiones legibles). El Deep Learning es de baja transparencia (caja negra con millones de pesos)."
+                correct: 1,
+                feedback: "La definición técnica del curso se centra en Machine Learning y Deep Learning aplicado: algoritmos capaces de extraer regularidades estadísticas a partir de datos empíricos para tomar decisiones, hacer predicciones o generar artefactos sintéticos."
             },
             {
                 id: 38,
-                category: "u2",
-                categoryName: "Tipos de ML",
-                text: "¿Qué es formalmente una 'etiqueta' (ground truth label) en el marco metodológico del Machine Learning?",
+                category: "u2_definiciones",
+                categoryName: "U2: Definiciones y Agentes",
+                text: "En el modelo formal de agente racional, ¿cuál es el rol específico que desempeñan los actuadores?",
                 options: [
-                    "El valor objetivo o respuesta verificada que se proporciona junto a cada dato de entrada para orientar el entrenamiento en modelos supervisados.",
-                    "El identificador numérico que asigna el compilador a una variable estática para reservar un bloque en la memoria de la tarjeta gráfica.",
-                    "El nombre comercial con el que se registra un modelo preentrenado ante las oficinas nacionales de patentes y propiedad intelectual.",
-                    "La métrica de velocidad que cuantifica cuántas inferencias por segundo puede completar un procesador durante una prueba de carga."
+                    "Capturar los estímulos lumínicos y sonoros emitidos por el medio físico.",
+                    "Ejecutar sobre el entorno las acciones determinadas por el sistema.",
+                    "Almacenar el historial completo de estados pasados en memoria de largo plazo.",
+                    "Calcular el error estadístico comparando la predicción con el valor esperado."
                 ],
-                correct: 0,
-                feedback: "Una etiqueta es la salida correcta conocida de antemano (ej. el correo con la marca 'spam' o 'no-spam'). Es la señal supervisada que permite a la función de pérdida cuantificar el error durante el ajuste de pesos."
+                correct: 1,
+                feedback: "Los actuadores son los mecanismos mediante los cuales el agente interviene y modifica su entorno (ej. mover un volante, generar un texto en pantalla, accionar un relé de riego o emitir una señal de alerta)."
             },
             {
                 id: 39,
-                category: "u2",
-                categoryName: "Tipos de ML",
-                text: "Dentro del Aprendizaje Supervisado, ¿cuál es el criterio matemático que distingue a una tarea de Clasificación de una tarea de Regresión?",
+                category: "u2_definiciones",
+                categoryName: "U2: Definiciones y Agentes",
+                text: "En un sistema de conducción autónoma en Quito, ¿a qué componente corresponde el modelo de red neuronal?",
                 options: [
-                    "La clasificación predice etiquetas categóricas cualitativas discretas, mientras que la regresión estima valores numéricos continuos.",
-                    "La clasificación solo opera sobre archivos de sonido, mientras que la regresión se aplica de manera exclusiva a registros de bases tabulares.",
-                    "La clasificación requiere obligatoriamente hardware con GPUs, mientras que la regresión se ejecuta exclusivamente en microcontroladores.",
-                    "La clasificación nunca comete errores de generalización, mientras que la regresión depende de supuestos gaussianos en los residuos estocásticos."
+                    "A los sensores que detectan obstáculos en la vía.",
+                    "A la función agente que decide las maniobras.",
+                    "A los actuadores que presionan los frenos del auto.",
+                    "Al entorno compuesto por la calzada y los peatones."
                 ],
-                correct: 0,
-                feedback: "Clasificación = salida discreta (categorías: fraude/no fraude, gato/perro). Regresión = salida continua (precios, temperaturas, caudales hidráulicos)."
+                correct: 1,
+                feedback: "El modelo entrenado actúa como la función agente: mapea el historial de percepciones capturado por las cámaras y radares (sensores) hacia la acción óptima (actuadores: acelerador, freno, dirección)."
             },
             {
                 id: 40,
-                category: "u2",
-                categoryName: "Tipos de ML",
-                text: "¿Cuál de los siguientes problemas prácticos corresponde de forma estricta a un escenario de Aprendizaje No Supervisado?",
+                category: "u2_definiciones",
+                categoryName: "U2: Definiciones y Agentes",
+                text: "¿Cuándo se considera técnicamente que la conducta de un agente inteligente es 'racional'?",
                 options: [
-                    "Segmentar una base de 100.000 clientes en grupos con patrones de consumo afines mediante clustering, sin definir categorías previas.",
-                    "Pronosticar el precio de venta de una vivienda a partir del metraje y la ubicación, disponiendo del histórico de precios de cierre de transacciones.",
-                    "Determinar si una biopsia celular es benigna o maligna a partir de mil radiografías previamente categorizadas por médicos oncólogos.",
-                    "Optimizar la política de frenado de un tren autónomo recibiendo señales de penalización cada vez que se sobrepasa la velocidad permitida."
+                    "Cuando replica exactamente el proceso de pensamiento biológico de un humano.",
+                    "Cuando selecciona la acción que maximiza su medida de desempeño esperada.",
+                    "Cuando sus decisiones resultan infalibles y nunca comete errores de cálculo.",
+                    "Cuando procesa la totalidad de variables del entorno en tiempo infinitesimal."
                 ],
-                correct: 0,
-                feedback: "El aprendizaje no supervisado trabaja sin etiquetas predeterminadas. Agrupar clientes sin categorías previas para encontrar estructuras ocultas (clustering) es el ejemplo paradigmático."
+                correct: 1,
+                feedback: "La racionalidad en IA no presupone omnisciencia ni perfección: un agente es racional si, dada la información disponible a través de sus percepciones y su conocimiento previo, toma la decisión que maximiza el éxito según su métrica objetiva."
             },
             {
                 id: 41,
-                category: "u2",
-                categoryName: "Tipos de ML",
-                text: "Google Photos agrupa automáticamente las fotografías de una misma persona sin intervención, y tras una única indicación del usuario ('Mamá'), identifica todo el álbum. ¿Qué tipo de ML es?",
+                category: "u2_clasificacion",
+                categoryName: "U2: Clasificación de la IA",
+                text: "¿Cuál es el criterio técnico riguroso por el cual ChatGPT y AlphaGo se clasifican hoy como IA Débil (Narrow AI)?",
                 options: [
-                    "Aprendizaje Semi-supervisado, porque combina la extracción de clusters sobre datos no etiquetados con una mínima señal de supervisión humana.",
-                    "Aprendizaje por Refuerzo puro, porque el algoritmo premia al dispositivo con mayor almacenamiento cada vez que acierta en la identificación facial.",
-                    "IA Simbólica clásica, porque aplica reglas lógicas deductivas escritas por los desarrolladores de la aplicación para cada usuario en particular.",
-                    "Regresión logística no lineal, porque calcula un valor de salida continuo para medir la distancia métrica exacta entre los ojos de los familiares."
+                    "Porque registran bajas tasas de acierto en sus tareas específicas de diseño.",
+                    "Porque operan en dominios específicos y son inútiles fuera de su entrenamiento.",
+                    "Porque requieren ser ejecutados en computadoras que consuman energía eléctrica.",
+                    "Porque fueron desarrollados antes del establecimiento formal del EU AI Act."
                 ],
-                correct: 0,
-                feedback: "El aprendizaje semi-supervisado combina grandes volúmenes de datos sin etiquetar (agrupamiento no supervisado de fotos similares) con un volumen mínimo de datos etiquetados (el usuario nombra una sola foto y el nombre se propaga)."
+                correct: 1,
+                feedback: "La IA Débil (Narrow AI) se define por su especificidad de dominio: AlphaGo juega Go con maestría sobrehumana pero no puede redactar un email ni reconocer una flor; ChatGPT opera en texto pero no puede conducir un auto ni razonar de forma general."
             },
             {
                 id: 42,
-                category: "u2",
-                categoryName: "Tipos de ML",
-                text: "AlphaGo aprendió a dominar el juego milenario del Go mediante Aprendizaje por Refuerzo porque su principio de entrenamiento consistió en:",
+                category: "u2_clasificacion",
+                categoryName: "U2: Clasificación de la IA",
+                text: "A nivel conceptual, ¿cuál es la diferencia técnica entre la Inteligencia Artificial Fuerte y la AGI?",
                 options: [
-                    "Aprender mediante millones de partidas jugadas contra sí mismo, guiándose por una señal escalar de recompensa (+1 al ganar, -1 al perder).",
-                    "Seguir de forma determinista un catálogo de seiscientas reglas condicionales programadas a mano por campeones orientales de la disciplina.",
-                    "Memorizar una base de datos indexada con todas las jugadas posibles registradas en los torneos profesionales de los últimos doscientos años.",
-                    "Ajustar sus parámetros sinápticos a partir de un conjunto supervisado donde cada movimiento individual fue validado por árbitros de la federación."
+                    "La IA Fuerte es un software privativo; la AGI es necesariamente de código abierto.",
+                    "La IA Fuerte iguala al humano; la AGI lo supera y se automodifica.",
+                    "La IA Fuerte se limita a cálculos numéricos; la AGI procesa texto no estructurado.",
+                    "La IA Fuerte ya existe comercialmente; la AGI fue descartada por los científicos."
                 ],
-                correct: 0,
-                feedback: "El aprendizaje por refuerzo se basa en prueba-error con una señal de recompensa o castigo. AlphaGo descubrió estrategias sobrehumanas jugando millones de partidas contra sí mismo optimizando su política para maximizar la recompensa de victoria."
+                correct: 1,
+                feedback: "Aunque a veces se usen de forma coloquial, la distinción conceptual es clara: la IA Fuerte iguala las capacidades cognitivas humanas en cualquier dominio; la AGI va más allá, superando al humano y adquiriendo capacidad de automodificación recursiva."
             },
             {
                 id: 43,
-                category: "u2",
-                categoryName: "NLP",
-                text: "En Procesamiento de Lenguaje Natural, ¿qué es formalmente un 'embedding' vectorial y cuál es su utilidad práctica?",
+                category: "u2_clasificacion",
+                categoryName: "U2: Clasificación de la IA",
+                text: "¿Qué barrera técnica fundamental impide que los LLMs actuales sean considerados modelos de IA Fuerte?",
                 options: [
-                    "Una representación numérica densa en un espacio de alta dimensión donde las palabras con significados semánticamente afines quedan situadas cerca.",
-                    "Un algoritmo de cifrado asimétrico que garantiza que el texto de un prompt no pueda ser interceptado por atacantes durante la transmisión por red.",
-                    "Un archivo binario comprimido que reduce el peso de una fuente tipográfica para optimizar el renderizado visual de caracteres cirílicos en pantalla.",
-                    "Una estructura de base de datos relacional orientada a almacenar el recuento exacto de frecuencia léxica de cada párrafo analizado en memoria."
+                    "Su incapacidad para almacenar vectores de más de quinientos elementos.",
+                    "Identifican correlaciones estadísticas en datos pero no razonan sobre causas y efectos.",
+                    "La ausencia de protocolos de conexión con plataformas de mensajería móvil.",
+                    "El límite legal de ventanas de contexto restringido a diez mil caracteres."
                 ],
-                correct: 0,
-                feedback: "Un embedding convierte palabras o secuencias en vectores densos en un espacio multidimensional. Permite operar matemáticamente con el lenguaje: conceptos conceptualmente próximos (ej. 'rey' y 'reina') quedan situados a corta distancia euclidiana o de coseno."
+                correct: 1,
+                feedback: "Los LLMs predicen secuencias basadas en correlaciones observadas en el texto de entrenamiento. Carecen de modelos ontológicos del mundo físico, sentido común genuino y capacidad para inferir causalidad ('A causa B', no solo 'A y B suelen aparecer juntos')."
             },
             {
                 id: 44,
-                category: "u2",
-                categoryName: "Visión por Computadora",
-                text: "En Visión por Computadora, ¿cuál es la diferencia técnica sustancial entre la tarea de 'Clasificación' y la tarea de 'Detección de Objetos'?",
+                category: "u2_ml_tipos",
+                categoryName: "U2: Disciplinas y Tipos de ML",
+                text: "¿Cuál es la relación de inclusión jerárquica formal entre los campos principales de la Inteligencia Artificial?",
                 options: [
-                    "La clasificación asigna una etiqueta global a la imagen entera, mientras la detección ubica múltiples entidades acotadas por cajas delimitadoras.",
-                    "La clasificación se realiza únicamente sobre imágenes en blanco y negro, mientras que la detección de objetos requiere cámaras de visión térmica.",
-                    "La clasificación determina el precio de mercado de la escena, mientras que la detección calcula la frecuencia de actualización del sensor en hercios.",
-                    "La clasificación es una tarea exclusiva de la robótica industrial, mientras que la detección de objetos solo opera en aplicaciones de diseño gráfico."
+                    "NLP y Visión contienen a Deep Learning, que contiene a ML, que contiene a IA.",
+                    "IA contiene a ML, que contiene a Deep Learning, que contiene a NLP y Visión.",
+                    "ML contiene a la IA Simbólica, que abarca a las Redes Neuronales Convolucionales.",
+                    "Deep Learning es independiente de la IA y comparte algoritmos con la cibernética."
                 ],
-                correct: 0,
-                feedback: "Clasificación responde '¿qué hay en la imagen global?' (una sola etiqueta). Detección (como en YOLO) responde '¿qué objetos hay y en qué coordenadas exactas de la imagen están ubicados?' (múltiples cajas delimitadoras con etiquetas)."
+                correct: 1,
+                feedback: "La jerarquía matemática formal es: Inteligencia Artificial ⊃ Machine Learning ⊃ Deep Learning ⊃ {NLP, Visión por Computadora} (estas dos últimas especializadas en dominios de lenguaje y visión que hoy se resuelven con DL)."
             },
             {
                 id: 45,
-                category: "u2",
-                categoryName: "Visión por Computadora",
-                text: "¿Cuál es el nivel de granularidad distintivo que caracteriza a la 'Segmentación Semántica' en el análisis de imágenes?",
+                category: "u2_ml_tipos",
+                categoryName: "U2: Disciplinas y Tipos de ML",
+                text: "En el marco del aprendizaje supervisado, ¿cómo se diferencian las tareas de clasificación y regresión?",
                 options: [
-                    "Asigna una etiqueta de clase individual a cada píxel que conforma la imagen, delimitando con precisión los contornos anatómicos o viales.",
-                    "Calcula la distancia focal en milímetros de la lente con la que fue capturada la fotografía para ajustar la exposición de los sensores CMOS.",
-                    "Elimina las frecuencias de color intermedias para transformar la imagen en una representación vectorial formada por líneas rectas y curvas Bézier.",
-                    "Reduce la resolución volumétrica de la escena a una miniatura monocromática de ocho por ocho píxeles para agilizar el guardado en bases de datos."
+                    "La clasificación utiliza datos etiquetados; la regresión prescinde de etiquetas.",
+                    "La clasificación predice categorías discretas; la regresión predice valores continuos.",
+                    "La clasificación requiere redes profundas; la regresión solo funciona con reglas IF-THEN.",
+                    "La clasificación optimiza recompensas; la regresión minimiza el sobreajuste manual."
                 ],
-                correct: 0,
-                feedback: "La segmentación clasifica a nivel de cada píxel individual de la imagen. Es vital en cirugía asistida por computador, conducción autónoma para reconocer el asfalto exacto y mapeo satelital de cultivos agrícolas."
+                correct: 1,
+                feedback: "Ambas son supervisadas (usan etiquetas y = f(x)). La clasificación predice una etiqueta categórica discreta (ej. spam / no spam, tumor / sano), mientras que la regresión estima una variable numérica continua (ej. precio de una casa, caudal de un río)."
             },
             {
                 id: 46,
-                category: "ec",
-                categoryName: "Contexto Ecuador",
-                text: "En Ecuador, el uso de plataformas de entrevistas laborales automatizadas con IA (como Agatha / Siass AI) se ubica en la etapa de 'Expectativas Irreales' debido a que:",
+                category: "u2_ml_tipos",
+                categoryName: "U2: Disciplinas y Tipos de ML",
+                text: "¿Cuál de los siguientes problemas se modela típicamente mediante aprendizaje no supervisado?",
                 options: [
-                    "Se promocionaron prometiendo evaluaciones objetivas infalibles de tono y personalidad, pero generaron fricciones operativas y riesgo de sesgos.",
-                    "Las leyes laborales ecuatorianas promulgaron decretos que prohíben de forma absoluta la instalación de cámaras web en las áreas de talento humano.",
-                    "Los postulantes demostraron una tasa de rechazo nula al ser calificados de forma exclusiva por sintetizadores de voz sin moderadores corporativos.",
-                    "El sistema requería para su ejecución centros de procesamiento distribuido que solo operaban en redes satelitales militares inaccesibles en el país."
+                    "Predecir la temperatura exacta de mañana a partir de sensores climáticos.",
+                    "Segmentar a clientes bancarios en grupos afines sin categorías previas.",
+                    "Clasificar correos electrónicos en bandeja prioritaria o spam con datos históricos.",
+                    "Entrenar a un robot cuadrúpedo para caminar penalizando sus caídas al suelo."
                 ],
-                correct: 0,
-                feedback: "Caso real de RRHH en Ecuador: se comercializó prometiendo evaluar tono y gestos de forma 'imparcial' para descartar personal de forma autónoma. En la práctica, el rechazo de candidatos, el sesgo algorítmico y la falta de empatía obligaron a mantener el filtro humano."
+                correct: 1,
+                feedback: "El aprendizaje no supervisado opera con datos sin etiquetas previas (clustering, reducción de dimensionalidad). Descubrir agrupamientos intrínsecos de clientes basados en su comportamiento transaccional es la aplicación arquetípica (ej. K-means)."
             },
             {
                 id: 47,
-                category: "ec",
-                categoryName: "Contexto Ecuador",
-                text: "El proyecto de cámaras con reconocimiento facial y analítica delictiva del ECU-911 se cataloga dentro de la fase de 'Invierno' del ciclo debido a que:",
+                category: "u2_ml_tipos",
+                categoryName: "U2: Disciplinas y Tipos de ML",
+                text: "¿Cómo implementa Google Photos el aprendizaje semi-supervisado para indexar galerías familiares?",
                 options: [
-                    "Tras la expectativa mediática, enfrentó un estancamiento por altos costos de licencias, falsos positivos y falta de impacto comprobado en reducir el crimen.",
-                    "El sistema resolvió por completo todos los eventos delictivos de Quito y Guayaquil mediante patrullajes anticipados por drones autónomos con GPS.",
-                    "La tecnología fue transferida íntegramente a las operadoras de telefonía móvil comercial para optimizar la publicidad de servicios bancarios en vía pública.",
-                    "Las cámaras instaladas fueron diseñadas para operar únicamente en laboratorios universitarios controlados con iluminación de luz ultravioleta."
+                    "Exige que el usuario etiquete manualmente cada fotografía guardada en el dispositivo.",
+                    "Agrupa rostros automáticamente y propaga el nombre tras etiquetar una sola foto.",
+                    "Aplica penalizaciones numéricas cada vez que confunde a una persona con otra.",
+                    "Utiliza únicamente un sistema de reglas simbólicas basadas en fecha y hora."
                 ],
-                correct: 0,
-                feedback: "En videovigilancia pública ecuatoriana: el proyecto pasó del hype inicial al 'invierno' debido al alto costo de mantenimiento, abundancia de falsos positivos en multitudes y falta de evidencia estadística de disminución del delito, quedando relegado a uso pasivo."
+                correct: 1,
+                feedback: "Es el ejemplo paradigmático: una fase no supervisada agrupa millones de rostros similares por clusters de embeddings faciales; cuando el usuario etiqueta una sola foto con 'Mamá', el sistema supervisado propaga esa etiqueta a todo el grupo afín."
             },
             {
                 id: 48,
-                category: "ec",
-                categoryName: "Contexto Ecuador",
-                text: "El empleo de modelos predictivos de Machine Learning en el CENACE para proyectar caudales fluviales y demanda eléctrica se sitúa en 'Breakthrough' porque:",
+                category: "u2_ml_tipos",
+                categoryName: "U2: Disciplinas y Tipos de ML",
+                text: "En Visión por Computadora, ¿qué diferencia a la detección de objetos de la clasificación de imágenes?",
                 options: [
-                    "Demostró resultados técnicos medibles y consolidados que resolvieron el despacho manual y optimizaron el uso de agua en embalses críticos del país.",
-                    "Requirió la cancelación preventiva del suministro hidroeléctrico para evitar fluctuaciones térmicas en las subestaciones de transformación eléctrica.",
-                    "Fue clausurado tras comprobarse que las redes neuronales producían alucinaciones matemáticas que duplicaban el costo del kilovatio por hora.",
-                    "Se mantuvo en estricto secreto de laboratorio sin haber sido desplegado jamás en la operación real de la red de transmisión del sistema nacional."
+                    "La clasificación requiere cámaras térmicas; la detección opera en escala de grises.",
+                    "La clasificación asigna una etiqueta global; la detección localiza múltiples objetos con cajas.",
+                    "La clasificación separa píxeles individuales; la detección comprime el tamaño de la imagen.",
+                    "La clasificación genera descripciones poéticas; la detección optimiza la nitidez óptica."
                 ],
-                correct: 0,
-                feedback: "CENACE (Operador Eléctrico de Ecuador): los modelos de ML que correlacionan caudales de cuencas con la curva de demanda nacional entregaron resultados concretos y medibles, superando el cálculo manual de despacho y operando en producción continua."
+                correct: 1,
+                feedback: "La clasificación responde '¿qué hay en la imagen?' con una etiqueta global. La detección de objetos (como YOLO) responde '¿qué hay y dónde está?', prediciendo las coordenadas de cajas delimitadoras (bounding boxes) para múltiples instancias simultáneas."
             },
             {
                 id: 49,
-                category: "ec",
-                categoryName: "Contexto Ecuador",
-                text: "El desarrollo de redes convolucionales en universidades ecuatorianas para analizar bioacústica en Galápagos y la Amazonía se encuentra en 'Investigación Silenciosa' porque:",
+                category: "ecuador",
+                categoryName: "Contexto y Casos Ecuador",
+                text: "¿Por qué un modelo de visión entrenado en EE.UU. puede fallar al diagnosticar plagas de cacao en Ecuador?",
                 options: [
-                    "Logra avances científicos metodológicamente rigurosos en laboratorio para monitorear especies protegidas, pero opera sin cobertura de prensa masiva.",
-                    "Se comercializa agresivamente en ferias internacionales prometiendo erradicar la pérdida de hábitats naturales en menos de seis meses de despliegue.",
-                    "Ha sufrido un corte absoluto de electricidad que obligó a suspender de forma definitiva la captura de datos acústicos en las reservas biológicas.",
-                    "Fue sustituido de manera integral por sistemas expertos basados en reglas deducidas por guardaparques sin ningún procesamiento digital de audio."
+                    "Porque el hardware local no soporta bibliotecas desarrolladas en código C++.",
+                    "Por el desajuste entre la distribución de entrenamiento y el entorno real.",
+                    "Porque la normativa ambiental prohíbe el uso de redes neuronales en el agro.",
+                    "Porque los satélites geoestacionarios distorsionan la iluminación ecuatorial."
                 ],
-                correct: 0,
-                feedback: "La investigación bioacústica en fauna ecuatoriana cumple la fase de investigación silenciosa: científicos locales procesan miles de horas de audio para identificar especies amenazadas con rigor técnico, pero fuera del radar comercial o del hype mediático."
+                correct: 1,
+                feedback: "El problema central de la IA aplicada en Latinoamérica es el 'distributional shift': modelos preentrenados con flora o climas templados no generalizan ante suelos, variaciones lumínicas, patologías locales (ej. Monilia) ni densidades foliares de plantaciones ecuatorianas."
             },
             {
                 id: 50,
-                category: "ec",
-                categoryName: "Contexto Ecuador",
-                text: "¿Por qué la aplicación de modelos de visión preentrenados en el hemisferio norte suele fallar al detectar plagas (como monilia) en cultivos de cacao ecuatoriano?",
+                category: "ecuador",
+                categoryName: "Contexto y Casos Ecuador",
+                text: "En el contexto ecuatoriano, promocionar que un software con IA resolverá demandas y dictará sentencias sin supervisión se ubica en:",
                 options: [
-                    "Por el desajuste en la distribución de datos (distributional shift): los modelos fueron entrenados con condiciones de luz, suelo y patologías ajenas a la realidad local.",
-                    "Porque los sistemas operativos instalados en los dispositivos de los agricultores ecuatorianos no pueden decodificar matrices numéricas convolucionales.",
-                    "Porque los modelos extranjeros tienen un bloqueo de geolocalización que les impide procesar imágenes tomadas en la línea ecuatorial sobre el nivel del mar.",
-                    "Porque las plagas tropicales del cacao solo pueden ser representadas de forma válida utilizando gramáticas deductivas de la IA simbólica clásica."
+                    "Investigación silenciosa, porque los tribunales operan sin cobertura de la prensa.",
+                    "Expectativas irreales, al ignorar alucinaciones y la necesidad de supervisión legal.",
+                    "Breakthrough, debido a que el sistema procesal penal fue sustituido con éxito.",
+                    "Invierno tecnológico, al cancelarse definitivamente el código de procedimiento judicial."
                 ],
-                correct: 0,
-                feedback: "Desajuste de distribución (distributional shift): un modelo entrenado en Europa o EE.UU. aprende sobre sus condiciones locales. Al aplicarlo en plantaciones densas ecuatorianas, la variabilidad lumínica, patologías locales y humedad hacen que generalice mal sin datos de calibración local."
+                correct: 1,
+                feedback: "Prometer que un LLM emitirá resoluciones judiciales autónomas en Ecuador cae en la fase de 'Expectativas irreales': los modelos sufren alucinaciones, citan leyes inexistentes y el ordenamiento jurídico exige estricta responsabilidad humana y debido proceso."
             }
         ];
 
-        // ==========================================
-        // GESTIÓN DEL ESTADO Y LOCALSTORAGE
-        // ==========================================
-        const STORAGE_KEY_FLAGS = 'puce_ia_quiz_flagged_v1';
-        const STORAGE_KEY_ANSWERS = 'puce_ia_quiz_answers_v1';
+        // ESTADO DE LA APLICACIÓN
+        let currentQuestions = [...MASTER_QUESTIONS];
+        let currentIndex = 0;
+        let userAnswers = {}; // { qId: selectedOptionIndex }
+        let bookmarked = new Set();
+        let examFinished = false;
+        let immediateFeedback = true;
 
-        let currentQuestions = [...rawQuestions];
-        let flagged = new Set();
-        let userAnswers = {};
-        let currentFilter = 'all';
+        // ELEMENTOS DOM
+        const qBadge = document.getElementById('qBadge');
+        const qNumber = document.getElementById('qNumber');
+        const qText = document.getElementById('qText');
+        const optionsContainer = document.getElementById('optionsContainer');
+        const feedbackBox = document.getElementById('feedbackBox');
+        const feedbackTitle = document.getElementById('feedbackTitle');
+        const feedbackText = document.getElementById('feedbackText');
+        const feedbackIconContainer = document.getElementById('feedbackIconContainer');
+        const bookmarkBtn = document.getElementById('bookmarkBtn');
+        const bookmarkIcon = document.getElementById('bookmarkIcon');
+        const bookmarkText = document.getElementById('bookmarkText');
 
-        // Carga inicial desde LocalStorage
-        function initStorage() {
-            try {
-                const savedFlags = localStorage.getItem(STORAGE_KEY_FLAGS);
-                if (savedFlags) {
-                    const arr = JSON.parse(savedFlags);
-                    flagged = new Set(arr);
-                }
-                const savedAnswers = localStorage.getItem(STORAGE_KEY_ANSWERS);
-                if (savedAnswers) {
-                    userAnswers = JSON.parse(savedAnswers);
-                }
-            } catch (e) {
-                console.error("Error al leer de localStorage:", e);
-            }
-            updateStorageStatusText();
-        }
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        const clearChoiceBtn = document.getElementById('clearChoiceBtn');
+        const questionsGrid = document.getElementById('questionsGrid');
 
-        function saveFlagsToStorage() {
-            try {
-                localStorage.setItem(STORAGE_KEY_FLAGS, JSON.stringify(Array.from(flagged)));
-                updateStorageStatusText();
-            } catch (e) {
-                console.error("Error al guardar marcas en localStorage:", e);
-            }
-        }
+        const statCurrentQuestion = document.getElementById('statCurrentQuestion');
+        const statTotalQuestions = document.getElementById('statTotalQuestions');
+        const statCorrect = document.getElementById('statCorrect');
+        const statIncorrect = document.getElementById('statIncorrect');
+        const statBookmarked = document.getElementById('statBookmarked');
+        const answeredCount = document.getElementById('answeredCount');
 
-        function saveAnswersToStorage() {
-            try {
-                localStorage.setItem(STORAGE_KEY_ANSWERS, JSON.stringify(userAnswers));
-            } catch (e) {
-                console.error("Error al guardar respuestas en localStorage:", e);
-            }
-        }
+        const categoryFilter = document.getElementById('categoryFilter');
+        const immediateFeedbackToggle = document.getElementById('immediateFeedbackToggle');
+        const restartBtn = document.getElementById('restartBtn');
+        const shuffleAllBtn = document.getElementById('shuffleAllBtn');
+        const finishExamBtn = document.getElementById('finishExamBtn');
 
-        function updateStorageStatusText() {
-            const el = document.getElementById('storage-status');
-            if (flagged.size === 0) {
-                el.textContent = "Sin marcas almacenadas";
+        // Modales
+        const resultsModal = document.getElementById('resultsModal');
+        const closeResultsModalBtn = document.getElementById('closeResultsModalBtn');
+        const modalRestartAllBtn = document.getElementById('modalRestartAllBtn');
+        const reviewErrorsBtn = document.getElementById('reviewErrorsBtn');
+        const modalCorrectCount = document.getElementById('modalCorrectCount');
+        const modalIncorrectCount = document.getElementById('modalIncorrectCount');
+        const modalGrade10 = document.getElementById('modalGrade10');
+        const resultScoreBadge = document.getElementById('resultScoreBadge');
+        const categoryBreakdown = document.getElementById('categoryBreakdown');
+
+        const addModal = document.getElementById('addModal');
+        const openAddModalBtn = document.getElementById('openAddModalBtn');
+        const closeAddModalBtn = document.getElementById('closeAddModalBtn');
+        const cancelAddBtn = document.getElementById('cancelAddBtn');
+        const addQuestionForm = document.getElementById('addQuestionForm');
+
+        // Sonido
+        const soundToggleBtn = document.getElementById('soundToggleBtn');
+        const soundIconOn = document.getElementById('soundIconOn');
+        const soundIconOff = document.getElementById('soundIconOff');
+
+        soundToggleBtn.addEventListener('click', () => {
+            sound.enabled = !sound.enabled;
+            if (sound.enabled) {
+                soundIconOn.classList.remove('hidden');
+                soundIconOff.classList.add('hidden');
+                sound.playClick();
             } else {
-                el.textContent = `${flagged.size} pregunta(s) marcada(s) en disco local`;
+                soundIconOn.classList.add('hidden');
+                soundIconOff.classList.remove('hidden');
+            }
+        });
+
+        const STORAGE_KEY_ANS = 'ai_quiz_answers_v2';
+        const STORAGE_KEY_BM = 'ai_quiz_bookmarks_v2';
+
+        function saveState() {
+            try {
+                localStorage.setItem(STORAGE_KEY_ANS, JSON.stringify(userAnswers));
+                localStorage.setItem(STORAGE_KEY_BM, JSON.stringify(Array.from(bookmarked)));
+            } catch (e) {
+                console.error("Error saving state:", e);
             }
         }
 
-        function clearAllStoredFlags() {
-            if (flagged.size === 0) {
-                alert("No tienes preguntas marcadas en este momento.");
-                return;
-            }
-            if (confirm("¿Estás seguro de que deseas desmarcar todas las preguntas guardadas en tu navegador?")) {
-                flagged.clear();
-                saveFlagsToStorage();
-                updateDashboard();
-                renderQuiz();
-            }
-        }
-
-        // ==========================================
-        // OPERACIONES DEL SIMULADOR
-        // ==========================================
-        function toggleFlag(qId) {
-            if (flagged.has(qId)) {
-                flagged.delete(qId);
-            } else {
-                flagged.add(qId);
-            }
-            saveFlagsToStorage();
-            updateDashboard();
-            renderQuiz();
-        }
-
-        function handleSelectOption(qId, selectedIndex) {
-            if (userAnswers[qId] !== undefined) return; // ya respondida en este intento
-            userAnswers[qId] = selectedIndex;
-            saveAnswersToStorage();
-            updateDashboard();
-            renderQuiz();
-            checkAllAnswered();
-        }
-
-        function setFilter(filter) {
-            currentFilter = filter;
-            document.querySelectorAll('.filter-group .btn').forEach(b => b.classList.remove('active'));
-
-            // Asignar active
-            const btn = Array.from(document.querySelectorAll('.filter-group .btn')).find(b => {
-                if (filter === 'all' && b.textContent.includes('Todas')) return true;
-                if (filter === 'u1' && b.textContent.includes('Unidad 1')) return true;
-                if (filter === 'u2' && b.textContent.includes('Unidad 2')) return true;
-                if (filter === 'ec' && b.textContent.includes('Ecuador')) return true;
-                if (filter === 'flagged' && b.textContent.includes('Marcadas')) return true;
-                if (filter === 'errors' && b.textContent.includes('Errores')) return true;
-                return false;
-            });
-            if (btn) btn.classList.add('active');
-
-            renderQuiz();
-        }
-
-        function shuffleQuiz() {
-            // Barajar orden de preguntas
-            for (let i = currentQuestions.length - 1; i > 0; i--) {
-                const j = Math.floor(Math.random() * (i + 1));
-                [currentQuestions[i], currentQuestions[j]] = [currentQuestions[j], currentQuestions[i]];
-            }
-            // Barajar opciones de cada pregunta
-            currentQuestions.forEach(q => {
-                const correctOptionText = q.options[q.correct];
-                const indices = [0, 1, 2, 3];
-                for (let i = indices.length - 1; i > 0; i--) {
-                    const j = Math.floor(Math.random() * (i + 1));
-                    [indices[i], indices[j]] = [indices[j], indices[i]];
-                }
-                const newOptions = indices.map(idx => q.options[idx]);
-                q.options = newOptions;
-                q.correct = q.options.indexOf(correctOptionText);
-            });
-
-            userAnswers = {};
-            saveAnswersToStorage();
-            updateDashboard();
-            renderQuiz();
-        }
-
-        function resetAnswers() {
-            if (confirm("¿Deseas reiniciar tus respuestas de este intento? (Tus marcas guardadas se conservarán)")) {
-                userAnswers = {};
-                saveAnswersToStorage();
-                updateDashboard();
-                renderQuiz();
-            }
-        }
-
-        function updateDashboard() {
-            const answeredCount = Object.keys(userAnswers).length;
-            let correctCount = 0;
-            let errorCount = 0;
-
-            Object.entries(userAnswers).forEach(([qId, ans]) => {
-                const q = rawQuestions.find(item => item.id == qId);
-                if (q && q.correct === ans) {
-                    correctCount++;
-                } else {
-                    errorCount++;
-                }
-            });
-
-            document.getElementById('stat-answered').textContent = answeredCount;
-            document.getElementById('stat-correct').textContent = correctCount;
-            document.getElementById('stat-flagged').textContent = flagged.size;
-            document.getElementById('btn-filter-flagged').textContent = `Marcadas (${flagged.size})`;
-            document.getElementById('btn-filter-errors').textContent = `Errores (${errorCount})`;
-
-            if (answeredCount > 0) {
-                const score = ((correctCount / answeredCount) * 10).toFixed(1);
-                document.getElementById('stat-score').textContent = `${score} / 10`;
-            } else {
-                document.getElementById('stat-score').textContent = "- / 10";
-            }
-        }
-
-        function checkAllAnswered() {
-            const visibleQuestions = getVisibleQuestions();
-            if (visibleQuestions.length === 0) return;
-            const allDone = visibleQuestions.every(q => userAnswers[q.id] !== undefined);
-            if (allDone && visibleQuestions.length >= 5) {
-                showResultsModal(visibleQuestions);
-            }
-        }
-
-        function getVisibleQuestions() {
-            return currentQuestions.filter(q => {
-                if (currentFilter === 'all') return true;
-                if (currentFilter === 'u1') return q.category === 'u1';
-                if (currentFilter === 'u2') return q.category === 'u2';
-                if (currentFilter === 'ec') return q.category === 'ec';
-                if (currentFilter === 'flagged') return flagged.has(q.id);
-                if (currentFilter === 'errors') {
-                    const userAns = userAnswers[q.id];
-                    return userAns !== undefined && userAns !== q.correct;
-                }
-                return true;
-            });
-        }
-
-        function renderQuiz() {
-            const container = document.getElementById('quiz-container');
-            const questionsToShow = getVisibleQuestions();
-            document.getElementById('stat-total').textContent = questionsToShow.length;
-
-            if (questionsToShow.length === 0) {
-                container.innerHTML = `
-        <div class="empty-state">
-          <h3>No hay preguntas para mostrar en esta vista</h3>
-          <p style="margin-top:0.5rem;">Prueba seleccionando otro filtro o desmarcando preguntas.</p>
-        </div>
-      `;
-                return;
+        function initApp() {
+            // Cargar estado
+            try {
+                const savedAns = localStorage.getItem(STORAGE_KEY_ANS);
+                if (savedAns) userAnswers = JSON.parse(savedAns);
+                
+                const savedBm = localStorage.getItem(STORAGE_KEY_BM);
+                if (savedBm) bookmarked = new Set(JSON.parse(savedBm));
+            } catch(e) {
+                console.error("Error loading state:", e);
             }
 
-            container.innerHTML = questionsToShow.map((q, idx) => {
-                const isFlagged = flagged.has(q.id);
-                const userChoice = userAnswers[q.id];
-                const isAnswered = userChoice !== undefined;
-                const letters = ["A", "B", "C", "D"];
-
-                let optionsHtml = q.options.map((opt, optIdx) => {
-                    let optClass = "option-item";
-                    if (isAnswered) {
-                        optClass += " disabled";
-                        if (optIdx === q.correct) {
-                            optClass += " correct";
-                        } else if (optIdx === userChoice) {
-                            optClass += " incorrect";
-                        }
+            // Cargar preguntas guardadas en memoria local si existen
+            const customData = localStorage.getItem('ai_quiz_custom_q');
+            if (customData) {
+                try {
+                    const parsed = JSON.parse(customData);
+                    if (Array.isArray(parsed) && parsed.length > 0) {
+                        MASTER_QUESTIONS.push(...parsed);
                     }
+                } catch (e) {
+                    console.error("Error al cargar preguntas personalizadas:", e);
+                }
+            }
+            applyFilter();
+        }
 
-                    return `
-          <div class="${optClass}" onclick="handleSelectOption(${q.id}, ${optIdx})">
-            <span class="opt-letter">${letters[optIdx]}</span>
-            <span>${opt}</span>
-          </div>
-        `;
-                }).join('');
+        function applyFilter() {
+            const cat = categoryFilter.value;
+            if (cat === 'all') {
+                currentQuestions = [...MASTER_QUESTIONS];
+            } else if (cat === 'bookmarked') {
+                currentQuestions = MASTER_QUESTIONS.filter(q => bookmarked.has(q.id));
+                if (currentQuestions.length === 0) {
+                    currentQuestions = [...MASTER_QUESTIONS];
+                    showToast("No tienes preguntas marcadas con duda. Mostrando todas.");
+                    categoryFilter.value = 'all';
+                }
+            } else {
+                currentQuestions = MASTER_QUESTIONS.filter(q => q.category === cat);
+            }
+            currentIndex = 0;
+            updateHeaderStats();
+            renderGrid();
+            renderCurrentQuestion();
+        }
 
-                let feedbackHtml = '';
-                if (isAnswered) {
-                    const isCorrect = userChoice === q.correct;
-                    feedbackHtml = `
-          <div class="feedback-box show ${isCorrect ? 'correct' : 'incorrect'}">
-            <div class="feedback-title">${isCorrect ? '✓ Respuesta Correcta' : '✗ Respuesta Incorrecta'}</div>
-            <p>${q.feedback}</p>
-          </div>
-        `;
+        function renderGrid() {
+            questionsGrid.innerHTML = '';
+            currentQuestions.forEach((q, idx) => {
+                const btn = document.createElement('button');
+                btn.textContent = idx + 1;
+                btn.className = `h-8 rounded-lg text-xs font-mono font-semibold transition flex items-center justify-center border `;
+
+                const isCurrent = idx === currentIndex;
+                const ans = userAnswers[q.id];
+                const isAnswered = ans !== undefined;
+                const isMarked = bookmarked.has(q.id);
+
+                if (isCurrent) {
+                    btn.className += 'bg-indigo-600 text-white border-indigo-400 shadow-lg shadow-indigo-600/40 ring-2 ring-indigo-400 ';
+                } else if (isAnswered) {
+                    if (examFinished || immediateFeedback) {
+                        if (ans === q.correct) {
+                            btn.className += 'bg-emerald-900/60 text-emerald-300 border-emerald-700/80 hover:bg-emerald-800/80 ';
+                        } else {
+                            btn.className += 'bg-rose-900/60 text-rose-300 border-rose-700/80 hover:bg-rose-800/80 ';
+                        }
+                    } else {
+                        btn.className += 'bg-slate-700 text-slate-200 border-slate-600 ';
+                    }
+                } else if (isMarked) {
+                    btn.className += 'bg-amber-950/60 text-amber-300 border-amber-700/80 hover:bg-amber-900/80 ';
+                } else {
+                    btn.className += 'bg-slate-800/80 text-slate-400 border-slate-700/60 hover:bg-slate-800 hover:text-slate-200 ';
                 }
 
-                return `
-        <div class="question-card ${isFlagged ? 'flagged' : ''}" id="card-${q.id}">
-          <div class="q-header">
-            <span class="q-badge">${q.categoryName} · #${idx + 1}</span>
-            <button class="flag-btn ${isFlagged ? 'active' : ''}" onclick="toggleFlag(${q.id})">
-              ${isFlagged ? '★ Guardada para repasar' : '☆ Marcar para repasar'}
-            </button>
-          </div>
-          <div class="q-text">${q.text}</div>
-          <div class="options-grid">${optionsHtml}</div>
-          ${feedbackHtml}
-        </div>
-      `;
-            }).join('');
-        }
+                btn.onclick = () => {
+                    sound.playClick();
+                    currentIndex = idx;
+                    renderGrid();
+                    renderCurrentQuestion();
+                };
 
-        function showResultsModal(subset) {
-            let correct = 0;
-            subset.forEach(q => {
-                if (userAnswers[q.id] === q.correct) correct++;
+                questionsGrid.appendChild(btn);
             });
-            const finalScore = ((correct / subset.length) * 10).toFixed(1);
-            document.getElementById('final-score').textContent = `${finalScore} / 10`;
-            document.getElementById('final-details').textContent = `Correctas: ${correct} de ${subset.length} evaluadas (${subset.length - correct} errores)`;
-            document.getElementById('results-modal').style.display = 'flex';
+
+            // Contador respondidas
+            const count = currentQuestions.filter(q => userAnswers[q.id] !== undefined).length;
+            answeredCount.textContent = `${count}/${currentQuestions.length} Resp.`;
         }
 
-        function closeModal() {
-            document.getElementById('results-modal').style.display = 'none';
+        function renderCurrentQuestion() {
+            if (currentQuestions.length === 0) return;
+            const q = currentQuestions[currentIndex];
+
+            // Badges y datos
+            qBadge.textContent = q.categoryName;
+            qNumber.textContent = `PREGUNTA ${(currentIndex + 1).toString().padStart(2, '0')} DE ${currentQuestions.length.toString().padStart(2, '0')}`;
+            qText.textContent = q.text;
+
+            // Estado del botón Duda
+            const isMarked = bookmarked.has(q.id);
+            if (isMarked) {
+                bookmarkIcon.classList.add('text-amber-400', 'fill-amber-400');
+                bookmarkText.textContent = "Duda marcada";
+                bookmarkText.className = "text-amber-400";
+            } else {
+                bookmarkIcon.classList.remove('text-amber-400', 'fill-amber-400');
+                bookmarkText.textContent = "Marcar duda";
+                bookmarkText.className = "text-slate-400";
+            }
+
+            // Renderizar Opciones
+            optionsContainer.innerHTML = '';
+            const letters = ['A', 'B', 'C', 'D'];
+            const currentAnswer = userAnswers[q.id];
+            const hasAnswered = currentAnswer !== undefined;
+            const showCorrection = hasAnswered && (immediateFeedback || examFinished);
+
+            q.options.forEach((optText, optIdx) => {
+                const optBtn = document.createElement('button');
+                optBtn.className = `w-full text-left p-4 rounded-xl border transition-all duration-200 flex items-start gap-3 text-xs sm:text-sm `;
+
+                let isThisSelected = currentAnswer === optIdx;
+                let isThisCorrect = optIdx === q.correct;
+
+                if (showCorrection) {
+                    if (isThisCorrect) {
+                        optBtn.className += 'bg-emerald-950/50 border-emerald-500/80 text-emerald-100 shadow-md shadow-emerald-950/40 ';
+                    } else if (isThisSelected) {
+                        optBtn.className += 'bg-rose-950/50 border-rose-500/80 text-rose-100 shadow-md shadow-rose-950/40 ';
+                    } else {
+                        optBtn.className += 'bg-slate-900/50 border-slate-800 text-slate-500 opacity-60 ';
+                    }
+                } else if (isThisSelected) {
+                    optBtn.className += 'bg-indigo-950/60 border-indigo-500 text-white shadow-lg shadow-indigo-950/50 ring-1 ring-indigo-500 ';
+                } else {
+                    optBtn.className += 'bg-slate-800/60 border-slate-700/80 text-slate-200 hover:bg-slate-800 hover:border-slate-600 ';
+                }
+
+                // Letra identificadora
+                const badge = document.createElement('span');
+                badge.className = `flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs font-mono border `;
+
+                if (showCorrection) {
+                    if (isThisCorrect) {
+                        badge.className += 'bg-emerald-600 text-white border-emerald-400';
+                        badge.innerHTML = '✓';
+                    } else if (isThisSelected) {
+                        badge.className += 'bg-rose-600 text-white border-rose-400';
+                        badge.innerHTML = '✗';
+                    } else {
+                        badge.className += 'bg-slate-800 text-slate-500 border-slate-700';
+                        badge.textContent = letters[optIdx];
+                    }
+                } else if (isThisSelected) {
+                    badge.className += 'bg-indigo-600 text-white border-indigo-400';
+                    badge.textContent = letters[optIdx];
+                } else {
+                    badge.className += 'bg-slate-700/60 text-slate-400 border-slate-600';
+                    badge.textContent = letters[optIdx];
+                }
+
+                const textSpan = document.createElement('span');
+                textSpan.className = 'flex-1 leading-relaxed';
+                textSpan.textContent = optText;
+
+                optBtn.appendChild(badge);
+                optBtn.appendChild(textSpan);
+
+                optBtn.onclick = () => {
+                    if (examFinished) return;
+                    selectOption(q.id, optIdx);
+                };
+
+                optionsContainer.appendChild(optBtn);
+            });
+
+            // Caja de retroalimentación
+            if (showCorrection) {
+                feedbackBox.classList.remove('hidden');
+                const isUserCorrect = currentAnswer === q.correct;
+                if (isUserCorrect) {
+                    feedbackBox.className = "mt-6 p-4 rounded-xl border bg-emerald-950/40 border-emerald-800/80 text-emerald-200";
+                    feedbackIconContainer.className = "w-6 h-6 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold";
+                    feedbackIconContainer.innerHTML = "✓";
+                    feedbackTitle.textContent = "¡Correcto! Razonamiento Válido";
+                    feedbackTitle.className = "font-bold text-emerald-300 mb-1 text-sm";
+                } else {
+                    feedbackBox.className = "mt-6 p-4 rounded-xl border bg-rose-950/40 border-rose-800/80 text-rose-200";
+                    feedbackIconContainer.className = "w-6 h-6 rounded-full bg-rose-700 text-white flex items-center justify-center font-bold";
+                    feedbackIconContainer.innerHTML = "✗";
+                    feedbackTitle.textContent = "Respuesta Incorrecta — Análisis de Error";
+                    feedbackTitle.className = "font-bold text-rose-300 mb-1 text-sm";
+                }
+                feedbackText.textContent = q.feedback;
+            } else {
+                feedbackBox.classList.add('hidden');
+            }
+
+            // Estados de botones anterior y siguiente
+            prevBtn.disabled = currentIndex === 0;
+            nextBtn.textContent = currentIndex === currentQuestions.length - 1 ? "Revisar / Calificar" : "Siguiente";
+
+            updateHeaderStats();
         }
 
-        function reviewErrors() {
-            closeModal();
-            setFilter('errors');
+        function selectOption(qId, optIdx) {
+            const q = currentQuestions.find(item => item.id === qId);
+            const isAlreadyChosen = userAnswers[qId] === optIdx;
+
+            userAnswers[qId] = optIdx;
+            saveState();
+
+            if (immediateFeedback) {
+                if (optIdx === q.correct) {
+                    sound.playCorrect();
+                } else {
+                    sound.playWrong();
+                }
+            } else {
+                sound.playClick();
+            }
+
+            renderGrid();
+            renderCurrentQuestion();
         }
 
-        // Inicialización al cargar la ventana
+        function updateHeaderStats() {
+            statCurrentQuestion.textContent = currentIndex + 1;
+            statTotalQuestions.textContent = currentQuestions.length;
+
+            let correct = 0;
+            let incorrect = 0;
+            currentQuestions.forEach(q => {
+                const a = userAnswers[q.id];
+                if (a !== undefined) {
+                    if (a === q.correct) correct++;
+                    else incorrect++;
+                }
+            });
+
+            statCorrect.textContent = correct;
+            statIncorrect.textContent = incorrect;
+            statBookmarked.textContent = bookmarked.size;
+        }
+
+        prevBtn.addEventListener('click', () => {
+            sound.playClick();
+            if (currentIndex > 0) {
+                currentIndex--;
+                renderGrid();
+                renderCurrentQuestion();
+            }
+        });
+
+        nextBtn.addEventListener('click', () => {
+            sound.playClick();
+            if (currentIndex < currentQuestions.length - 1) {
+                currentIndex++;
+                renderGrid();
+                renderCurrentQuestion();
+            } else {
+                // Fin de la lista
+                showResults();
+            }
+        });
+
+        clearChoiceBtn.addEventListener('click', () => {
+            sound.playClick();
+            const q = currentQuestions[currentIndex];
+            delete userAnswers[q.id];
+            saveState();
+            renderGrid();
+            renderCurrentQuestion();
+        });
+
+        bookmarkBtn.addEventListener('click', () => {
+            sound.playClick();
+            const q = currentQuestions[currentIndex];
+            if (bookmarked.has(q.id)) {
+                bookmarked.delete(q.id);
+            } else {
+                bookmarked.add(q.id);
+            }
+            saveState();
+            renderGrid();
+            renderCurrentQuestion();
+        });
+
+        categoryFilter.addEventListener('change', () => {
+            applyFilter();
+        });
+
+        immediateFeedbackToggle.addEventListener('change', (e) => {
+            immediateFeedback = e.target.checked;
+            renderGrid();
+            renderCurrentQuestion();
+        });
+
+        function shuffleArray(array) {
+            for (let i = array.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [array[i], array[j]] = [array[j], array[i]];
+            }
+            return array;
+        }
+
+        function shuffleQuestionsAndOptions() {
+            // Barajar preguntas
+            currentQuestions = shuffleArray([...currentQuestions]);
+            // Barajar opciones de cada pregunta ajustando índice correcto
+            currentQuestions.forEach(q => {
+                const optionsWithIndices = q.options.map((opt, idx) => ({
+                    text: opt,
+                    isCorrect: idx === q.correct
+                }));
+                shuffleArray(optionsWithIndices);
+                q.options = optionsWithIndices.map(o => o.text);
+                q.correct = optionsWithIndices.findIndex(o => o.isCorrect);
+            });
+            // Reiniciar respuestas
+            userAnswers = {};
+            saveState();
+            currentIndex = 0;
+            examFinished = false;
+            renderGrid();
+            renderCurrentQuestion();
+            showToast("¡Preguntas y opciones barajadas aleatoriamente!");
+        }
+
+        shuffleAllBtn.addEventListener('click', () => {
+            sound.playClick();
+            shuffleQuestionsAndOptions();
+        });
+
+        restartBtn.addEventListener('click', () => {
+            sound.playClick();
+            userAnswers = {};
+            saveState();
+            examFinished = false;
+            currentIndex = 0;
+            renderGrid();
+            renderCurrentQuestion();
+            showToast("Cuestionario reiniciado. ¡Buena suerte!");
+        });
+
+        finishExamBtn.addEventListener('click', () => {
+            showResults();
+        });
+
+        function showResults() {
+            examFinished = true;
+            let total = currentQuestions.length;
+            let correct = 0;
+            let answered = 0;
+
+            const catStats = {};
+
+            currentQuestions.forEach(q => {
+                if (!catStats[q.categoryName]) {
+                    catStats[q.categoryName] = { correct: 0, total: 0 };
+                }
+                catStats[q.categoryName].total++;
+
+                const userChoice = userAnswers[q.id];
+                if (userChoice !== undefined) {
+                    answered++;
+                    if (userChoice === q.correct) {
+                        correct++;
+                        catStats[q.categoryName].correct++;
+                    }
+                }
+            });
+
+            const incorrect = answered - correct;
+            const grade10 = ((correct / total) * 10).toFixed(1);
+
+            modalCorrectCount.textContent = correct;
+            modalIncorrectCount.textContent = incorrect + (total - answered);
+            modalGrade10.textContent = grade10;
+            resultScoreBadge.textContent = `${correct}/${total}`;
+
+            if (grade10 >= 8.5) {
+                resultScoreBadge.className = "inline-flex items-center justify-center w-20 h-20 rounded-full bg-emerald-950/80 border-2 border-emerald-500 text-3xl font-extrabold text-emerald-300 font-mono mb-3";
+            } else if (grade10 >= 6.0) {
+                resultScoreBadge.className = "inline-flex items-center justify-center w-20 h-20 rounded-full bg-amber-950/80 border-2 border-amber-500 text-3xl font-extrabold text-amber-300 font-mono mb-3";
+            } else {
+                resultScoreBadge.className = "inline-flex items-center justify-center w-20 h-20 rounded-full bg-rose-950/80 border-2 border-rose-500 text-3xl font-extrabold text-rose-300 font-mono mb-3";
+            }
+
+            // Render desglose por unidad
+            categoryBreakdown.innerHTML = '';
+            for (const [catName, stats] of Object.entries(catStats)) {
+                const pct = Math.round((stats.correct / stats.total) * 100) || 0;
+                const div = document.createElement('div');
+                div.className = "p-2.5 rounded-lg bg-slate-800 border border-slate-700";
+                div.innerHTML = `
+          <div class="flex justify-between items-center mb-1">
+            <span class="font-medium text-slate-200">${catName}</span>
+            <span class="font-mono ${pct >= 70 ? 'text-emerald-400' : 'text-amber-400'}">${stats.correct}/${stats.total} (${pct}%)</span>
+          </div>
+          <div class="w-full h-1.5 bg-slate-700 rounded-full overflow-hidden">
+            <div class="h-full ${pct >= 70 ? 'bg-emerald-500' : pct >= 40 ? 'bg-amber-500' : 'bg-rose-500'} rounded-full transition-all duration-500" style="width: ${pct}%"></div>
+          </div>
+        `;
+                categoryBreakdown.appendChild(div);
+            }
+
+            resultsModal.classList.remove('hidden');
+            renderGrid();
+            renderCurrentQuestion();
+        }
+
+        closeResultsModalBtn.addEventListener('click', () => {
+            resultsModal.classList.add('hidden');
+        });
+
+        modalRestartAllBtn.addEventListener('click', () => {
+            resultsModal.classList.add('hidden');
+            shuffleQuestionsAndOptions();
+        });
+
+        reviewErrorsBtn.addEventListener('click', () => {
+            const errorQuestions = currentQuestions.filter(q => {
+                const a = userAnswers[q.id];
+                return a === undefined || a !== q.correct;
+            });
+
+            if (errorQuestions.length === 0) {
+                showToast("¡Felicitaciones! No tienes errores que repasar.");
+                return;
+            }
+
+            currentQuestions = errorQuestions;
+            userAnswers = {};
+            saveState();
+            examFinished = false;
+            currentIndex = 0;
+            resultsModal.classList.add('hidden');
+            renderGrid();
+            renderCurrentQuestion();
+            showToast(`Modo repaso activado: ${errorQuestions.length} preguntas por consolidar.`);
+        });
+
+        openAddModalBtn.addEventListener('click', () => {
+            addModal.classList.remove('hidden');
+        });
+
+        closeAddModalBtn.addEventListener('click', () => {
+            addModal.classList.add('hidden');
+        });
+
+        cancelAddBtn.addEventListener('click', () => {
+            addModal.classList.add('hidden');
+        });
+
+        addQuestionForm.addEventListener('submit', (e) => {
+            e.preventDefault();
+            const cat = document.getElementById('newCat').value;
+            const text = document.getElementById('newText').value.trim();
+            const opt0 = document.getElementById('newOpt0').value.trim();
+            const opt1 = document.getElementById('newOpt1').value.trim();
+            const opt2 = document.getElementById('newOpt2').value.trim();
+            const opt3 = document.getElementById('newOpt3').value.trim();
+            const correctIdx = parseInt(document.querySelector('input[name="newCorrectIdx"]:checked').value, 10);
+            const feedback = document.getElementById('newFeedback').value.trim();
+
+            const catNames = {
+                'u1_historia': 'U1: Orígenes e IA Simbólica',
+                'u1_inviernos': 'U1: Inviernos y ML',
+                'u1_deep_llm': 'U1: Deep Learning & LLMs',
+                'u2_definiciones': 'U2: Definiciones y Agentes',
+                'u2_clasificacion': 'U2: Clasificación de la IA',
+                'u2_ml_tipos': 'U2: Disciplinas y Tipos de ML',
+                'ecuador': 'Contexto y Casos Ecuador'
+            };
+
+            const newQ = {
+                id: Date.now(),
+                category: cat,
+                categoryName: catNames[cat] || 'General',
+                text: text,
+                options: [opt0, opt1, opt2, opt3],
+                correct: correctIdx,
+                feedback: feedback
+            };
+
+            MASTER_QUESTIONS.push(newQ);
+
+            // Guardar en localStorage
+            try {
+                const stored = JSON.parse(localStorage.getItem('ai_quiz_custom_q') || '[]');
+                stored.push(newQ);
+                localStorage.setItem('ai_quiz_custom_q', JSON.stringify(stored));
+            } catch (err) {
+                console.error(err);
+            }
+
+            addModal.classList.add('hidden');
+            addQuestionForm.reset();
+            applyFilter();
+            showToast("¡Nueva pregunta añadida al banco!");
+        });
+
+        // Notificación flotante (toast)
+        function showToast(msg) {
+            const toast = document.createElement('div');
+            toast.className = "fixed bottom-6 right-6 z-50 bg-indigo-600 text-white px-4 py-2.5 rounded-xl shadow-2xl text-xs sm:text-sm font-medium transition-all duration-300 transform translate-y-2 opacity-0";
+            toast.textContent = msg;
+            document.body.appendChild(toast);
+            setTimeout(() => {
+                toast.classList.remove('translate-y-2', 'opacity-0');
+            }, 10);
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3000);
+        }
+
+        // Inicializar al cargar
         window.addEventListener('DOMContentLoaded', () => {
-            initStorage();
-            updateDashboard();
-            renderQuiz();
+            initApp();
         });
     </script>
-
 </body>
 
 </html>
