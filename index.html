@@ -1419,9 +1419,8 @@
                 btn.classList.toggle('active-bank', btn.dataset.bank === bankName);
             });
             examFinished = false;
-            currentIndex = 0;
             populateCategoryDropdown();
-            applyFilter();
+            restoreBankState();
             var label = bankName === 'original' ? 'Original (50)' : bankName === 'nuevo' ? 'Nuevo (75)' : 'Completo (125)';
             showToast('Banco "' + label + '" cargado.');
         }
@@ -1505,8 +1504,50 @@
             try {
                 localStorage.setItem(getBankStorageKey('ans'), JSON.stringify(userAnswers));
                 localStorage.setItem(getBankStorageKey('bm'), JSON.stringify(Array.from(bookmarked)));
+                localStorage.setItem(getBankStorageKey('cat'), categoryFilter.value);
+                localStorage.setItem(getBankStorageKey('idx'), currentIndex.toString());
+                localStorage.setItem(getBankStorageKey('order'), JSON.stringify(currentQuestions.map(q => q.id)));
             } catch (e) {
                 console.error("Error saving state:", e);
+            }
+        }
+
+        function restoreBankState() {
+            try {
+                var savedCat = localStorage.getItem(getBankStorageKey('cat'));
+                if (savedCat) categoryFilter.value = savedCat;
+                else categoryFilter.value = 'all';
+
+                var savedOrder = localStorage.getItem(getBankStorageKey('order'));
+                var savedIdx = localStorage.getItem(getBankStorageKey('idx'));
+
+                if (savedOrder) {
+                    var orderIds = JSON.parse(savedOrder);
+                    var bank = getBankQuestions();
+                    currentQuestions = [];
+                    var bankMap = {};
+                    bank.forEach(function(q) { bankMap[q.id] = q; });
+                    orderIds.forEach(function(id) {
+                        if (bankMap[id]) currentQuestions.push(bankMap[id]);
+                    });
+                    
+                    if (currentQuestions.length === 0) {
+                        applyFilter();
+                        return;
+                    }
+
+                    currentIndex = savedIdx ? (parseInt(savedIdx, 10) || 0) : 0;
+                    if (currentIndex >= currentQuestions.length) currentIndex = 0;
+
+                    updateHeaderStats();
+                    renderGrid();
+                    renderCurrentQuestion();
+                } else {
+                    applyFilter();
+                }
+            } catch(e) {
+                console.error("Error restoring state:", e);
+                applyFilter();
             }
         }
 
@@ -1540,7 +1581,7 @@
             });
 
             populateCategoryDropdown();
-            applyFilter();
+            restoreBankState();
         }
 
         function applyFilter() {
@@ -1562,6 +1603,7 @@
             updateHeaderStats();
             renderGrid();
             renderCurrentQuestion();
+            saveState();
         }
 
         function renderGrid() {
@@ -1771,6 +1813,7 @@
                 currentIndex--;
                 renderGrid();
                 renderCurrentQuestion();
+                saveState();
             }
         });
 
@@ -1780,6 +1823,7 @@
                 currentIndex++;
                 renderGrid();
                 renderCurrentQuestion();
+                saveState();
             } else {
                 // Fin de la lista
                 showResults();
@@ -1841,9 +1885,9 @@
             });
             // Reiniciar respuestas
             userAnswers = {};
-            saveState();
             currentIndex = 0;
             examFinished = false;
+            saveState();
             renderGrid();
             renderCurrentQuestion();
             showToast("¡Preguntas y opciones barajadas aleatoriamente!");
@@ -1954,9 +1998,9 @@
 
             currentQuestions = errorQuestions;
             userAnswers = {};
-            saveState();
             examFinished = false;
             currentIndex = 0;
+            saveState();
             resultsModal.classList.add('hidden');
             renderGrid();
             renderCurrentQuestion();
