@@ -148,7 +148,8 @@
             <button id="bankBtn_original" class="bank-btn active-bank px-3 py-1 rounded-lg text-xs font-semibold border transition" data-bank="original" onclick="selectBank('original')">Banco Original (50)</button>
             <button id="bankBtn_nuevo"    class="bank-btn px-3 py-1 rounded-lg text-xs font-semibold border transition" data-bank="nuevo"    onclick="selectBank('nuevo')">Banco Nuevo (77)</button>
             <button id="bankBtn_extra"    class="bank-btn px-3 py-1 rounded-lg text-xs font-semibold border transition" data-bank="extra"    onclick="selectBank('extra')">Banco Extra (60)</button>
-            <button id="bankBtn_todos"    class="bank-btn px-3 py-1 rounded-lg text-xs font-semibold border transition" data-bank="todos"    onclick="selectBank('todos')">Todo (187)</button>
+            <button id="bankBtn_paul"     class="bank-btn px-3 py-1 rounded-lg text-xs font-semibold border transition" data-bank="paul"     onclick="selectBank('paul')">Banco Paúl (4)</button>
+            <button id="bankBtn_todos"    class="bank-btn px-3 py-1 rounded-lg text-xs font-semibold border transition" data-bank="todos"    onclick="selectBank('todos')">Todo (191)</button>
         </div>
     </div>
     <div class="bg-slate-900 border-b border-slate-800 py-2.5 px-4 sm:px-6">
@@ -1405,7 +1406,19 @@
             {value:'extra',      label:'Preguntas Extras'},
             {value:'bookmarked', label:'Marcadas para Duda'},
         ];
-        const BANK_ALL_COMBINED = [...MASTER_QUESTIONS, ...BANK_NUEVO, ...BANK_EXTRA];
+                const BANK_PAUL = [
+            {id:801,category:"definiciones",categoryName:"Definiciones de IA",text:"¿Cuál es la definición fundacional de Inteligencia Artificial propuesta por McCarthy (1956)?",options:["“Estudio de agentes que perciben y actúan racionalmente.”", "Sistema que infiere de datos cómo generar predicciones o decisiones.", "Aprende patrones de datos para decidir o generar contenido.", "“Ciencia e ingeniería de crear máquinas inteligentes.”"],correct:3,feedback:"McCarthy acuñó el término en 1956 con una visión fundacional centrada en la ciencia e ingeniería de crear máquinas inteligentes."},
+            {id:802,category:"definiciones",categoryName:"Definiciones de IA",text:"Según Russell & Norvig (2020), ¿cuál es la definición moderna de Inteligencia Artificial?",options:["Sistema que infiere de datos cómo generar predicciones o decisiones.", "Aprende patrones de datos para decidir o generar contenido.", "“Estudio de agentes que perciben y actúan racionalmente.”", "“Ciencia e ingeniería de crear máquinas inteligentes.”"],correct:2,feedback:"Russell & Norvig (2020) definen la IA moderna enfocándose en agentes racionales (que perciben y actúan para lograr objetivos)."},
+            {id:803,category:"definiciones",categoryName:"Definiciones de IA",text:"¿Cómo define la Inteligencia Artificial el Reglamento UE 2024/1689 desde una perspectiva regulatoria?",options:["Sistema que infiere de datos cómo generar predicciones o decisiones.", "Aprende patrones de datos para decidir o generar contenido.", "“Estudio de agentes que perciben y actúan racionalmente.”", "“Ciencia e ingeniería de crear máquinas inteligentes.”"],correct:0,feedback:"El Reglamento UE 2024/1689 da una definición regulatoria enfocada en sistemas que infieren a partir de datos para predecir o decidir."},
+            {id:804,category:"definiciones",categoryName:"Definiciones de IA",text:"¿Cuál es la definición técnica de Inteligencia Artificial adoptada en este curso?",options:["Sistema que infiere de datos cómo generar predicciones o decisiones.", "“Estudio de agentes que perciben y actúan racionalmente.”", "Aprende patrones de datos para decidir o generar contenido.", "“Ciencia e ingeniería de crear máquinas inteligentes.”"],correct:2,feedback:"La definición técnica del curso se centra en sistemas de ML/DL que aprenden patrones de los datos para tomar decisiones (clasificación/regresión) o generar contenido (IA Generativa)."}
+        ];
+
+        const CATEGORIES_PAUL = [
+            {value:'all',          label:'Todas (Banco Paúl – 4)'},
+            {value:'definiciones', label:'Definiciones de IA'},
+            {value:'bookmarked',   label:'Marcadas para Duda'},
+        ];
+        const BANK_ALL_COMBINED = [...MASTER_QUESTIONS, ...BANK_NUEVO, ...BANK_EXTRA, ...BANK_PAUL];
 
         // ── Categorias por banco ─────────────────────────────────────────────
         const CATEGORIES_ORIGINAL = [
@@ -1430,7 +1443,7 @@
             {value:'bookmarked',       label:'Marcadas para Duda'},
         ];
         const CATEGORIES_TODOS = [
-            {value:'all',              label:'Todas (187 preguntas)'},
+            {value:'all',              label:'Todas (191 preguntas)'},
             {value:'u1_historia',      label:'U1: Historia y Origenes'},
             {value:'u1_inviernos',     label:'U1: Inviernos y ML'},
             {value:'u1_deep_llm',      label:'U1: Deep Learning y LLMs'},
@@ -1453,12 +1466,14 @@
         function getBankQuestions() {
             if (activeBank === 'nuevo') return BANK_NUEVO;
             if (activeBank === 'extra') return BANK_EXTRA;
+            if (activeBank === 'paul')  return BANK_PAUL;
             if (activeBank === 'todos') return BANK_ALL_COMBINED;
             return MASTER_QUESTIONS;
         }
         function getBankCategories() {
             if (activeBank === 'nuevo') return CATEGORIES_NUEVO;
             if (activeBank === 'extra') return CATEGORIES_EXTRA;
+            if (activeBank === 'paul')  return CATEGORIES_PAUL;
             if (activeBank === 'todos') return CATEGORIES_TODOS;
             return CATEGORIES_ORIGINAL;
         }
@@ -1492,7 +1507,7 @@
             examFinished = false;
             populateCategoryDropdown();
             restoreBankState();
-            var label = bankName === 'original' ? 'Original (50)' : bankName === 'nuevo' ? 'Nuevo (77)' : bankName === 'extra' ? 'Extra (60)' : 'Completo (187)';
+            var label = bankName === 'original' ? 'Original (50)' : bankName === 'nuevo' ? 'Nuevo (77)' : bankName === 'extra' ? 'Extra (60)' : bankName === 'paul' ? 'Paúl (4)' : 'Completo (191)';
             showToast('Banco "' + label + '" cargado.');
         }
 
