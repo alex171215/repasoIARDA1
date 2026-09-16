@@ -1255,6 +1255,192 @@ window.QUIZ_DATA = {
           "id": 1085
         }
       ]
+    },
+    {
+      "id": "semana_3",
+      "titulo": "Semana 3 - Regresión Múltiple, Polinomios y Dummies",
+      "categorias": [
+        {
+          "value": "all",
+          "label": "Todas (Semana 3)"
+        },
+        {
+          "value": "multiple",
+          "label": "Regresión Múltiple y R² Ajustado"
+        },
+        {
+          "value": "dummies",
+          "label": "Variables Categóricas y Dummies"
+        },
+        {
+          "value": "polinomial",
+          "label": "Regresión Polinomial y Overfitting"
+        },
+        {
+          "value": "comandos",
+          "label": "Implementación en Scikit-Learn"
+        },
+        {
+          "value": "bookmarked",
+          "label": "Marcadas para Duda"
+        }
+      ],
+      "preguntas": [
+        {
+          "category": "multiple",
+          "categoryName": "Regresión Múltiple y R² Ajustado",
+          "text": "En una regresión múltiple, ¿cómo se interpreta estrictamente el coeficiente β₁ asociado al kilometraje del auto?",
+          "options": [
+            "Indica la correlación directa entre el kilometraje y el precio, sin tomar en cuenta las otras variables.",
+            "Indica el cambio promedio en el precio por cada kilómetro adicional, asumiendo que el año, el motor y las demás variables se mantienen constantes (ceteris paribus).",
+            "Indica el porcentaje de varianza en el precio que es explicado exclusivamente por el kilometraje.",
+            "Indica el precio base del auto cuando el kilometraje es exactamente igual a cero."
+          ],
+          "correct": 1,
+          "feedback": "El poder de la regresión múltiple es el análisis 'ceteris paribus' (todo lo demás constante). Permite aislar el efecto puro de una sola variable.",
+          "id": 1086
+        },
+        {
+          "category": "multiple",
+          "categoryName": "Regresión Múltiple y R² Ajustado",
+          "text": "Tienes un modelo con 5 variables. Eliminas 2 de ellas y notas que el R² ordinario baja ligeramente, pero el R² Ajustado sube. ¿Qué conclusión técnica extraes de esto?",
+          "options": [
+            "Significa que el modelo pasó de estar bajoajustado (underfitting) a estar sobreajustado (overfitting).",
+            "Las 2 variables eliminadas eran 'ruido' o redundantes. El R² Ajustado subió porque premia a los modelos más simples que no incluyen variables inútiles.",
+            "El modelo empeoró; el R² ordinario es la única métrica válida, y cualquier caída significa que el modelo perdió capacidad predictiva.",
+            "Ocurrió un error matemático, ya que es estadísticamente imposible que el R² ordinario baje mientras el R² Ajustado sube."
+          ],
+          "correct": 1,
+          "feedback": "El R² ordinario NUNCA baja al añadir variables, aunque sean basura. El R² Ajustado resuelve esto penalizando la adición de variables que no aportan valor predictivo real.",
+          "id": 1087
+        },
+        {
+          "category": "multiple",
+          "categoryName": "Regresión Múltiple y R² Ajustado",
+          "text": "Al calcular el VIF (Factor de Inflación de la Varianza) para tus variables predictoras, notas que 'cilindrada_cc' tiene un VIF de 12. ¿Qué problema estadístico advierte este valor y cómo deberías actuar?",
+          "options": [
+            "Advierte Multicolinealidad severa (VIF > 10). La variable está altamente correlacionada con otra, lo que vuelve inestables a los coeficientes. Se debe considerar eliminarla.",
+            "Advierte Overfitting severo. El modelo ha memorizado los datos de la cilindrada. Se debe cambiar a un modelo no lineal.",
+            "Advierte Homocedasticidad. Significa que la varianza del error no es constante a lo largo de la cilindrada.",
+            "Advierte un excelente poder predictivo. Un VIF alto significa que la variable es la que más explica el precio. Se debe mantener obligatoriamente."
+          ],
+          "correct": 0,
+          "feedback": "La multicolinealidad ocurre cuando dos variables X miden prácticamente lo mismo (ej. cc del motor y caballos de fuerza). El VIF > 10 exige revisar y posiblemente eliminar la variable redundante.",
+          "id": 1088
+        },
+        {
+          "category": "dummies",
+          "categoryName": "Variables Categóricas y Dummies",
+          "text": "¿Cuál es la justificación matemática fundamental para convertir una variable categórica nominal (ej. 'combustible: diésel, gasolina, híbrido') en variables 'dummy' en lugar de codificarlas numéricamente como 0, 1 y 2?",
+          "options": [
+            "Las variables 'dummy' reducen el espacio de memoria requerido en disco, acelerando drásticamente el tiempo de entrenamiento del modelo.",
+            "Codificarlas como 0, 1 y 2 impondría un orden jerárquico y distancias numéricas que no existen en la realidad (ej. inferiría que híbrido vale el doble que gasolina).",
+            "Scikit-Learn es incapaz de procesar números enteros en sus modelos de regresión; solo acepta formatos binarios (0 y 1).",
+            "Evita el riesgo de extrapolación, ya que el modelo nunca podrá predecir un combustible de categoría 3."
+          ],
+          "correct": 1,
+          "feedback": "En variables nominales (sin orden jerárquico), codificarlas con enteros engaña al modelo matemático, haciéndole creer que hay una progresión lineal entre categorías.",
+          "id": 1089
+        },
+        {
+          "category": "dummies",
+          "categoryName": "Variables Categóricas y Dummies",
+          "text": "Conocemos el fenómeno de la 'Trampa de la Colinealidad Perfecta' (Dummy Trap). Si la variable 'provincia' tiene 6 categorías, ¿por qué los comandos como `drop_first=True` obligan a crear solo 5 columnas dummy?",
+          "options": [
+            "Porque si incluyes las 6, la suma de esas columnas para cualquier fila siempre será exactamente 1. Esto genera colinealidad perfecta (redundancia total) y la ecuación matemática no se puede resolver.",
+            "Para forzar al modelo a aplicar regularización (Ridge/Lasso) automáticamente sobre la categoría que fue descartada.",
+            "Para ahorrar memoria computacional, ya que en datasets masivos, agregar 1 columna extra por variable categórica consumiría toda la RAM disponible.",
+            "Porque siempre habrá al menos una provincia en la base de datos que no tenga ninguna venta, por lo que su columna estaría llena de ceros."
+          ],
+          "correct": 0,
+          "feedback": "La regla matemática es crear 'k - 1' dummies. La categoría descartada no se pierde, se convierte en la línea base (baseline) contra la cual se comparan las demás.",
+          "id": 1090
+        },
+        {
+          "category": "dummies",
+          "categoryName": "Variables Categóricas y Dummies",
+          "text": "Al evaluar tu regresión, ves que la categoría base omitida para transmisión es 'Manual'. El coeficiente de la variable dummy 'tipo_cambio_automatico' resultó en +2,500. ¿Qué significa esto?",
+          "options": [
+            "Significa que un auto automático recorre 2,500 kilómetros más que un auto manual antes de dañarse.",
+            "Significa que el precio inicial de cualquier auto automático es estrictamente de 2,500 USD.",
+            "Significa que, manteniendo todo lo demás constante, los autos automáticos cuestan en promedio 2,500 USD más que los autos manuales.",
+            "Significa que cambiar la transmisión de un auto de manual a automático costará exactamente 2,500 USD en el taller."
+          ],
+          "correct": 2,
+          "feedback": "Los coeficientes dummy siempre se leen como la 'diferencia' en el precio (Ŷ) respecto a la categoría de referencia (baseline), ceteris paribus.",
+          "id": 1091
+        },
+        {
+          "category": "dummies",
+          "categoryName": "Variables Categóricas y Dummies",
+          "text": "Tienes la variable categórica 'nivel educativo' con los valores: básica, secundaria, superior. ¿Deberías usar obligatoriamente One-Hot Encoding (dummies) para esta variable?",
+          "options": [
+            "Sí, porque One-Hot Encoding es el único método capaz de descubrir el orden oculto entre las categorías sin intervención humana.",
+            "No necesariamente. Al ser una variable 'ordinal' (tiene un orden lógico claro), puede codificarse con enteros (ej. 1, 2, 3) si asumimos que la distancia entre niveles es similar.",
+            "Sí, es absolutamente obligatorio. Si no se usa One-Hot Encoding, el modelo de regresión lineal mostrará un error de compilación.",
+            "No, las variables categóricas relacionadas con educación deben eliminarse siempre, ya que causan multicolinealidad con el salario."
+          ],
+          "correct": 1,
+          "feedback": "A diferencia de las variables nominales (ej. colores o marcas), las variables ordinales sí tienen jerarquía. Codificarlas como 1, 2, 3 mediante `OrdinalEncoder` es una práctica válida e interpretable.",
+          "id": 1092
+        },
+        {
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial y Overfitting",
+          "text": "Si los datos del mundo real muestran que el consumo de energía de un edificio aumenta drásticamente tanto con el frío extremo (calefacción) como con el calor extremo (aire acondicionado), formando una curva en U. ¿Qué ajuste necesita el modelo predictivo?",
+          "options": [
+            "Requiere una regresión múltiple estándar, agregando más variables lineales como la humedad o el viento, lo que automáticamente curvará la línea.",
+            "Requiere eliminar los datos de frío extremo, ya que matemáticamente son considerados valores atípicos (outliers) que dañan el R².",
+            "Requiere transformar la variable objetivo (Y) utilizando una escala logarítmica para aplanar la U en una línea recta perfecta.",
+            "Requiere una regresión polinomial (ej. agregar la variable temperatura al cuadrado, X²) para que la línea matemática pueda curvarse y capturar la relación en forma de U."
+          ],
+          "correct": 3,
+          "feedback": "La regresión lineal simple asume una línea recta interminable. Los fenómenos en 'U' o 'campana' requieren grados polinomiales (cuadrático o cúbico) para otorgarle flexibilidad a la curva.",
+          "id": 1093
+        },
+        {
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial y Overfitting",
+          "text": "Ajustas un polinomio de grado 2 y obtienes un RMSE de prueba de 1,500 USD. Luego subes la complejidad a un polinomio de grado 5; el RMSE de entrenamiento baja casi a cero, pero el RMSE de prueba se dispara a 8,000 USD. ¿A qué se debe esto?",
+          "options": [
+            "Underfitting (subajuste): El polinomio de grado 5 es demasiado simple para capturar la verdadera complejidad del mercado automotriz.",
+            "Data Leakage (fuga de datos): Al usar grado 5, el modelo accidentalmente accedió a los datos del conjunto de prueba durante el entrenamiento.",
+            "Overfitting (sobreajuste): El polinomio de grado 5 es tan complejo que memorizó perfectamente el ruido y fluctuaciones de los datos de entrenamiento, perdiendo la capacidad de generalizar a datos nuevos.",
+            "Multicolinealidad: Los grados polinomiales superiores siempre causan que la variable objetivo (Y) se correlacione perfectamente consigo misma."
+          ],
+          "correct": 2,
+          "feedback": "Aumentar el grado del polinomio indiscriminadamente hace que la curva comience a 'zigzaguear' locamente para tocar todos los puntos de entrenamiento, destruyendo su utilidad en la vida real.",
+          "id": 1094
+        },
+        {
+          "category": "comandos",
+          "categoryName": "Implementación en Scikit-Learn",
+          "text": "Regla crítica para evitar 'Data Leakage': al usar herramientas como `OneHotEncoder` o `PolynomialFeatures`, ¿por qué DEBEMOS ajustarlas (usar el comando `.fit_transform()`) ÚNICAMENTE sobre el conjunto de entrenamiento (X_train)?",
+          "options": [
+            "Porque el conjunto de prueba (X_test) se corrompería irreversiblemente y perderíamos los datos originales para futuras consultas.",
+            "Porque Scikit-Learn tiene un límite de memoria; aplicar `.fit_transform()` al dataset completo siempre provocará un desbordamiento de RAM.",
+            "Porque si ajustamos el transformador usando todo el dataset (incluyendo X_test), el modelo 'aprenderá' información de los datos de prueba antes de tiempo, volviendo la evaluación final completamente engañosa y optimista.",
+            "Porque los datos del conjunto de prueba (X_test) no contienen la variable objetivo (y), por lo que el transformador fallará al buscarla."
+          ],
+          "correct": 2,
+          "feedback": "El conjunto de prueba (Test set) debe ser un examen sorpresa total. Si el transformador 've' las categorías o los rangos del test set durante el procesamiento previo, estás haciendo trampa (Data Leakage).",
+          "id": 1095
+        },
+        {
+          "category": "comandos",
+          "categoryName": "Implementación en Scikit-Learn",
+          "text": "Tanto `pd.get_dummies()` de Pandas como `OneHotEncoder` de Scikit-Learn sirven para crear columnas dummy. En un entorno de producción (software en la vida real), ¿por qué se prefiere usar fuertemente `OneHotEncoder` integrado en un `ColumnTransformer`?",
+          "options": [
+            "Porque memoriza estrictamente las categorías vistas en el entrenamiento. Si en producción llega un dato con una categoría desconocida, el parámetro `handle_unknown='ignore'` evita que el sistema colapse.",
+            "Porque `OneHotEncoder` puede predecir automáticamente el precio (Y) sin necesidad de instanciar el modelo `LinearRegression`.",
+            "Porque Pandas es incapaz de aplicar `drop_first=True` para evitar la trampa dummy, obligando al usuario a borrar columnas manualmente.",
+            "Porque `OneHotEncoder` se ejecuta en la GPU (Tarjeta Gráfica) usando redes neuronales, lo que es mil veces más rápido que Pandas."
+          ],
+          "correct": 0,
+          "feedback": "`pd.get_dummies()` es genial para explorar datos rápido, pero peligroso en producción: si el test set no tiene una categoría rara que sí estaba en train, las matrices no cuadrarán y el código fallará.",
+          "id": 1096
+        }
+      ]
     }
   ]
 };
