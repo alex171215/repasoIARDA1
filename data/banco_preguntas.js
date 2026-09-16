@@ -1055,6 +1055,206 @@ window.QUIZ_DATA = {
           "feedback": "`axvline` (Axis Vertical Line) traza una línea perpendicular al eje X, muy útil para mostrar visualmente dónde se ubica la media respecto a la distribución."
         }
       ]
+    },
+    {
+      "id": "semana_2",
+      "titulo": "Semana 2 - Regresión Lineal Simple y Métricas",
+      "categorias": [
+        {
+          "value": "all",
+          "label": "Todas (Semana 2)"
+        },
+        {
+          "value": "metricas",
+          "label": "Métricas de Evaluación (MAE, RMSE, R²)"
+        },
+        {
+          "value": "visual",
+          "label": "Análisis Visual y Residuos"
+        },
+        {
+          "value": "teoria_ml",
+          "label": "Conceptos Teóricos y Extrapolación"
+        },
+        {
+          "value": "comandos",
+          "label": "Pipeline de Scikit-Learn"
+        },
+        {
+          "value": "bookmarked",
+          "label": "Marcadas para Duda"
+        }
+      ],
+      "preguntas": [
+        {
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación",
+          "text": "En el contexto de evaluar un modelo predictivo, ¿qué representa matemáticamente la métrica R² (Coeficiente de Determinación)?",
+          "options": [
+            "El peso que se le asigna a los errores más grandes para penalizar modelos inestables.",
+            "La distancia promedio absoluta entre cada predicción y su valor real correspondiente en el dataset de prueba.",
+            "La probabilidad porcentual de que la predicción del modelo sea exactamente igual a la realidad en nuevos datos.",
+            "La proporción de la varianza en la variable a predecir que el modelo logra explicar frente a simplemente adivinar usando el promedio."
+          ],
+          "correct": 3,
+          "feedback": "R² es una métrica relativa (sin unidades). R²=0.92 significa que el modelo explica el 92% de la varianza. El resto es ruido o requiere más variables.",
+          "id": 1074
+        },
+        {
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación",
+          "text": "Al evaluar un modelo de regresión, observas que el RMSE es significativamente mayor que el MAE. ¿Qué te indica estadísticamente esta diferencia?",
+          "options": [
+            "El modelo es perfecto; un RMSE mayor que el MAE es la prueba definitiva de que la varianza es constante.",
+            "La relación entre las variables de entrada y salida no es lineal, por lo que MCO no logró ajustar una recta adecuada.",
+            "El modelo está cometiendo errores inusualmente grandes (outliers) en ciertas predicciones, ya que el RMSE amplifica los errores al elevarlos al cuadrado.",
+            "El modelo sufre de un overfitting severo, memorizando el conjunto de entrenamiento en lugar de aprender el patrón general."
+          ],
+          "correct": 2,
+          "feedback": "El MAE trata todos los errores por igual. El RMSE eleva el error al cuadrado antes de promediar, por lo que unos pocos errores enormes disparan el valor del RMSE por encima del MAE.",
+          "id": 1075
+        },
+        {
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación",
+          "text": "El algoritmo de Mínimos Cuadrados Ordinarios (MCO) ajusta la recta de regresión minimizando la suma de los errores. ¿Por qué eleva los errores al cuadrado en lugar de solo usar el valor absoluto?",
+          "options": [
+            "Para transformar automáticamente distribuciones sesgadas en distribuciones normales y cumplir los supuestos.",
+            "Porque el valor absoluto consume demasiada memoria computacional en datasets de millones de filas.",
+            "Para asegurar que la métrica de error siempre devuelva valores en el rango estadístico entre 0 y 1.",
+            "Para evitar que subestimaciones y sobreestimaciones se cancelen entre sí, y porque la función cuadrática es diferenciable (ideal para cálculo matemático)."
+          ],
+          "correct": 3,
+          "feedback": "Elevar al cuadrado resuelve el problema de signos (cancelación) y crea una curva convexa suave (parábola) que matemáticamente permite encontrar el mínimo exacto con derivadas.",
+          "id": 1076
+        },
+        {
+          "category": "visual",
+          "categoryName": "Análisis Visual y Residuos",
+          "text": "Antes de entrenar un modelo de regresión lineal, la regla de oro es realizar una exploración visual con un diagrama de dispersión (scatter plot). ¿Cuál es el objetivo principal de este paso?",
+          "options": [
+            "Calcular directamente la ecuación de la recta (pendiente e intercepto) sin usar código de Scikit-Learn.",
+            "Dividir visualmente los datos en un conjunto de entrenamiento (80%) y un conjunto de prueba (20%).",
+            "Detectar si realmente existe una tendencia lineal clara entre las variables y visualizar si existen valores atípicos extremos (outliers).",
+            "Convertir las variables categóricas de texto a números para que el modelo pueda procesarlas."
+          ],
+          "correct": 2,
+          "feedback": "El scatter plot te dice a simple vista si intentar aplicar regresión lineal tiene sentido. Si los puntos forman una curva de U, una recta será inútil.",
+          "id": 1077
+        },
+        {
+          "category": "visual",
+          "categoryName": "Análisis Visual y Residuos",
+          "text": "En un gráfico de residuos (errores vs valores predichos), observas que los puntos forman un claro patrón de 'embudo' o 'cono' que se abre hacia la derecha. ¿Qué supuesto matemático está violando el modelo?",
+          "options": [
+            "Normalidad: los residuos no siguen la forma simétrica de una campana de Gauss.",
+            "Linealidad: la verdadera relación en el mundo real es una curva polinómica y no una línea recta.",
+            "Independencia: una observación está directamente influenciada por la observación anterior.",
+            "Homocedasticidad: la varianza del error no es constante, sino que crece a medida que los valores de X aumentan."
+          ],
+          "correct": 3,
+          "feedback": "El patrón de embudo (heterocedasticidad) es común: predecir el precio de casas pequeñas tiene poco margen de error, pero el precio de mansiones gigantes varía brutalmente.",
+          "id": 1078
+        },
+        {
+          "category": "visual",
+          "categoryName": "Análisis Visual y Residuos",
+          "text": "En la evaluación de tu modelo, construyes un gráfico con los Valores Predichos (eje X) frente a los Valores Reales (eje Y). ¿Qué patrón visual indicaría un modelo de regresión absolutamente perfecto?",
+          "options": [
+            "Los puntos se agrupan en un círculo denso en el centro exacto del gráfico.",
+            "Los puntos forman una línea totalmente horizontal cruzando el promedio de la variable Y.",
+            "Los puntos forman una nube completamente aleatoria (sin patrón) alrededor de la línea de cero.",
+            "Todos los puntos caen alineados exactamente sobre una recta diagonal perfecta de 45 grados."
+          ],
+          "correct": 3,
+          "feedback": "Si Predicho = Real, entonces X=Y. La gráfica de X=Y es una línea recta diagonal de 45 grados.",
+          "id": 1079
+        },
+        {
+          "category": "teoria_ml",
+          "categoryName": "Conceptos Teóricos y Extrapolación",
+          "text": "Al graficar el histograma del precio de departamentos, notas que la gran mayoría de propiedades son baratas o de precio medio, pero hay un pequeño grupo de mansiones de lujo que extienden el gráfico como una larga 'cola' hacia la derecha. ¿Cómo se clasifica esta distribución?",
+          "options": [
+            "Distribución Uniforme (Uniform distribution), ya que hay precios a lo largo de todo el espectro.",
+            "Distribución Normal (Campana de Gauss), ya que es el comportamiento esperado en la economía humana.",
+            "Distribución Sesgada (Skewed distribution), lo que indica asimetría extrema provocada por outliers.",
+            "Distribución Bimodal, porque claramente existen dos mercados diferentes (barato y caro) compitiendo."
+          ],
+          "correct": 2,
+          "feedback": "El sesgo hacia la derecha (right skew) es típico en salarios o precios: un límite inferior estricto (0 dólares) pero sin límite superior (multimillonarios).",
+          "id": 1080
+        },
+        {
+          "category": "teoria_ml",
+          "categoryName": "Conceptos Teóricos y Extrapolación",
+          "text": "¿Cuál es el riesgo fundamental de medir la calidad de tu modelo evaluando su MAE y RMSE sobre los MISMOS datos que usaste para entrenarlo (el Train Set)?",
+          "options": [
+            "El modelo arrojará un error de sintaxis en Scikit-Learn porque no está permitido predecir sobre datos de entrenamiento.",
+            "El modelo subestimará su propio desempeño, haciéndote creer que es mucho peor de lo que en realidad es.",
+            "No podrás saber si el modelo aprendió a generalizar el patrón real, o si simplemente memorizó las respuestas específicas, lo cual ocultaría un posible 'overfitting'.",
+            "Los valores de MAE y RMSE se volverán negativos, lo cual arruina la interpretación estadística."
+          ],
+          "correct": 2,
+          "feedback": "Evaluar un modelo sobre sus datos de entrenamiento es como darle a un alumno las respuestas exactas antes del examen. Siempre sacarás un 10 falso. Por eso siempre hay que ocultar el 20% (Test Set).",
+          "id": 1081
+        },
+        {
+          "category": "teoria_ml",
+          "categoryName": "Conceptos Teóricos y Extrapolación",
+          "text": "Tu modelo de regresión predice rendimiento agrícola. Fue entrenado con dosis de fertilizante entre 50 y 200 kg/ha. Si usas el modelo para predecir el rendimiento usando 800 kg/ha, ¿qué falacia matemática y de negocio estás cometiendo?",
+          "options": [
+            "Estás extrapolando; assumes que la línea recta seguirá subiendo hasta el infinito, ignorando la realidad (ej. exceso de químico quema la planta).",
+            "Estás induciendo overfitting; el modelo intentará memorizar la predicción de 800 kg/ha y dañará sus pesos internos.",
+            "Estás interpolando; es seguro porque el modelo ya aprendió la pendiente matemática exacta de la naturaleza.",
+            "Estás rompiendo el supuesto de independencia, ya que la predicción de 800 depende de las predicciones menores."
+          ],
+          "correct": 0,
+          "feedback": "Extrapolar con un modelo lineal es sumamente peligroso. Las líneas rectas no tienen tope matemático, pero el mundo físico sí lo tiene.",
+          "id": 1082
+        },
+        {
+          "category": "comandos",
+          "categoryName": "Pipeline de Scikit-Learn",
+          "text": "En el flujo clásico de Machine Learning, usamos el comando `train_test_split(X, y, test_size=0.2)`. ¿Cuál es el propósito exacto de esta instrucción?",
+          "options": [
+            "Recortar el 20% de los valores atípicos (outliers) extremos para limpiar la base de datos antes de entrenar.",
+            "Comprobar si el modelo es al menos un 20% mejor que predecir utilizando simplemente el promedio.",
+            "Extraer aleatoriamente el 20% del dataset original para ocultarlo durante el entrenamiento, garantizando una evaluación honesta sobre datos nunca vistos.",
+            "Dividir cada columna en 20 pedazos independientes para que el modelo entrene más rápido en paralelo."
+          ],
+          "correct": 2,
+          "feedback": "Garantiza la regla de oro del ML: nunca debes evaluar el modelo usando datos que usó para entrenar.",
+          "id": 1083
+        },
+        {
+          "category": "comandos",
+          "categoryName": "Pipeline de Scikit-Learn",
+          "text": "Una vez inicializado tu modelo (`modelo = LinearRegression()`), ¿qué comando en Scikit-Learn desencadena el algoritmo matemático que procesa los datos y calcula la pendiente y el intercepto óptimos?",
+          "options": [
+            "`modelo.train(X, y)`",
+            "`modelo.predict(X_test)`",
+            "`modelo.optimize_weights()`",
+            "`modelo.fit(X_train, y_train)`"
+          ],
+          "correct": 3,
+          "feedback": "El método `.fit()` ('ajustar') es el estándar absoluto en scikit-learn para entrenar cualquier algoritmo, desde Regresión hasta Random Forests.",
+          "id": 1084
+        },
+        {
+          "category": "comandos",
+          "categoryName": "Pipeline de Scikit-Learn",
+          "text": "En la fórmula clásica de la regresión lineal simple: ŷ = β₀ + β₁x, ¿a qué componente matemático hace referencia exactamente el término β₁ (beta sub uno)?",
+          "options": [
+            "El coeficiente de determinación (R²); evalúa qué tan confiable es la predicción.",
+            "El error residual; cuantifica la distancia entre el punto real y la línea de predicción.",
+            "El intercepto (intercept); indica el valor inicial de ŷ asumiendo que x fuera exactamente cero.",
+            "La pendiente (slope); indica cuánto sube o baja el valor estimado de ŷ por cada unidad extra de la variable x."
+          ],
+          "correct": 3,
+          "feedback": "β₀ es el intercepto (el punto de partida) y β₁ es la pendiente (el motor de cambio). Juntos forman los 'parámetros' que el modelo aprende de los datos.",
+          "id": 1085
+        }
+      ]
     }
   ]
 };
