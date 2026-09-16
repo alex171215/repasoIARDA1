@@ -482,6 +482,7 @@
         </div>
     </div>
 
+    <script src="data/banco_preguntas.js"></script>
     <script>
         // Sistema de Audio Sintetizado Web Audio API (Sin dependencias externas)
         class SoundFX {
@@ -548,6 +549,42 @@
         }
 
         const sound = new SoundFX();
+
+        function loadData() {
+            if (window.QUIZ_DATA && window.QUIZ_DATA.semanas) {
+                dataBancos = window.QUIZ_DATA.semanas;
+                
+                // Si el activeBank en localStorage ya no existe en el JSON, fallback al primero
+                if (!dataBancos.find(b => b.id === activeBank)) {
+                    activeBank = dataBancos[0].id;
+                }
+                
+                buildBankButtons();
+                initApp();
+            } else {
+                console.error("Error loading JS data");
+                const qTextEl = document.getElementById('qText');
+                if (qTextEl) {
+                    qTextEl.innerHTML = `<span class="text-red-500">Error al cargar datos. Verifica el archivo banco_preguntas.js.</span>`;
+                }
+            }
+        }
+
+        function buildBankButtons() {
+            var container = document.getElementById('bankSelectorContainer');
+            if (!container) return;
+            container.innerHTML = '';
+            dataBancos.forEach(function(b) {
+                var btn = document.createElement('button');
+                btn.className = 'bank-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition';
+                btn.dataset.bank = b.id;
+                btn.textContent = b.title;
+                btn.addEventListener('click', function() {
+                    selectBank(b.id);
+                });
+                container.appendChild(btn);
+            });
+        }
 
         // BANCO COMPLETO DE 50 PREGUNTAS RIGUROSAMENTE EQUILIBRADAS
         // ── Estado del banco activo ──────────────────────────────────────────

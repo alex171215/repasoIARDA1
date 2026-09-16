@@ -1,4 +1,4 @@
-{
+window.QUIZ_DATA = {
   "semanas": [
     {
       "id": "semana_1",
@@ -1057,4 +1057,4 @@
       ]
     }
   ]
-}
+};
