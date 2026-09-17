@@ -1441,6 +1441,54 @@ window.QUIZ_DATA = {
           "id": 1096
         }
       ]
+    },
+    {
+      "id": "paul",
+      "titulo": "Preguntas Paúl",
+      "categorias": [
+        {
+          "value": "all",
+          "label": "Todas (Paúl)"
+        },
+        {
+          "value": "teoria",
+          "label": "Teoría Básica"
+        },
+        {
+          "value": "bookmarked",
+          "label": "Marcadas para Duda"
+        }
+      ],
+      "preguntas": [
+        {
+          "category": "teoria",
+          "categoryName": "Teoría Básica",
+          "text": "¿Qué es un scatter plot (diagrama de dispersión) y para qué sirve principalmente en Machine Learning?",
+          "options": [
+            "Es un gráfico circular que muestra la proporción porcentual que representa cada categoría respecto al total de datos recolectados.",
+            "Es un gráfico que dibuja puntos en un plano usando valores de dos variables. Sirve para detectar visualmente si existe una relación (tendencia) entre ambas antes de modelar, y para identificar valores atípicos (outliers).",
+            "Es un gráfico de barras múltiples que sirve para comparar el promedio matemático de diferentes categorías dentro de un dataset.",
+            "Es un gráfico de líneas continuas que se utiliza exclusivamente para analizar el comportamiento de una sola variable a lo largo del tiempo."
+          ],
+          "correct": 1,
+          "feedback": "El scatter plot es el paso 'Cero' antes de aplicar regresión lineal. Si los puntos forman una nube redonda sin forma, o una curva pronunciada, sabrás que la regresión lineal simple fallará.",
+          "id": 1097
+        },
+        {
+          "category": "teoria",
+          "categoryName": "Teoría Básica",
+          "text": "En la fórmula estadística del R² Ajustado, ¿qué significan exactamente las variables 'n' y 'p'?",
+          "options": [
+            "n = número máximo de iteraciones permitidas para el algoritmo; p = probabilidad de cometer un error en la predicción.",
+            "n = número de grados de libertad del modelo; p = porcentaje total de varianza que el modelo logró explicar.",
+            "n = número de observaciones (filas) en el test set; p = número de variables predictoras (columnas) del modelo.",
+            "n = número de variables predictoras del modelo; p = número de observaciones en el test set."
+          ],
+          "correct": 2,
+          "feedback": "El R² Ajustado usa 'p' (cantidad de variables) para castigar al modelo si le metes demasiadas columnas inútiles, restándole puntos por complejidad innecesaria.",
+          "id": 1098
+        }
+      ]
     }
   ]
 };
