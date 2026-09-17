@@ -144,12 +144,7 @@
 
     <div id="bankSelectorBar" class="bg-slate-950 border-b border-slate-800/60 py-2 px-4 sm:px-6">
         <div class="max-w-7xl mx-auto flex flex-wrap items-center gap-2">
-            <span class="text-slate-400 text-xs font-medium mr-1">Banco de preguntas:</span>
-            <button id="bankBtn_original" class="bank-btn active-bank px-3 py-1 rounded-lg text-xs font-semibold border transition" data-bank="original" onclick="selectBank('original')">Banco Original (50)</button>
-            <button id="bankBtn_nuevo"    class="bank-btn px-3 py-1 rounded-lg text-xs font-semibold border transition" data-bank="nuevo"    onclick="selectBank('nuevo')">Banco Nuevo (77)</button>
-            <button id="bankBtn_extra"    class="bank-btn px-3 py-1 rounded-lg text-xs font-semibold border transition" data-bank="extra"    onclick="selectBank('extra')">Banco Extra (60)</button>
-            <button id="bankBtn_paul"     class="bank-btn px-3 py-1 rounded-lg text-xs font-semibold border transition" data-bank="paul"     onclick="selectBank('paul')">Banco Paúl (4)</button>
-            <button id="bankBtn_todos"    class="bank-btn px-3 py-1 rounded-lg text-xs font-semibold border transition" data-bank="todos"    onclick="selectBank('todos')">Todo (191)</button>
+            <div id="bankSelectorContainer" class="flex flex-wrap items-center gap-2"></div>
         </div>
     </div>
     <div class="bg-slate-900 border-b border-slate-800 py-2.5 px-4 sm:px-6">
@@ -578,10 +573,13 @@
                 var btn = document.createElement('button');
                 btn.className = 'bank-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition';
                 btn.dataset.bank = b.id;
-                btn.textContent = b.title;
+                btn.textContent = b.titulo;
                 btn.addEventListener('click', function() {
                     selectBank(b.id);
                 });
+                if (b.id === activeBank) {
+                    btn.classList.add('active-bank');
+                }
                 container.appendChild(btn);
             });
         }
