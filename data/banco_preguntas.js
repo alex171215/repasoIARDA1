@@ -1759,6 +1759,18 @@ window.QUIZ_DATA = {
         {
           "value": "bookmarked",
           "label": "Marcadas para Duda"
+        },
+        {
+          "value": "eda_correlacion",
+          "label": "EDA y Correlación"
+        },
+        {
+          "value": "modelos_regresion",
+          "label": "Modelos de Regresión"
+        },
+        {
+          "value": "metricas_comparacion",
+          "label": "Métricas y Comparación de Modelos"
         }
       ],
       "preguntas": [
@@ -2113,298 +2125,298 @@ window.QUIZ_DATA = {
           "feedback": "Un dataset sintético es artificial: los valores fueron generados por código o inventados por el docente para que sean pedagógicamente claros. En el mercado real, los salarios tienen mucho más ruido, sesgos y variables ocultas. Un modelo entrenado en datos sintéticos puede ser incapaz de generalizar al mundo real."
         },
         {
-          "id": 1151,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 1: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "eda_correlacion",
+          "categoryName": "EDA y Correlación",
+          "text": "En el taller de autos usados, la correlación de Pearson entre 'kilometraje_km' y 'precio_usd' es +0.68. ¿Cómo interpretas este valor?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "Existe una relación lineal positiva moderada-fuerte: los autos con más kilómetros tienden a costar más, aunque no perfectamente.",
+            "Existe una relación lineal negativa fuerte: los autos más viejos con muchos kilómetros valen significativamente menos.",
+            "No existe ninguna relación entre kilometraje y precio; el 0.68 es un valor de p-value que indica significancia estadística.",
+            "El 68% de los autos en el dataset tienen un precio superior al promedio en función de su kilometraje acumulado."
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "La correlación de Pearson va de -1 a +1. Un valor de +0.68 indica relación positiva moderada-fuerte: a mayor kilometraje, mayor precio. Nota: en el contexto de autos usados esto podría parecer ilógico; la correlación captura tendencia lineal pero no causalidad.",
+          "id": 1151
         },
         {
-          "id": 1152,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 2: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "eda_correlacion",
+          "categoryName": "EDA y Correlación",
+          "text": "Al construir el heatmap de correlaciones con `df[cols_num].corr()`, notas que 'motor_cc' y 'potencia_hp' tienen correlación 0.91 entre sí. ¿Qué riesgo introduce esto en tu modelo de regresión múltiple?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "Multicolinealidad: el modelo no puede separar el efecto individual de cada variable, haciendo inestables ambos coeficientes.",
+            "Heterocedasticidad: la varianza de los residuos crecerá en los extremos del rango de la variable motor_cc.",
+            "Overfitting garantizado: tener dos variables muy correlacionadas siempre eleva el R² por encima de 0.99.",
+            "Underfitting: las variables redundantes se cancelan mutuamente, forzando al modelo a ignorar ambas en el ajuste."
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "Multicolinealidad ocurre cuando dos predictores están muy correlacionados entre sí. El modelo no puede determinar cuánto del precio se debe a motor_cc y cuánto a potencia_hp por separado. Los coeficientes β se vuelven inestables: pequeños cambios en los datos producen coeficientes muy distintos.",
+          "id": 1152
         },
         {
-          "id": 1153,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 3: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "eda_correlacion",
+          "categoryName": "EDA y Correlación",
+          "text": "En el dataset del taller, la variable 'anio' tiene correlación -0.41 con 'precio_usd'. ¿Cómo interpretas el signo negativo en el contexto de autos usados?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "A mayor año de fabricación, menor precio: los autos más recientes son más baratos. Esto es ilógico y el signo debe ser error.",
+            "A menor año de fabricación (autos más viejos), mayor precio: los autos más antiguos tienden a costar menos.",
+            "A mayor año de fabricación, mayor precio; el signo negativo indica que la correlación está invertida por error de cálculo.",
+            "El año y el precio no tienen relación; la correlación negativa pequeña indica que son estadísticamente independientes."
           ],
-          "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "correct": 1,
+          "feedback": "La variable 'anio' guarda el año de fabricación (ej. 2005 es pequeño, 2023 es grande). Correlación negativa con precio: a menor valor de 'anio' (auto más antiguo), menor precio. Es decir: autos más antiguos (2005) cuestan menos que autos nuevos (2023). El signo negativo es correcto y lógico.",
+          "id": 1153
         },
         {
-          "id": 1154,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 4: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (OHE y Data Leakage)",
+          "text": "El taller establece la 'Regla Fundamental' del preprocesamiento. ¿En qué momento exacto debe hacerse el `train_test_split` para evitar Data Leakage?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "El split debe hacerse ANTES de cualquier transformación: primero dividir, luego ajustar los transformadores solo en X_train.",
+            "El split puede hacerse en cualquier momento, siempre que el OneHotEncoder se aplique al dataset completo primero.",
+            "El split debe hacerse DESPUÉS de aplicar PolynomialFeatures para garantizar que ambos conjuntos tengan el mismo número de columnas.",
+            "El split debe hacerse sobre la variable Y solamente; la variable X se usa completa tanto en train como en test."
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "Regla fundamental del taller: PRIMERO divide en train/test, LUEGO aplica las transformaciones ajustando (.fit) solo en X_train. Si transformas todo el dataset antes del split, el test 'se cuela' en el ajuste del preprocesador, contaminando la evaluación con data leakage.",
+          "id": 1154
         },
         {
-          "id": 1155,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 5: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (OHE y Data Leakage)",
+          "text": "En el taller de autos, las variables 'marca', 'tipo_cambio', 'combustible' y 'provincia' son categóricas nominales. ¿Por qué NO las codificamos como números enteros (1, 2, 3...) con un LabelEncoder?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "Porque LabelEncoder asigna un orden numérico implícito (Toyota=1 < Volkswagen=2) que no existe en la realidad entre marcas.",
+            "Porque LabelEncoder produce columnas flotantes que Scikit-Learn no puede procesar en LinearRegression.",
+            "Porque LabelEncoder solo funciona con variables ordinales de más de 10 categorías únicas en el dataset.",
+            "Porque las marcas de autos son variables continuas que requieren PolynomialFeatures antes de codificarse."
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "LabelEncoder asigna enteros arbitrarios: si Toyota=1 y Ford=2, el modelo asume Ford > Toyota matemáticamente. Eso es mentira para variables nominales sin jerarquía real. One-Hot Encoding crea una columna binaria por categoría (0 o 1), sin asumir ningún orden entre ellas.",
+          "id": 1155
         },
         {
-          "id": 1156,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 6: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "modelos_regresion",
+          "categoryName": "Modelos de Regresión (Lineal, Múltiple y Polinomial)",
+          "text": "El taller construye 4 modelos progresivos: A1 (lineal simple con kilometraje), A2 (múltiple con todas las numéricas), A3 (múltiple con numéricas + dummies de categoricas), A4 (polinomial grado 2). ¿Cuál es el orden esperado de mejora del R²?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "A1 < A2 < A3 < A4: cada modelo agrega más información (más variables o más complejidad), mejorando el poder predictivo.",
+            "A4 < A3 < A2 < A1: la regresión lineal simple siempre supera a los modelos más complejos por la Navaja de Ockham.",
+            "Todos tienen el mismo R²: agregar variables no cambia el poder predictivo si el algoritmo es LinearRegression.",
+            "A2 < A1 < A4 < A3: las variables categóricas siempre mejoran más que las polinomiales en datasets de autos."
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "Agregar variables relevantes (numéricas + categóricas) y complejidad (polinomial) generalmente mejora el R² en train. Sin embargo, el R² ajustado y el R² en Test son más honestos: pueden bajar si las variables no aportan o si hay Overfitting en A4.",
+          "id": 1156
         },
         {
-          "id": 1157,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 7: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "modelos_regresion",
+          "categoryName": "Modelos de Regresión (Lineal, Múltiple y Polinomial)",
+          "text": "Comparas el Modelo A3 (múltiple con OHE) vs Modelo A4 (polinomial grado 2). A3 tiene R²_test=0.78 y A4 tiene R²_test=0.79, pero A4 tiene 45 columnas vs 12 de A3. ¿Cuál recomiendas y por qué?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "A3: una mejora de 0.01 en R² no justifica triplicar las columnas, aumentar el costo computacional y el riesgo de Overfitting futuro.",
+            "A4: en Machine Learning siempre se debe maximizar el R², aunque sea en centésimas, sin importar la complejidad del modelo.",
+            "A3: porque PolynomialFeatures está prohibido en datasets con variables categóricas según las reglas de Scikit-Learn.",
+            "A4: las 45 columnas adicionales garantizan que el modelo nunca sufra Underfitting en producción real con datos nuevos."
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "Principio de parsimonia (Navaja de Ockham): si dos modelos tienen desempeño casi idéntico en Test, elige el más simple. El modelo complejo es más difícil de mantener, más lento en producción y más propenso a Overfitting cuando lleguen datos nuevos del mercado.",
+          "id": 1157
         },
         {
-          "id": 1158,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 8: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "modelos_regresion",
+          "categoryName": "Modelos de Regresión (Lineal, Múltiple y Polinomial)",
+          "text": "En el taller, la Sección B.1 pide construir el Modelo A2 usando solo numéricas. ¿Cuál es el comando correcto para separar las columnas numéricas de las categóricas antes de entrenar?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "`cols_num = df.select_dtypes(include='number').columns.tolist()` selecciona automáticamente todas las columnas numéricas.",
+            "`cols_num = df.filter(dtype=int).keys()` filtra columnas de tipo entero usando el método nativo de Pandas.",
+            "`cols_num = df.get_numerics()` devuelve un dict con los nombres y valores de las columnas numéricas.",
+            "`cols_num = sklearn.utils.get_numeric_cols(df)` usa la función utilitaria de Scikit-Learn para esto."
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "`df.select_dtypes(include='number')` devuelve un DataFrame con solo las columnas numéricas (int64, float64). Luego `.columns.tolist()` las convierte en una lista de nombres de columna. Es el método estándar en Pandas para separar tipos de datos antes de aplicar transformadores.",
+          "id": 1158
         },
         {
-          "id": 1159,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 9: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "modelos_regresion",
+          "categoryName": "Modelos de Regresión (Lineal, Múltiple y Polinomial)",
+          "text": "Ejercicio B.2 del taller: al agregar la variable 'marca' (OHE) al modelo lineal múltiple, el R² ajustado pasa de 0.71 a 0.76. ¿Qué concluyes sobre la variable 'marca'?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "La marca aporta información real al modelo: saber qué marca es el auto ayuda a predecir mejor el precio.",
+            "La mejora del R² ajustado es ficticia; agregar variables siempre sube el R² ajustado sin excepción matemática.",
+            "La marca no sirve como predictor; el aumento del R² se debe exclusivamente al incremento de columnas dummy.",
+            "La marca debe eliminarse porque produce Multicolinealidad al crear múltiples columnas binarias correlacionadas."
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "El R² ajustado penaliza por el número de variables. Si sube al agregar 'marca' (con sus dummies), significa que las columnas dummy de marca aportan información genuina que supera la penalización por complejidad. La marca tiene poder predictivo real sobre el precio.",
+          "id": 1159
         },
         {
-          "id": 1160,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 10: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "modelos_regresion",
+          "categoryName": "Modelos de Regresión (Lineal, Múltiple y Polinomial)",
+          "text": "En el taller, el coeficiente del predictor 'tipo_cambio_automatico' (dummy OHE) es +3,500 USD. ¿Qué significa?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "Ceteris paribus, un auto con transmisión automática se espera que cueste en promedio 3,500 USD más que uno con transmisión manual.",
+            "El 3,500% de los autos automáticos en el dataset son más caros que los manuales de la misma marca y año.",
+            "Comprar un auto automático genera un costo adicional único de 3,500 USD en impuestos de importación en Ecuador.",
+            "El coeficiente positivo indica que la variable tipo_cambio es irrelevante y debe eliminarse del modelo final."
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "En regresión con variables dummy, el coeficiente indica la diferencia promedio respecto a la categoría base (manual) manteniendo todo lo demás igual (ceteris paribus). Coeficiente +3,500 en 'automatico': un auto automático vale en promedio 3,500 USD más que el mismo auto con transmisión manual.",
+          "id": 1160
         },
         {
-          "id": 1161,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 11: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial (No Lineal)",
+          "text": "¿Qué columnas ADICIONALES crea `PolynomialFeatures(degree=2)` cuando le pasas una sola variable X (ej. kilometraje)?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "Crea: 1 (intercepto), X (original) y X² (cuadrado). Con include_bias=True son 3 columnas en total.",
+            "Crea: X (original) y √X (raíz cuadrada). Solo genera transformaciones que mantienen la unidad original.",
+            "Crea: X, X², X³, X⁴... hasta el infinito; el parámetro degree=2 indica que empieza desde el grado 2.",
+            "Crea: X y log(X). PolynomialFeatures siempre aplica transformación logarítmica al grado especificado."
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "PolynomialFeatures(degree=2) con 1 variable genera: [1, X, X²]. Con include_bias=False (sin el 1): [X, X²]. Con 2 variables (X1, X2): genera [1, X1, X2, X1², X1·X2, X2²]. La cantidad de columnas crece exponencialmente con el número de variables y el grado.",
+          "id": 1161
         },
         {
-          "id": 1162,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 12: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial (No Lineal)",
+          "text": "Entrenas un modelo polinomial de grado 4 con el dataset de autos. R²_train=0.97, R²_test=0.41. ¿Qué diagnóstico y solución aplicarías?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "Overfitting severo: el modelo memorizó el ruido del training. Solución: bajar el grado (probar grado 2 o 3).",
+            "Underfitting severo: el modelo necesita más variables. Solución: agregar todas las columnas disponibles del CSV.",
+            "Dataset contaminado: el test set tiene outliers que distorsionan el R². Solución: eliminar el 20% de outliers.",
+            "Error de implementación: Scikit-Learn calcula mal el R² para grados polinomiales superiores a 3 con datos reales."
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "Diferencia masiva entre R²_train (0.97) y R²_test (0.41) es la firma del Overfitting. El grado 4 creó demasiadas columnas (combinaciones de variables elevadas a la 4), memorizando hasta el ruido. Solución: usar validación cruzada o grid search para encontrar el grado óptimo (probablemente 1 o 2).",
+          "id": 1162
         },
         {
-          "id": 1163,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 13: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial (No Lineal)",
+          "text": "En el taller, al aplicar `PolynomialFeatures(degree=2)` sobre 5 variables numéricas, ¿cuántas columnas aproximadas genera la transformación?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "21 columnas: 1 intercepto + 5 originales + 15 términos cuadráticos e interacciones (C(5+2,2) = 21).",
+            "10 columnas: simplemente duplica cada variable original con su cuadrado sin crear interacciones cruzadas.",
+            "5 columnas: PolynomialFeatures solo eleva al cuadrado cada variable sin crear términos de interacción.",
+            "100 columnas: el cuadrado del número de variables × el grado polinomial × 4 factores de ajuste interno."
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "La fórmula es C(n+d, d) donde n=variables y d=grado. Con n=5, d=2: C(7,2) = 21 columnas (incluyendo el intercepto y todos los términos de interacción como X1·X2, X1·X3, etc.). Por eso con muchas variables el grado 2 ya explota la dimensionalidad y puede causar Overfitting.",
+          "id": 1163
         },
         {
-          "id": 1164,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 14: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "metricas_comparacion",
+          "categoryName": "Métricas y Comparación de Modelos",
+          "text": "Tienes 3 modelos evaluados en el Test Set de autos. ¿Cuál seleccionarías y por qué? — M1: RMSE=4,200, R²=0.72, 8 predictores — M2: RMSE=3,800, R²=0.79, 42 predictores — M3: RMSE=3,750, R²=0.80, 45 predictores",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "M2: mejor balance entre error bajo, buen R² y complejidad razonable; M3 solo mejora 0.01 con 3 variables más.",
+            "M3: siempre el mejor R² gana; la diferencia de 3 variables entre M2 y M3 es despreciable en producción.",
+            "M1: el modelo con menos predictores siempre es el mejor independientemente del RMSE y el R² obtenidos.",
+            "Los tres modelos son equivalentes: cualquier diferencia en métricas del conjunto de test se debe al azar del split."
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "M2 vs M3: el R² mejora apenas 0.01 (de 0.79 a 0.80) pero M3 tiene 3 predictores más. Con el principio de parsimonia, M2 es preferible: misma potencia predictiva práctica, más simple de mantener e interpretar. M1 queda descartado por su RMSE y R² claramente inferiores.",
+          "id": 1164
         },
         {
-          "id": 1165,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 15: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "metricas_comparacion",
+          "categoryName": "Métricas y Comparación de Modelos",
+          "text": "El RMSE del Modelo A1 (simple) es USD 5,800 y el del Modelo A3 (múltiple con dummies) es USD 3,200. ¿Cómo interpretas esta diferencia en el contexto del negocio de autos usados?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "El Modelo A3 es mucho mejor: sus predicciones de precio se equivocan en promedio 2,600 USD menos por auto.",
+            "El Modelo A1 es mejor: el RMSE de 5,800 indica que predice con 5,800 veces más precisión que el promedio.",
+            "La diferencia no es significativa; ambos errores son aceptables si el dataset tiene menos de 10,000 filas.",
+            "Un RMSE más alto siempre es preferible: significa que el modelo es más conservador y no sobreestima precios."
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "RMSE está en las mismas unidades que la variable objetivo (USD). Modelo A1 se equivoca en promedio 5,800 USD por auto, A3 se equivoca 3,200 USD. Para una empresa inmobiliaria o concesionaria, reducir el error en 2,600 USD por predicción es una mejora económicamente significativa.",
+          "id": 1165
         },
         {
-          "id": 1166,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 16: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "metricas_comparacion",
+          "categoryName": "Métricas y Comparación de Modelos",
+          "text": "¿Para qué sirve el `r2_score()` de Scikit-Learn y cuándo puede devolver un valor NEGATIVO?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "Mide qué tan bien predice el modelo vs predecir la media. Es negativo cuando el modelo es peor que usar la media de Y como predicción.",
+            "Mide el porcentaje de datos correctamente clasificados; es negativo cuando el modelo confunde más del 50% de las clases.",
+            "Mide la correlación de Pearson al cuadrado; es negativo cuando las variables predictoras tienen correlación inversa con Y.",
+            "Mide el error relativo respecto a la desviación estándar; es negativo cuando el dataset tiene más ruido que señal útil."
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "R² = 1 - (SS_residual / SS_total). SS_total es la varianza de Y alrededor de su media. Si el modelo predice tan mal que su SS_residual > SS_total, el R² se vuelve negativo, indicando que simplemente predecir ȳ (la media) hubiera sido mejor predictor que el modelo ajustado.",
+          "id": 1166
         },
         {
-          "id": 1167,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 17: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "eda_correlacion",
+          "categoryName": "EDA y Correlación",
+          "text": "Ejercicio B.5 del taller: al graficar un boxplot de 'precio_usd', identificas varios puntos por encima del bigote superior. ¿Qué representan y qué efecto tienen en el modelo?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "Son outliers: autos con precios inusualmente altos. Inflaman el RMSE del modelo porque el cuadrado del error grande es enorme.",
+            "Son la mediana del dataset: el boxplot siempre marca la mediana como puntos separados sobre el bigote superior.",
+            "Son el 75% de los datos más caros: el boxplot divide el dataset en cuartiles y pinta el último como puntos.",
+            "Son ruido estadístico sin efecto en el modelo; Scikit-Learn filtra automáticamente los puntos fuera del bigote."
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "En un boxplot, los puntos fuera de 1.5×RIC (rango intercuartílico) son outliers. Un auto de USD 55,000 con precio esperado de USD 30,000 genera un residuo de 25,000. Al elevarse al cuadrado (625,000,000), domina el MSE y 'castiga' desproporcionadamente al RMSE del modelo.",
+          "id": 1167
         },
         {
-          "id": 1168,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 18: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (OHE y Data Leakage)",
+          "text": "En el Ejercicio B.3 del taller, debes construir el ColumnTransformer que aplica OHE a las variables categóricas y deja pasar las numéricas. ¿Cuál de las siguientes implementaciones es correcta?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "`ColumnTransformer([('ohe', OneHotEncoder(drop='first'), cols_cat)], remainder='passthrough')`",
+            "`ColumnTransformer([('ohe', OneHotEncoder(), cols_num)], remainder='drop')`",
+            "`ColumnTransformer([('ohe', LabelEncoder(), cols_cat), ('poly', PolynomialFeatures(), cols_num)])`",
+            "`ColumnTransformer(OneHotEncoder(drop='first', handle_unknown='ignore'), input_cols=cols_cat)`"
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "La sintaxis correcta es: ColumnTransformer([(nombre, transformador, columnas)], remainder=...). Usamos 'ohe' como nombre, OneHotEncoder(drop='first') para evitar la Dummy Trap, cols_cat para las categóricas, y remainder='passthrough' para que las numéricas pasen sin transformar.",
+          "id": 1168
         },
         {
-          "id": 1169,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 19: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "modelos_regresion",
+          "categoryName": "Modelos de Regresión (Lineal, Múltiple y Polinomial)",
+          "text": "Al terminar el taller B.8, debes reportar cuál de tus 4 modelos fue el mejor. ¿Qué criterios debes considerar para hacer una recomendación completa y profesional?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "R² ajustado en test (poder predictivo real), RMSE en test (error en USD), número de predictores (complejidad) y diferencia entre R²_train y R²_test (Overfitting).",
+            "Solo el R² más alto en entrenamiento; las demás métricas son redundantes si el ajuste en train es cercano a 1.0.",
+            "Solo el RMSE más bajo sin importar el número de predictores ni la diferencia entre train y test del modelo.",
+            "El tiempo de entrenamiento en segundos y el uso de memoria RAM de Google Colab durante la ejecución."
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "Una recomendación profesional de modelo evalúa: (1) Poder predictivo real (R²_test, RMSE_test), (2) Overfitting (gap entre R²_train y R²_test), (3) Complejidad (número de predictores, mantenibilidad) y (4) Interpretabilidad para el cliente. Reportar solo R²_train es una práctica inaceptable en entornos reales.",
+          "id": 1169
         },
         {
-          "id": 1170,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 20: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "metricas_comparacion",
+          "categoryName": "Métricas y Comparación de Modelos",
+          "text": "En el taller, ¿cuál es la diferencia clave entre usar `r2_score(y_test, y_pred)` y el atributo `modelo.score(X_test, y_test)` de Scikit-Learn?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "Producen exactamente el mismo resultado: ambos calculan R² = 1 - (SS_res/SS_tot) sobre los mismos datos de prueba.",
+            "`r2_score()` evalúa con datos de entrenamiento y `modelo.score()` evalúa con el conjunto de prueba automáticamente.",
+            "`modelo.score()` calcula el R² ajustado por defecto, mientras que `r2_score()` calcula el R² ordinario sin ajuste.",
+            "`r2_score()` requiere dos arrays de igual tamaño; `modelo.score()` puede operar con DataFrames de diferente forma."
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "Internamente, `modelo.score(X_test, y_test)` llama `modelo.predict(X_test)` y luego calcula `r2_score(y_test, y_pred)`. Son equivalentes. La función `r2_score()` es más flexible porque puedes pasarle cualquier array de predicciones, no necesariamente del mismo modelo.",
+          "id": 1170
         },
         {
-          "id": 1171,
-          "category": "teoria_ml",
-          "categoryName": "Fundamentos y Multicolinealidad",
-          "text": "Escenario de práctica de razonamiento 21: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial (No Lineal)",
+          "text": "¿Por qué el Ejercicio B.8 del taller insiste en comparar modelos usando R² en el TEST SET y no solo en el TRAIN SET?",
           "options": [
-            "Multicolinealidad: el modelo no puede separar los efectos de variables muy correlacionadas; los coeficientes se vuelven inestables e ininterpretables.",
-            "Heterocedasticidad: los residuos aumentan de varianza para sujetos de mayor edad en el conjunto de entrenamiento.",
-            "Underfitting automático: Scikit-Learn rechaza matrices con más de 10 columnas numéricas correlacionadas.",
-            "No hay ningún efecto negativo; más variables correlacionadas siempre mejoran el R² sin consecuencias adversas."
+            "Porque el test set simula datos nuevos nunca vistos; solo ese R² refleja si el modelo generalizará correctamente al mundo real.",
+            "Porque Scikit-Learn no puede calcular R² sobre el training set; la función r2_score requiere datos distintos a los de ajuste.",
+            "Porque el R² en train siempre es exactamente 1.0 en regresión múltiple, haciendo imposible la comparación entre modelos.",
+            "Porque el test set es estadísticamente más grande que el train set y ofrece mayor poder estadístico de evaluación."
           ],
           "correct": 0,
-          "feedback": "Multicolinealidad: cuando dos variables predictoras están muy correlacionadas entre sí (ej. edad y experiencia), el modelo no puede separar el efecto de cada una de forma independiente. Los coeficientes se vuelven inestables: pequeños cambios en los datos producen coeficientes completamente distintos, aunque el R² no baje mucho. Solución: eliminar una de las dos variables correlacionadas."
+          "feedback": "El train set fue visto por el modelo durante el ajuste, por lo que su R² mide principalmente la capacidad de memorización. El test set (nunca visto) mide la capacidad de generalización: cuánto de bueno será el modelo al predecir autos nuevos que lleguen mañana al inventario de la concesionaria.",
+          "id": 1171
         }
       ]
     },
