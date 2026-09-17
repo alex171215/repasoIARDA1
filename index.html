@@ -591,6 +591,14 @@
         let dataBancos = [];
         let activeBank = localStorage.getItem('ai_quiz_active_bank') || 'semana_1';
 
+        function getBankQuestions() { 
+            const b = dataBancos.find(x => x.id === activeBank); 
+            return b ? b.preguntas : []; 
+        }
+        function getBankCategories() { 
+            const b = dataBancos.find(x => x.id === activeBank); 
+            return b ? b.categorias : []; 
+        }
         
         function getBankStorageKey(type) {
             return 'ai_quiz_' + type + '_' + activeBank + '_v3';
