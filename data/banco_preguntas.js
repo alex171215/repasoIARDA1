@@ -1253,6 +1253,482 @@ window.QUIZ_DATA = {
           "correct": 3,
           "feedback": "β₀ es el intercepto (el punto de partida) y β₁ es la pendiente (el motor de cambio). Juntos forman los 'parámetros' que el modelo aprende de los datos.",
           "id": 1085
+        },
+        {
+          "id": 1103,
+          "category": "comandos",
+          "categoryName": "Implementación en Scikit-Learn",
+          "text": "¿Cuál es la diferencia técnica estricta entre las librerías `pandas` y `numpy` en el pipeline del Laboratorio 1?",
+          "options": [
+            "No hay diferencia; ambas son nombres distintos para la misma librería creada por Scikit-Learn.",
+            "`pandas` manipula la tabla de datos completa (DataFrame) y `numpy` ejecuta cálculos matemáticos sobre arreglos (ej. calcular la raíz cuadrada para RMSE).",
+            "`numpy` solo funciona con variables de texto (strings) y `pandas` con variables numéricas enteras.",
+            "`pandas` es para modelos de Machine Learning y `numpy` es para generar gráficos de dispersión interactivos."
+          ],
+          "correct": 1,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1104,
+          "category": "comandos",
+          "categoryName": "Implementación en Scikit-Learn",
+          "text": "En Pandas, ¿qué información crítica te proporciona el comando `df.describe()` antes de entrenar el modelo?",
+          "options": [
+            "La ecuación matemática exacta de la recta de regresión que mejor se ajusta a los datos.",
+            "Un mapa de calor automático que muestra la correlación de Pearson entre todas las variables.",
+            "Estadísticas descriptivas completas como media, desviación estándar, valores mínimos y máximos de las variables numéricas.",
+            "Un listado de todas las celdas nulas o vacías que impedirán que el modelo de regresión se ejecute."
+          ],
+          "correct": 2,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1105,
+          "category": "comandos",
+          "categoryName": "Implementación en Scikit-Learn",
+          "text": "Al revisar los datos con `df.info()`, notas que la variable predictora está como 'object' (texto) en lugar de 'float'. ¿Qué sucederá si intentas ejecutar `modelo.fit()`?",
+          "options": [
+            "Scikit-Learn aplicará One-Hot Encoding por defecto a cualquier columna tipo 'object'.",
+            "El modelo entrenará normalmente, ignorando internamente la columna de texto y usando promedios aleatorios.",
+            "El modelo automáticamente convertirá el texto a números usando la longitud de la cadena de caracteres.",
+            "Scikit-Learn lanzará un error, ya que los modelos de regresión lineal pura no pueden procesar texto sin ser convertido a números."
+          ],
+          "correct": 3,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1106,
+          "category": "visual",
+          "categoryName": "Análisis Visual y Residuos",
+          "text": "En la librería Matplotlib, ¿por qué utilizamos `axes.scatter(X, y)` para graficar los datos de entrenamiento y NO usamos `axes.plot(X, y)`?",
+          "options": [
+            "Porque `scatter` es el único comando que soporta variables de tipo decimal (float) en el eje X.",
+            "Porque `scatter` dibuja puntos individuales sueltos (la 'nube' de datos real), mientras que `plot` dibuja una línea continua que une cada punto, creando un gráfico confuso de zigzag.",
+            "Porque `plot` automáticamente ajusta y dibuja la línea de regresión perfecta sin necesidad de entrenar un modelo.",
+            "No importa, ambos comandos generan exactamente el mismo resultado visual en gráficos bidimensionales."
+          ],
+          "correct": 1,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1107,
+          "category": "visual",
+          "categoryName": "Análisis Visual y Residuos",
+          "text": "Deseas graficar la recta de predicciones del modelo sobre el scatter plot. ¿Qué combinación de comandos y datos usarías?",
+          "options": [
+            "`axes.scatter(y_test, y_pred)` para dibujar la línea horizontal promedio.",
+            "`axes.scatter(X_train, y_test)` usando un color azul oscuro.",
+            "`axes.plot(X_train, y_train)` con el parámetro linewidth=0.",
+            "`axes.plot(X_test, y_pred)` usando color rojo para sobreponer la línea sobre los puntos reales."
+          ],
+          "correct": 3,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1108,
+          "category": "visual",
+          "categoryName": "Análisis Visual y Residuos",
+          "text": "Observas un scatter plot de Precio vs Área, pero los puntos parecen formar una curva exponencial en lugar de una recta. ¿Qué deberías concluir?",
+          "options": [
+            "Que la relación no es lineal; intentar ajustar un modelo de regresión lineal simple estándar resultará en un modelo ineficiente (underfitting).",
+            "Que el modelo de regresión lineal simple será perfecto porque las curvas exponenciales se aplanan durante el entrenamiento.",
+            "Que debes eliminar todos los datos de la parte superior de la curva para forzar que parezca una recta.",
+            "Que los datos tienen ruido aleatorio extremo y es imposible aplicar Machine Learning."
+          ],
+          "correct": 0,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1109,
+          "category": "comandos",
+          "categoryName": "Implementación en Scikit-Learn",
+          "text": "Al usar `train_test_split`, siempre defines el parámetro `random_state=42`. ¿Cuál es el propósito empresarial y técnico de este comando?",
+          "options": [
+            "Fijar el límite máximo de error (42%) que el modelo de regresión puede tolerar antes de colapsar.",
+            "Garantizar la 'reproducibilidad': asegura que cada vez que tú o tu jefe ejecuten el código, la división aleatoria sea idéntica y las métricas no cambien misteriosamente.",
+            "Asegurar que el 42% de los datos sean siempre descartados para acelerar el procesamiento en servidores locales.",
+            "Mejorar la exactitud del modelo inyectando una semilla matemática secreta que optimiza los pesos de Scikit-Learn."
+          ],
+          "correct": 1,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1110,
+          "category": "teoria_ml",
+          "categoryName": "Conceptos Teóricos y Extrapolación",
+          "text": "Si en lugar de dividir el dataset en Train y Test (80/20), decides entrenar con el 100% de los datos y evaluar sobre ese mismo 100%, ¿qué engaño estadístico estás sufriendo?",
+          "options": [
+            "El error RMSE será ridículamente alto porque el modelo intentará adivinar dos veces los mismos datos, colisionando matemáticamente.",
+            "Ninguno; evaluar sobre el 100% es la única forma estadísticamente pura de obtener el R² real del mercado inmobiliario.",
+            "El modelo reportará un R² negativo porque Scikit-Learn prohíbe evaluar modelos sin la función `train_test_split`.",
+            "Crees que tu modelo generaliza perfecto (RMSE bajo), pero en realidad estás evaluando su capacidad de memorizar los datos que ya vio, ocultando el posible Overfitting."
+          ],
+          "correct": 3,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1111,
+          "category": "teoria_ml",
+          "categoryName": "Conceptos Teóricos y Extrapolación",
+          "text": "¿Cuál es la proporción estándar recomendada para separar el dataset en entrenamiento (Train) y evaluación (Test) en la industria general?",
+          "options": [
+            "100% para entrenar y luego descargar datos aleatorios de internet para evaluar.",
+            "50% para entrenar y 50% para evaluar estrictamente.",
+            "10% para entrenar y 90% para evaluar.",
+            "80% para entrenar y 20% para evaluar (o 70% / 30% dependiendo de la cantidad de datos)."
+          ],
+          "correct": 3,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1112,
+          "category": "comandos",
+          "categoryName": "Implementación en Scikit-Learn",
+          "text": "En Scikit-Learn, el comando que genera las predicciones para calcular las métricas sobre datos nuevos es:",
+          "options": [
+            "`modelo.fit(X_test, y_test)`",
+            "`modelo.score(y_test, X_train)`",
+            "`modelo.predict(X_test)`",
+            "`modelo.evaluate(y_pred)`"
+          ],
+          "correct": 2,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1113,
+          "category": "comandos",
+          "categoryName": "Implementación en Scikit-Learn",
+          "text": "¿Por qué la variable `X` debe ser una estructura 2D (ej. `df[['area_m2']]`) mientras que la variable `y` puede ser 1D (ej. `df['precio_usd']`)?",
+          "options": [
+            "No es cierto, ambas variables deben ser estrictamente estructuras 3D (Tensores) en Scikit-Learn.",
+            "Porque Scikit-Learn espera que `X` sea una matriz (tabla) capaz de contener múltiples columnas predictoras en el futuro, pero `y` siempre es un único vector de respuestas.",
+            "Porque Pandas exige que las variables con números decimales sean forzadas a estar en formato 2D bidimensional para ahorrar memoria.",
+            "Porque el eje X de Matplotlib requiere obligatoriamente una estructura 2D para graficar, mientras que el eje Y no."
+          ],
+          "correct": 1,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1114,
+          "category": "comandos",
+          "categoryName": "Implementación en Scikit-Learn",
+          "text": "Una vez entrenado el modelo, ¿qué atributos de la variable `modelo` de Scikit-Learn contienen la pendiente y el intercepto matemáticos aprendidos?",
+          "options": [
+            "`modelo.weights` y `modelo.anchor`.",
+            "`modelo.coef_` (para la pendiente) y `modelo.intercept_` (para el intercepto).",
+            "`modelo.beta1` y `modelo.beta0`.",
+            "`modelo.slope` y `modelo.bias`."
+          ],
+          "correct": 1,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1115,
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación (MAE, RMSE, R²)",
+          "text": "Predices precio vs metros cuadrados. Tu modelo dice que el Intercepto (β₀) es -5,000 USD y la Pendiente (β₁) es +1,200 USD. ¿Qué significado lógico en el negocio tiene el Intercepto aquí?",
+          "options": [
+            "Significa que los materiales base (sin área construida) cuestan 5,000 USD.",
+            "Significa que la constructora te pagará 5,000 USD por llevarte el departamento.",
+            "Significa que el modelo ha fallado miserablemente y debe ser descartado, porque el intercepto siempre debe ser cero absoluto.",
+            "No tiene sentido lógico real, ya que un departamento de 0 m² no puede tener un precio negativo; el intercepto actúa solo como un ancla matemática para que la recta cuadre con los datos mayores a 30 m²."
+          ],
+          "correct": 3,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1116,
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación (MAE, RMSE, R²)",
+          "text": "Continuando con la pregunta anterior (β₁ = +1,200). ¿Qué le explicas al cliente que significa este coeficiente?",
+          "options": [
+            "'El error máximo que comete nuestro sistema al estimar tu propiedad es de 1,200 dólares'.",
+            "'Por cada metro cuadrado adicional que decidas construir o comprar, el precio del departamento aumentará en promedio 1,200 dólares'.",
+            "'El departamento costará 1,200 dólares solo si tiene más de 100 metros cuadrados'.",
+            "'El precio inicial de cualquier departamento es de 1,200 dólares, y va disminuyendo según el área'."
+          ],
+          "correct": 1,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1117,
+          "category": "teoria_ml",
+          "categoryName": "Conceptos Teóricos y Extrapolación",
+          "text": "Interpolación vs Extrapolación: Entrenas tu modelo con departamentos de 40 m² a 150 m². Luego, el banco te pide predecir el precio de un inmenso terreno de 5,000 m². ¿Por qué confiar ciegamente en esta predicción lineal es un error gravísimo?",
+          "options": [
+            "Porque los terrenos grandes requieren automáticamente regresión logística en lugar de regresión lineal.",
+            "No es un error. Las matemáticas son universales y la recta infinita garantizará un precio perfecto al 100% de precisión.",
+            "Porque estás extrapolando masivamente; la tendencia lineal del precio por m² de los departamentos casi seguro no se mantiene igual para hectáreas de terreno vacío.",
+            "Porque estás interpolando masivamente, lo que genera colapso en la memoria de la CPU de Scikit-Learn."
+          ],
+          "correct": 2,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1118,
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación (MAE, RMSE, R²)",
+          "text": "En el contexto de estimar el salario de un desarrollador de software (en dólares), si obtienes un MAE de 400. ¿Qué significa exactamente ese número?",
+          "options": [
+            "Significa que el 400% de la varianza salarial no puede ser explicada por tu modelo de regresión.",
+            "Significa que el salario base de cualquier desarrollador junior comenzará siempre en 400 dólares mensuales.",
+            "Significa que el modelo comete un error cuadrático masivo y las predicciones están desviadas en 160,000 dólares (400 al cuadrado).",
+            "Significa que, en promedio, cuando el modelo intenta predecir el salario de alguien, se equivoca por 400 dólares (ya sea pagando de más o pagando de menos)."
+          ],
+          "correct": 3,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1119,
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación (MAE, RMSE, R²)",
+          "text": "¿Por qué en los laboratorios calculamos el RMSE (Root Mean Squared Error) aplicando la raíz cuadrada al MSE (`np.sqrt(mean_squared_error)`)?",
+          "options": [
+            "Porque Scikit-Learn no permite imprimir números grandes por pantalla sin antes aplicarles la raíz cuadrada.",
+            "Para devolver el error a las unidades originales del problema (ej. de 'dólares al cuadrado' a 'dólares normales') para que sea entendible por un ser humano.",
+            "Para que el error siempre dé un número entre 0 y 1, similar a una probabilidad.",
+            "Para ocultar los errores catastróficos causados por los outliers, reduciendo artificialmente el impacto visual de los errores grandes."
+          ],
+          "correct": 1,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1120,
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación (MAE, RMSE, R²)",
+          "text": "Si tu R² en el conjunto de entrenamiento (Train) es 0.95 pero tu R² en el conjunto de prueba (Test) es 0.10. ¿Cuál es el diagnóstico inequívoco de este modelo?",
+          "options": [
+            "Sufre un Underfitting severo. No pudo entender la relación ni siquiera con los datos que tenía frente a sus ojos.",
+            "Es un modelo matemáticamente imposible; el R² de Test siempre debe ser idéntico al R² de Train por ley estadística.",
+            "Sufre un Overfitting extremo. Memorizó los datos con los que entrenó pero es totalmente inútil para predecir sobre datos nuevos y reales.",
+            "Es el modelo perfecto. El R² de prueba bajo demuestra que el modelo es humilde y no sufre de data leakage."
+          ],
+          "correct": 2,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1121,
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación (MAE, RMSE, R²)",
+          "text": "¿Qué sucedería matemáticamente si Mínimos Cuadrados Ordinarios (MCO) solo intentara minimizar la suma de los errores normales (sin elevarlos al cuadrado ni aplicar valor absoluto)?",
+          "options": [
+            "El modelo ajustaría una recta perfecta que pasaría exactamente por todos y cada uno de los puntos, creando un sobreajuste del 100%.",
+            "Las predicciones que superan el valor real cancelarían mágicamente a las predicciones que están por debajo del valor real, dando una suma engañosa de error cero.",
+            "La línea de regresión explotaría buscando el infinito vertical porque no hay techo para los errores.",
+            "El R² ordinario se transformaría automáticamente en R² ajustado sin necesidad de calcular 'p' ni 'n'."
+          ],
+          "correct": 1,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1122,
+          "category": "visual",
+          "categoryName": "Análisis Visual y Residuos",
+          "text": "Al revisar el gráfico predichos vs reales de un modelo inmobiliario, ves que para precios por debajo de USD 100,000 los puntos se alinean perfecto a la diagonal, pero para propiedades de USD 500,000 los puntos caen muy por debajo de la diagonal. ¿Qué significa?",
+          "options": [
+            "Significa que la métrica de R² es del 100% para todas las propiedades millonarias.",
+            "El modelo está subestimando sistemáticamente los precios de las propiedades de lujo (predice que valen mucho menos de lo que realmente valen).",
+            "El modelo está sobrestimando sistemáticamente el precio de las propiedades baratas.",
+            "Significa que es momento de descartar completamente la librería Matplotlib por fallos en renderizado gráfico."
+          ],
+          "correct": 1,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1123,
+          "category": "teoria_ml",
+          "categoryName": "Conceptos Teóricos y Extrapolación",
+          "text": "¿Cuál es la premisa fundamental del algoritmo de Mínimos Cuadrados Ordinarios (MCO / OLS) que usa Scikit-Learn por debajo de la mesa?",
+          "options": [
+            "Encuentra la línea recta que toca la mayor cantidad de puntos de datos físicos simultáneamente en el gráfico.",
+            "Calcula el promedio matemático de la variable Y y dibuja una línea horizontal inamovible.",
+            "Encuentra la única línea recta matemática que hace que la suma de todos los 'residuos' (errores) elevados al cuadrado sea la menor posible.",
+            "Divide el dataset en múltiples líneas pequeñas y aplica redes neuronales para unirlas en una curva hiperbólica."
+          ],
+          "correct": 2,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1124,
+          "category": "visual",
+          "categoryName": "Análisis Visual y Residuos",
+          "text": "En el contexto de Regresión Lineal, ¿a qué llamamos formalmente un 'residuo'?",
+          "options": [
+            "A la pendiente de la recta cuando intercepta el eje X en el punto cero.",
+            "Al número de filas descartadas por el `train_test_split` que no fueron usadas en el entrenamiento.",
+            "A la diferencia matemática entre el MAE y el RMSE cuando existen demasiados valores atípicos.",
+            "A la distancia vertical exacta entre el dato real (y_i) y el punto correspondiente estimado por la línea de predicción (ŷ_i)."
+          ],
+          "correct": 3,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1125,
+          "category": "teoria_ml",
+          "categoryName": "Conceptos Teóricos y Extrapolación",
+          "text": "Tienes un R² de 0.05 (5%) al intentar predecir el precio del oro basándote en la cantidad de lluvias en Japón. ¿Cuál es el análisis correcto?",
+          "options": [
+            "Hubo un error de sintaxis en Pandas. El R² siempre varía entre 1 y 100, nunca da decimales tan bajos.",
+            "El R² es lo suficientemente alto para justificar una inversión millonaria, ya que en el mundo financiero cualquier número sobre 0 es ganancia.",
+            "El modelo es inútil. Prácticamente toda la variabilidad del precio del oro (95%) depende de factores externos que el modelo desconoce totalmente.",
+            "El modelo tiene un 5% de probabilidad de adivinar el precio del oro exacto en el próximo año bisiesto."
+          ],
+          "correct": 2,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1126,
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación (MAE, RMSE, R²)",
+          "text": "¿Qué sucede con la métrica MAE si dentro de un dataset de casas hay UNA sola casa multimillonaria catalogada por error como 10 veces su valor real (outlier masivo)?",
+          "options": [
+            "El MAE aumentará, pero no tan violentamente como lo haría el RMSE, ya que el MAE no eleva los errores enormes al cuadrado.",
+            "El MAE se volverá instantáneamente negativo, indicando la presencia del outlier.",
+            "El MAE y el R² se volverán idénticos matemáticamente.",
+            "El MAE la ignorará por completo de forma automática gracias al filtro de la mediana matemática."
+          ],
+          "correct": 0,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1127,
+          "category": "comandos",
+          "categoryName": "Implementación en Scikit-Learn",
+          "text": "¿Por qué es una mala práctica empresarial confiar en un modelo solo mirando el R² de entrenamiento sin validar nunca sobre el Test Set?",
+          "options": [
+            "Porque un R² alto en entrenamiento solo prueba que el algoritmo logró acoplarse a los datos pasados, no que haya descubierto la ley subyacente útil para el futuro.",
+            "No es mala práctica. El R² de entrenamiento es la métrica de oro avalada mundialmente por la Unión Europea.",
+            "Porque Scikit-Learn inserta datos falsos aleatoriamente en la matriz de entrenamiento por temas de seguridad de la memoria RAM.",
+            "Porque los gerentes no entienden de porcentajes y es mejor entregarles gráficos de torta circulares."
+          ],
+          "correct": 0,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1128,
+          "category": "teoria_ml",
+          "categoryName": "Conceptos Teóricos y Extrapolación",
+          "text": "Para evitar Overfitting en regresión, el principio de la Navaja de Ockham sugiere que:",
+          "options": [
+            "Debes recortar (afeitar) la cantidad de datos del conjunto de entrenamiento a la mitad para que el modelo entrene más rápido.",
+            "Ante dos modelos con poder predictivo similar en el test set, debes elegir siempre el modelo más simple matemáticamente.",
+            "Debes eliminar todas las variables categóricas siempre, sin excepción, para simplificar el código.",
+            "Debes elegir el modelo que tenga la ecuación polinomial más compleja, ya que refleja mejor la profundidad del universo."
+          ],
+          "correct": 1,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1129,
+          "category": "visual",
+          "categoryName": "Análisis Visual y Residuos",
+          "text": "Si graficas un Histograma de la variable 'Salario', y la forma es como una pirámide perfecta centrada. ¿Qué tipo de distribución es?",
+          "options": [
+            "Distribución Bimodal o de dos picos.",
+            "Distribución Normal o Gaussiana (simétrica).",
+            "Distribución Uniforme (plana).",
+            "Distribución Severamente Sesgada a la Izquierda."
+          ],
+          "correct": 1,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1130,
+          "category": "comandos",
+          "categoryName": "Implementación en Scikit-Learn",
+          "text": "El código `df = pd.read_csv('datos.csv')` en Google Colab o Jupyter requiere que:",
+          "options": [
+            "El archivo `datos.csv` esté alojado exclusivamente en los servidores de la NASA para descarga HTTP.",
+            "Scikit-Learn esté desactivado temporalmente para no causar conflictos de lectura binaria.",
+            "El archivo `datos.csv` esté físicamente disponible en la ruta especificada (ej. subido a la memoria local del entorno virtual).",
+            "El código esté escrito obligatoriamente en C++ transpilado a Python."
+          ],
+          "correct": 2,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1131,
+          "category": "teoria_ml",
+          "categoryName": "Conceptos Teóricos y Extrapolación",
+          "text": "¿Cuál es la principal limitación estructural de la Regresión Lineal Simple?",
+          "options": [
+            "No permite graficar sus resultados usando Matplotlib.",
+            "Solo admite UNA única variable predictora (X) para predecir Y, ignorando que en la vida real los fenómenos dependen de docenas de variables.",
+            "Exige que el programador calcule manualmente la fórmula de derivadas antes de instanciar el modelo.",
+            "Solo puede predecir números positivos, colapsando si Y es negativo."
+          ],
+          "correct": 1,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1132,
+          "category": "visual",
+          "categoryName": "Análisis Visual y Residuos",
+          "text": "¿Para qué sirve el método `alpha=0.5` en un `plt.scatter()` cuando graficamos miles de puntos de datos?",
+          "options": [
+            "Para volver los puntos semitransparentes, revelando las zonas de alta densidad (donde los puntos se superponen oscureciendo el área).",
+            "Para reducir el tamaño del punto a la mitad de su radio original en píxeles.",
+            "Para indicar el grado de confianza (p-value) matemático del 50%.",
+            "Para indicarle a Scikit-Learn que ignore los datos atípicos más allá de 0.5 desviaciones estándar."
+          ],
+          "correct": 0,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1133,
+          "category": "teoria_ml",
+          "categoryName": "Conceptos Teóricos y Extrapolación",
+          "text": "Un modelo predice ingresos en función de los años de estudio. Un niño de 1 año tiene un ingreso estimado de -500 dólares según la recta. ¿Qué sucedió?",
+          "options": [
+            "Extrapolación ilógica: aplicar la recta de regresión fuera del rango lógico con el que fue entrenada produce absurdos matemáticos.",
+            "Underfitting severo: un R² negativo obliga a la pendiente a volverse negativa.",
+            "El modelo es brillante e indica la deuda en pañales y comida que genera el niño.",
+            "Falla de librerías: se requiere reinstalar Numpy porque el motor aritmético sumó mal los vectores."
+          ],
+          "correct": 0,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1134,
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación (MAE, RMSE, R²)",
+          "text": "MSE (Mean Squared Error) y RMSE (Root Mean Squared Error) castigan fuertemente los errores grandes. Si quisieras una métrica que NO se altere tan violentamente por dos o tres predicciones desastrosas, usarías:",
+          "options": [
+            "MAE (Mean Absolute Error).",
+            "R² Ordinario.",
+            "Ninguna; todas las métricas en Machine Learning elevan al cuadrado los residuos.",
+            "R² Ajustado."
+          ],
+          "correct": 0,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1135,
+          "category": "comandos",
+          "categoryName": "Implementación en Scikit-Learn",
+          "text": "Si olvidaste llamar a `modelo.fit(X_train, y_train)` e intentas ejecutar `modelo.predict(X_test)`, el intérprete de Python:",
+          "options": [
+            "Entrenará el modelo silenciosamente sobre el set de pruebas para no interrumpir la ejecución del código.",
+            "Borrará los archivos de tu disco duro para proteger la integridad estadística del sistema operativo.",
+            "Adivinará los valores usando promedios globales extraídos secretamente de `y_test`.",
+            "Lanzará un `NotFittedError`, recordándote que el modelo está 'vacío' y no ha aprendido ninguna pendiente ni intercepto aún."
+          ],
+          "correct": 3,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
+        },
+        {
+          "id": 1136,
+          "category": "teoria_ml",
+          "categoryName": "Conceptos Teóricos y Extrapolación",
+          "text": "A diferencia de un modelo determinista de la física (ej. Gravedad = masa / distancia²), la regresión lineal en Machine Learning es un modelo estadístico, lo que implica que:",
+          "options": [
+            "Nunca será 100% exacto; incluye inherentemente un término de error o 'ruido' originado por variables que desconocemos o no medimos.",
+            "Se limita a predecir datos categóricos (ej. Perro, Gato) y jamás datos continuos (ej. dinero, peso).",
+            "Siempre acertará el 100% del tiempo si logras recopilar al menos 100,000 datos (Ley de los Grandes Números).",
+            "No usa las matemáticas reales, sino simples aproximaciones empíricas descartadas por la ciencia."
+          ],
+          "correct": 0,
+          "feedback": "Explicación aprendida de la teoría y los laboratorios."
         }
       ]
     },
@@ -1439,6 +1915,496 @@ window.QUIZ_DATA = {
           "correct": 0,
           "feedback": "`pd.get_dummies()` es genial para explorar datos rápido, pero peligroso en producción: si el test set no tiene una categoría rara que sí estaba en train, las matrices no cuadrarán y el código fallará.",
           "id": 1096
+        },
+        {
+          "id": 1137,
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (OHE y Data Leakage)",
+          "text": "Regla Fundamental en Machine Learning (Data Leakage): ¿Qué ocurre estadísticamente si aplicas `.fit_transform()` de tu preprocesador usando el conjunto X_test?",
+          "options": [
+            "Nada malo; es obligatorio aplicar `.fit_transform()` tanto en el Train como en el Test para mantener la simetría matemática.",
+            "Optimizas la memoria RAM de Scikit-Learn al realizar el ajuste de forma simultánea en una sola línea de código.",
+            "Cometes 'Fuga de Datos' o Data Leakage: el preprocesador espía las características del examen sorpresa (test), contaminando la evaluación y reportando métricas falsamente altas e irreales.",
+            "Mejoras la precisión del modelo porque le permites aprender el vocabulario completo de la base de datos antes de entrenar."
+          ],
+          "correct": 2,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1138,
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (OHE y Data Leakage)",
+          "text": "¿Cuál es la secuencia estricta y correcta para preprocesar datos usando un `ColumnTransformer` en Scikit-Learn?",
+          "options": [
+            "`.transform()` sobre el X_train; y `.fit_transform()` sobre el X_test.",
+            "`.fit_transform()` sobre el dataset completo antes de aplicar el `train_test_split`.",
+            "`.fit()` a la variable dependiente `y`, y `.transform()` a la variable independiente `X`.",
+            "`.fit_transform()` sobre el X_train (aprende de los datos y los transforma); y exclusivamente `.transform()` sobre el X_test (solo aplica lo que ya aprendió)."
+          ],
+          "correct": 3,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1139,
+          "category": "comandos_avanzados",
+          "categoryName": "Comandos: ColumnTransformer y Matrices",
+          "text": "Al usar `ColumnTransformer`, configuras el parámetro `remainder='passthrough'`. ¿Cuál es su propósito vital en el flujo de datos?",
+          "options": [
+            "Sirve para borrar silenciosamente cualquier columna que contenga valores nulos ('NaN') en el dataset.",
+            "Indica que si el modelo falla, debe dejar pasar el error y continuar ejecutando la siguiente línea de código.",
+            "Indica que las columnas que NO fueron transformadas explícitamente (ej. las numéricas) pasen intactas al nuevo dataset, evitando que se borren o desaparezcan.",
+            "Instruye al modelo a aplicar una regresión polinomial 'a través' de las variables restantes automáticamente."
+          ],
+          "correct": 2,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1140,
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (OHE y Data Leakage)",
+          "text": "En el dataset de salarios TI, la variable 'nivel_ingles' (1=Básico, 5=Nativo) se dejó intacta, mientras que 'rol' (Backend, Frontend) se pasó por One-Hot Encoding. ¿Por qué esta decisión técnica es crucial?",
+          "options": [
+            "Porque One-Hot Encoding está diseñado exclusivamente para variables de texto largo, y 'nivel_ingles' solo tiene números enteros cortos.",
+            "Porque el nivel de inglés es Ordinal (tiene una jerarquía matemática lógica donde 5 es mejor que 1). En cambio, el 'rol' es Nominal (no hay orden real donde Backend sea matemáticamente mayor a QA).",
+            "Porque el gerente pidió ahorrar columnas, así que se decidió procesar solo la mitad de las variables del dataset.",
+            "Porque las librerías de Python no soportan aplicar One-Hot Encoding a columnas que tienen la letra 'i' en su nombre."
+          ],
+          "correct": 1,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1141,
+          "category": "comandos_avanzados",
+          "categoryName": "Comandos: ColumnTransformer y Matrices",
+          "text": "Al configurar `OneHotEncoder`, es mandatorio usar el parámetro `drop='first'`. ¿Qué problema estadístico previene esto?",
+          "options": [
+            "Previene el Underfitting, forzando al modelo a aprender patrones más oscuros en los datos.",
+            "Borra automáticamente la primera columna del DataFrame original por ser típicamente el 'ID' irrelevante del usuario.",
+            "Previene la Trampa de las Variables Ficticias (Multicolinealidad perfecta), evitando información redundante donde una categoría puede adivinarse sumando las otras.",
+            "Evita que la primera fila del dataset contamine el modelo si contiene valores extremos (outliers)."
+          ],
+          "correct": 2,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1142,
+          "category": "comandos_avanzados",
+          "categoryName": "Comandos: ColumnTransformer y Matrices",
+          "text": "¿Para qué se usa comúnmente el parámetro `handle_unknown='ignore'` dentro del OneHotEncoder en producción?",
+          "options": [
+            "Para que si el modelo encuentra en el futuro una nueva categoría que nunca vio en el entrenamiento (ej. un rol 'Astronauta TI'), no rompa el código y le asigne ceros a todo.",
+            "Para que el algoritmo ignore por completo los errores de sintaxis en el código de Python.",
+            "Para borrar automáticamente cualquier fila que tenga un valor vacío (NaN) en la base de datos de producción.",
+            "Para decirle al modelo que ignore la existencia del conjunto de prueba (Test set) y entrene sin él."
+          ],
+          "correct": 0,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1143,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Entrenaste una Regresión Lineal Múltiple para salarios TI y obtuviste la ecuación ŷ = 500 + 300(experiencia) - 200(modalidad_Presencial). ¿Qué puedes deducir sobre la modalidad de trabajo?",
+          "options": [
+            "Que la modalidad presencial es la más demandada del mercado y por ende siempre se pagará menos.",
+            "Que la modalidad presencial genera un salario negativo, debiéndole dinero a la empresa.",
+            "Que trabajar de manera 'Presencial', manteniendo todas las demás variables constantes (experiencia, rol), reduce el salario esperado en 200 dólares en promedio.",
+            "Que el modelo está matemáticamente errado; la regresión múltiple no permite coeficientes negativos bajo ninguna circunstancia."
+          ],
+          "correct": 2,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1144,
+          "category": "comandos_avanzados",
+          "categoryName": "Comandos: ColumnTransformer y Matrices",
+          "text": "Luego de usar `ColumnTransformer` con OHE, tu matriz X pasa de tener 4 columnas a 15 columnas de números sin nombre. ¿Qué comando usas para recuperar los nombres reales (ej. 'rol_Backend') y poder graficar los coeficientes?",
+          "options": [
+            "`preprocesador.get_feature_names_out()`",
+            "`preprocesador.columns_names_recover()`",
+            "`preprocesador.describe()`",
+            "`df.columns()`"
+          ],
+          "correct": 0,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1145,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Si en un modelo de regresión múltiple eliminas dos variables predictoras irrelevantes y el R² ajustado SUBE. ¿Qué te está diciendo el comportamiento de la métrica?",
+          "options": [
+            "Significa que las variables eliminadas eran las más importantes del modelo y el sistema está intentando compensarlo.",
+            "Te indica que cometiste un grave error de programación y perdiste poder predictivo valioso.",
+            "Demuestra matemáticamente que la regresión múltiple siempre funciona mejor con menos variables, sin importar cuáles sean.",
+            "Te confirma que esas variables estaban aportando puro ruido al modelo; el R² ajustado premia la simplicidad si eliminas datos inútiles."
+          ],
+          "correct": 3,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1146,
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial (No Lineal)",
+          "text": "Deseas crear un modelo capaz de capturar relaciones curvas en los años de experiencia usando `PolynomialFeatures(degree=2)`. ¿Por qué aplicas esto SOLO a las variables numéricas y NO a las variables dummy (categóricas)?",
+          "options": [
+            "No importa, siempre se debe aplicar polinomial a todo el dataset completo sin discriminar para maximizar el R².",
+            "Porque elevar al cuadrado o interactuar variables dummy (ceros y unos) generaría redundancia absoluta y columnas repetidas inútiles, estallando la matriz de datos sin aportar valor predictivo.",
+            "Porque las variables dummy al elevarse al cuadrado producen automáticamente números negativos infinitos.",
+            "Porque la librería Scikit-Learn prohíbe terminantemente por defecto cruzar texto con números en funciones polinómicas."
+          ],
+          "correct": 1,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1147,
+          "category": "comandos_avanzados",
+          "categoryName": "Comandos: ColumnTransformer y Matrices",
+          "text": "Tras procesar las numéricas con Polinomial (grado 2) y las categóricas con OHE, obtienes dos matrices separadas (`X_train_poly` y `dummies_train`). ¿Cómo las unes horizontalmente para alimentar tu `LinearRegression`?",
+          "options": [
+            "Usando `np.hstack((X_train_poly, dummies_train))` para concatenarlas horizontalmente como columnas de una sola gran tabla.",
+            "No hace falta unirlas, la función `LinearRegression` permite ingresar hasta 5 matrices distintas en sus parámetros.",
+            "Sumándolas matemáticamente con el signo de suma `+` en Python.",
+            "Usando `np.vstack((X_train_poly, dummies_train))` para apilarlas verticalmente, agregando nuevas filas al dataset."
+          ],
+          "correct": 0,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1148,
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial (No Lineal)",
+          "text": "Tu Modelo Polinomial (Grado 3) logra un R² brutal de 0.99 en entrenamiento, pero en el conjunto de prueba (Test) su R² se desploma a -1.50. ¿Cómo interpretas y solucionas este evento?",
+          "options": [
+            "Interpretación: El modelo es excelente, pero el conjunto de pruebas es defectuoso. Solución: Borrar el conjunto de pruebas.",
+            "Interpretación: Overfitting severo y catastrófico. El modelo aprendió el ruido exacto memorizando los datos. Solución: Bajar la complejidad (regresar a Grado 2 o 1).",
+            "Interpretación: Underfitting grave. El modelo necesita aún más complejidad. Solución: Aumentar la regresión a Grado 15.",
+            "Interpretación: Falta memoria RAM en Google Colab para procesar la curva. Solución: Usar la librería `pandas` en lugar de `numpy`."
+          ],
+          "correct": 1,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1149,
+          "category": "comparativa",
+          "categoryName": "Comparativa y Selección de Modelos",
+          "text": "Comparativa Final: Modelo Lineal (15 predictores, R² Ajustado = 0.81). Modelo Polinomial Grado 2 (45 predictores, R² Ajustado = 0.82). Basado en la 'Navaja de Ockham', ¿qué recomiendas para el sistema en producción?",
+          "options": [
+            "El Modelo Lineal. Ganar apenas un 1% de R² no justifica triplicar la complejidad, dificultar la mantenibilidad y elevar el riesgo de Overfitting en producción.",
+            "El Modelo Polinomial. En la industria del software, un incremento del 1% es la ley absoluta y siempre debe sacrificarse toda la mantenibilidad del código para conseguirlo.",
+            "Ninguno. Ambos modelos son basura estadística porque su R² no es 0.99 perfecto.",
+            "Promediar ambos modelos sumando sus ecuaciones matemáticas línea por línea y construir un tercer modelo híbrido manual."
+          ],
+          "correct": 0,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1150,
+          "category": "comparativa",
+          "categoryName": "Comparativa y Selección de Modelos",
+          "text": "¿Por qué NUNCA utilizaríamos un 'Dataset Sintético Didáctico' (como el usado en la Tarea 2) para presentar un informe ejecutivo o entrenar una IA de contratación real?",
+          "options": [
+            "Porque los valores y patrones (aunque plausibles) son inventados por el profesor o una computadora; no reflejan la cruda y ruidosa realidad del mercado laboral real. Generaríamos un modelo inútil que discriminaría o pagaría mal en la vida real.",
+            "Sí podemos usarlo sin problema; en Data Science los datos falsos valen lo mismo que los datos reales si están en formato CSV.",
+            "Porque Scikit-Learn detecta mediante algoritmos internos si los números son reales o falsos, y se niega a compilar la regresión lineal.",
+            "Porque los datasets sintéticos siempre tienen distribución uniforme, mientras que la vida real siempre tiene distribución bimodal obligatoriamente."
+          ],
+          "correct": 0,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1151,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 1: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente.",
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente.",
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes."
+          ],
+          "correct": 3,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1152,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 2: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes.",
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente.",
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente."
+          ],
+          "correct": 1,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1153,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 3: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente.",
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente.",
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes."
+          ],
+          "correct": 3,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1154,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 4: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente.",
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes.",
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente."
+          ],
+          "correct": 0,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1155,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 5: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes.",
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente.",
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes."
+          ],
+          "correct": 0,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1156,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 6: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente.",
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente.",
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes."
+          ],
+          "correct": 0,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1157,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 7: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente.",
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes.",
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente."
+          ],
+          "correct": 2,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1158,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 8: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente.",
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente.",
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes."
+          ],
+          "correct": 1,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1159,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 9: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes.",
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente.",
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes."
+          ],
+          "correct": 0,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1160,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 10: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes.",
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente.",
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes."
+          ],
+          "correct": 0,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1161,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 11: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes.",
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente.",
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente."
+          ],
+          "correct": 0,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1162,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 12: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente.",
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes.",
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente."
+          ],
+          "correct": 2,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1163,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 13: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente.",
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes.",
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente."
+          ],
+          "correct": 1,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1164,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 14: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente.",
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes.",
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes.",
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente."
+          ],
+          "correct": 1,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1165,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 15: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente.",
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes.",
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes."
+          ],
+          "correct": 2,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1166,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 16: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes.",
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes.",
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente."
+          ],
+          "correct": 0,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1167,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 17: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente.",
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes.",
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente."
+          ],
+          "correct": 1,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1168,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 18: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente.",
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes.",
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente."
+          ],
+          "correct": 2,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1169,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 19: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes.",
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente.",
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente."
+          ],
+          "correct": 2,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1170,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 20: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente.",
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes.",
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente."
+          ],
+          "correct": 2,
+          "feedback": "Razonamiento clave de la Semana 3."
+        },
+        {
+          "id": 1171,
+          "category": "teoria_ml",
+          "categoryName": "Fundamentos y Multicolinealidad",
+          "text": "Escenario de práctica de razonamiento 21: Supongamos que añadimos la variable 'Edad' (altamente correlacionada con 'Años de Experiencia') a nuestro modelo múltiple. ¿Qué fenómeno estadístico peligroso introducimos al sistema?",
+          "options": [
+            "Underfitting automático. El modelo rechazará trabajar con más de 10 columnas numéricas simultáneamente.",
+            "Heterocedasticidad. Los errores del modelo se volverán más grandes para las personas más jóvenes.",
+            "Ninguno, cuantas más variables correlacionadas le pasemos al modelo, el R² aumentará más y más, lo cual siempre es excelente.",
+            "Multicolinealidad. El modelo se confundirá al intentar separar el impacto de la edad y el impacto de la experiencia sobre el salario, volviendo inestables e interpretativamente inútiles a ambos coeficientes."
+          ],
+          "correct": 3,
+          "feedback": "Razonamiento clave de la Semana 3."
         }
       ]
     },
