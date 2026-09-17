@@ -1463,6 +1463,62 @@ window.QUIZ_DATA = {
         {
           "category": "teoria",
           "categoryName": "Teoría Básica",
+          "text": "¿Cuál es la definición Fundacional de Inteligencia Artificial propuesta por McCarthy (1956)?",
+          "options": [
+            "Ciencia e ingeniería de crear máquinas inteligentes.",
+            "Estudio de agentes que perciben y actúan racionalmente.",
+            "Sistema que infiere de datos cómo generar predicciones o decisiones.",
+            "Aprende patrones de datos para decidir o generar contenido."
+          ],
+          "correct": 0,
+          "feedback": "McCarthy acuñó el término en la conferencia de Dartmouth en 1956 definiéndola como la ciencia e ingeniería de crear máquinas inteligentes.",
+          "id": 1099
+        },
+        {
+          "category": "teoria",
+          "categoryName": "Teoría Básica",
+          "text": "¿Cuál es la definición Moderna de Inteligencia Artificial según Russell & Norvig (2020)?",
+          "options": [
+            "Estudio de agentes que perciben y actúan racionalmente.",
+            "Ciencia e ingeniería de crear máquinas inteligentes.",
+            "Sistema que infiere de datos cómo generar predicciones o decisiones.",
+            "Aprende patrones de datos para decidir o generar contenido."
+          ],
+          "correct": 0,
+          "feedback": "Russell y Norvig le dan un enfoque de agentes racionales: percibir el entorno y actuar para maximizar el éxito.",
+          "id": 1100
+        },
+        {
+          "category": "teoria",
+          "categoryName": "Teoría Básica",
+          "text": "¿Cuál es la definición Regulatoria de IA según el Reglamento de la Unión Europea (2024/1689)?",
+          "options": [
+            "Sistema que infiere de datos cómo generar predicciones o decisiones.",
+            "Estudio de agentes que perciben y actúan racionalmente.",
+            "Ciencia e ingeniería de crear máquinas inteligentes.",
+            "Aprende patrones de datos para decidir o generar contenido."
+          ],
+          "correct": 0,
+          "feedback": "La UE se enfoca en el aspecto legal: sistemas basados en datos que infieren predicciones, decisiones o contenido que influyen en el entorno.",
+          "id": 1101
+        },
+        {
+          "category": "teoria",
+          "categoryName": "Teoría Básica",
+          "text": "¿Cuál es la definición Técnica de IA que utilizaremos en este curso?",
+          "options": [
+            "Aprende patrones de datos para decidir o generar contenido.",
+            "Sistema que infiere de datos cómo generar predicciones o decisiones.",
+            "Estudio de agentes que perciben y actúan racionalmente.",
+            "Ciencia e ingeniería de crear máquinas inteligentes."
+          ],
+          "correct": 0,
+          "feedback": "En la práctica técnica de este curso, la IA trata sobre aprender patrones a partir de datos para tomar decisiones (ML predictivo) o generar cosas nuevas (GenAI).",
+          "id": 1102
+        },
+        {
+          "category": "teoria",
+          "categoryName": "Teoría Básica",
           "text": "¿Qué es un scatter plot (diagrama de dispersión) y para qué sirve principalmente en Machine Learning?",
           "options": [
             "Es un gráfico circular que muestra la proporción porcentual que representa cada categoría respecto al total de datos recolectados.",
