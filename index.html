@@ -629,7 +629,7 @@
 
 
         // ESTADO DE LA APLICACIÓN
-        let currentQuestions = [...MASTER_QUESTIONS];
+        let currentQuestions = [];
         let currentIndex = 0;
         let userAnswers = {}; // { qId: selectedOptionIndex }
         let bookmarked = new Set();
@@ -763,13 +763,16 @@
                 console.error("Error loading state:", e);
             }
 
-            // Cargar preguntas personalizadas (solo banco original)
+            // Cargar preguntas personalizadas en el banco activo
             var customData = localStorage.getItem('ai_quiz_custom_q');
             if (customData) {
                 try {
                     var parsed = JSON.parse(customData);
                     if (Array.isArray(parsed) && parsed.length > 0) {
-                        MASTER_QUESTIONS.push(...parsed);
+                        const activeB = dataBancos.find(b => b.id === activeBank);
+                        if (activeB) {
+                            activeB.preguntas.push(...parsed);
+                        }
                     }
                 } catch (e) {
                     console.error("Error al cargar preguntas personalizadas:", e);
@@ -1251,8 +1254,10 @@
                 feedback: feedback
             };
 
-            MASTER_QUESTIONS.push(newQ);
-
+            const activeB = dataBancos.find(b => b.id === activeBank);
+            if (activeB) {
+                activeB.preguntas.push(newQ);
+            }
             // Guardar en localStorage
             try {
                 const stored = JSON.parse(localStorage.getItem('ai_quiz_custom_q') || '[]');
