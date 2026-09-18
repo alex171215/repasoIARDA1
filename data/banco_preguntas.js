@@ -1771,6 +1771,10 @@ window.QUIZ_DATA = {
         {
           "value": "metricas_comparacion",
           "label": "Métricas y Comparación de Modelos"
+        },
+        {
+          "value": "despliegue",
+          "label": "Despliegue y API"
         }
       ],
       "preguntas": [
@@ -2417,6 +2421,104 @@ window.QUIZ_DATA = {
           "correct": 0,
           "feedback": "El train set fue visto por el modelo durante el ajuste, por lo que su R² mide principalmente la capacidad de memorización. El test set (nunca visto) mide la capacidad de generalización: cuánto de bueno será el modelo al predecir autos nuevos que lleguen mañana al inventario de la concesionaria.",
           "id": 1171
+        },
+        {
+          "id": 1172,
+          "category": "despliegue",
+          "categoryName": "Despliegue y API",
+          "text": "En el código `pipeline = joblib.load('modelo.pkl')` ubicado fuera (antes) de la función del endpoint `/predict`, ¿por qué se carga el modelo en ese punto y no dentro de la función de predicción?",
+          "options": [
+            "Porque así el modelo se reentrena automáticamente con cada solicitud que llega al servidor.",
+            "Porque FastAPI lo exige por razones de sintaxis, sin ninguna ventaja real de rendimiento.",
+            "Porque dentro de la función del endpoint no se puede usar la librería joblib por seguridad.",
+            "Para cargar el modelo una sola vez al iniciar el servidor, en vez de releerlo desde disco en cada solicitud."
+          ],
+          "correct": 3,
+          "feedback": "Cargar el modelo una sola vez al iniciar el servidor evita releerlo desde disco en cada solicitud, haciendo que cada predicción sea más rápida y consuma menos recursos."
+        },
+        {
+          "id": 1173,
+          "category": "despliegue",
+          "categoryName": "Despliegue y API",
+          "text": "¿Para qué se utiliza `joblib.dump()` y `joblib.load()` en el flujo de despliegue de un modelo?",
+          "options": [
+            "Para guardar y cargar el objeto (pipeline) entrenado, de modo que pueda reutilizarse sin volver a entrenarlo.",
+            "Para dividir los datos en conjuntos de entrenamiento y prueba antes de iniciar el servidor web.",
+            "Para entrenar el modelo desde cero cada vez que se necesita realizar una nueva predicción.",
+            "Para calcular automáticamente el RMSE del modelo después de que ha sido desplegado en el servidor."
+          ],
+          "correct": 0,
+          "feedback": "joblib.dump() guarda el pipeline entrenado en un archivo, y joblib.load() lo recupera en otro programa sin necesidad de reentrenarlo."
+        },
+        {
+          "id": 1174,
+          "category": "despliegue",
+          "categoryName": "Despliegue y API",
+          "text": "¿Qué indica el decorador `@app.post('/predict')` sobre una función en FastAPI?",
+          "options": [
+            "Que esa función se ejecuta automáticamente de forma periódica cada cierto tiempo (ej. cada minuto).",
+            "Que esa función solo puede ejecutarse si la solicitud proviene de una aplicación móvil nativa.",
+            "Que esa función entrena el modelo de regresión desde cero cada vez que es llamada externamente.",
+            "Que esa función maneja las peticiones POST que llegan al endpoint /predict en la aplicación."
+          ],
+          "correct": 3,
+          "feedback": "El decorador @app.post('/predict') indica que la función definida debajo se ejecuta cuando llega una petición HTTP POST a esa ruta específica."
+        },
+        {
+          "id": 1175,
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial (No Lineal)",
+          "text": "En `PolynomialFeatures(degree=2, include_bias=False)`, ¿qué logra el parámetro include_bias=False?",
+          "options": [
+            "Excluye la columna constante del término independiente, porque el modelo de regresión lineal ya agrega su propio intercepto.",
+            "Elimina automáticamente todas las variables categóricas del dataset antes de aplicar la expansión polinomial.",
+            "Impide que se generen términos de grado 2, limitando la transformación solo a interacciones de primer grado.",
+            "Evita el data leakage entre el conjunto de entrenamiento y el conjunto de prueba durante la transformación."
+          ],
+          "correct": 0,
+          "feedback": "include_bias=False excluye la columna constante (de puros unos) que representaría el término independiente, ya que el propio modelo (ej. LinearRegression) añade su intercepto por separado por defecto."
+        },
+        {
+          "id": 1176,
+          "category": "despliegue",
+          "categoryName": "Despliegue y API",
+          "text": "¿Cuál es la diferencia entre una API y un endpoint?",
+          "options": [
+            "La API es la interfaz general que expone el servicio; el endpoint es una dirección específica dentro de esa API que realiza una tarea concreta.",
+            "Son sinónimos exactos en el contexto del desarrollo web y no existe ninguna diferencia técnica entre ellos.",
+            "El endpoint es el servicio completo que se expone, mientras que la API es una ruta específica dentro de él.",
+            "La API es una base de datos que almacena información y el endpoint es la interfaz visual para consultarla."
+          ],
+          "correct": 0,
+          "feedback": "La API es el servicio completo (ej. el sistema de predicción); dentro de ella puede haber varios endpoints (por ejemplo, /predict y /health), cada uno encargado de una tarea concreta."
+        },
+        {
+          "id": 1177,
+          "category": "despliegue",
+          "categoryName": "Despliegue y API",
+          "text": "¿Qué realiza la línea `pipeline = joblib.load('modelo.pkl')`?",
+          "options": [
+            "Convierte el archivo modelo.pkl en un archivo JSON para poder ser transmitido por la red rápidamente.",
+            "Elimina de la memoria el modelo entrenado anteriormente para liberar recursos del servidor web.",
+            "Carga en memoria el objeto (pipeline) previamente entrenado y guardado en el archivo modelo.pkl.",
+            "Entrena un nuevo pipeline de regresión usando los datos contenidos en el archivo modelo.pkl como dataset."
+          ],
+          "correct": 2,
+          "feedback": "joblib.load() recupera (deserializa) el objeto previamente guardado con joblib.dump(), dejándolo listo para usarse con el método .predict()."
+        },
+        {
+          "id": 1178,
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial (No Lineal)",
+          "text": "¿Por qué la regresión polinomial se considera un caso especial de la regresión lineal múltiple?",
+          "options": [
+            "Porque solo puede usarse con una única variable categórica convertida mediante One-Hot Encoding.",
+            "Porque el modelo es lineal en los parámetros β (coeficientes), aunque no lo sea en las variables x.",
+            "Porque a diferencia de la regresión lineal, la regresión polinomial no utiliza coeficientes β.",
+            "Porque siempre tiene exactamente el mismo grado matemático que el número de variables predictoras."
+          ],
+          "correct": 1,
+          "feedback": "Aunque la relación con x no es lineal (hay potencias de x como x² o x³), el modelo sigue siendo una suma lineal de términos multiplicados por coeficientes β (ej. y = β₀ + β₁x + β₂x²), por lo que se ajusta con las técnicas estándar de regresión lineal."
         }
       ]
     },
