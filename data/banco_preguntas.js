@@ -2631,6 +2631,10 @@ window.QUIZ_DATA = {
       "description": "Regresión Logística, Clasificación Binaria, Función Sigmoide, Pipeline, y Evaluación de Modelos (ROC/AUC, Matriz de Confusión).",
       "categorias": [
         {
+          "value": "all",
+          "label": "Todas (Semana 4)"
+        },
+        {
           "value": "fundamentos",
           "label": "Fundamentos: Regresión vs Clasificación"
         },
