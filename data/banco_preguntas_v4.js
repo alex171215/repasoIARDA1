@@ -2653,6 +2653,10 @@ window.QUIZ_DATA = {
         {
           "value": "despliegue",
           "label": "Despliegue y Producción"
+        },
+        {
+          "value": "bookmarked",
+          "label": "Marcadas para Duda"
         }
       ],
       "preguntas": [
