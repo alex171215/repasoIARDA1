@@ -2628,7 +2628,6 @@ window.QUIZ_DATA = {
     },
     {
       "id": "semana_4",
-      "title": "Semana 4",
       "description": "Regresión Logística, Clasificación Binaria, Función Sigmoide, Pipeline, y Evaluación de Modelos (ROC/AUC, Matriz de Confusión).",
       "categorias": [
         {
@@ -3003,7 +3002,8 @@ window.QUIZ_DATA = {
           "correct": 2,
           "id": 1203
         }
-      ]
+      ],
+      "titulo": "Semana 4"
     }
   ]
 };
