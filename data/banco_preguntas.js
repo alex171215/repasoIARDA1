@@ -2625,6 +2625,385 @@ window.QUIZ_DATA = {
           "id": 1098
         }
       ]
+    },
+    {
+      "id": "semana_4",
+      "title": "Semana 4",
+      "description": "Regresión Logística, Clasificación Binaria, Función Sigmoide, Pipeline, y Evaluación de Modelos (ROC/AUC, Matriz de Confusión).",
+      "categorias": [
+        {
+          "value": "fundamentos",
+          "label": "Fundamentos: Regresión vs Clasificación"
+        },
+        {
+          "value": "preprocesamiento",
+          "label": "Preprocesamiento (Escalado, OHE, ColumnTransformer)"
+        },
+        {
+          "value": "entrenamiento",
+          "label": "Entrenamiento: Costo, Gradiente y MLE"
+        },
+        {
+          "value": "evaluacion",
+          "label": "Métricas de Evaluación: ROC, AUC y Reporte"
+        },
+        {
+          "value": "despliegue",
+          "label": "Despliegue y Producción"
+        }
+      ],
+      "preguntas": [
+        {
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (Escalado, OHE, ColumnTransformer)",
+          "text": "¿Por qué es crucial escalar o normalizar las variables numéricas (por ejemplo, usando StandardScaler) antes de entrenar un modelo de Regresión Logística?",
+          "feedback": "El escalado de variables no cambia la información, pero pone todos los predictores numéricos en una misma magnitud (media 0, varianza 1). Esto ayuda matemáticamente al algoritmo de descenso de gradiente a encontrar el mínimo de la función de costo mucho más rápido y sin oscilaciones inestables.",
+          "options": [
+            "Porque escalar las variables categóricas permite que OneHotEncoder detecte automáticamente cuántas columnas binarias debe generar sin riesgo de colinealidad.",
+            "Porque el algoritmo de optimización (descenso de gradiente) converge mucho más lento o puede fallar si las variables tienen escalas muy distintas (ej. edad vs. ingreso).",
+            "Porque la regresión logística exige obligatoriamente que todos los valores numéricos del dataset sean números enteros positivos antes de calcular las probabilidades.",
+            "Porque StandardScaler convierte las probabilidades que están fuera del rango [0,1] hacia valores válidos, permitiendo que la función sigmoide se ajuste correctamente."
+          ],
+          "correct": 1,
+          "id": 1179
+        },
+        {
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (Escalado, OHE, ColumnTransformer)",
+          "text": "¿Qué es el `ColumnTransformer` en scikit-learn y cómo funciona dentro del preprocesamiento?",
+          "feedback": "En un dataset real tienes variables numéricas y categóricas mezcladas. ColumnTransformer te permite decir: 'aplica OneHotEncoder a estas 3 columnas' y 'aplica StandardScaler a estas otras 4'. Al ejecutarlo, procesa todo en paralelo y te devuelve una sola matriz lista para el modelo.",
+          "options": [
+            "Es un modelo de Machine Learning que predice qué columnas son las más importantes para el resultado final, descartando aquellas que generan multicolinealidad severa.",
+            "Es el algoritmo interno de la regresión logística que transforma los coeficientes β en probabilidades utilizando la función sigmoide sobre todas las columnas continuas.",
+            "Es un objeto que permite aplicar transformaciones distintas a distintos grupos de columnas (ej. OHE a categóricas, StandardScaler a numéricas) y devuelve una sola matriz unificada.",
+            "Es una función matemática exclusiva de Pandas que elimina las variables categóricas del dataset para que la Regresión Logística pueda ejecutarse sin arrojar errores."
+          ],
+          "correct": 2,
+          "id": 1180
+        },
+        {
+          "category": "entrenamiento",
+          "categoryName": "Entrenamiento: Costo, Gradiente y MLE",
+          "text": "En el contexto de la Regresión Logística, ¿qué son la 'Función de Costo' (log-loss) y el 'Descenso de Gradiente'?",
+          "feedback": "La función de costo (Pérdida Logística o Log-Loss) cuantifica el error (penaliza más si el modelo estaba muy seguro de una predicción incorrecta). El descenso de gradiente es el 'motor' que, paso a paso, ajusta los parámetros (pesos β) bajando por la pendiente hasta encontrar el punto de menor error (convergencia).",
+          "options": [
+            "Ambos términos son sinónimos que describen el proceso de aplicar One-Hot Encoding a variables nominales, asegurando que el costo computacional no crezca exponencialmente.",
+            "La función de costo transforma variables numéricas a valores entre 0 y 1; el descenso de gradiente divide los datos en conjuntos de entrenamiento y prueba aleatorios.",
+            "La función de costo mide qué tan grandes son los errores del modelo; el descenso de gradiente es el algoritmo iterativo que actualiza los coeficientes β para minimizar dicho costo.",
+            "La función de costo calcula automáticamente el R² ajustado del modelo; el descenso de gradiente añade nuevas variables polinomiales para mejorar la precisión global."
+          ],
+          "correct": 2,
+          "id": 1181
+        },
+        {
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (Escalado, OHE, ColumnTransformer)",
+          "text": "Al dividir tus datos con `train_test_split` en un problema de clasificación, incluyes el argumento `stratify=y`. ¿Para qué sirve esto y por qué es vital?",
+          "feedback": "Sin `stratify=y`, el azar podría hacer que tu conjunto de prueba termine solo con ejemplos de la clase mayoritaria (ej. puros créditos aprobados). Al estratificar, obligas a que si el dataset original tiene 10% de fraude, el train tenga 10% y el test tenga 10%. Es crítico para una evaluación realista.",
+          "options": [
+            "Fuerza a que las clases desbalanceadas se equilibren mágicamente al 50/50 generando datos sintéticos nuevos antes de separar el entrenamiento y la validación final.",
+            "Sirve para ordenar el dataset alfabéticamente según la variable objetivo antes de dividirlo, asegurando que el modelo logístico procese los datos más rápido en memoria.",
+            "Garantiza que la proporción de clases (ej. 80% aprobados, 20% rechazados) se mantenga exactamente igual tanto en el conjunto de entrenamiento como en el de prueba.",
+            "Transforma automáticamente la variable objetivo (y) usando One-Hot Encoding internamente, evitando tener que usar un ColumnTransformer para las columnas categóricas."
+          ],
+          "correct": 2,
+          "id": 1182
+        },
+        {
+          "category": "despliegue",
+          "categoryName": "Despliegue y Producción",
+          "text": "Una vez que evaluaste tu Pipeline y determinaste que es el 'mejor modelo', ¿cuál es el paso final antes de exportarlo a producción?",
+          "feedback": "El train/test split (80/20) era solo un experimento para simular el futuro y MEDIR el modelo. Una vez confirmas que el modelo es bueno, no desperdicias el 20% de tus datos: reentrenas el Pipeline final con todos los datos disponibles. Luego lo exportas con `joblib.dump(pipeline_final, 'modelo.pkl')`.",
+          "options": [
+            "Se aplican más transformaciones polinomiales para forzar que el Accuracy llegue al 100% en el conjunto de prueba, y luego se exportan los datos en formato CSV.",
+            "Se exporta únicamente el modelo LogisticRegression entrenado con X_train, ignorando el ColumnTransformer para ahorrar espacio en la base de datos de producción.",
+            "Se debe cambiar el hiperparámetro stratify a False y reentrenar solo con el conjunto de prueba, exportando el resultado mediante el comando interno pipeline.deploy().",
+            "Se reentrena el Pipeline completo (preprocesamiento + modelo) utilizando el 100% de los datos (X e y completos) y se lo exporta como un archivo .pkl usando joblib."
+          ],
+          "correct": 3,
+          "id": 1183
+        },
+        {
+          "category": "evaluacion",
+          "categoryName": "Métricas de Evaluación: ROC, AUC y Reporte",
+          "text": "¿Qué es exactamente la curva ROC (Receiver Operating Characteristic) y qué muestra visualmente?",
+          "feedback": "La curva ROC evalúa cómo se comporta el modelo en TODOS los umbrales de probabilidad posibles (no solo en 0.5). El eje Y es el Recall (cuántos positivos reales encuentro) y el eje X es el FPR (cuántas falsas alarmas genero). Un modelo perfecto sube recto por el eje Y.",
+          "options": [
+            "Es un gráfico tridimensional que relaciona el descenso de gradiente, la función de costo log-loss y la tasa de aprendizaje durante el entrenamiento del algoritmo logístico.",
+            "Es una curva que representa la Media Armónica entre Precision y Recall, utilizada exclusivamente cuando las clases del dataset están severamente desbalanceadas en la vida real.",
+            "Es un gráfico que muestra el equilibrio entre la Tasa de Verdaderos Positivos (Recall) y la Tasa de Falsos Positivos a medida que varía el umbral de decisión del modelo.",
+            "Es una métrica numérica que penaliza fuertemente el Overfitting, dibujando una línea recta cuando el modelo memoriza el ruido del conjunto de datos de entrenamiento."
+          ],
+          "correct": 2,
+          "id": 1184
+        },
+        {
+          "category": "evaluacion",
+          "categoryName": "Métricas de Evaluación: ROC, AUC y Reporte",
+          "text": "Asociada a la curva ROC se encuentra la métrica AUC (Área Bajo la Curva). ¿Cómo se interpreta el valor del AUC en un modelo de clasificación?",
+          "feedback": "AUC (Area Under the Curve) resume toda la curva ROC en un solo número. Si el AUC es 0.5, el modelo tira una moneda al azar. Si es 1.0, el modelo separa perfectamente las dos clases. En la práctica, un AUC > 0.8 se considera bueno a excelente dependiendo del problema.",
+          "options": [
+            "Es una penalización por complejidad: a mayor número de variables categóricas ingresadas al modelo, menor será el AUC, forzando al científico a eliminar predictores.",
+            "Su rango va de 0 a 100, donde los valores más cercanos a 0 indican que el modelo generaliza bien y los valores cercanos a 100 indican un sobreajuste severo en los datos.",
+            "Su rango va de 0.5 (clasificador aleatorio inútil) a 1.0 (clasificador perfecto). Un AUC más alto indica mayor capacidad general para distinguir entre la clase positiva y la negativa.",
+            "Mide el porcentaje exacto de predicciones correctas sobre el total; un AUC de 0.80 significa que el modelo acertó exactamente el 80% de todas las observaciones de prueba."
+          ],
+          "correct": 2,
+          "id": 1185
+        },
+        {
+          "category": "evaluacion",
+          "categoryName": "Métricas de Evaluación: ROC, AUC y Reporte",
+          "text": "Dentro del Classification Report, ¿qué mide la métrica PRECISION y en qué escenario de negocio debemos priorizarla?",
+          "feedback": "Precision = TP / (TP + FP). Responde a: 'Cuando el modelo grita ¡LO ENCONTRÉ!, ¿qué tan probable es que tenga razón?'. Si la Precision es baja, el modelo genera muchas 'Falsas Alarmas' (Falsos Positivos). Si un falso positivo te cuesta dinero (ej. dar crédito malo, spam en bandeja de entrada), optimiza Precision.",
+          "options": [
+            "Mide: el equilibrio armónico general de los errores del modelo. Se prioriza únicamente cuando las clases del dataset de entrenamiento se encuentran perfectamente balanceadas.",
+            "Mide: de todos los que el modelo etiquetó como 'Positivos', ¿cuántos realmente lo eran? Se prioriza cuando un Falso Positivo es muy costoso (ej. aprobar crédito a quien no pagará).",
+            "Mide: de todos los casos reales 'Positivos', ¿a cuántos logró detectar el modelo? Se prioriza cuando es vital no dejar escapar ningún caso real (ej. detección de cáncer grave).",
+            "Mide: la cantidad de veces que el modelo acertó tanto en verdaderos positivos como verdaderos negativos. Se prioriza cuando ambas clases son igualmente importantes para el banco."
+          ],
+          "correct": 1,
+          "id": 1186
+        },
+        {
+          "category": "evaluacion",
+          "categoryName": "Métricas de Evaluación: ROC, AUC y Reporte",
+          "text": "Dentro del Classification Report, ¿qué mide la métrica RECALL y en qué escenario de negocio es crítico maximizarla?",
+          "feedback": "Recall (o Sensibilidad) = TP / (TP + FN). Responde a: 'De todos los positivos que andan sueltos, ¿qué porcentaje atrapé?'. Un modelo con bajo Recall es un modelo ciego que deja escapar casos reales (Falsos Negativos). En medicina o fraude, escapar un caso es letal, por eso se exige un Recall altísimo.",
+          "options": [
+            "Mide: el número total de observaciones reales en cada clase (soporte). Se prioriza para asegurar que el conjunto de prueba tenga suficientes datos para ser estadísticamente válido.",
+            "Mide: de todos los que el modelo predijo como 'Positivos', ¿cuántos fueron correctos? Se prioriza cuando las falsas alarmas generan enormes costos económicos a la empresa.",
+            "Mide: de todos los casos reales 'Positivos' que existen, ¿a cuántos logró detectar el modelo? Se prioriza cuando un Falso Negativo es inaceptable (ej. no detectar un paciente con cáncer).",
+            "Mide: la proporción de la varianza explicada por el modelo de regresión logística, útil únicamente cuando las variables predictoras superan las mil columnas transformadas."
+          ],
+          "correct": 2,
+          "id": 1187
+        },
+        {
+          "category": "evaluacion",
+          "categoryName": "Métricas de Evaluación: ROC, AUC y Reporte",
+          "text": "¿Qué es la métrica F1-Score y cuándo es la mejor opción para evaluar un modelo?",
+          "feedback": "El F1-Score castiga los valores extremos. Si un modelo tiene 100% Precision pero 0% Recall (no detecta casi nada), su promedio simple sería 50%, lo cual es engañoso. La media armónica (F1-Score) tiraría ese número casi a 0. Es la métrica resumen más honesta en clasificación desbalanceada.",
+          "options": [
+            "Es el promedio simple (suma dividida para dos) de la Exactitud (Accuracy) y el Soporte (Support), y se utiliza en algoritmos de aprendizaje no supervisado sin etiquetas.",
+            "Es una métrica que solo evalúa los Verdaderos Negativos; se utiliza exclusivamente para validar modelos donde la clase mayoritaria representa el 99% de las observaciones reales.",
+            "Es la media armónica entre Precision y Recall. Es ideal cuando te importan tanto los Falsos Positivos como los Falsos Negativos, especialmente si las clases están muy desbalanceadas.",
+            "Es el gráfico que resulta de trazar Precision en el eje Y y Recall en el eje X, calculando el área bajo dicha curva para determinar si el modelo sufrió sobreajuste en el train."
+          ],
+          "correct": 2,
+          "id": 1188
+        },
+        {
+          "category": "evaluacion",
+          "categoryName": "Métricas de Evaluación: ROC, AUC y Reporte",
+          "text": "En la tabla generada por `classification_report`, aparece una columna llamada 'support' (Soporte). ¿Qué indica exactamente este número?",
+          "feedback": "El Support no evalúa qué tan bueno es el modelo; solo te describe la realidad de tu dataset (ej. 200 observaciones en la clase 0 y 800 en la clase 1). Te sirve para saber rápidamente si estás lidiando con clases desbalanceadas y darle el peso adecuado a las métricas.",
+          "options": [
+            "Indica el grado de soporte matemático que tiene cada variable predictora frente al modelo; un support bajo sugiere que la variable debe eliminarse para evitar ruido.",
+            "Indica el número real de observaciones que pertenecen a esa clase específica dentro del conjunto de datos evaluado (por ejemplo, cuántos clientes realmente pagaron y cuántos no).",
+            "Representa la confianza probabilística promedio con la que el modelo emitió sus predicciones; si es menor a 0.5 el reporte invalida los resultados automáticamente.",
+            "Es el hiperparámetro de regularización L2 aplicado internamente por scikit-learn para evitar que el descenso de gradiente diverja durante la fase de entrenamiento."
+          ],
+          "correct": 1,
+          "id": 1189
+        },
+        {
+          "category": "evaluacion",
+          "categoryName": "Métricas de Evaluación: ROC, AUC y Reporte",
+          "text": "¿Qué mide el Accuracy (Exactitud) y cuál es su trampa o limitación mortal en Machine Learning?",
+          "feedback": "Accuracy responde: 'De todo lo que dije, ¿en qué porcentaje acerté?'. En el mundo real, los problemas (fraude, enfermedades, clics en anuncios) son eventos raros (desbalanceados). Evaluar un modelo de fraude con Accuracy es el error de novato más común; siempre debes mirar Precision, Recall o F1-Score.",
+          "options": [
+            "Mide el área bajo la curva ROC. La limitación es que solo funciona en problemas de clasificación multiclase, arrojando siempre un error de sintaxis en problemas de clasificación binaria.",
+            "Mide el error cuadrático medio de las predicciones probabilísticas. Su única limitación es que no puede utilizarse con la función sigmoide si las variables no han sido escaladas.",
+            "Mide el porcentaje total de aciertos (TP+TN)/Total. Es engañoso con clases desbalanceadas: si el 99% de emails NO son spam, un modelo inútil que siempre diga 'No spam' tendrá 99% de Accuracy.",
+            "Mide qué tan rápido convergió el modelo durante el descenso de gradiente. Es problemático porque depende enormemente de la potencia del procesador de la computadora utilizada."
+          ],
+          "correct": 2,
+          "id": 1190
+        },
+        {
+          "category": "fundamentos",
+          "categoryName": "Fundamentos: Regresión vs Clasificación",
+          "text": "Desde el punto de vista del Aprendizaje Supervisado, ¿cuál es la diferencia fundamental entre una Regresión Lineal y una Clasificación?",
+          "feedback": "El tipo de algoritmo que usas depende estrictamente de tu variable objetivo (Y). Si Y es un número (dólares, edad, temperatura), es Regresión. Si Y es una clase (Spam/No Spam, Perro/Gato, Sano/Enfermo), es Clasificación.",
+          "options": [
+            "La regresión predice un valor numérico continuo (ej. el precio en dólares de un auto), mientras que la clasificación predice una categoría discreta predefinida (ej. crédito Aprobado o Rechazado).",
+            "La regresión pertenece al aprendizaje no supervisado porque no necesita una variable objetivo (Y), mientras que la clasificación requiere etiquetas manuales generadas por humanos.",
+            "La clasificación utiliza múltiples variables predictoras (X) para su análisis, pero la regresión lineal está limitada matemáticamente a usar una sola variable (regresión simple).",
+            "La regresión solo se aplica a datasets con columnas numéricas puras, mientras que la clasificación es obligatoria en cuanto aparece al menos una columna categórica (como 'provincia')."
+          ],
+          "correct": 0,
+          "id": 1191
+        },
+        {
+          "category": "fundamentos",
+          "categoryName": "Fundamentos: Regresión vs Clasificación",
+          "text": "¿Por qué un modelo de Regresión Lineal clásica falla y no debe usarse para resolver un problema de clasificación binaria (0 y 1)?",
+          "feedback": "Una línea recta va desde menos infinito hasta más infinito. Si mapeas clientes (0=rechazado, 1=aprobado) y trazas una recta, para un cliente muy riesgoso la recta te dará y=-2. ¿Qué significa -2% de probabilidad? No tiene sentido matemático ni estadístico. Necesitamos una curva que se acote entre 0 y 1.",
+          "options": [
+            "Porque la regresión lineal genera una curva en forma de 'S' que es incapaz de interceptar correctamente los puntos binarios trazados en un plano cartesiano de dos dimensiones.",
+            "Porque el descenso de gradiente en la regresión lineal requiere obligatoriamente que todas las observaciones pertenezcan a la misma clase, haciendo imposible la predicción binaria.",
+            "Porque la métrica R² ajustado se vuelve matemáticamente infinita cuando la variable objetivo solo contiene ceros y unos, bloqueando el código de Python internamente.",
+            "Porque la recta de regresión puede predecir valores negativos (ej. -0.5) o superiores a 1 (ej. 1.8), los cuales no tienen sentido ni pueden interpretarse como probabilidades válidas."
+          ],
+          "correct": 3,
+          "id": 1192
+        },
+        {
+          "category": "entrenamiento",
+          "categoryName": "Entrenamiento: Costo, Gradiente y MLE",
+          "text": "El corazón matemático de la Regresión Logística es la función Sigmoide (σ). ¿Cuál es su propiedad matemática principal que resuelve el problema de clasificación?",
+          "feedback": "La Sigmoide soluciona el problema de la regresión lineal. Toma la ecuación lineal clásica (β₀ + β₁X) y la envuelve: p = 1 / (1 + e^-(β₀ + β₁X)). Así, sin importar qué tan grande o negativo sea el resultado lineal, la sigmoide lo fuerza suavemente a ser un porcentaje válido entre 0% y 100%.",
+          "options": [
+            "Es un transformador de datos de Scikit-Learn que normaliza la variable objetivo (y) eliminando los valores atípicos severos para que la matriz de confusión sea simétrica.",
+            "Es una ecuación cuadrática que se activa únicamente si el coeficiente de correlación de Pearson entre X e Y es superior a 0.80, garantizando alta precisión en el modelo.",
+            "Es una función matemática con forma de 'S' que toma cualquier número real y lo comprime estrictamente dentro del intervalo [0, 1], permitiendo interpretarlo como una probabilidad.",
+            "Es una función lineal que maximiza la distancia entre las clases creando múltiples hiperplanos de separación sin requerir preprocesamiento adicional sobre las variables predictoras."
+          ],
+          "correct": 2,
+          "id": 1193
+        },
+        {
+          "category": "entrenamiento",
+          "categoryName": "Entrenamiento: Costo, Gradiente y MLE",
+          "text": "La estimación de Máxima Verosimilitud (MLE) es el concepto teórico detrás de la Regresión Logística. En términos simples, ¿qué busca hacer MLE?",
+          "feedback": "Imagina que eres el algoritmo: miras un cliente real que FUE aprobado. Ajustas tus parámetros (β) para que, al pasar por tu fórmula, ese cliente reciba un 99% de probabilidad, no un 10%. MLE busca matemáticamente los pesos que hagan que los datos que ya observaste sean 'lo más probables posible' según tu modelo.",
+          "options": [
+            "Maximiza el número de columnas creadas por el OneHotEncoder para asegurar que el modelo tenga suficiente varianza explicativa antes de iniciar el descenso de gradiente.",
+            "Prueba muchas combinaciones de coeficientes β y se queda con aquellos que asignan probabilidades altas a los casos positivos reales y probabilidades bajas a los casos negativos reales.",
+            "Busca la línea recta con el Error Cuadrático Medio (MSE) más bajo posible, penalizando únicamente a las variables que presenten alta correlación entre sí (multicolinealidad).",
+            "Filtra probabilísticamente el conjunto de prueba para garantizar que los Falsos Positivos nunca excedan el 5% de las observaciones reales, ajustando el umbral dinámicamente."
+          ],
+          "correct": 1,
+          "id": 1194
+        },
+        {
+          "category": "entrenamiento",
+          "categoryName": "Entrenamiento: Costo, Gradiente y MLE",
+          "text": "¿Por qué se utiliza el 'Logaritmo' (Log-Verosimilitud) en lugar de la Verosimilitud normal al momento de derivar la Función de Costo?",
+          "feedback": "Probabilidad conjunta = P(cliente1) × P(cliente2) × ... × P(cliente1000). Multiplicar mil números menores a 1 (ej. 0.8 × 0.2 × 0.9...) da un número minúsculo (0.00000000001) que las computadoras redondean a 0 (underflow matemático). Propiedad de logaritmos: log(A×B) = log(A) + log(B). Las sumas son seguras computacionalmente.",
+          "options": [
+            "Porque el logaritmo garantiza que las variables categóricas codificadas con OHE mantengan independencia estadística y no caigan en la Trampa de las Variables Ficticias (Dummy Trap).",
+            "Porque aplicar el logaritmo reduce automáticamente el número de iteraciones necesarias en el descenso de gradiente limitándolo siempre a un máximo de 100 iteraciones (max_iter).",
+            "Porque Scikit-Learn requiere que todas las métricas de evaluación sean números logarítmicos para poder graficar correctamente la curva ROC en un espacio de dos dimensiones.",
+            "Porque el logaritmo transforma productos (multiplicaciones de miles de probabilidades pequeñas) en sumas, evitando un problema computacional llamado 'underflow' donde las multiplicaciones darían cero."
+          ],
+          "correct": 3,
+          "id": 1195
+        },
+        {
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (Escalado, OHE, ColumnTransformer)",
+          "text": "Un Pipeline encadena el preprocesamiento y el estimador final. ¿Por qué es estructuralmente superior usar un Pipeline en lugar de aplicar las transformaciones a mano línea por línea?",
+          "feedback": "Con transformaciones manuales es facilísimo cometer el error de hacer `scaler.fit_transform(X_test)`, arruinando tu evaluación por completo al filtrar información del test. El Pipeline es una 'tubería' sellada: si le haces `.fit()`, entrena lo de adentro de forma segura. Si le haces `.predict()`, solo transforma. Es disciplina forzada por código.",
+          "options": [
+            "Porque encadenar pasos reduce el peso en megabytes del archivo .pkl exportado, permitiendo que las aplicaciones web con FastAPI carguen los modelos instantáneamente en memoria.",
+            "Porque el Pipeline es el único objeto capaz de graficar automáticamente la matriz de confusión y calcular el F1-Score sin necesidad de importar la librería de métricas de scikit-learn.",
+            "Porque asegura que `.fit()` se ejecute solo en el conjunto de entrenamiento, y aplica automáticamente `.transform()` al conjunto de prueba, eliminando el riesgo de Data Leakage accidental.",
+            "Porque al usar un Pipeline, el algoritmo de Regresión Logística ignora la multicolinealidad, haciendo que el modelo se vuelva inmune al sobreajuste severo en datos nuevos."
+          ],
+          "correct": 2,
+          "id": 1196
+        },
+        {
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (Escalado, OHE, ColumnTransformer)",
+          "text": "La Regla de Oro del preprocesamiento establece que funciones como `scaler.fit()` u `ohe.fit()` deben aplicarse EXCLUSIVAMENTE sobre el conjunto de Entrenamiento (X_train). ¿Por qué?",
+          "feedback": "Data Leakage (Fuga de Datos). El test set debe ser un simulacro perfecto de la vida real (clientes nuevos del futuro). Si usas el test set para calcular la media del escalado, le estás pasando información del 'futuro' al modelo presente. En la realidad, no puedes sacar el promedio de clientes que aún no existen.",
+          "options": [
+            "Porque `.fit()` genera columnas polinomiales de forma aleatoria; si se aplica en el test, el número de columnas no coincidirá jamás con la matriz dimensional del conjunto de entrenamiento.",
+            "Porque el conjunto de prueba siempre carece de la variable objetivo (Y), haciendo matemáticamente imposible que el StandardScaler o el OneHotEncoder puedan completar su rutina interna.",
+            "Porque la función `.fit()` altera permanentemente la estructura del disco duro, y aplicarla múltiples veces sobrescribiría los archivos CSV originales alojados en Google Colab o tu PC.",
+            "Porque `.fit()` aprende parámetros de los datos (ej. el promedio y la desviación estándar). Si los aprendes del Test, el modelo conocerá información de los datos de evaluación, perdiendo validez."
+          ],
+          "correct": 3,
+          "id": 1197
+        },
+        {
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (Escalado, OHE, ColumnTransformer)",
+          "text": "En el OneHotEncoder, el parámetro `handle_unknown='ignore'` es vital para modelos en producción. ¿Qué problema previene exactamente?",
+          "feedback": "Imagina entrenar tu modelo con historial crediticio 'Bueno', 'Regular' y 'Malo'. Se exporta a producción y, un año después, el sistema del banco añade el historial 'Excelente'. Si no tienes `handle_unknown='ignore'`, cuando un cliente ponga 'Excelente', el OneHotEncoder arrojará un KeyError crasheando toda tu API web.",
+          "options": [
+            "Ignora y elimina las categorías que generan multicolinealidad perfecta (Dummy Trap), haciendo innecesario el uso del parámetro clásico 'drop=first' durante la instanciación.",
+            "Evita que el modelo evalúe observaciones que contengan la variable objetivo (y) nula, ignorando automáticamente esas filas sin interrumpir el proceso del descenso de gradiente.",
+            "Ignora de manera inteligente todas las variables numéricas que no hayan sido procesadas previamente por un StandardScaler, procesándolas temporalmente en formato booleano binario.",
+            "Evita que la aplicación colapse si un cliente nuevo ingresa con una categoría que el modelo no vio durante el entrenamiento (ej. aparece una provincia nueva en el formulario)."
+          ],
+          "correct": 3,
+          "id": 1198
+        },
+        {
+          "category": "evaluacion",
+          "categoryName": "Métricas de Evaluación: ROC, AUC y Reporte",
+          "text": "En el contexto de una Matriz de Confusión para aprobación de créditos bancarios, ¿qué representa estadísticamente un 'Error Tipo I' (Falso Positivo)?",
+          "feedback": "Positivo = Lo que predijo el modelo (Aprobó). Falso = Estaba equivocado (el cliente no pagó). En la medicina, un Falso Positivo es decirle a alguien que tiene una enfermedad cuando está sano. Cada dominio tiene un error que cuesta más; en bancos, los FP son usualmente el peor escenario (pérdida de capital).",
+          "options": [
+            "El modelo acierta la predicción de rechazo (True Negative), pero el sistema interno del banco aprueba el crédito manualmente debido a políticas secundarias de retención de usuarios.",
+            "El modelo predice '0' (Rechazar crédito), pero la realidad es '1' (Era un buen cliente). Genera un costo de oportunidad al perder a un cliente muy rentable a largo plazo.",
+            "El modelo predice '1' (Aprobar crédito), pero la realidad es '0' (Es un mal cliente que no pagará). Genera pérdida directa de dinero para la institución bancaria.",
+            "El modelo genera internamente una predicción de 0.5 (Incertidumbre perfecta), forzando al analista humano a tomar la decisión final sobre el riesgo del cliente en cuestión."
+          ],
+          "correct": 2,
+          "id": 1199
+        },
+        {
+          "category": "evaluacion",
+          "categoryName": "Métricas de Evaluación: ROC, AUC y Reporte",
+          "text": "Siguiendo con la Matriz de Confusión, ¿qué representa estadísticamente un 'Error Tipo II' (Falso Negativo)?",
+          "feedback": "Negativo = Lo que predijo el modelo (Rechazó). Falso = Estaba equivocado (el cliente SÍ habría pagado). En medicina, decirle a un paciente con cáncer que está sano es un Falso Negativo (consecuencias fatales). Reducir este error exige aumentar el Recall.",
+          "options": [
+            "El modelo predice un valor continuo negativo (ej. -0.80), lo que evidencia matemáticamente el error de utilizar Regresión Lineal Clásica para tareas binarias de clasificación.",
+            "El modelo acierta la predicción de aprobación (True Positive), pero el crédito es rechazado posteriormente por un oficial de cuentas que revisó la documentación manual del cliente.",
+            "El modelo predice '1' (Aprobar crédito), pero la realidad es '0' (Es un cliente que entrará en mora). El banco asume una pérdida directa sobre el monto total prestado al usuario.",
+            "El modelo predice '0' (Rechazar crédito), pero la realidad es '1' (Era un cliente excelente). El banco pierde una oportunidad de negocio y decepciona a un buen usuario."
+          ],
+          "correct": 3,
+          "id": 1200
+        },
+        {
+          "category": "despliegue",
+          "categoryName": "Despliegue y Producción",
+          "text": "En Scikit-Learn, luego de entrenar tu Pipeline logístico, tienes acceso a los métodos `.predict()` y `.predict_proba()`. ¿Cuál es la diferencia entre ellos?",
+          "feedback": "En producción (FastAPI), usar `.predict_proba()` es mucho más útil. Te permite tomar decisiones de negocio inteligentes: 'Si la probabilidad de fraude es > 90%, bloquear cuenta; si está entre 60% y 90%, mandar a revisión humana; si es < 60%, aprobar automáticamente'. Con `.predict()` pierdes todos esos matices.",
+          "options": [
+            ".predict() devuelve probabilidades exclusivas para la clase negativa; .predict_proba() devuelve exactamente el mismo valor pero ajustado estadísticamente para la clase positiva mayoritaria.",
+            ".predict() calcula el rendimiento del modelo generando la matriz de confusión; .predict_proba() grafica directamente la curva ROC en pantalla sin necesidad de importar Matplotlib o Seaborn.",
+            ".predict() devuelve directamente la etiqueta final de clase (ej. 0 o 1) asumiendo un umbral del 50%; .predict_proba() devuelve las probabilidades decimales brutas (ej. 85%) de pertenecer a la clase.",
+            ".predict() se utiliza únicamente durante el entrenamiento con el conjunto X_train; .predict_proba() se habilita exclusivamente cuando el modelo pasa a fase de validación con el X_test."
+          ],
+          "correct": 2,
+          "id": 1201
+        },
+        {
+          "category": "entrenamiento",
+          "categoryName": "Entrenamiento: Costo, Gradiente y MLE",
+          "text": "Al instanciar `LogisticRegression()`, ocasionalmente puede aparecer un 'Warning de No Convergencia'. ¿Qué hiperparámetro recomienda el taller ajustar para solucionarlo?",
+          "feedback": "El descenso de gradiente es como bajar una montaña dando pasos. Si al llegar a 100 pasos (el máximo por defecto) el algoritmo ve que todavía está bajando (no ha llegado al fondo llano), grita un Warning: 'STOP: TOTAL NO. of ITERATIONS REACHED LIMIT'. Le subes el límite (max_iter) y lo dejas caminar hasta que converja.",
+          "options": [
+            "Cambiar el parámetro `random_state` a cero. Esto asegura que el algoritmo de descenso de gradiente arranque siempre desde el mínimo local más cercano en la primera iteración.",
+            "Desactivar la regularización ajustando `C=0`. Esto elimina todas las restricciones matemáticas sobre los pesos β, garantizando convergencia absoluta independientemente del estado de los datos.",
+            "Aumentar `max_iter` (ej. de 100 a 500 o 1000). Esto le da al Descenso de Gradiente más 'pasos' iterativos para lograr encontrar el mínimo de la función de costo.",
+            "Aumentar drásticamente la tasa de aprendizaje (`learning_rate`), provocando que los pesos den saltos gigantescos y alcancen el punto óptimo de manera forzada en menos de 10 iteraciones."
+          ],
+          "correct": 2,
+          "id": 1202
+        },
+        {
+          "category": "despliegue",
+          "categoryName": "Despliegue y Producción",
+          "text": "Al usar `pipeline_prod = joblib.load('modelo_creditos.pkl')` en un script completamente nuevo o una API web, ¿por qué es tan simple predecir clientes nuevos enviando solo un DataFrame crudo con sus datos?",
+          "feedback": "Esa es la magia del Pipeline y la razón por la que en Machine Learning maduro nadie usa transformadores sueltos. El objeto .pkl que descargas contiene 'memoria': sabe que 'Azuay' es la columna 3 y sabe cuál era la media exacta de 'Edad' durante el entrenamiento. Le pasas datos crudos, él hace todo el trabajo interno sucio y escupe la predicción limpia.",
+          "options": [
+            "Porque el desarrollador backend debe reescribir manualmente todo el bloque del ColumnTransformer en la API web antes de ejecutar el .predict(), pero esto se considera una convención de programación estándar.",
+            "Porque la librería joblib incluye un módulo de Inteligencia Artificial secundaria que detecta el formato de cualquier diccionario JSON entrante y lo adapta mágicamente sin necesitar transformadores previos.",
+            "Porque el objeto importado (Pipeline) lleva guardadas en su interior tanto las reglas del preprocesamiento (OneHotEncoder, Scaler ajustados) como los coeficientes finales del modelo, aplicando todo automáticamente.",
+            "Porque al exportar un modelo con scikit-learn, la herramienta deshabilita por completo la necesidad de codificar las variables categóricas, obligando a los algoritmos a procesar texto en crudo directamente."
+          ],
+          "correct": 2,
+          "id": 1203
+        }
+      ]
     }
   ]
 };
