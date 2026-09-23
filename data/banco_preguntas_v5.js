@@ -30,7 +30,7 @@ window.QUIZ_DATA = {
         },
         {
           "value": "bookmarked",
-          "label": "Marcadas para Duda"
+          "label": "Solo Preguntas Marcadas"
         }
       ],
       "preguntas": [
@@ -1082,7 +1082,7 @@ window.QUIZ_DATA = {
         },
         {
           "value": "bookmarked",
-          "label": "Marcadas para Duda"
+          "label": "Solo Preguntas Marcadas"
         }
       ],
       "preguntas": [
@@ -1758,7 +1758,7 @@ window.QUIZ_DATA = {
         },
         {
           "value": "bookmarked",
-          "label": "Marcadas para Duda"
+          "label": "Solo Preguntas Marcadas"
         },
         {
           "value": "eda_correlacion",
@@ -2536,7 +2536,7 @@ window.QUIZ_DATA = {
         },
         {
           "value": "bookmarked",
-          "label": "Marcadas para Duda"
+          "label": "Solo Preguntas Marcadas"
         }
       ],
       "preguntas": [
@@ -2656,7 +2656,7 @@ window.QUIZ_DATA = {
         },
         {
           "value": "bookmarked",
-          "label": "Marcadas para Duda"
+          "label": "Solo Preguntas Marcadas"
         }
       ],
       "preguntas": [
