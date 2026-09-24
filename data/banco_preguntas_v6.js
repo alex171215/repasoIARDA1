@@ -1,6 +1,1876 @@
 window.QUIZ_DATA = {
   "semanas": [
     {
+      "id": "mega_banco",
+      "titulo": "Mega Banco Definitivo (Examen)",
+      "categorias": [
+        {
+          "value": "all",
+          "label": "Todas (Examen Definitivo)"
+        },
+        {
+          "value": "teoria_base",
+          "label": "Guía Base (Depurada)"
+        },
+        {
+          "value": "python_practica",
+          "label": "Taller: Python"
+        },
+        {
+          "value": "analisis_residuos",
+          "label": "Análisis y Residuos"
+        },
+        {
+          "value": "extrapolacion",
+          "label": "Extrapolación"
+        },
+        {
+          "value": "metricas",
+          "label": "Métricas Lin. Simp."
+        },
+        {
+          "value": "pipeline",
+          "label": "Pipeline (Scikit)"
+        },
+        {
+          "value": "eda",
+          "label": "EDA y Exploración"
+        },
+        {
+          "value": "polinomial",
+          "label": "Polinomial/Overfitting"
+        },
+        {
+          "value": "comparativa",
+          "label": "Comparativa"
+        },
+        {
+          "value": "costo_mle",
+          "label": "Reg. Log: Costo y MLE"
+        },
+        {
+          "value": "metricas_roc",
+          "label": "Reg. Log: ROC y AUC"
+        },
+        {
+          "value": "preprocesamiento",
+          "label": "Preprocesamiento (OHE/Scaler)"
+        },
+        {
+          "value": "bookmarked",
+          "label": "Solo Preguntas Marcadas"
+        }
+      ],
+      "preguntas": [
+        {
+          "id": "2fc7f0f5-4dd3-4cf7-9028-387a361941d2",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "El informe Lighthill (1973) fue determinante para el Primer Invierno de la IA. ¿Qué concluyó ese informe?",
+          "options": [
+            "Que la IA había cumplido todas sus promesas y merecía mayor financiamiento para la siguiente década.",
+            "Que la IA era una amenaza para la seguridad nacional y debía regularse urgentemente.",
+            "Que la IA no había cumplido ninguna de sus promesas fundamentales, justificando el recorte masivo de fondos.",
+            "Que las redes neuronales eran superiores a los sistemas expertos y merecían toda la inversión futura."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Lighthill concluyó que el campo había sobreprometido y subentregado. Su informe fue la justificación técnica para el recorte masivo de financiamiento que desencadenó el Primer Invierno. James Lighthill, matemático contratado por el gobierno británico, evaluó el progreso de la IA y concluyó que los avances reales eran muy modestos en comparación con las promesas realizadas. Su informe justificó el recorte casi total del financiamiento gubernamental en el Reino Unido y envió una señal negativa a otros organismos financiadores, incluyendo DARPA en EE.UU. Es el ejemplo clásico del ciclo: promesas exageradas → expectativas no cumplidas → invierno."
+        },
+        {
+          "id": "ee16083d-8557-4c77-8040-58565a77e8dc",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "GPT-3 (2020) introdujo el concepto de \"few-shot learning\". ¿Qué significa exactamente en el contexto de los LLMs?",
+          "options": [
+            "El modelo puede realizar una nueva tarea viéndola demostrada solo 3 o 5 veces dentro del prompt, sin modificar sus pesos.",
+            "El modelo selecciona automáticamente las 3 características más importantes de cada dataset sin preprocesamiento.",
+            "El modelo aprende una nueva tarea entrenándose con solo 3 a 5 ejemplos etiquetados durante varios días de re-entrenamiento.",
+            "El modelo genera pocos tokens de respuesta para ahorrar cómputo en tareas sencillas de clasificación."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. Few-shot learning en LLMs ocurre completamente en el prompt (in-context learning): los ejemplos se incluyen en el texto de entrada y el modelo infiere la tarea sin ningún cambio en sus parámetros. Few-shot learning en LLMs es radicalmente diferente al fine-tuning tradicional: no hay re-entrenamiento, no se modifican los pesos del modelo. Se incluyen 3-5 ejemplos de la tarea directamente en el prompt y el modelo generaliza el patrón para resolver el nuevo caso. Esto es posible porque el pre-entrenamiento masivo da al modelo suficiente comprensión del lenguaje y los patrones para inferir la tarea a partir de muy pocos ejemplos."
+        },
+        {
+          "id": "468a5a8f-b5f6-494e-8244-6763e9ef8f07",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "Un \"token\" es la unidad mínima de procesamiento en un LLM. ¿Cuál de las siguientes describe mejor qué es un token?",
+          "options": [
+            "Un token es un símbolo binario (0 o 1) que representa el estado de activación de una neurona.",
+            "Un token es siempre una palabra completa del diccionario en el idioma de entrenamiento.",
+            "Un token puede ser una palabra completa, una parte de palabra o un símbolo; GPT-4 maneja aproximadamente 100.000 tokens distintos.",
+            "Un token es una oración completa codificada como un vector de alta dimensión."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. La tokenización por subpalabras (BPE, WordPiece) es el estándar en LLMs modernos. Permite representar cualquier texto con un vocabulario finito de tokens. La tokenización no se hace palabra por palabra. Los LLMs modernos usan tokenización por subpalabras (como Byte-Pair Encoding): palabras frecuentes se representan como un solo token, pero palabras raras se dividen en subunidades. Por ejemplo, \"subcategorización\" podría tokenizarse en varias partes. GPT-4 tiene aproximadamente 100.000 tokens en su vocabulario, lo que le permite manejar cualquier texto en múltiples idiomas."
+        },
+        {
+          "id": "d05686d7-d08b-478f-bb6c-65e34ab5645d",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "La victoria de AlexNet en ImageNet (2012) se considera el inicio de la revolución del Deep Learning. ¿Cuál de los tres factores que la hicieron posible describe CORRECTAMENTE el rol de las GPUs?",
+          "options": [
+            "Las GPUs reemplazaron el backpropagation por un nuevo algoritmo de optimización más eficiente.",
+            "Las GPUs permitieron almacenar datasets de 14 millones de imágenes en memoria de alta velocidad.",
+            "Las GPUs eliminaron la necesidad de datos etiquetados al generar ejemplos sintéticos automáticamente.",
+            "Las GPUs aceleraron el entrenamiento hasta 100 veces respecto a las CPUs al ejecutar miles de operaciones matriciales en paralelo."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. El paralelismo masivo de las GPUs (miles de núcleos) es ideal para las multiplicaciones de matrices que dominan el entrenamiento de redes neuronales. Sin GPUs, entrenar AlexNet habría sido imprácticamente lento. El entrenamiento de redes profundas implica millones de multiplicaciones de matrices simultáneas. Las CPUs ejecutan operaciones secuencialmente; las GPUs tienen miles de núcleos diseñados para paralelismo masivo. NVIDIA lanzó CUDA en 2007, habilitando el uso de GPUs para cómputo científico general. AlexNet se entrenó en dos GPUs NVIDIA GTX 580 en una semana; en CPU habría tardado meses. Las GPUs fueron el acelerador que desbloqueó el Deep Learning a escala."
+        },
+        {
+          "id": "634cefcf-7489-4f7a-8e26-7f472cbcf81a",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "El paper \"Attention is All You Need\" (Google Brain, 2017) reemplazó las RNNs como arquitectura dominante para NLP. ¿Cuál es la ventaja central del mecanismo de atención sobre las RNNs?",
+          "options": [
+            "Las RNNs no pueden procesar texto en español; los Transformers sí lo hacen gracias al mecanismo de atención multilingüe.",
+            "El mecanismo de atención permite procesar toda la secuencia en paralelo y ponderar dinámicamente la relevancia de cada parte, en lugar de procesarla token por token en orden.",
+            "Los Transformers no requieren datos de entrenamiento porque generan su propio conocimiento mediante atención recursiva.",
+            "El mecanismo de atención reduce el número de parámetros necesarios al reutilizar pesos entre todas las capas del modelo."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El paralelismo y la atención global son las dos ventajas clave: velocidad de entrenamiento y capacidad de capturar dependencias a largas distancias sin degradación. Las RNNs procesan la secuencia de izquierda a derecha manteniendo un estado oculto que resume el contexto anterior — lento y con pérdida de información a largas distancias. El mecanismo de atención calcula para cada token de salida un peso de relevancia sobre todos los tokens de entrada simultáneamente, permitiendo capturar dependencias a cualquier distancia y procesar toda la secuencia en paralelo. Este fue el salto que hizo posibles los LLMs modernos."
+        },
+        {
+          "id": "d9c0afeb-9768-43a4-9a99-d1478d7381b4",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "MYCIN (1972) y DENDRAL (1965) son dos sistemas expertos históricos. ¿En qué se diferencia su dominio de aplicación?",
+          "options": [
+            "MYCIN procesaba datos financieros; DENDRAL optimizaba rutas de transporte logístico.",
+            "MYCIN diagnosticaba infecciones bacterianas en sangre; DENDRAL identificaba estructuras moleculares en química orgánica.",
+            "MYCIN clasificaba imágenes de rayos X; DENDRAL analizaba señales de audio de pacientes.",
+            "MYCIN traducía textos médicos al español; DENDRAL generaba código Python para experimentos."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. DENDRAL (1965) fue el pionero en química; MYCIN (1972) lo fue en medicina. Ambos demostraron la viabilidad de la IA simbólica en dominios científicos de alta especialización. DENDRAL (Stanford, 1965) fue el primer sistema experto de la historia: analizaba datos de espectrometría de masas para identificar estructuras moleculares en química orgánica. MYCIN (Stanford, 1972) se enfocó en medicina: diagnosticaba infecciones bacterianas en sangre y recomendaba antibióticos. Ambos demostraron que la IA simbólica podía alcanzar niveles de especialista en dominios cerrados y bien definidos."
+        },
+        {
+          "id": "5f5d653d-cdab-4cba-9679-f200f8a86bed",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "La IA Simbólica (GOFAI) tiene una propiedad que la distingue claramente del Machine Learning. ¿Cuál es?",
+          "options": [
+            "Aprende automáticamente de grandes volúmenes de datos no etiquetados mediante redes profundas.",
+            "Genera representaciones latentes del conocimiento mediante autoencoders variacionales.",
+            "El conocimiento es codificado explícitamente por expertos humanos en forma de reglas; el sistema no aprende de datos.",
+            "Utiliza GPUs masivas para paralelizar el entrenamiento y reducir el tiempo de convergencia."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Esta es la diferencia fundamental: en IA simbólica el conocimiento es explícito y estático; en ML es implícito y emerge del entrenamiento con datos. En la IA simbólica, el conocimiento no emerge de los datos — lo programa directamente un experto humano en forma de reglas IF-THEN explícitas. Esto hace al sistema transparente (puedes leer las reglas) pero estático (si el dominio cambia, hay que reprogramar). En contraste, en ML el algoritmo extrae patrones estadísticos de ejemplos, sin que nadie le diga qué patrones buscar."
+        },
+        {
+          "id": "f2891903-fb29-4298-beb6-5a06b9a8aa8d",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "El problema XOR fue central en el Primer Invierno de la IA. ¿Por qué una red neuronal de una sola capa (perceptrón) no puede aprender XOR?",
+          "options": [
+            "Porque XOR requiere más de 1.000 ejemplos de entrenamiento y en 1969 no había tantos datos disponibles.",
+            "Porque el perceptrón solo acepta entradas binarias y XOR produce salidas decimales.",
+            "Porque XOR es una función no separable linealmente: ninguna línea recta puede separar correctamente sus cuatro casos.",
+            "Porque el hardware de 1969 no tenía suficiente memoria RAM para almacenar la tabla de verdad de XOR."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Esta es la limitación matemática fundamental. Un perceptrón de una capa solo puede aprender funciones linealmente separables. XOR no lo es, lo que requiere múltiples capas y no-linealidades. Una red de una capa traza una única frontera de decisión lineal (una línea recta en 2D). XOR requiere dos regiones separadas que no pueden delimitarse con una sola línea: los puntos (0,1) y (1,0) producen 1, mientras (0,0) y (1,1) producen 0, y no existe ninguna recta que los separe correctamente. La solución — múltiples capas con funciones de activación no lineales + backpropagation — no se popularizó hasta 1986."
+        },
+        {
+          "id": "deb3fd34-bf7b-45d2-9313-9f27a6e629bf",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "El argumento del Cuarto Chino de John Searle (1980) cuestiona la validez del Test de Turing. ¿Qué implica para la evaluación de la inteligencia artificial?",
+          "options": [
+            "Que imitar correctamente un comportamiento inteligente no implica que el sistema comprenda lo que está haciendo.",
+            "Que ningún sistema informático puede superar el Test de Turing porque las computadoras solo procesan números.",
+            "Que el Test de Turing es válido únicamente para idiomas con escritura fonética.",
+            "Que la IA solo puede considerarse inteligente si fue programada por un hablante nativo de ese idioma."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. El Cuarto Chino muestra que la manipulación perfecta de símbolos (sintaxis) puede coexistir con ausencia total de comprensión (semántica). Un sistema puede pasar el Test de Turing sin entender nada de lo que procesa. Searle imagina a alguien encerrado en un cuarto que recibe preguntas en chino, consulta un manual de reglas y responde en chino perfectamente — sin entender una sola palabra. La analogía sugiere que un sistema puede pasar el Test de Turing mediante operaciones sintácticas (manipulación de símbolos) sin comprensión semántica (significado real). Imitar comportamiento inteligente no equivale a poseer inteligencia genuina."
+        },
+        {
+          "id": "75f2f5d3-82b7-4e1a-8d63-a48e5a258227",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "El Logic Theorist (1955) demostró 38 de 52 teoremas del Principia Mathematica. ¿Cuál es el significado histórico de ese logro?",
+          "options": [
+            "Demostró que las redes neuronales podían aprender lógica matemática sin datos de entrenamiento.",
+            "Demostró que las computadoras podían superar a los humanos en cualquier tarea cognitiva.",
+            "Fue la primera demostración de que una máquina podía razonar formalmente y resolver problemas simbólicos.",
+            "Fue el primer sistema capaz de traducir lenguaje natural a código ejecutable."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. El Logic Theorist rompió la suposición de que el razonamiento lógico era exclusivamente humano, estableciendo la viabilidad de la IA simbólica como campo de investigación. Antes del Logic Theorist, se asumía que el razonamiento matemático era exclusivamente humano. Newell y Simon demostraron que una máquina podía deducir teoremas a partir de axiomas usando manipulación simbólica formal, incluso encontrando algunas pruebas más elegantes que las originales de Russell y Whitehead. Esto estableció la IA simbólica como paradigma dominante durante las siguientes tres décadas."
+        },
+        {
+          "id": "ce178556-56b8-4891-bc46-55a373e7c25b",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "ChatGPT no es simplemente GPT-3. ¿Qué proceso adicional distingue a ChatGPT de un modelo base pre-entrenado?",
+          "options": [
+            "ChatGPT conecta el modelo base a bases de datos en tiempo real para responder preguntas con información actualizada.",
+            "ChatGPT usa un sistema de reglas IF-THEN superpuesto al modelo base para filtrar respuestas inapropiadas.",
+            "ChatGPT aplica RLHF (aprendizaje por refuerzo con feedback humano) para alinear las respuestas del modelo con las preferencias de los evaluadores humanos.",
+            "ChatGPT tiene más parámetros que GPT-3 gracias a un proceso de escalado adicional con hardware más potente."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. RLHF es el proceso que convierte un predictor de texto en un asistente útil y seguro. Los evaluadores humanos califican respuestas, entrenando un modelo de recompensa que guía el fine-tuning final. Un modelo base pre-entrenado predice texto estadísticamente — puede ser útil pero también peligroso o incoherente como asistente. RLHF añade tres pasos: (1) evaluadores humanos califican pares de respuestas del modelo; (2) esas calificaciones entrenan un modelo de recompensa; (3) el LLM se optimiza con aprendizaje por refuerzo para maximizar esa recompensa. El resultado es un modelo alineado: útil, honesto y menos propenso a generar contenido dañino."
+        },
+        {
+          "id": "d5fce9cd-9f0e-453d-85c7-2e36d7bf79de",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "La neurona artificial de McCulloch y Pitts (1943) tiene tres componentes principales en su operación. ¿Cuál de las siguientes describe correctamente esos tres pasos?",
+          "options": [
+            "Genera datos sintéticos, los clasifica y envía el resultado a una capa de memoria.",
+            "Recibe señales de entrada ponderadas, las suma y las compara con un umbral para decidir si dispara o no.",
+            "Descarga un gradiente hacia atrás, ajusta pesos y actualiza su umbral automáticamente.",
+            "Tokeniza texto de entrada, calcula atención y predice el siguiente símbolo en la secuencia."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Entrada ponderada → suma → comparación con umbral → disparo (1) o silencio (0). Ese es el modelo completo de McCulloch-Pitts, que sigue siendo la intuición base de las neuronas en redes profundas actuales. El modelo de McCulloch-Pitts funciona así: cada señal de entrada (x₁, x₂…) se multiplica por un peso (w₁, w₂…), los productos se suman, y esa suma se compara con un umbral θ. Si la suma supera el umbral, la neurona \"dispara\" (salida = 1); si no, permanece inactiva (salida = 0). Es una simplificación matemática de cómo funciona una neurona biológica y es la base conceptual de todas las redes neuronales modernas."
+        },
+        {
+          "id": "8abe218e-9475-4592-a242-7e778dacd893",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "La Conferencia de Dartmouth (1956) es el evento fundacional de la IA como disciplina. ¿Cuál de los siguientes participantes acuñó el término \"Artificial Intelligence\" en ese evento?",
+          "options": [
+            "Claude Shannon",
+            "John McCarthy",
+            "Marvin Minsky",
+            "Alan Turing"
+          ],
+          "correct": 1,
+          "feedback": "Correcto. John McCarthy organizó la conferencia de Dartmouth en 1956 y acuñó el término \"Artificial Intelligence\", estableciendo el nombre del campo que ha perdurado hasta hoy. John McCarthy organizó el verano de investigación en Dartmouth College y acuñó el término \"Artificial Intelligence\". Otros participantes clave fueron Marvin Minsky (pionero de redes neuronales), Claude Shannon (padre de la teoría de la información) y Newell & Simon (creadores del Logic Theorist). Dartmouth reunió por primera vez a investigadores de disciplinas distintas bajo un objetivo común: construir máquinas inteligentes."
+        },
+        {
+          "id": "2289a35c-f1a4-43ac-8dde-75550436fe6b",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "El Test de Turing (1950) propone una forma operacional de evaluar la inteligencia de una máquina. ¿En qué consiste exactamente?",
+          "options": [
+            "La máquina debe resolver ecuaciones diferenciales más rápido que un matemático en menos de 10 segundos.",
+            "Un juez humano conversa por escrito con una máquina y un humano; si no puede distinguir cuál es cuál, la máquina supera el test.",
+            "Un comité de cinco filósofos evalúa si la máquina expresa emociones genuinas en una entrevista oral.",
+            "La máquina debe demostrar 38 de 52 teoremas matemáticos del Principia Mathematica sin asistencia externa."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El Juego de Imitación evalúa si una máquina puede imitar el comportamiento conversacional humano de forma indistinguible. Nótese que superar el test prueba imitación, no inteligencia genuina — crítica que formuló Searle en 1980. Turing reformuló la pregunta filosófica \"¿pueden las máquinas pensar?\" en algo medible: ¿puede una máquina imitar el comportamiento humano en una conversación escrita tan bien que un observador no pueda distinguirla de un humano real? Este es el Juego de Imitación. La crítica posterior de Searle (Cuarto Chino, 1980) señala que superar el test prueba imitación del comportamiento, no comprensión genuina."
+        },
+        {
+          "id": "1a3f1a13-8e87-42c1-a995-35a694deb529",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "Un sistema experto como MYCIN logró precisión de especialista en diagnóstico bacteriano. Sin embargo, ¿cuál fue su limitación estructural más importante?",
+          "options": [
+            "Requería datos de laboratorio que en la época solo existían en tres hospitales de EE.UU.",
+            "No podía actualizar sus reglas automáticamente cuando surgían nuevas bacterias o tratamientos.",
+            "No tenía interfaz gráfica, lo que impedía su adopción por médicos no técnicos.",
+            "Era demasiado lento para usarse en hospitales con muchos pacientes simultáneos."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. La incapacidad de aprender y adaptarse es la limitación definitoria de la IA simbólica. El conocimiento estático es su talón de Aquiles en dominios dinámicos. La rigidez es la limitación estructural de todos los sistemas expertos: el conocimiento está congelado en las reglas que el experto codificó en un momento dado. Cuando aparecía una nueva bacteria resistente a antibióticos, MYCIN no podía aprenderlo — un especialista debía reescribir manualmente las reglas afectadas. Escalar ese mantenimiento a cientos de reglas en dominios dinámicos resultó económicamente insostenible."
+        },
+        {
+          "id": "5c918e9f-ddaa-4f47-aaa2-e16dcce6ea75",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "Rumelhart, Hinton y Williams popularizaron la retropropagación en 1986. ¿Qué problema fundamental resolvió este algoritmo?",
+          "options": [
+            "Permitió que las redes neuronales generaran imágenes fotorrealistas sin datos de entrenamiento etiquetados.",
+            "Resolvió cómo ajustar los pesos de todas las capas de una red propagando el error desde la salida hacia atrás, capa por capa.",
+            "Permitió que los sistemas expertos aprendieran nuevas reglas automáticamente de los casos históricos.",
+            "Eliminó la necesidad de usar hardware especializado al optimizar el uso de memoria RAM."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Backpropagation usa la regla de la cadena para calcular el gradiente de cada peso respecto al error total, permitiendo actualizar todos los pesos de una red profunda de forma eficiente. Antes de backpropagation, no había forma eficiente de entrenar redes con más de una capa: no se sabía cómo \"culpar\" a cada peso de las capas intermedias por el error final. Backpropagation calcula el gradiente del error respecto a cada peso usando la regla de la cadena del cálculo diferencial, propagando la señal de error desde la capa de salida hacia las capas de entrada. Esto hizo posible entrenar redes profundas de forma eficiente y sigue siendo el algoritmo de entrenamiento estándar hoy."
+        },
+        {
+          "id": "a3f4cfd6-b89e-4642-9a60-db896b7aa378",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "ResNet (Microsoft Research, 2015) resolvió un problema crítico del entrenamiento de redes muy profundas. ¿Cuál era ese problema y cómo lo resolvió?",
+          "options": [
+            "El sobreajuste en redes con pocas capas; ResNet lo resolvió añadiendo capas de Dropout entre cada bloque convolucional.",
+            "La falta de datos etiquetados; ResNet lo resolvió generando ejemplos sintéticos mediante data augmentation automático.",
+            "El gradiente que desaparece en redes profundas; ResNet lo resolvió con conexiones residuales que permiten atajos entre capas.",
+            "El alto costo de entrenamiento; ResNet lo resolvió distribuyendo el cómputo entre miles de GPUs en paralelo."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Las conexiones residuales crean \"autopistas\" para el gradiente, permitiendo que fluya directamente hacia capas anteriores sin degradarse multiplicativamente. Esto desbloqueó redes de cientos de capas. En redes muy profundas, el gradiente calculado por backpropagation se vuelve cada vez más pequeño a medida que se propaga hacia las capas iniciales — el gradiente \"desaparece\" y las capas tempranas dejan de aprender. ResNet introduce conexiones residuales: atajos que saltan una o más capas, permitiendo que el gradiente fluya directamente hacia capas anteriores sin degradarse. Esto permitió entrenar redes de 152 capas con error del 3.57% en ImageNet, superando la precisión humana estimada en 5.1%."
+        },
+        {
+          "id": "1a2b947a-c3b1-4c37-94a0-91eaf0320d06",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "La idea central de un Large Language Model (LLM) es aparentemente simple. ¿Cuál es esa idea?",
+          "options": [
+            "Un LLM es un sistema experto que codifica todas las reglas gramaticales de un idioma en forma de tablas de decisión.",
+            "Un LLM es un modelo que aprende a predecir el siguiente token en una secuencia, entrenado con cientos de miles de millones de tokens de texto.",
+            "Un LLM es un motor de búsqueda semántico que recupera documentos relevantes de una base de datos indexada.",
+            "Un LLM es una red neuronal que clasifica textos en categorías predefinidas usando aprendizaje supervisado con etiquetas humanas."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Esta tarea simple — predecir el siguiente token — entrenada a escala masiva produce modelos con capacidades emergentes sorprendentes que nadie programó explícitamente. La tarea de entrenamiento de un LLM es conceptualmente simple: dado un contexto, predecir el siguiente token más probable. Al aplicar esta tarea a escala masiva — cientos de miles de millones de tokens de libros, Wikipedia, código y web — el modelo aprende estadísticas del lenguaje tan ricas que emergen capacidades de razonamiento, traducción y generación de código que nadie programó explícitamente."
+        },
+        {
+          "id": "a9c20d04-9ae8-4a92-a7ee-35a2905bc5b6",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "En 1997, Deep Blue venció a Garry Kasparov en ajedrez. ¿Cómo logró esto y qué limitación tiene respecto al Machine Learning moderno?",
+          "options": [
+            "Usó una red neuronal profunda entrenada con millones de partidas; su limitación es que solo juega ajedrez.",
+            "Aprendió de forma autónoma jugando millones de partidas contra sí mismo; su limitación es el alto costo computacional.",
+            "Usó un sistema de reglas IF-THEN generado automáticamente; su limitación es que no puede manejar situaciones nuevas.",
+            "Combinó búsqueda por fuerza bruta con bases de datos de aperturas codificadas; su limitación es que no puede transferir ese conocimiento a ningún otro dominio."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Deep Blue era esencialmente IA simbólica + fuerza bruta computacional. Podía evaluar 200 millones de posiciones por segundo pero era absolutamente inútil fuera del tablero de ajedrez. Deep Blue no \"aprendió\" en el sentido moderno: evaluaba hasta 200 millones de posiciones por segundo usando algoritmos de búsqueda (minimax + poda alpha-beta) y consultaba bases de datos de aperturas codificadas por grandes maestros. Fue un hito mediático enorme, pero demostró precisamente la limitación de la IA de la época: rendimiento sobrehumano en una tarea específica, cero transferibilidad a cualquier otro contexto."
+        },
+        {
+          "id": "fe14f904-4a4e-4367-b3dd-5e1ea2522f8c",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "La sesión describe un patrón de 5 pasos que se repite en la historia de la IA. ¿Cuál es el orden correcto de ese ciclo?",
+          "options": [
+            "Investigación silenciosa → Expectativas irreales → Hype → Breakthrough → Invierno",
+            "Hype → Expectativas irreales → Invierno → Investigación silenciosa → Breakthrough",
+            "Invierno → Hype → Expectativas irreales → Breakthrough → Investigación silenciosa",
+            "Breakthrough → Investigación silenciosa → Hype → Expectativas irreales → Invierno"
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El ciclo histórico de la IA sigue un patrón predecible: (1) Hype — promesas exageradas e inversión masiva; (2) Expectativas irreales — plazos imposibles y aplicaciones más allá de lo técnicamente posible; (3) Invierno — financiamiento retirado y campo desprestigiado; (4) Investigación silenciosa — avances reales en laboratorio sin atención mediática; (5) Breakthrough — un resultado concreto que relanza el ciclo. Reconocer en qué fase se encuentra el campo es una habilidad profesional crítica. El ciclo histórico de la IA sigue un patrón predecible: (1) Hype — promesas exageradas e inversión masiva; (2) Expectativas irreales — plazos imposibles y aplicaciones más allá de lo técnicamente posible; (3) Invierno — financiamiento retirado y campo desprestigiado; (4) Investigación silenciosa — avances reales en laboratorio sin atención mediática; (5) Breakthrough — un resultado concreto que relanza el ciclo. Reconocer en qué fase se encuentra el campo es una habilidad profesional crítica."
+        },
+        {
+          "id": "ea97f998-0762-4836-b31f-c228abf4b9bf",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Por qué los modelos de IA preentrenados en EE.UU. o Europa pueden no funcionar bien directamente en problemas agrícolas ecuatorianos como la detección de enfermedades en cacao?",
+          "options": [
+            "Porque fueron entrenados con datos que no reflejan los cultivos, condiciones climáticas ni patologías locales de Ecuador.",
+            "Porque los modelos preentrenados no son compatibles con el sistema operativo Linux utilizado en el país.",
+            "Porque la legislación ecuatoriana prohíbe el uso de IA extranjera en el sector agrícola.",
+            "Porque Ecuador no tiene acceso a Internet de alta velocidad para ejecutar esos modelos."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. El desajuste entre la distribución de datos de entrenamiento y la distribución real de aplicación es el problema central. Los modelos aprenden los patrones de sus datos; si esos datos no representan el contexto ecuatoriano, el modelo fallará. Un modelo entrenado con datos de cultivos europeos o norteamericanos aprende patrones de esas realidades específicas: sus plagas, sus suelos, sus condiciones climáticas. Al aplicarlo a cacao ecuatoriano, los datos de entrada son distribuciones distintas a las del entrenamiento — el modelo generaliza mal. Esta brecha entre los datos con que se entrenó un modelo y el contexto donde se usa es uno de los problemas centrales de la IA aplicada en Latinoamérica."
+        },
+        {
+          "id": "8343588d-7c64-4368-bb62-26d607b432bd",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "En el ejemplo del sistema experto para detección de enfermedades en cacao ecuatoriano, una regla dice: IF hoja.color='amarillo' AND hoja.manchas='negras' AND humedad>80% THEN enfermedad='monilia' (0.90). ¿Qué representa el valor 0.90 al final?",
+          "options": [
+            "El número de veces que esa regla fue validada por expertos en campo.",
+            "El factor de certeza o confianza asociado a esa regla específica.",
+            "La probabilidad de que el cultivo muera si no se aplica el tratamiento inmediatamente.",
+            "El porcentaje de precisión global del sistema experto en todos sus diagnósticos."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Los factores de certeza (CF) son valores codificados por el experto que indican cuánta confianza tiene el sistema en esa conclusión cuando se cumplen las condiciones. No son probabilidades estadísticas formales. En los sistemas expertos de la era simbólica, los factores de certeza (CF) representaban la confianza del sistema en una conclusión dado que las condiciones de la regla se cumplen. Un CF de 0.90 indica alta confianza — no una probabilidad estadística formal, sino un valor de confianza codificado por el experto. MYCIN fue pionero en usar estos factores para manejar la incertidumbre médica sin recurrir a probabilidades bayesianas completas."
+        },
+        {
+          "id": "96124024-f831-4663-a519-2c472957e134",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "El Segundo Invierno (1987-1993) fue desencadenado en parte por el colapso de las \"Lisp Machines\". ¿Qué eran y por qué colapsaron?",
+          "options": [
+            "Eran lenguajes de programación especializados para IA que fueron reemplazados por Python.",
+            "Eran computadoras especializadas para ejecutar código LISP y sistemas expertos, que perdieron su ventaja ante las PCs convencionales más baratas.",
+            "Eran unidades de memoria de alta capacidad diseñadas específicamente para almacenar bases de conocimiento.",
+            "Eran modelos de simulación matemática usados para predecir el comportamiento de sistemas expertos."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El modelo de negocio de hardware especializado para IA colapsó cuando las PCs convencionales ofrecieron mejor rendimiento a menor costo, eliminando la razón de ser de las Lisp Machines. Las Lisp Machines eran hardware especializado diseñado para ejecutar el lenguaje LISP eficientemente — el lenguaje dominante de la IA simbólica. Empresas como Symbolics y Lisp Machines Inc. vendían estas máquinas a precios muy altos. En 1987, Apple y Digital Equipment Corporation lanzaron PCs convencionales con mejor relación rendimiento/precio. Las Lisp Machines quedaron obsoletas comercialmente de golpe, arrastrando a las empresas que dependían de ese mercado."
+        },
+        {
+          "id": "308ef80b-754b-4367-88d8-301d6eb5e9e6",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál barrera técnica describe correctamente el problema de \"razonamiento causal\" que impide la IA Fuerte?",
+          "options": [
+            "Los LLMs identifican correlaciones en datos pero no razonan sobre causas y efectos.",
+            "Los modelos actuales no pueden procesar textos de más de 100.000 tokens.",
+            "Los modelos no tienen acceso a datos del mundo real en tiempo real.",
+            "Los modelos no pueden generar texto en más de 50 idiomas simultáneamente."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. El razonamiento causal implica entender que A causa B, no solo que A y B aparecen juntos frecuentemente. El razonamiento causal implica entender que A causa B, no solo que A y B aparecen juntos frecuentemente. Los LLMs actuales fallan en preguntas que requieren inferencia causal genuina."
+        },
+        {
+          "id": "09cf7db2-fae7-4ef0-a81c-0130f4977470",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "En el contexto de este curso, la definición de trabajo de IA pone énfasis en:",
+          "options": [
+            "La fabricación de robots físicos con comportamiento autónomo.",
+            "Sistemas expertos que aplican reglas lógicas IF-THEN.",
+            "El estudio formal de agentes racionales en entornos complejos.",
+            "Algoritmos que aprenden patrones de datos para tomar decisiones o generar contenido."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. La definición de trabajo del curso se centra en Machine Learning como base técnica, orientada a lo que los estudiantes construirán en el semestre. La definición de trabajo del curso se centra en Machine Learning como base técnica, orientada a lo que los estudiantes construirán a lo largo del semestre."
+        },
+        {
+          "id": "25059c75-0976-4fd3-88c3-94678acf98f9",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Qué relación jerárquica correcta existe entre IA, ML, Deep Learning, NLP y Visión por Computadora?",
+          "options": [
+            "NLP y Visión contienen a Deep Learning, que contiene a ML, que contiene a IA.",
+            "IA contiene a ML, que contiene a Deep Learning, que contiene a NLP y Visión por Computadora.",
+            "ML y Deep Learning son lo mismo; NLP y Visión son subcampos independientes de la IA.",
+            "Son disciplinas independientes sin relación jerárquica entre sí."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. La jerarquía es: IA ⊃ ML ⊃ Deep Learning ⊃ {NLP, Visión por Computadora}. Cada nivel es un subconjunto del anterior. La jerarquía correcta es: IA ⊃ ML ⊃ Deep Learning ⊃ {NLP, Visión por Computadora}. Cada nivel es un subconjunto del anterior, especializado en tipos de datos o técnicas específicas."
+        },
+        {
+          "id": "18804298-e00e-438e-aaf1-4d4f9e3c384d",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Qué descubrió GNoME (Google, 2023)?",
+          "options": [
+            "Los pesos óptimos para entrenar modelos de lenguaje con billones de parámetros.",
+            "Un método para predecir el comportamiento de vehículos autónomos en tiempo real.",
+            "2.2 millones de nuevos cristales estables con potencial para materiales avanzados.",
+            "Un sistema de traducción automática que supera a humanos en todos los idiomas."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. GNoME usó aprendizaje profundo sobre química computacional para descubrir 2.2 millones de cristales estables, publicado en Nature en noviembre 2023. GNoME (Graph Networks for Materials Exploration) usó aprendizaje profundo sobre química computacional para descubrir 2.2 millones de cristales estables, publicado en Nature en noviembre 2023."
+        },
+        {
+          "id": "b660d53e-259c-4493-b6cc-90aa8168ad69",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál de los 4 componentes de un agente es responsable de decidir qué acción tomar?",
+          "options": [
+            "Las percepciones.",
+            "La función agente.",
+            "Los actuadores.",
+            "Los sensores."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. La función agente es el \"cerebro\": dado el historial de percepciones, decide la mejor acción. En ML, esta función es el modelo entrenado. La función agente es el \"cerebro\" del sistema: dado el historial de percepciones, decide la mejor acción. En ML, esta función corresponde al modelo entrenado."
+        },
+        {
+          "id": "b6aa51cd-900c-457d-aa11-0f4279f0b5cb",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál de las siguientes es una tarea de clasificación de texto?",
+          "options": [
+            "Generar el siguiente párrafo de una novela dado un contexto inicial.",
+            "Resumir un documento legal extenso en tres párrafos.",
+            "Traducir un artículo del español al inglés automáticamente.",
+            "Determinar si una reseña de producto tiene sentimiento positivo o negativo."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Clasificación de texto asigna una categoría a un texto completo. El análisis de sentimientos (positivo/negativo) es su aplicación más conocida. Clasificación de texto asigna una categoría a un texto completo. El análisis de sentimientos (positivo/negativo) es su aplicación más conocida."
+        },
+        {
+          "id": "2c16cc5d-164a-4ab4-a7e9-aafabf8b5860",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "En el modelo de agente racional de Russell y Norvig, los actuadores son:",
+          "options": [
+            "Los dispositivos que reciben información del entorno como cámaras o micrófonos.",
+            "Los criterios que el agente maximiza para elegir la mejor acción.",
+            "Las representaciones internas del estado del entorno en un instante dado.",
+            "Los mecanismos que ejecutan la acción en el entorno (pantalla, motor, respuesta de texto)."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Los actuadores ejecutan la acción decidida por la función agente: generar texto, mover un motor, mostrar una recomendación o encender una alarma. Los actuadores ejecutan la acción decidida por la función agente: generar texto, mover un motor, mostrar una recomendación o encender una alarma."
+        },
+        {
+          "id": "f38cfac3-140e-4afd-8158-e49f6a79ac2c",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál de las siguientes afirmaciones sobre la IA Fuerte es correcta en 2026?",
+          "options": [
+            "Existe solo en aplicaciones militares clasificadas.",
+            "Existe en forma de prototipos experimentales en OpenAI y DeepMind.",
+            "No existe — es el objetivo a largo plazo de varias organizaciones de investigación.",
+            "Existe en GPT-5 y modelos equivalentes lanzados en 2025."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. La IA Fuerte no existe en 2026. Es el objetivo declarado de OpenAI, DeepMind, Anthropic y Meta, pero no se ha logrado. La IA Fuerte no existe en 2026. Es el objetivo declarado de OpenAI, DeepMind, Anthropic y Meta, pero no se ha logrado y no hay consenso sobre cuándo o si se logrará."
+        },
+        {
+          "id": "76c32ec7-ea80-4cf7-9cd7-c0237435f245",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Qué es un embedding en el contexto del NLP?",
+          "options": [
+            "La capa de salida del modelo que genera el texto final de respuesta.",
+            "El proceso de dividir un texto en oraciones para facilitar su procesamiento.",
+            "Un archivo comprimido que almacena el vocabulario del modelo de lenguaje.",
+            "Una representación numérica (vector) de una palabra en un espacio de alta dimensión donde palabras similares quedan cercanas."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Un embedding convierte palabras en vectores numéricos. \"Rey\" y \"reina\" quedan matemáticamente más cerca que \"rey\" y \"manzana\". Sin embeddings, el modelo no puede operar con lenguaje. Un embedding convierte palabras en vectores numéricos en un espacio de alta dimensión. Palabras con significado similar quedan matemáticamente cercanas — \"rey\" y \"reina\" están más cerca que \"rey\" y \"manzana\"."
+        },
+        {
+          "id": "dcb76f19-4d14-4bcc-930d-ce7c09437535",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "NLP y Visión por Computadora tienen en común que ambos son:",
+          "options": [
+            "Técnicas exclusivas de IA Fuerte que aún no existen en forma práctica.",
+            "Subcampos del Deep Learning que procesan distintos tipos de datos (texto/voz vs. imágenes/video).",
+            "Subcampos del aprendizaje por refuerzo aplicados a distintos tipos de datos.",
+            "Ramas del ML clásico que no usan redes neuronales profundas."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. NLP y Visión son subcampos del Deep Learning: ambos usan redes neuronales profundas pero especializadas para diferentes tipos de datos de entrada (texto/voz vs. imágenes/video). NLP y Visión son subcampos del Deep Learning: ambos usan redes neuronales profundas pero especializadas para diferentes tipos de datos de entrada (texto/voz vs. imágenes/video)."
+        },
+        {
+          "id": "93e722d7-294e-4e06-bdf3-bd39d0448d2a",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Qué significa que el Deep Learning aprende \"representaciones jerárquicas\"?",
+          "options": [
+            "Que el modelo aprende primero conceptos simples y luego los olvida para aprender los complejos.",
+            "Que cada capa transforma la salida de la anterior en algo más abstracto: bordes → formas → partes → conceptos.",
+            "Que el entrenamiento sigue una jerarquía de autoridad entre los ingenieros del equipo.",
+            "Que el modelo organiza los datos en una base de datos relacional con tablas anidadas."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Las capas de una red profunda aprenden en cadena: Capa 1 detecta bordes, Capa 2 formas, Capa N conceptos completos como \"cara\" o \"auto\". Las capas de una red profunda aprenden en cadena: Capa 1 detecta bordes, Capa 2 combina bordes en formas, Capa N combina formas en conceptos completos como \"cara\" o \"auto\"."
+        },
+        {
+          "id": "90057204-67e7-4316-a1e4-0bcc9b3614af",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál es la diferencia fundamental entre la IA Simbólica y el Machine Learning?",
+          "options": [
+            "ML es más antiguo que la IA Simbólica y surgió en los años 50.",
+            "La IA Simbólica usa redes neuronales mientras que ML usa árboles de decisión.",
+            "La IA Simbólica requiere GPUs mientras que ML puede correr en CPU estándar.",
+            "En IA Simbólica el humano programa las reglas; en ML el algoritmo las descubre de los datos."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. La distinción clave es quién genera el conocimiento: en IA Simbólica, reglas IF-THEN escritas por un experto; en ML, patrones aprendidos automáticamente de datos. La distinción clave es quién genera el conocimiento: en IA Simbólica, reglas IF-THEN escritas por un experto humano; en ML, patrones aprendidos automáticamente de datos."
+        },
+        {
+          "id": "32005cff-1b69-46af-bd7e-41982bb4d099",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿En qué contexto es más apropiado usar la definición operativa de IA del EU AI Act?",
+          "options": [
+            "Al seleccionar el algoritmo de aprendizaje automático más eficiente.",
+            "Al diseñar arquitecturas de redes neuronales profundas.",
+            "Al publicar resultados de investigación científica sobre agentes.",
+            "En contratos, auditorías y cumplimiento regulatorio."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. La definición del EU AI Act (2024) es de naturaleza legal: cualquier sistema que realiza lo que un humano haría, sin importar la técnica usada. La definición del EU AI Act (2024) es de naturaleza legal y es la definición aplicable en contextos regulatorios, contratos y auditorías."
+        },
+        {
+          "id": "32a0cfd4-6875-46bc-92a6-220bbc0e42a8",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál de los siguientes sistemas es un ejemplo de IA Débil en funcionamiento en 2026?",
+          "options": [
+            "Un sistema capaz de aprender cualquier dominio nuevo sin re-entrenamiento.",
+            "Un sistema de recomendación de películas que solo sugiere contenido similar al visto.",
+            "Un sistema que se automodifica y supera a los humanos en todas las tareas cognitivas.",
+            "Un sistema que razona en cualquier dominio con comprensión genuina del significado."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Un sistema de recomendación tiene una sola función y es completamente inútil fuera de ese dominio: es IA Débil. Un sistema de recomendación tiene una sola función (recomendar contenido similar) y es inútil fuera de ese dominio: es IA Débil, el único tipo de IA real en 2026."
+        },
+        {
+          "id": "5dc24063-fea5-4caa-8ed2-77c217bb1c76",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Por qué GPT-4, siendo capaz en muchos dominios del lenguaje, sigue clasificando como IA Débil?",
+          "options": [
+            "Porque no puede generar imágenes ni audio.",
+            "Porque fue lanzado antes de 2024 y la IA Fuerte aún no existía.",
+            "Porque no comprende lo que produce — predice el siguiente token más probable.",
+            "Porque requiere conexión a internet para funcionar."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. La IA Fuerte requiere comprensión real (semántica). GPT-4 manipula símbolos estadísticamente sin significado real. La IA Fuerte requiere comprensión real (semántica). GPT-4 predice tokens estadísticamente sin significado real — es IA Débil aunque opere en múltiples subdominios del lenguaje."
+        },
+        {
+          "id": "4cce34b5-99b4-408e-963f-2766637df60c",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál de las siguientes definiciones de IA fue propuesta por John McCarthy en 1956?",
+          "options": [
+            "El estudio de agentes que reciben percepciones del entorno y ejecutan acciones.",
+            "Sistemas capaces de realizar tareas que normalmente requieren inteligencia humana.",
+            "Algoritmos que aprenden patrones de datos para tomar decisiones o generar contenido.",
+            "La ciencia e ingeniería de fabricar máquinas inteligentes."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. McCarthy acuñó el término \"Inteligencia Artificial\" en 1956 con énfasis en la fabricación e ingeniería, sin definir formalmente qué significa \"inteligente\". McCarthy acuñó el término \"Inteligencia Artificial\" en 1956 con énfasis en la fabricación e ingeniería, sin definir formalmente qué significa \"inteligente\"."
+        },
+        {
+          "id": "15906df0-19f2-4ec7-b00d-f423956c1415",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "El Transformer, arquitectura base del NLP moderno, fue introducido en:",
+          "options": [
+            "2012, con el paper de AlexNet sobre redes convolucionales.",
+            "2015, con el paper de ResNet sobre redes residuales.",
+            "2017, con el paper \"Attention is All You Need\".",
+            "2020, con el lanzamiento de GPT-3 por OpenAI."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. El Transformer fue propuesto por Vaswani et al. en 2017 en \"Attention is All You Need\". BERT (2018) y GPT son sus derivados más conocidos. El Transformer fue propuesto por Vaswani et al. en 2017 en el paper \"Attention is All You Need\". BERT (2018) y GPT son sus derivados más conocidos."
+        },
+        {
+          "id": "6263cd4e-16c2-49dd-9ef7-96ccddec8b33",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál es el criterio técnico correcto para identificar que un sistema es IA Débil?",
+          "options": [
+            "Requiere supervisión humana constante para funcionar correctamente.",
+            "Tiene capacidad de razonamiento inferior a la de un humano promedio.",
+            "Fue desarrollado antes del año 2010.",
+            "No puede hacer nada útil fuera del dominio para el que fue entrenado."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. El criterio definitorio de la IA Débil (Narrow AI) es la especificidad de dominio: fuera de su tarea específica, es completamente inútil. El criterio definitorio de la IA Débil (Narrow AI) es la especificidad de dominio: fuera de su tarea específica es completamente inútil, independientemente de su rendimiento dentro de ese dominio."
+        },
+        {
+          "id": "a580008f-dda7-4755-91ea-e2a415fd3233",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "AlphaGo es el ejemplo paradigmático de aprendizaje por refuerzo porque:",
+          "options": [
+            "Aprendió jugando contra sí mismo, recibiendo +1 por ganar y −1 por perder, sin que nadie le explicara estrategias.",
+            "Agrupa movimientos similares en clusters para descubrir patrones de juego.",
+            "Fue entrenado con millones de partidas de Go jugadas y etiquetadas por maestros humanos.",
+            "Usa reglas IF-THEN programadas por expertos en Go para decidir cada movimiento."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. El aprendizaje por refuerzo se basa en prueba-error con señales de recompensa. AlphaGo aprendió su política de juego solo a través de señales de ganancia/pérdida. El aprendizaje por refuerzo se basa en prueba-error con señales de recompensa. AlphaGo aprendió su política de juego solo a través de millones de partidas y señales de ganancia/pérdida."
+        },
+        {
+          "id": "b0d8e9e4-cfa7-4748-8d8c-44a2ea569fad",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Por qué el Deep Learning requiere típicamente millones de ejemplos y hardware GPU, a diferencia del ML clásico?",
+          "options": [
+            "Porque los algoritmos de DL son ineficientes y no han sido optimizados todavía.",
+            "Porque el DL solo puede procesarse en centros de datos en la nube, no en servidores locales.",
+            "Porque tiene millones de parámetros que ajustar, lo que requiere muchos datos y alta capacidad de cómputo paralelo.",
+            "Porque los datos de entrenamiento del DL deben estar en formato de imagen exclusivamente."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Las redes profundas tienen millones o miles de millones de parámetros. Ajustarlos requiere ver muchos ejemplos y el GPU realiza las multiplicaciones matriciales en paralelo. Las redes profundas tienen millones o miles de millones de parámetros. Ajustarlos requiere ver muchos ejemplos y el GPU realiza las multiplicaciones matriciales en paralelo de forma masiva."
+        },
+        {
+          "id": "df8802ba-197d-4090-a226-eed0fa8564e4",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Por qué no existe una única definición universal de Inteligencia Artificial?",
+          "options": [
+            "Porque cada definición refleja el propósito y el contexto de quien la propone.",
+            "Porque la IA cambia de nombre según el país donde se aplique.",
+            "Porque los científicos no se ponen de acuerdo sobre si las máquinas pueden pensar.",
+            "Porque la IA es una disciplina muy nueva y aún no ha sido estudiada suficientemente."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. McCarthy quería construir, Russell y Norvig querían entender, la industria necesitaba regular, y este curso necesita una base técnica practicable. Cada definición refleja el propósito de quien la propone: McCarthy quería construir, Russell y Norvig querían entender, la industria necesitaba regular, y el curso necesita una base técnica practicable."
+        },
+        {
+          "id": "8953afbf-9285-43aa-85af-8499aae0d430",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Qué tarea de Visión por Computadora determina a qué objeto pertenece cada píxel de la imagen?",
+          "options": [
+            "Clasificación.",
+            "Reconocimiento facial.",
+            "Segmentación.",
+            "Detección de objetos."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. La segmentación es el nivel más granular: cada píxel se etiqueta según el objeto al que pertenece. Se usa en cirugía asistida, conducción autónoma y mapeo de terrenos. La segmentación es el nivel más granular de Visión por Computadora: cada píxel se etiqueta según el objeto al que pertenece. Se usa en cirugía asistida por imagen, conducción autónoma y mapeo de terrenos."
+        },
+        {
+          "id": "196f7856-e53c-45af-812d-389dd841544c",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál de los siguientes es un ejemplo de AGI según los contenidos de la sesión?",
+          "options": [
+            "Un sistema de recomendación de Netflix.",
+            "Ninguno — la AGI es un concepto teórico que no existe en 2026.",
+            "AlphaFold, que predijo millones de estructuras de proteínas.",
+            "GPT-4 con acceso a navegador web."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. La AGI es un objetivo futuro sin hoja de ruta concreta. Ningún sistema real actual califica como AGI. La AGI es un objetivo futuro sin hoja de ruta concreta. Ningún sistema real actual califica como AGI. Todos los ejemplos mencionados (AlphaFold, GPT-4) son IA Débil."
+        },
+        {
+          "id": "23687d59-89b3-4a3d-acea-4d41747adfab",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "La diferencia principal entre IA Fuerte y AGI es que la AGI:",
+          "options": [
+            "Supera al humano en prácticamente todas las tareas cognitivas y generalmente implica automodificación.",
+            "Se limita a tareas intelectuales mientras que la IA Fuerte incluye habilidades físicas.",
+            "Es idéntica a la IA Fuerte; los dos términos son completamente sinónimos sin ninguna diferencia.",
+            "Fue definida antes que la IA Fuerte, por lo que es un concepto más antiguo."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. IA Fuerte = nivel humano en cualquier tarea intelectual. AGI va más allá: supera al humano y se mejora a sí misma sin intervención humana. En la práctica se usan como sinónimos, pero conceptualmente difieren. IA Fuerte = nivel humano en cualquier tarea intelectual. AGI va más allá: supera al humano y se mejora a sí misma sin intervención humana. En la práctica se usan como sinónimos, pero conceptualmente difieren."
+        },
+        {
+          "id": "444c4e75-73a1-448f-aff0-0695e7574f20",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "Según el modelo del agente racional, ChatGPT cumple el rol de actuador cuando:",
+          "options": [
+            "Genera y muestra el texto de respuesta al usuario.",
+            "El modelo Transformer procesa las representaciones internas.",
+            "Convierte el texto en tokens numéricos.",
+            "Recibe el texto escrito por el usuario."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. En ChatGPT: sensor = texto escrito, percepción = tokens, función agente = Transformer, actuador = texto generado y mostrado al usuario. En ChatGPT: sensor = texto escrito, percepción = tokens, función agente = Transformer, actuador = texto generado y mostrado al usuario."
+        },
+        {
+          "id": "ad9ad76c-3105-41f0-bf22-3145f59c36d0",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál de los siguientes escenarios corresponde a aprendizaje no supervisado?",
+          "options": [
+            "Predecir el precio de una casa basándose en datos históricos de ventas con precios conocidos.",
+            "Analizar el comportamiento de 100.000 clientes para descubrir grupos similares sin definir categorías previas.",
+            "Un agente que aprende a jugar un videojuego recibiendo puntos como recompensa.",
+            "Entrenar un modelo para clasificar radiografías como \"tumor\" o \"sin tumor\" con 5.000 imágenes etiquetadas."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El aprendizaje no supervisado opera sin etiquetas. Descubrir grupos de clientes sin definir categorías previas es clustering. El aprendizaje no supervisado opera sin etiquetas. Descubrir grupos de clientes sin definir categorías previas es clustering — tarea típica de aprendizaje no supervisado."
+        },
+        {
+          "id": "c9dafa50-f7d5-4f36-8eac-579c446573fe",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "Según la tabla comparativa de la sesión, ¿cuál enfoque tiene la mayor transparencia (legibilidad para humanos)?",
+          "options": [
+            "Deep Learning, porque visualiza sus capas ocultas claramente.",
+            "ML clásico, porque sus modelos son siempre interpretables.",
+            "IA Simbólica, porque las reglas IF-THEN son escritas y legibles por humanos.",
+            "Los tres enfoques tienen la misma transparencia."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. IA Simbólica = alta transparencia. ML clásico = media. Deep Learning = baja (caja negra), ya que las representaciones internas no son fácilmente interpretables. IA Simbólica = alta transparencia (reglas legibles). ML clásico = media. Deep Learning = baja transparencia (caja negra), ya que las representaciones internas no son fácilmente interpretables por humanos."
+        },
+        {
+          "id": "6184043d-950d-4faa-8473-dc05f5f1c62e",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "AlphaGo, el sistema que venció al campeón mundial de Go, es un ejemplo de:",
+          "options": [
+            "IA Débil, porque solo puede jugar Go y es inútil en cualquier otro dominio.",
+            "IA Fuerte, porque supera a los humanos en su tarea.",
+            "IA Fuerte parcial, porque transfiere conocimiento entre juegos de tablero.",
+            "AGI, porque demostró inteligencia general superior."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. Superar a humanos en una tarea específica no convierte un sistema en IA Fuerte. AlphaGo no puede mantener una conversación ni jugar ajedrez. Superar a humanos en una tarea específica no convierte un sistema en IA Fuerte. AlphaGo no puede mantener una conversación ni jugar ajedrez: dominio único = IA Débil."
+        },
+        {
+          "id": "fb071865-c5ce-4ac0-a7da-4ef921f2f4e6",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "Un agente es racional cuando:",
+          "options": [
+            "Aprende de datos sin intervención humana.",
+            "Tiene consciencia de sí mismo y puede reflexionar sobre sus acciones.",
+            "Elige la acción que maximiza su medida de desempeño dado lo que ha percibido.",
+            "Siempre elige la acción más rápida de entre las posibles."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Racionalidad no implica consciencia ni velocidad, sino que la acción elegida sea la óptima dado el historial de percepciones y la medida de desempeño del agente. Racionalidad no implica consciencia ni velocidad, sino que la acción elegida sea la óptima dado el historial de percepciones y la medida de desempeño del agente."
+        },
+        {
+          "id": "0e335ffd-45c3-4b85-8d7d-206ffd000134",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Por qué AlphaFold (2020) fue considerado un hito histórico en la ciencia?",
+          "options": [
+            "Desarrolló el mecanismo de atención que se usa en todos los Transformers modernos.",
+            "Descubrió 2.2 millones de nuevos cristales estables para materiales avanzados.",
+            "Fue el primer modelo de IA que superó a humanos en el juego de Go.",
+            "Predijo la estructura 3D de más de 200 millones de proteínas, acelerando la biología estructural en décadas."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. AlphaFold resolvió el \"problema del plegamiento de proteínas\" que tardó 50 años en resolverse. En 2024 recibió el Premio Nobel de Química. AlphaFold resolvió el problema del plegamiento de proteínas, prediciendo la estructura 3D de más de 200 millones de proteínas. En 2024 recibió el Premio Nobel de Química."
+        },
+        {
+          "id": "eb0c86ff-8585-4c34-8525-73941b8a4591",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "La detección de plagas por imagen en cultivos de cacao y banano en Ecuador es un ejemplo de aplicación de IA en el sector:",
+          "options": [
+            "Agricultura, mediante Visión por Computadora aplicada a cultivos locales.",
+            "Manufactura, mediante control de calidad visual en empacadoras.",
+            "Finanzas, mediante scoring crediticio para pequeños agricultores.",
+            "Salud, mediante diagnóstico de enfermedades en zonas rurales."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La detección de plagas por imagen es Visión por Computadora aplicada al sector agrícola, con alta pertinencia para Ecuador dado su producción de cacao, banano y camarón. La detección de plagas por imagen es Visión por Computadora aplicada al sector agrícola — uno de los casos de uso con mayor pertinencia para Ecuador dado su producción de cacao, banano y camarón."
+        },
+        {
+          "id": "2fc560b1-7b75-4892-a7c3-f99aa99d8abb",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "La definición de Russell y Norvig (2020) describe la IA como \"el estudio de agentes\". ¿Qué característica fundamental tiene un agente según esta definición?",
+          "options": [
+            "Fabrica réplicas digitales de procesos industriales.",
+            "Tiene consciencia propia y puede automodificarse.",
+            "Aprende de datos etiquetados provistos por humanos.",
+            "Percibe su entorno a través de sensores y actúa sobre él a través de actuadores."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Russell y Norvig definen al agente como una entidad que percibe (sensores) y actúa (actuadores), siendo racional cuando maximiza su medida de desempeño. Russell y Norvig definen al agente como una entidad que percibe (sensores) y actúa (actuadores), siendo racional cuando maximiza su medida de desempeño."
+        },
+        {
+          "id": "caa9c3cb-efe1-4072-a560-cf49a1002d76",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál tipo de aprendizaje automático se aplica más directamente al problema de detectar fraude bancario en tiempo real?",
+          "options": [
+            "Por refuerzo, porque el sistema aprende de los errores de detección con penalizaciones.",
+            "Simbólico, porque requiere reglas explícitas definidas por expertos en seguridad bancaria.",
+            "No supervisado, porque los patrones de fraude no se conocen de antemano.",
+            "Supervisado, porque se entrena con transacciones históricas etiquetadas como fraude o legítimas."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. La detección de fraude bancario usa aprendizaje supervisado: se cuenta con datos históricos donde cada transacción ya tiene la etiqueta \"fraude\" o \"legítima\". La detección de fraude bancario típicamente usa aprendizaje supervisado: se cuenta con datos históricos donde cada transacción ya tiene la etiqueta \"fraude\" o \"legítima\"."
+        },
+        {
+          "id": "463c4ee3-e782-4eb1-a592-3c6cd106a10b",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál es la característica distintiva del Deep Learning frente al ML clásico en cuanto al conocimiento?",
+          "options": [
+            "El Deep Learning solo funciona con datos de texto mientras que el ML clásico funciona con cualquier tipo.",
+            "El Deep Learning requiere menos datos que el ML clásico para funcionar correctamente.",
+            "El ML clásico aprende automáticamente las características mientras que en DL el humano las diseña.",
+            "En Deep Learning las representaciones útiles se aprenden automáticamente; en ML clásico las diseña el humano (feature engineering)."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. La diferencia fundamental es que el DL elimina el feature engineering manual: la red descubre sola qué características son relevantes durante el entrenamiento. La diferencia fundamental es que el DL elimina el feature engineering manual: la red descubre sola qué características son relevantes durante el entrenamiento."
+        },
+        {
+          "id": "f7a9c6ca-120a-450b-bf4c-beb5f25e1737",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál es la diferencia entre clasificación y detección de objetos en Visión por Computadora?",
+          "options": [
+            "La detección requiere más datos que la clasificación pero produce resultados más precisos.",
+            "La clasificación funciona con imágenes en color y la detección solo con imágenes en escala de grises.",
+            "Clasificación asigna una etiqueta a toda la imagen; detección localiza y clasifica múltiples objetos dentro de ella.",
+            "Son términos sinónimos que describen el mismo proceso con diferente nombre."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Clasificación: \"¿qué es esta imagen?\" (una etiqueta global). Detección: \"¿dónde está cada objeto y qué es?\" (múltiples cajas delimitadoras con etiquetas). Clasificación: \"¿qué es esta imagen?\" (una etiqueta global). Detección: \"¿dónde está cada objeto y qué es?\" (múltiples cajas delimitadoras con etiquetas, como en YOLO)."
+        },
+        {
+          "id": "7bad94c5-6285-456a-9d2c-8ed4ad69295d",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Qué hace una capa de convolución en una CNN de Visión por Computadora?",
+          "options": [
+            "Clasifica directamente la imagen asignándole una etiqueta de categoría.",
+            "Normaliza el brillo y contraste de la imagen antes del procesamiento.",
+            "Reduce la imagen a un vector de números comprimiendo toda la información en un solo paso.",
+            "Aplica un filtro que desliza sobre la imagen para detectar patrones locales como bordes, esquinas y texturas."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Un filtro convolucional es una pequeña matriz que desliza sobre la imagen detectando si ciertos patrones están presentes en cada región. Capas sucesivas combinan patrones simples en conceptos más complejos. Un filtro convolucional es una pequeña matriz que desliza sobre la imagen detectando si ciertos patrones están presentes en cada región. Capas sucesivas combinan patrones simples en conceptos más complejos."
+        },
+        {
+          "id": "2160d509-46d0-4a97-91b9-14db3b81673b",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "En el aprendizaje supervisado, ¿qué es una \"etiqueta\"?",
+          "options": [
+            "La respuesta correcta que ya se conoce para un dato de entrenamiento.",
+            "El nombre que se le asigna a un modelo una vez entrenado.",
+            "Un parámetro interno del algoritmo que se ajusta durante el entrenamiento.",
+            "Un metadato que describe el tamaño del archivo de datos."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. Una etiqueta es la salida correcta conocida de antemano. Ej: el email tiene la etiqueta \"spam\" o \"no-spam\". Una etiqueta es la salida correcta conocida de antemano. Ej: un email + su etiqueta \"spam\" o \"no-spam\". El modelo aprende a predecir la etiqueta a partir de los datos de entrada. #"
+        },
+        {
+          "id": "a30197bf-119e-474f-8e7b-5d56046fc30c",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Qué significa que un coeficiente βⱼ se interprete **ceteris paribus**?",
+          "options": [
+            "Que la variable xⱼ no tiene ningún efecto sobre ŷ.",
+            "Que mide el efecto de xⱼ sobre ŷ manteniendo constantes las demás variables del modelo.",
+            "Que el coeficiente solo aplica al conjunto de entrenamiento.",
+            "Que el coeficiente cambia cada vez que se agrega una nueva variable."
+          ],
+          "correct": 1,
+          "feedback": "Respuesta correcta. **Ceteris paribus** significa **todo lo demás constante**: βⱼ representa el efecto puro de esa variable, aislado del efecto de las demás."
+        },
+        {
+          "id": "ba846f34-8b84-4ec3-afd7-0e2a1ce8024d",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "En el código `pipeline = joblib.load(**modelo.pkl**)` ubicado fuera (antes) de la función del endpoint `/predict`, ¿por qué se carga el modelo en ese punto y no dentro de la función de predicción?",
+          "options": [
+            "Porque así el modelo se reentrena automáticamente con cada solicitud.",
+            "Porque FastAPI lo exige por razones de sintaxis, sin ninguna ventaja de rendimiento.",
+            "Para cargar el modelo una sola vez al iniciar el servidor, en vez de releerlo desde disco en cada solicitud.",
+            "Porque dentro de la función del endpoint no se puede usar joblib."
+          ],
+          "correct": 2,
+          "feedback": "Respuesta correcta. Cargar el modelo una sola vez al iniciar el servidor evita releerlo desde disco en cada solicitud, haciendo que cada predicción sea más rápida."
+        },
+        {
+          "id": "613243d2-2887-4566-b820-a2e3a971ce92",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Por qué un mismo endpoint de una API puede ser consumido tanto por una aplicación web como por una aplicación móvil, sin necesidad de exportar el modelo de formas distintas?",
+          "options": [
+            "Porque el modelo se expone como un servicio HTTP genérico: cualquier cliente que pueda enviar y recibir JSON por HTTP puede consumirlo, sin necesitar Python ni scikit-learn instalado.",
+            "Porque el archivo .pkl cambia de formato según el tipo de cliente que lo consulta.",
+            "Porque FastAPI genera automáticamente una app móvil distinta para cada cliente.",
+            "Porque las apps web y móviles usan lenguajes de programación idénticos."
+          ],
+          "correct": 0,
+          "feedback": "Respuesta correcta. Al exponerse como un servicio HTTP con JSON, el endpoint puede ser consumido por cualquier cliente sin importar el lenguaje que use."
+        },
+        {
+          "id": "4669d90e-1d6a-4d11-9935-32227fa17d6f",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Qué efecto tiene `drop_first=True` en `pd.get_dummies(X, columns=[**tipo_cambio**], drop_first=True)`?",
+          "options": [
+            "Elimina la primera columna dummy generada, evitando la dummy trap (multicolinealidad perfecta).",
+            "Ordena las categorías de forma alfabética antes de codificarlas.",
+            "Convierte automáticamente todas las columnas numéricas en categóricas.",
+            "Elimina todas las columnas categóricas del DataFrame."
+          ],
+          "correct": 0,
+          "feedback": "Respuesta correcta. drop_first=True descarta una de las k columnas dummy generadas, dejando esa categoría como referencia y evitando la colinealidad perfecta."
+        },
+        {
+          "id": "10a72a43-8ac7-4519-b701-3e21ae52e495",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Para qué se utiliza joblib.dump() y joblib.load() en el flujo de despliegue de un modelo?",
+          "options": [
+            "Para calcular automáticamente el RMSE del modelo.",
+            "Para dividir los datos en train y test.",
+            "Para entrenar el modelo desde cero cada vez que se necesita una predicción.",
+            "Para guardar y cargar el objeto (pipeline) entrenado, de modo que pueda reutilizarse sin volver a entrenarlo."
+          ],
+          "correct": 3,
+          "feedback": "Respuesta correcta. joblib.dump() guarda el pipeline entrenado en un archivo, y joblib.load() lo recupera en otro programa sin necesidad de reentrenarlo."
+        },
+        {
+          "id": "2bb311cc-8fea-4753-8c91-68ec6a35eac6",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cómo se define la multicolinealidad?",
+          "options": [
+            "Cuando dos o más variables independientes están altamente correlacionadas entre sí.",
+            "Cuando se usan variables categóricas en el modelo.",
+            "Cuando la variable dependiente Y no tiene varianza.",
+            "Cuando el modelo tiene un R² mayor a 0.9."
+          ],
+          "correct": 0,
+          "feedback": "Respuesta correcta. La multicolinealidad ocurre cuando una variable independiente puede predecirse con alta precisión a partir de otras variables independientes del modelo."
+        },
+        {
+          "id": "2e97c4a0-694d-4753-a817-e3cd109bb45e",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "En la ecuación ŷ = β₀ + β₁x + β₂x² + … + βₙxⁿ, ¿qué representa n?",
+          "options": [
+            "El número de observaciones del dataset.",
+            "El valor del intercepto.",
+            "El grado del polinomio.",
+            "El número de variables categóricas del modelo."
+          ],
+          "correct": 2,
+          "feedback": "Respuesta correcta. n es el grado del polinomio, es decir, la potencia más alta de x incluida en el modelo."
+        },
+        {
+          "id": "28b6c295-7402-41d7-916a-29f9a52a4612",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál de las siguientes afirmaciones sobre el R² ajustado es correcta?",
+          "options": [
+            "Nunca puede ser negativo.",
+            "Es siempre menor o igual que el R² ordinario, y puede disminuir si se agrega una variable poco útil.",
+            "Siempre es mayor que el R² ordinario.",
+            "Es independiente del número de predictores del modelo."
+          ],
+          "correct": 1,
+          "feedback": "Respuesta correcta. El R² ajustado es siempre ≤ R² ordinario, y a diferencia de este, puede disminuir cuando se agrega una variable que no compensa la pérdida de un grado de libertad."
+        },
+        {
+          "id": "4010397c-79c6-4247-8771-661e48592dde",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Por qué el modelo que se exporta a producción se reentrena con el 100% de los datos disponibles, y no con el mismo 80% usado para evaluarlo?",
+          "options": [
+            "Porque el conjunto de prueba contiene errores que deben excluirse.",
+            "Porque joblib no permite guardar modelos entrenados con menos del 100% de los datos.",
+            "Porque el modelo de producción no necesita ser preciso.",
+            "Porque el conjunto de prueba ya cumplió su función de medir el desempeño, y usar más datos de entrenamiento generalmente produce un modelo mejor."
+          ],
+          "correct": 3,
+          "feedback": "Respuesta correcta. Una vez medido el desempeño con el train/test split, el conjunto de prueba deja de tener un rol especial; el modelo final se reentrena con todos los datos disponibles."
+        },
+        {
+          "id": "d0c3cf3e-d713-4962-8268-70241a58c7c9",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cómo se determina, en la práctica, el grado óptimo de un polinomio para un modelo de regresión?",
+          "options": [
+            "Se elige arbitrariamente el grado 2 en todos los casos.",
+            "Se prueban distintos grados y se elige aquel con el menor error sobre el conjunto de prueba (test).",
+            "Se calcula directamente con una fórmula matemática sin necesidad de probar datos.",
+            "Se elige siempre el grado más alto posible."
+          ],
+          "correct": 1,
+          "feedback": "Respuesta correcta. El grado no se conoce de antemano: se evalúan varios grados candidatos y se elige el que produce el menor error en el conjunto de prueba (idealmente con validación cruzada)."
+        },
+        {
+          "id": "e1612582-75b6-49e8-a1c7-04de442031b4",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál es el problema de codificar una variable categórica nominal directamente como enteros (0, 1, 2, …)?",
+          "options": [
+            "La variable deja de poder usarse en el modelo.",
+            "Se impone una jerarquía u orden numérico entre categorías que no existe en la realidad.",
+            "El modelo no puede procesar números enteros.",
+            "El modelo automáticamente ignora esa variable."
+          ],
+          "correct": 1,
+          "feedback": "Respuesta correcta. Codificar categorías sin orden real como enteros consecutivos hace que el modelo interprete una distancia u orden entre ellas que no existe."
+        },
+        {
+          "id": "2533b9d9-ba98-4bc1-b421-5254ede5d2cc",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Qué indica el decorador @app.post(**/predict**) sobre una función en FastAPI?",
+          "options": [
+            "Que esa función entrena el modelo desde cero.",
+            "Que esa función se ejecuta automáticamente cada minuto.",
+            "Que esa función maneja las peticiones POST que llegan al endpoint /predict.",
+            "Que esa función solo puede ejecutarse desde una app móvil."
+          ],
+          "correct": 2,
+          "feedback": "Respuesta correcta. El decorador @app.post(**/predict**) indica que la función definida debajo se ejecuta cuando llega una petición HTTP POST a esa dirección."
+        },
+        {
+          "id": "eea460fd-4104-4907-8cb7-2adf389f71f4",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "En `PolynomialFeatures(degree=2, include_bias=False)`, ¿qué logra el parámetro include_bias=False?",
+          "options": [
+            "Evita el data leakage entre train y test.",
+            "Excluye la columna constante del término independiente, porque el modelo ya agrega su propio intercepto.",
+            "Impide que se generen términos de grado 2.",
+            "Elimina todas las variables categóricas del dataset."
+          ],
+          "correct": 1,
+          "feedback": "Respuesta correcta. include_bias=False excluye la columna constante (de puros unos) que representaría el término independiente, ya que el propio modelo lineal (LinearRegression) añade su intercepto por separado."
+        },
+        {
+          "id": "e5903027-e5f9-4979-8919-1218980a9ec7",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál es la diferencia entre una variable categórica nominal y una ordinal?",
+          "options": [
+            "La nominal solo puede tener dos categorías.",
+            "La nominal tiene un orden significativo entre sus categorías; la ordinal no.",
+            "Ambas siempre deben codificarse de la misma manera.",
+            "La ordinal tiene un orden significativo entre sus categorías; la nominal no."
+          ],
+          "correct": 3,
+          "feedback": "Respuesta correcta. Una variable ordinal tiene categorías con un orden real (ej. nivel educativo); una nominal no tiene orden ni distancia real entre sus categorías (ej. marca, provincia)."
+        },
+        {
+          "id": "438624b8-172e-4104-93e1-77094c91b0bb",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál es el problema principal del R² ordinario al comparar modelos con distinto número de variables?",
+          "options": [
+            "Nunca puede calcularse con más de una variable.",
+            "Siempre aumenta o se mantiene igual al agregar cualquier variable, incluso si es irrelevante.",
+            "Solo puede calcularse sobre el conjunto de entrenamiento.",
+            "Disminuye automáticamente al agregar variables relevantes."
+          ],
+          "correct": 1,
+          "feedback": "Respuesta correcta. El R² ordinario nunca disminuye al agregar variables, aunque sean ruido puro sin relación real con Y, lo que lo hace inadecuado para comparar modelos de distinta complejidad."
+        },
+        {
+          "id": "58a3e068-eed2-4edf-bcb3-f5281ed83414",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "Según el vocabulario de despliegue visto en clase, ¿qué es una API?",
+          "options": [
+            "Un archivo que almacena el modelo entrenado.",
+            "Una interfaz que permite que un programa le pida algo a otro, sin compartir su código interno.",
+            "Un protocolo exclusivo para bases de datos.",
+            "Un formato de texto para estructurar datos en pares clave-valor."
+          ],
+          "correct": 1,
+          "feedback": "Respuesta correcta. Una API (Interfaz de Programación de Aplicaciones) permite que un programa solicite algo a otro sin necesidad de conocer su código interno."
+        },
+        {
+          "id": "f06a522d-6378-49ab-846b-f0a03afdc6d7",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "En un ColumnTransformer, ¿qué hace la opción `remainder=**passthrough**`?",
+          "options": [
+            "Elimina del DataFrame todas las columnas no mencionadas explícitamente en los transformadores.",
+            "Convierte todas las columnas restantes en variables numéricas estandarizadas.",
+            "Aplica One-Hot Encoding a todas las columnas del DataFrame, sin excepción.",
+            "Deja pasar sin modificación las columnas que no fueron indicadas explícitamente en ningún transformador."
+          ],
+          "correct": 3,
+          "feedback": "Respuesta correcta. remainder=**passthrough** indica que las columnas no mencionadas explícitamente se mantienen sin cambios, en lugar de ser descartadas."
+        },
+        {
+          "id": "f343f5ee-b731-4c98-90fc-0fd2902c0ae5",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿En qué consiste el One-Hot Encoding?",
+          "options": [
+            "En convertir una variable categórica con k categorías en k columnas binarias, cada una indicando pertenencia a esa categoría.",
+            "En convertir cualquier variable numérica en una variable categórica.",
+            "En eliminar todas las variables categóricas del modelo.",
+            "En asignar un número entero consecutivo a cada categoría."
+          ],
+          "correct": 0,
+          "feedback": "Respuesta correcta. One-Hot Encoding crea una columna binaria (0/1) por cada categoría, evitando imponer un orden o distancia falsa entre ellas."
+        },
+        {
+          "id": "47107f0b-60e3-4a75-8bdc-c9c6f196a92c",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿En qué situación es apropiado usar OrdinalEncoder en lugar de One-Hot Encoding?",
+          "options": [
+            "Cuando la variable categórica es nominal, sin ningún orden entre sus categorías.",
+            "Cuando el modelo no tiene variable objetivo.",
+            "Cuando la variable categórica es ordinal, con un orden real y significativo entre sus categorías.",
+            "Cuando la variable es numérica continua."
+          ],
+          "correct": 2,
+          "feedback": "Respuesta correcta. OrdinalEncoder es apropiado para variables ordinales, donde existe un orden real (por ejemplo, nivel educativo); para variables nominales sin orden se prefiere One-Hot Encoding."
+        },
+        {
+          "id": "24a01eed-ee70-4792-950a-698a76e6bb84",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Por qué, al codificar una variable categórica con k categorías, se recomienda usar solo k−1 columnas dummy?",
+          "options": [
+            "Porque usar k−1 columnas hace el modelo más rápido de entrenar, sin ninguna otra razón.",
+            "Porque scikit-learn no permite más de k−1 columnas categóricas.",
+            "Porque así se elimina la necesidad de un intercepto β₀.",
+            "Porque usar las k columnas completas genera multicolinealidad perfecta (dummy trap), ya que su suma siempre es 1."
+          ],
+          "correct": 3,
+          "feedback": "Respuesta correcta. Si se incluyen las k dummies completas, la suma de todas las columnas es siempre 1 para cada fila, generando colinealidad perfecta (dummy trap). Usar k−1 columnas evita ese problema, dejando una categoría como referencia."
+        },
+        {
+          "id": "07b529c9-b886-479a-b85b-6a40569abcd2",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál es la diferencia entre una API y un endpoint?",
+          "options": [
+            "La API es la interfaz general que expone el servicio; el endpoint es una dirección específica dentro de esa API que realiza una tarea concreta.",
+            "Son sinónimos exactos y no existe ninguna diferencia.",
+            "La API solo puede tener un endpoint como máximo.",
+            "El endpoint siempre contiene varias APIs dentro de sí."
+          ],
+          "correct": 0,
+          "feedback": "Respuesta correcta. La API es el servicio completo que se expone; dentro de ella puede haber varios endpoints (por ejemplo, /predict y /health), cada uno encargado de una tarea concreta."
+        },
+        {
+          "id": "957e2fd4-b04f-4cdd-8121-0121748ad492",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál es la diferencia entre el momento de **entrenamiento** y el momento de **servicio** (inferencia) de un modelo?",
+          "options": [
+            "El entrenamiento ocurre una sola vez (o cuando hay datos nuevos) y requiere el dataset completo; el servicio ocurre muchas veces y solo necesita el objeto ya entrenado.",
+            "El servicio requiere más tiempo de cómputo que el entrenamiento.",
+            "El entrenamiento ocurre en la API; el servicio ocurre en el notebook.",
+            "Son exactamente el mismo proceso, solo con nombres distintos."
+          ],
+          "correct": 0,
+          "feedback": "Respuesta correcta. Entrenar es un proceso que ocurre pocas veces y necesita el dataset completo; servir (inferencia) ocurre muchas veces, una por cada solicitud, y solo requiere el modelo ya entrenado."
+        },
+        {
+          "id": "c89cc2a0-69b2-458c-ac16-956948e82ede",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Para qué sirve el parámetro `handle_unknown=**ignore**` al crear un OneHotEncoder?",
+          "options": [
+            "Para evitar que ocurra un error si en el conjunto de prueba aparece una categoría que no estaba presente en el entrenamiento.",
+            "Para ignorar por completo todas las variables categóricas del modelo.",
+            "Para forzar a que todas las categorías generen exactamente 2 columnas.",
+            "Para eliminar automáticamente las filas con datos faltantes."
+          ],
+          "correct": 0,
+          "feedback": "Respuesta correcta. handle_unknown=**ignore** evita que el codificador falle cuando encuentra una categoría que nunca vio durante el entrenamiento."
+        },
+        {
+          "id": "2406ca39-3a00-44ea-a346-20f45c5a6392",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Qué realiza la línea `pipeline = joblib.load(**modelo.pkl**)`?",
+          "options": [
+            "Convierte el archivo modelo.pkl en un archivo JSON.",
+            "Entrena un nuevo pipeline usando el archivo modelo.pkl como dataset.",
+            "Carga en memoria el objeto (pipeline) previamente guardado en el archivo modelo.pkl.",
+            "Elimina el modelo entrenado."
+          ],
+          "correct": 2,
+          "feedback": "Respuesta correcta. joblib.load() recupera (deserializa) el objeto previamente guardado con joblib.dump(), listo para usarse con .predict()."
+        },
+        {
+          "id": "7480a92e-6544-4d78-95e7-ab1d44fa7d53",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál es la principal motivación para usar regresión polinomial en lugar de regresión lineal simple?",
+          "options": [
+            "Evitar el uso de variables categóricas.",
+            "Capturar relaciones curvas entre las variables, que un modelo puramente lineal no puede representar.",
+            "Reducir el número de variables del modelo.",
+            "Eliminar la necesidad de dividir en train y test."
+          ],
+          "correct": 1,
+          "feedback": "Respuesta correcta. Muchos fenómenos reales no son estrictamente lineales; la regresión polinomial permite capturar esa curvatura agregando potencias de x."
+        },
+        {
+          "id": "8411423d-5386-4230-a580-2db5cb57661d",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Por qué PolynomialFeatures debe ajustarse (fit) únicamente sobre el conjunto de entrenamiento?",
+          "options": [
+            "Porque ajustarlo sobre test es más rápido computacionalmente.",
+            "Porque ajustarlo sobre test provoca data leakage: el transformador **vería** información del conjunto de prueba antes de tiempo.",
+            "Porque el conjunto de prueba nunca contiene variables numéricas.",
+            "Porque PolynomialFeatures no puede aplicarse al conjunto de entrenamiento."
+          ],
+          "correct": 1,
+          "feedback": "Respuesta correcta. Ajustar transformaciones sobre el conjunto de prueba filtra información de ese conjunto hacia el proceso de entrenamiento (data leakage), haciendo que las métricas de evaluación resulten optimistas y poco confiables."
+        },
+        {
+          "id": "c9a74aa2-2c53-4b62-8838-67b98239b29d",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Qué mide el Factor de Inflación de la Varianza (VIF) de una variable?",
+          "options": [
+            "Cuánto se infla la varianza de su coeficiente debido a la correlación con las demás variables independientes.",
+            "El número óptimo de variables a incluir en el modelo.",
+            "La proporción de varianza de Y explicada por el modelo completo.",
+            "La diferencia entre el valor real y el valor predicho."
+          ],
+          "correct": 0,
+          "feedback": "Respuesta correcta. El VIF cuantifica cuánto aumenta la varianza del coeficiente de una variable debido a su correlación con las demás variables independientes del modelo."
+        },
+        {
+          "id": "ae55523f-7f6f-4851-9409-21587b464e0e",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Por qué se prefiere joblib sobre pickle para guardar un pipeline de scikit-learn?",
+          "options": [
+            "Porque pickle no puede guardar ningún objeto de Python.",
+            "Porque joblib no requiere que el modelo esté entrenado previamente.",
+            "Porque pickle solo funciona con modelos de regresión logística.",
+            "Porque joblib maneja mejor los arreglos grandes de NumPy que suelen contener los pipelines entrenados, siendo generalmente más rápido y con archivos más livianos."
+          ],
+          "correct": 3,
+          "feedback": "Respuesta correcta. Ambos pueden serializar objetos de scikit-learn, pero joblib está optimizado para manejar los arreglos de NumPy grandes típicos de un pipeline entrenado."
+        },
+        {
+          "id": "ca49997c-de6e-46a7-8094-6c0eae725ced",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Por qué la regresión polinomial se considera un caso especial de la regresión lineal múltiple?",
+          "options": [
+            "Porque no tiene coeficientes β.",
+            "Porque el modelo es lineal en los parámetros β, aunque no lo sea en x.",
+            "Porque siempre tiene el mismo grado que el número de variables.",
+            "Porque solo puede usarse con una variable categórica."
+          ],
+          "correct": 1,
+          "feedback": "Respuesta correcta. Aunque la relación con x no es lineal (hay potencias de x), el modelo sigue siendo lineal respecto a los coeficientes β, por lo que se ajusta con las mismas técnicas de regresión lineal."
+        },
+        {
+          "id": "649b9254-51ab-41e2-a26d-d0fbfc7111a0",
+          "category": "teoria_base",
+          "categoryName": "Preguntas Guía",
+          "text": "¿Cuál es la forma general de la ecuación de un modelo de regresión lineal múltiple?",
+          "options": [
+            "ŷ = β₀ + β₁x + β₂x²",
+            "ŷ = β₀ + β₁x₁ + β₂x₂ + … + βₚxₚ",
+            "ŷ = β₀ + β₁x",
+            "ŷ = β₀ · x₁ · x₂ · … · xₚ"
+          ],
+          "correct": 1,
+          "feedback": "Respuesta correcta. La regresión múltiple extiende el modelo simple a p variables independientes, cada una con su propio coeficiente βⱼ."
+        },
+        {
+          "id": 1070,
+          "category": "python_practica",
+          "categoryName": "Taller Práctico: Numpy y Pandas",
+          "text": "Si en Python creas la lista `[1, 2, 3]` y la multiplicas por 2, obtienes `[1, 2, 3, 1, 2, 3]`. Pero si haces lo mismo con un array de NumPy (`np.array([1, 2, 3]) * 2`), ¿qué resultado obtienes y por qué?",
+          "options": [
+            "`[1, 2, 3, 1, 2, 3]`, porque NumPy maneja los arrays exactamente igual que las listas de Python.",
+            "`[1, 4, 9]`, porque NumPy siempre eleva al cuadrado por defecto en operaciones simples.",
+            "Un error de sintaxis, porque no se pueden multiplicar arrays en NumPy.",
+            "`[2, 4, 6]`, porque NumPy aplica la operación de forma vectorizada a cada elemento matemáticamente."
+          ],
+          "correct": 3,
+          "feedback": "La vectorización es la base de NumPy; aplica operaciones directamente sobre cada elemento en C por debajo, siendo infinitamente más rápido para cálculos matemáticos en IA."
+        },
+        {
+          "id": 1071,
+          "category": "python_practica",
+          "categoryName": "Taller Práctico: Numpy y Pandas",
+          "text": "¿Por qué es obligatorio utilizar la función `pd.to_datetime()` sobre la columna de fecha luego de cargar un archivo CSV con Pandas?",
+          "options": [
+            "Para evitar que los valores de fecha generen outliers estadísticos que sesgan la media del dataset.",
+            "Para transformar las fechas en valores booleanos True/False según si son anteriores o posteriores a hoy.",
+            "Porque los archivos CSV codifican todas las columnas como binario y pd.to_datetime() las decodifica.",
+            "Porque Pandas importa las fechas como strings 'object'; to_datetime() las convierte a tipo datetime64."
+          ],
+          "correct": 3,
+          "feedback": "Sin pd.to_datetime(), la columna de fecha es texto (dtype='object'). Con ella, Pandas la convierte a datetime64, permitiendo operaciones temporales: extraer año/mes/día, calcular diferencias entre fechas, ordenar cronológicamente y crear features como 'días transcurridos'."
+        },
+        {
+          "id": 1072,
+          "category": "python_practica",
+          "categoryName": "Taller Práctico: Numpy y Pandas",
+          "text": "Si necesitas obtener rápidamente el conteo, la media, la desviación estándar, los cuartiles y los valores máximos y mínimos de las columnas numéricas de tu DataFrame, ¿qué comando de Pandas utilizas?",
+          "options": [
+            "`df.describe()`",
+            "`df.value_counts()`",
+            "`df.info()`",
+            "`df.head()`"
+          ],
+          "correct": 0,
+          "feedback": "`describe()` arroja un cuadro estadístico completo de todas las variables numéricas, clave en la fase de exploración (EDA)."
+        },
+        {
+          "id": 1073,
+          "category": "python_practica",
+          "categoryName": "Taller Práctico: Numpy y Pandas",
+          "text": "En Matplotlib, al construir un histograma de ventas, ¿para qué sirve la función `plt.axvline()`?",
+          "options": [
+            "Para separar visualmente las barras del histograma usando espaciado y colorearlas automáticamente.",
+            "Para filtrar y eliminar de la gráfica todos los puntos de datos atípicos detectados como outliers.",
+            "Para dibujar una línea vertical sobre el gráfico, útil para marcar el promedio u otro valor de referencia.",
+            "Para generar etiquetas de texto rotadas en el eje X cuando los nombres de categorías son muy largos."
+          ],
+          "correct": 2,
+          "feedback": "axes.axvline(x=valor, color='rojo', linestyle='--') dibuja una línea vertical en x=valor. Se usa para marcar referencias como la media, mediana, un umbral de decisión o el valor objetivo. Es una herramienta de análisis visual muy usada en dashboards de ML."
+        },
+        {
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación",
+          "text": "En el contexto de evaluar un modelo predictivo, ¿qué representa matemáticamente la métrica R² (Coeficiente de Determinación)?",
+          "options": [
+            "El peso que se le asigna a los errores más grandes para penalizar modelos inestables.",
+            "La distancia promedio absoluta entre cada predicción y su valor real correspondiente en el dataset de prueba.",
+            "La probabilidad porcentual de que la predicción del modelo sea exactamente igual a la realidad en nuevos datos.",
+            "La proporción de la varianza en la variable a predecir que el modelo logra explicar frente a simplemente adivinar usando el promedio."
+          ],
+          "correct": 3,
+          "feedback": "R² es una métrica relativa (sin unidades). R²=0.92 significa que el modelo explica el 92% de la varianza. El resto es ruido o requiere más variables.",
+          "id": 1074
+        },
+        {
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación",
+          "text": "Al evaluar un modelo de regresión, observas que el RMSE es significativamente mayor que el MAE. ¿Qué te indica estadísticamente esta diferencia?",
+          "options": [
+            "El modelo es perfecto; un RMSE mayor que el MAE es la prueba definitiva de que la varianza es constante.",
+            "La relación entre las variables de entrada y salida no es lineal, por lo que MCO no logró ajustar una recta adecuada.",
+            "El modelo está cometiendo errores inusualmente grandes (outliers) en ciertas predicciones, ya que el RMSE amplifica los errores al elevarlos al cuadrado.",
+            "El modelo sufre de un overfitting severo, memorizando el conjunto de entrenamiento en lugar de aprender el patrón general."
+          ],
+          "correct": 2,
+          "feedback": "El MAE trata todos los errores por igual. El RMSE eleva el error al cuadrado antes de promediar, por lo que unos pocos errores enormes disparan el valor del RMSE por encima del MAE.",
+          "id": 1075
+        },
+        {
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación",
+          "text": "El algoritmo de Mínimos Cuadrados Ordinarios (MCO) ajusta la recta de regresión minimizando la suma de los errores. ¿Por qué eleva los errores al cuadrado en lugar de solo usar el valor absoluto?",
+          "options": [
+            "Para transformar automáticamente distribuciones sesgadas en distribuciones normales y cumplir los supuestos.",
+            "Porque el valor absoluto consume demasiada memoria computacional en datasets de millones de filas.",
+            "Para asegurar que la métrica de error siempre devuelva valores en el rango estadístico entre 0 y 1.",
+            "Para evitar que subestimaciones y sobreestimaciones se cancelen entre sí, y porque la función cuadrática es diferenciable (ideal para cálculo matemático)."
+          ],
+          "correct": 3,
+          "feedback": "Elevar al cuadrado resuelve el problema de signos (cancelación) y crea una curva convexa suave (parábola) que matemáticamente permite encontrar el mínimo exacto con derivadas.",
+          "id": 1076
+        },
+        {
+          "id": 1115,
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación (MAE, RMSE, R²)",
+          "text": "Predices precio vs metros cuadrados. Tu modelo dice que el Intercepto (β₀) es -5,000 USD y la Pendiente (β₁) es +1,200 USD. ¿Qué significado lógico en el negocio tiene el Intercepto aquí?",
+          "options": [
+            "Es el valor matemático de ŷ cuando X=0 m², sin sentido físico real; actúa como ancla de la recta para el rango de datos.",
+            "Indica que la constructora subsidiará 5,000 USD a compradores de departamentos en zonas de alto riesgo sísmico.",
+            "Representa el costo fijo de terreno antes de construir; siempre debe ser positivo en modelos inmobiliarios reales.",
+            "Significa que el modelo está errado y debe descartarse; un β₀ negativo viola las asunciones del MCO clásico."
+          ],
+          "correct": 0,
+          "feedback": "El intercepto β₀ representa el valor de ŷ cuando X=0. En contextos físicos (0 m² es imposible), el intercepto no tiene interpretación de negocio directa: solo 'ancla' la recta para que cuadre bien en el rango real de datos (ej. 40-150 m²)."
+        },
+        {
+          "id": 1116,
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación (MAE, RMSE, R²)",
+          "text": "Continuando con la pregunta anterior (β₁ = +1,200). ¿Qué le explicas al cliente que significa este coeficiente?",
+          "options": [
+            "Por cada m² adicional el precio sube en promedio 1,200 USD, manteniendo los demás factores constantes.",
+            "El precio inicial de cualquier departamento es de 1,200 USD y baja a medida que sube el área construida.",
+            "Solo los departamentos mayores a 1,200 m² tienen un precio definido; los más pequeños quedan fuera del modelo.",
+            "El error promedio del sistema de estimación es de ±1,200 USD, equivalente al MAE del modelo de regresión."
+          ],
+          "correct": 0,
+          "feedback": "β₁ es la pendiente: cuánto aumenta ŷ por cada unidad que aumenta X. Aquí: por cada m² adicional, el precio sube en promedio 1,200 USD. Esto se asume 'manteniendo todo lo demás constante' (ceteris paribus)."
+        },
+        {
+          "id": 1118,
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación (MAE, RMSE, R²)",
+          "text": "En el contexto de estimar el salario de un desarrollador de software (en dólares), si obtienes un MAE de 400. ¿Qué significa exactamente ese número?",
+          "options": [
+            "En promedio, las predicciones se desvían ±400 USD del valor real; es la métrica más intuitiva para no técnicos.",
+            "El modelo asigna automáticamente un salario base de 400 USD a todos los desarrolladores sin experiencia previa.",
+            "El 400% de la varianza total del salario no puede ser capturada por ninguna variable del dataset actual.",
+            "Los errores cuadráticos promedian 160,000 USD², y la raíz cuadrada de ese valor equivale al RMSE del modelo."
+          ],
+          "correct": 0,
+          "feedback": "MAE = promedio de |y_real - y_pred|. Un MAE de 400 USD significa que, en promedio, las predicciones se desvían 400 dólares del valor real, sin importar si es por encima o por debajo. Es la métrica más fácil de explicar a un no técnico."
+        },
+        {
+          "id": 1119,
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación (MAE, RMSE, R²)",
+          "text": "¿Por qué en los laboratorios calculamos el RMSE (Root Mean Squared Error) aplicando la raíz cuadrada al MSE (`np.sqrt(mean_squared_error)`)?",
+          "options": [
+            "Para convertir el MSE (en unidades²) a la unidad original, haciendo el error directamente interpretable.",
+            "Para normalizar el error entre 0 y 1, convirtiéndolo en un porcentaje de error similar al R².",
+            "Scikit-Learn devuelve MSE como string y np.sqrt() lo convierte al tipo float antes de imprimirlo en pantalla.",
+            "Para compensar la magnificación de outliers que produce el cuadrado, reduciendo su impacto visual en el reporte."
+          ],
+          "correct": 0,
+          "feedback": "MSE = promedio de (y - ŷ)². Sus unidades son dólares² (o metros², o lo que sea al cuadrado), lo que es difícil de interpretar. Al aplicar np.sqrt() obtienes RMSE en la misma unidad que y, por lo que puedes decir 'el modelo se equivoca en promedio X dólares'."
+        },
+        {
+          "id": 1120,
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación (MAE, RMSE, R²)",
+          "text": "Si tu R² en el conjunto de entrenamiento (Train) es 0.95 pero tu R² en el conjunto de prueba (Test) es 0.10. ¿Cuál es el diagnóstico inequívoco de este modelo?",
+          "options": [
+            "Overfitting severo: el modelo memorizó el ruido del entrenamiento y falla con datos nuevos (Test).",
+            "El modelo es perfecto; un R² de Test bajo indica que los datos de prueba son de calidad inferior.",
+            "Underfitting severo: el modelo no logró aprender ni con los datos de entrenamiento que tenía disponibles.",
+            "Es un resultado estadísticamente imposible; por definición R²_test siempre debe estar cerca de R²_train."
+          ],
+          "correct": 0,
+          "feedback": "Cuando R²_train >> R²_test, el modelo memorizó los datos de entrenamiento (sobreajuste). En el test, ese 'conocimiento memorizado' no sirve porque son datos nuevos. Soluciones: regularización (Ridge/Lasso), menos variables, o más datos de entrenamiento."
+        },
+        {
+          "id": 1121,
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación (MAE, RMSE, R²)",
+          "text": "¿Qué sucedería matemáticamente si Mínimos Cuadrados Ordinarios (MCO) solo intentara minimizar la suma de los errores normales (sin elevarlos al cuadrado ni aplicar valor absoluto)?",
+          "options": [
+            "Los errores positivos y negativos se cancelarían mutuamente, dando una suma de cero aunque el modelo sea pésimo.",
+            "La recta de regresión se volvería vertical al intentar minimizar sumas que tienden al infinito negativo.",
+            "El modelo ajustaría una recta perfecta que pasa por todos los puntos mediante interpolación de Lagrange.",
+            "El R² ordinario se transformaría en R² ajustado de manera automática sin necesidad de conocer n ni p."
+          ],
+          "correct": 0,
+          "feedback": "Si usamos Σ(y_i - ŷ_i) sin valor absoluto ni cuadrado, las predicciones por encima del real (+errores) y por debajo (-errores) se cancelan entre sí, dando una suma cercana a cero aunque el modelo sea terrible. Por eso MCO usa Σ(y_i - ŷ_i)² para que todos los errores sean positivos y contribuyan."
+        },
+        {
+          "id": 1126,
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación (MAE, RMSE, R²)",
+          "text": "¿Qué sucede con la métrica MAE si dentro de un dataset de casas hay UNA sola casa multimillonaria catalogada por error como 10 veces su valor real (outlier masivo)?",
+          "options": [
+            "El MAE sube, pero menos que el RMSE, porque el MAE promedia errores absolutos sin elevarlos al cuadrado.",
+            "El MAE se vuelve negativo automáticamente cuando la diferencia entre real y predicho supera el rango del dataset.",
+            "El MAE ignora el outlier por su filtro interno basado en percentiles y mediana de la distribución residual.",
+            "El MAE y el RMSE se igualan matemáticamente cuando el outlier es exactamente 10 veces el valor real esperado."
+          ],
+          "correct": 0,
+          "feedback": "MAE = promedio de |errores|. Un outlier masivo genera un error enorme (ej. 5,000,000 USD de diferencia), que eleva el promedio pero linealmente. RMSE lo elevaría al cuadrado (25 trillones), amplificando mucho más su efecto. Por eso MAE es más robusto a outliers que RMSE."
+        },
+        {
+          "id": 1134,
+          "category": "metricas",
+          "categoryName": "Métricas de Evaluación (MAE, RMSE, R²)",
+          "text": "MSE (Mean Squared Error) y RMSE (Root Mean Squared Error) castigan fuertemente los errores grandes. Si quisieras una métrica que NO se altere tan violentamente por dos o tres predicciones desastrosas, usarías:",
+          "options": [
+            "MAE (Mean Absolute Error) promedia errores absolutos, sin amplificar outliers como sí lo hace MSE/RMSE.",
+            "R² ordinario es la única métrica que no eleva errores al cuadrado y es insensible a valores extremos.",
+            "R² Ajustado penaliza la complejidad pero también eleva los residuos al cuadrado en su cálculo interno.",
+            "No existe tal métrica; todas las métricas estándar de regresión requieren elevar los residuos al cuadrado."
+          ],
+          "correct": 0,
+          "feedback": "MAE usa |error|, que trata todos los errores de igual forma. MSE/RMSE usan error², que amplifica los errores grandes al cuadrado. Por eso 2-3 outliers devastadores inflan mucho el RMSE pero impactan de forma proporcional al MAE. Elige MAE si quieres robustez a outliers."
+        },
+        {
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial y Overfitting",
+          "text": "Si los datos del mundo real muestran que el consumo de energía de un edificio aumenta drásticamente tanto con el frío extremo (calefacción) como con el calor extremo (aire acondicionado), formando una curva en U. ¿Qué ajuste necesita el modelo predictivo?",
+          "options": [
+            "Requiere una regresión múltiple estándar, agregando más variables lineales como la humedad o el viento, lo que automáticamente curvará la línea.",
+            "Requiere eliminar los datos de frío extremo, ya que matemáticamente son considerados valores atípicos (outliers) que dañan el R².",
+            "Requiere transformar la variable objetivo (Y) utilizando una escala logarítmica para aplanar la U en una línea recta perfecta.",
+            "Requiere una regresión polinomial (ej. agregar la variable temperatura al cuadrado, X²) para que la línea matemática pueda curvarse y capturar la relación en forma de U."
+          ],
+          "correct": 3,
+          "feedback": "La regresión lineal simple asume una línea recta interminable. Los fenómenos en 'U' o 'campana' requieren grados polinomiales (cuadrático o cúbico) para otorgarle flexibilidad a la curva.",
+          "id": 1093
+        },
+        {
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial y Overfitting",
+          "text": "Ajustas un polinomio de grado 2 y obtienes un RMSE de prueba de 1,500 USD. Luego subes la complejidad a un polinomio de grado 5; el RMSE de entrenamiento baja casi a cero, pero el RMSE de prueba se dispara a 8,000 USD. ¿A qué se debe esto?",
+          "options": [
+            "Underfitting (subajuste): El polinomio de grado 5 es demasiado simple para capturar la verdadera complejidad del mercado automotriz.",
+            "Data Leakage (fuga de datos): Al usar grado 5, el modelo accidentalmente accedió a los datos del conjunto de prueba durante el entrenamiento.",
+            "Overfitting (sobreajuste): El polinomio de grado 5 es tan complejo que memorizó perfectamente el ruido y fluctuaciones de los datos de entrenamiento, perdiendo la capacidad de generalizar a datos nuevos.",
+            "Multicolinealidad: Los grados polinomiales superiores siempre causan que la variable objetivo (Y) se correlacione perfectamente consigo misma."
+          ],
+          "correct": 2,
+          "feedback": "Aumentar el grado del polinomio indiscriminadamente hace que la curva comience a 'zigzaguear' locamente para tocar todos los puntos de entrenamiento, destruyendo su utilidad en la vida real.",
+          "id": 1094
+        },
+        {
+          "id": 1137,
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (OHE y Data Leakage)",
+          "text": "Regla Fundamental en Machine Learning (Data Leakage): ¿Qué ocurre estadísticamente si aplicas `.fit_transform()` de tu preprocesador usando el conjunto X_test?",
+          "options": [
+            "Contaminas el preprocesador con info del Test; las métricas resultantes son falsamente optimistas e irreales.",
+            "Optimizas la RAM porque fit_transform simultáneo es más eficiente que llamar fit y transform por separado.",
+            "Es el procedimiento obligatorio; sin aplicar fit_transform al Test las columnas quedan sin escalar.",
+            "Mejoras la generalización al exponerle al modelo el vocabulario completo antes del ajuste final."
+          ],
+          "correct": 0,
+          "feedback": "Data Leakage (Fuga de Datos): si haces fit_transform() sobre X_test, el preprocesador aprende las categorías/estadísticas del test set ANTES de la evaluación. Esas estadísticas 'contaminan' el ajuste. La evaluación resultante es ilegítima porque el modelo indirectamente ya 'conoce' los datos de examen."
+        },
+        {
+          "id": 1138,
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (OHE y Data Leakage)",
+          "text": "¿Cuál es la secuencia estricta y correcta para preprocesar datos usando un `ColumnTransformer` en Scikit-Learn?",
+          "options": [
+            "fit_transform() en X_train para aprender + transformar; solo transform() en X_test para aplicar sin re-aprender.",
+            "transform() en X_train primero para normalizar; luego fit_transform() en X_test para ajustar a la distribución real.",
+            "fit_transform() sobre el 100% de los datos antes del split, para asegurar consistencia estadística global.",
+            "fit() sobre la variable objetivo y; transform() sobre la matriz X de variables predictoras del modelo."
+          ],
+          "correct": 0,
+          "feedback": "La secuencia correcta: (1) preprocesador.fit_transform(X_train) → aprende de los datos de entrenamiento Y los transforma. (2) preprocesador.transform(X_test) → solo aplica lo aprendido al test, sin volver a aprender nada. Así el test permanece 'ciego' durante el ajuste."
+        },
+        {
+          "id": 1140,
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (OHE y Data Leakage)",
+          "text": "En el dataset de salarios TI, la variable 'nivel_ingles' (1=Básico, 5=Nativo) se dejó intacta, mientras que 'rol' (Backend, Frontend) se pasó por One-Hot Encoding. ¿Por qué esta decisión técnica es crucial?",
+          "options": [
+            "Nivel de inglés es ordinal (5>4>3...) y se puede mantener numérico; rol es nominal sin jerarquía válida.",
+            "Python prohíbe aplicar OHE a columnas que contienen números; por eso nivel_ingles se deja sin transformar.",
+            "El gerente solicitó reducir columnas al mínimo, por lo que solo se codificó la variable con mayor cardinalidad.",
+            "Las librerías de ML solo permiten codificar variables cuyo nombre tenga más de 5 caracteres ASCII."
+          ],
+          "correct": 0,
+          "feedback": "Escala Nominal vs Ordinal. 'Nivel de inglés' tiene un orden matemático claro (5 > 4 > 3 ...), así que los números tienen sentido y la regresión los usará bien. 'Rol' (Backend, QA, Frontend) no tiene jerarquía numérica real; si pones Backend=1 y QA=3, el modelo asumirá incorrectamente que QA es 3 veces más que Backend."
+        },
+        {
+          "id": 1146,
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial (No Lineal)",
+          "text": "Deseas crear un modelo capaz de capturar relaciones curvas en los años de experiencia usando `PolynomialFeatures(degree=2)`. ¿Por qué aplicas esto SOLO a las variables numéricas y NO a las variables dummy (categóricas)?",
+          "options": [
+            "1² = 1 y 0² = 0; elevar dummies al cuadrado no agrega información y genera columnas redundantes.",
+            "Scikit-Learn prohíbe mezclar tipos en PolynomialFeatures; lanza un TypeError con datos mixtos categóricos.",
+            "Las dummies al cuadrado producen valores negativos que colapsan la matriz de correlación del modelo.",
+            "Siempre debes aplicar polinomial a todas las variables del dataset para que el modelo alcance su máximo R²."
+          ],
+          "correct": 0,
+          "feedback": "Una dummy (0 o 1) elevada al cuadrado sigue siendo 0 o 1. Dos dummies multiplicadas (interacción) producen otra columna de 0s y 1s que podría ser idéntica a una ya existente → multicolinealidad. PolynomialFeatures solo aporta información real cuando se aplica a variables continuas con variabilidad."
+        },
+        {
+          "id": 1148,
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial (No Lineal)",
+          "text": "Tu Modelo Polinomial (Grado 3) logra un R² brutal de 0.99 en entrenamiento, pero en el conjunto de prueba (Test) su R² se desploma a -1.50. ¿Cómo interpretas y solucionas este evento?",
+          "options": [
+            "Overfitting catastrófico: memorizó ruido del Train y es peor que predecir la media en Test (R² negativo).",
+            "Underfitting extremo: necesita más complejidad; el grado 3 no alcanza para capturar la curva real.",
+            "El Test set es defectuoso o tiene outliers; descártalo y usa el 100% de los datos para evaluar el modelo.",
+            "La RAM de Colab se saturó al procesar el grado 3; reiniciar el entorno resolverá el problema matemático."
+          ],
+          "correct": 0,
+          "feedback": "R²_train=0.99 con R²_test=-1.50 es Overfitting catastrófico. El modelo memorizó hasta el ruido del entrenamiento. R² negativo en test significa que el modelo es PEOR que simplemente predecir la media de Y. Solución: bajar el grado polinomial o agregar regularización."
+        },
+        {
+          "id": 1149,
+          "category": "comparativa",
+          "categoryName": "Comparativa y Selección de Modelos",
+          "text": "Comparativa Final: Modelo Lineal (15 predictores, R² Ajustado = 0.81). Modelo Polinomial Grado 2 (45 predictores, R² Ajustado = 0.82). Basado en la 'Navaja de Ockham', ¿qué recomiendas para el sistema en producción?",
+          "options": [
+            "El Modelo Lineal: 1% de mejora no justifica triplicar las variables ni el riesgo adicional de Overfitting.",
+            "El Polinomial siempre: en industria, cualquier mejora del R², por pequeña que sea, justifica la complejidad.",
+            "Promediar ambos modelos y crear un ensamble híbrido con la media de sus predicciones individuales.",
+            "Ninguno: ambos tienen R² insuficiente y deben reemplazarse por una red neuronal profunda de 10 capas."
+          ],
+          "correct": 0,
+          "feedback": "Navaja de Ockham en ML: si el Modelo Lineal (15 vars, R²_adj=0.81) y el Polinomial (45 vars, R²_adj=0.82) tienen desempeño casi idéntico en Test, el Lineal gana. Motivos: triplicar variables aumenta coste computacional, dificulta el mantenimiento y eleva el riesgo de Overfitting futuro con nuevos datos."
+        },
+        {
+          "id": 1150,
+          "category": "comparativa",
+          "categoryName": "Comparativa y Selección de Modelos",
+          "text": "¿Por qué NUNCA utilizaríamos un 'Dataset Sintético Didáctico' (como el usado en la Tarea 2) para presentar un informe ejecutivo o entrenar una IA de contratación real?",
+          "options": [
+            "Los datos sintéticos no reflejan el ruido y la complejidad del mercado real; el modelo no generalizaría bien.",
+            "Scikit-Learn detecta datos sintéticos automáticamente y rechaza entrenar modelos con ellos en producción.",
+            "Los datos sintéticos siempre tienen distribución uniforme; los datos reales tienen distribución normal estricta.",
+            "Los datos sintéticos son indistinguibles de los reales para cualquier algoritmo de Machine Learning existente."
+          ],
+          "correct": 0,
+          "feedback": "Un dataset sintético es artificial: los valores fueron generados por código o inventados por el docente para que sean pedagógicamente claros. En el mercado real, los salarios tienen mucho más ruido, sesgos y variables ocultas. Un modelo entrenado en datos sintéticos puede ser incapaz de generalizar al mundo real."
+        },
+        {
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (OHE y Data Leakage)",
+          "text": "El taller establece la 'Regla Fundamental' del preprocesamiento. ¿En qué momento exacto debe hacerse el `train_test_split` para evitar Data Leakage?",
+          "options": [
+            "El split debe hacerse ANTES de cualquier transformación: primero dividir, luego ajustar los transformadores solo en X_train.",
+            "El split puede hacerse en cualquier momento, siempre que el OneHotEncoder se aplique al dataset completo primero.",
+            "El split debe hacerse DESPUÉS de aplicar PolynomialFeatures para garantizar que ambos conjuntos tengan el mismo número de columnas.",
+            "El split debe hacerse sobre la variable Y solamente; la variable X se usa completa tanto en train como en test."
+          ],
+          "correct": 0,
+          "feedback": "Regla fundamental del taller: PRIMERO divide en train/test, LUEGO aplica las transformaciones ajustando (.fit) solo en X_train. Si transformas todo el dataset antes del split, el test 'se cuela' en el ajuste del preprocesador, contaminando la evaluación con data leakage.",
+          "id": 1154
+        },
+        {
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (OHE y Data Leakage)",
+          "text": "En el taller de autos, las variables 'marca', 'tipo_cambio', 'combustible' y 'provincia' son categóricas nominales. ¿Por qué NO las codificamos como números enteros (1, 2, 3...) con un LabelEncoder?",
+          "options": [
+            "Porque LabelEncoder asigna un orden numérico implícito (Toyota=1 < Volkswagen=2) que no existe en la realidad entre marcas.",
+            "Porque LabelEncoder produce columnas flotantes que Scikit-Learn no puede procesar en LinearRegression.",
+            "Porque LabelEncoder solo funciona con variables ordinales de más de 10 categorías únicas en el dataset.",
+            "Porque las marcas de autos son variables continuas que requieren PolynomialFeatures antes de codificarse."
+          ],
+          "correct": 0,
+          "feedback": "LabelEncoder asigna enteros arbitrarios: si Toyota=1 y Ford=2, el modelo asume Ford > Toyota matemáticamente. Eso es mentira para variables nominales sin jerarquía real. One-Hot Encoding crea una columna binaria por categoría (0 o 1), sin asumir ningún orden entre ellas.",
+          "id": 1155
+        },
+        {
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial (No Lineal)",
+          "text": "¿Qué columnas ADICIONALES crea `PolynomialFeatures(degree=2)` cuando le pasas una sola variable X (ej. kilometraje)?",
+          "options": [
+            "Crea: 1 (intercepto), X (original) y X² (cuadrado). Con include_bias=True son 3 columnas en total.",
+            "Crea: X (original) y √X (raíz cuadrada). Solo genera transformaciones que mantienen la unidad original.",
+            "Crea: X, X², X³, X⁴... hasta el infinito; el parámetro degree=2 indica que empieza desde el grado 2.",
+            "Crea: X y log(X). PolynomialFeatures siempre aplica transformación logarítmica al grado especificado."
+          ],
+          "correct": 0,
+          "feedback": "PolynomialFeatures(degree=2) con 1 variable genera: [1, X, X²]. Con include_bias=False (sin el 1): [X, X²]. Con 2 variables (X1, X2): genera [1, X1, X2, X1², X1·X2, X2²]. La cantidad de columnas crece exponencialmente con el número de variables y el grado.",
+          "id": 1161
+        },
+        {
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial (No Lineal)",
+          "text": "Entrenas un modelo polinomial de grado 4 con el dataset de autos. R²_train=0.97, R²_test=0.41. ¿Qué diagnóstico y solución aplicarías?",
+          "options": [
+            "Overfitting severo: el modelo memorizó el ruido del training. Solución: bajar el grado (probar grado 2 o 3).",
+            "Underfitting severo: el modelo necesita más variables. Solución: agregar todas las columnas disponibles del CSV.",
+            "Dataset contaminado: el test set tiene outliers que distorsionan el R². Solución: eliminar el 20% de outliers.",
+            "Error de implementación: Scikit-Learn calcula mal el R² para grados polinomiales superiores a 3 con datos reales."
+          ],
+          "correct": 0,
+          "feedback": "Diferencia masiva entre R²_train (0.97) y R²_test (0.41) es la firma del Overfitting. El grado 4 creó demasiadas columnas (combinaciones de variables elevadas a la 4), memorizando hasta el ruido. Solución: usar validación cruzada o grid search para encontrar el grado óptimo (probablemente 1 o 2).",
+          "id": 1162
+        },
+        {
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial (No Lineal)",
+          "text": "En el taller, al aplicar `PolynomialFeatures(degree=2)` sobre 5 variables numéricas, ¿cuántas columnas aproximadas genera la transformación?",
+          "options": [
+            "21 columnas: 1 intercepto + 5 originales + 15 términos cuadráticos e interacciones (C(5+2,2) = 21).",
+            "10 columnas: simplemente duplica cada variable original con su cuadrado sin crear interacciones cruzadas.",
+            "5 columnas: PolynomialFeatures solo eleva al cuadrado cada variable sin crear términos de interacción.",
+            "100 columnas: el cuadrado del número de variables × el grado polinomial × 4 factores de ajuste interno."
+          ],
+          "correct": 0,
+          "feedback": "La fórmula es C(n+d, d) donde n=variables y d=grado. Con n=5, d=2: C(7,2) = 21 columnas (incluyendo el intercepto y todos los términos de interacción como X1·X2, X1·X3, etc.). Por eso con muchas variables el grado 2 ya explota la dimensionalidad y puede causar Overfitting.",
+          "id": 1163
+        },
+        {
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (OHE y Data Leakage)",
+          "text": "En el Ejercicio B.3 del taller, debes construir el ColumnTransformer que aplica OHE a las variables categóricas y deja pasar las numéricas. ¿Cuál de las siguientes implementaciones es correcta?",
+          "options": [
+            "`ColumnTransformer([('ohe', OneHotEncoder(drop='first'), cols_cat)], remainder='passthrough')`",
+            "`ColumnTransformer([('ohe', OneHotEncoder(), cols_num)], remainder='drop')`",
+            "`ColumnTransformer([('ohe', LabelEncoder(), cols_cat), ('poly', PolynomialFeatures(), cols_num)])`",
+            "`ColumnTransformer(OneHotEncoder(drop='first', handle_unknown='ignore'), input_cols=cols_cat)`"
+          ],
+          "correct": 0,
+          "feedback": "La sintaxis correcta es: ColumnTransformer([(nombre, transformador, columnas)], remainder=...). Usamos 'ohe' como nombre, OneHotEncoder(drop='first') para evitar la Dummy Trap, cols_cat para las categóricas, y remainder='passthrough' para que las numéricas pasen sin transformar.",
+          "id": 1168
+        },
+        {
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial (No Lineal)",
+          "text": "¿Por qué el Ejercicio B.8 del taller insiste en comparar modelos usando R² en el TEST SET y no solo en el TRAIN SET?",
+          "options": [
+            "Porque el test set simula datos nuevos nunca vistos; solo ese R² refleja si el modelo generalizará correctamente al mundo real.",
+            "Porque Scikit-Learn no puede calcular R² sobre el training set; la función r2_score requiere datos distintos a los de ajuste.",
+            "Porque el R² en train siempre es exactamente 1.0 en regresión múltiple, haciendo imposible la comparación entre modelos.",
+            "Porque el test set es estadísticamente más grande que el train set y ofrece mayor poder estadístico de evaluación."
+          ],
+          "correct": 0,
+          "feedback": "El train set fue visto por el modelo durante el ajuste, por lo que su R² mide principalmente la capacidad de memorización. El test set (nunca visto) mide la capacidad de generalización: cuánto de bueno será el modelo al predecir autos nuevos que lleguen mañana al inventario de la concesionaria.",
+          "id": 1171
+        },
+        {
+          "id": 1175,
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial (No Lineal)",
+          "text": "En `PolynomialFeatures(degree=2, include_bias=False)`, ¿qué logra el parámetro include_bias=False?",
+          "options": [
+            "Excluye la columna constante del término independiente, porque el modelo de regresión lineal ya agrega su propio intercepto.",
+            "Elimina automáticamente todas las variables categóricas del dataset antes de aplicar la expansión polinomial.",
+            "Impide que se generen términos de grado 2, limitando la transformación solo a interacciones de primer grado.",
+            "Evita el data leakage entre el conjunto de entrenamiento y el conjunto de prueba durante la transformación."
+          ],
+          "correct": 0,
+          "feedback": "include_bias=False excluye la columna constante (de puros unos) que representaría el término independiente, ya que el propio modelo (ej. LinearRegression) añade su intercepto por separado por defecto."
+        },
+        {
+          "id": 1178,
+          "category": "polinomial",
+          "categoryName": "Regresión Polinomial (No Lineal)",
+          "text": "¿Por qué la regresión polinomial se considera un caso especial de la regresión lineal múltiple?",
+          "options": [
+            "Porque solo puede usarse con una única variable categórica convertida mediante One-Hot Encoding.",
+            "Porque el modelo es lineal en los parámetros β (coeficientes), aunque no lo sea en las variables x.",
+            "Porque a diferencia de la regresión lineal, la regresión polinomial no utiliza coeficientes β.",
+            "Porque siempre tiene exactamente el mismo grado matemático que el número de variables predictoras."
+          ],
+          "correct": 1,
+          "feedback": "Aunque la relación con x no es lineal (hay potencias de x como x² o x³), el modelo sigue siendo una suma lineal de términos multiplicados por coeficientes β (ej. y = β₀ + β₁x + β₂x²), por lo que se ajusta con las técnicas estándar de regresión lineal."
+        },
+        {
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (Escalado, OHE, ColumnTransformer)",
+          "text": "¿Por qué es crucial escalar o normalizar las variables numéricas (por ejemplo, usando StandardScaler) antes de entrenar un modelo de Regresión Logística?",
+          "feedback": "El escalado de variables no cambia la información, pero pone todos los predictores numéricos en una misma magnitud (media 0, varianza 1). Esto ayuda matemáticamente al algoritmo de descenso de gradiente a encontrar el mínimo de la función de costo mucho más rápido y sin oscilaciones inestables.",
+          "options": [
+            "Porque escalar las variables categóricas permite que OneHotEncoder detecte automáticamente cuántas columnas binarias debe generar sin riesgo de colinealidad.",
+            "Porque el algoritmo de optimización (descenso de gradiente) converge mucho más lento o puede fallar si las variables tienen escalas muy distintas (ej. edad vs. ingreso).",
+            "Porque la regresión logística exige obligatoriamente que todos los valores numéricos del dataset sean números enteros positivos antes de calcular las probabilidades.",
+            "Porque StandardScaler convierte las probabilidades que están fuera del rango [0,1] hacia valores válidos, permitiendo que la función sigmoide se ajuste correctamente."
+          ],
+          "correct": 1,
+          "id": 1179
+        },
+        {
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (Escalado, OHE, ColumnTransformer)",
+          "text": "¿Qué es el `ColumnTransformer` en scikit-learn y cómo funciona dentro del preprocesamiento?",
+          "feedback": "En un dataset real tienes variables numéricas y categóricas mezcladas. ColumnTransformer te permite decir: 'aplica OneHotEncoder a estas 3 columnas' y 'aplica StandardScaler a estas otras 4'. Al ejecutarlo, procesa todo en paralelo y te devuelve una sola matriz lista para el modelo.",
+          "options": [
+            "Es un modelo de Machine Learning que predice qué columnas son las más importantes para el resultado final, descartando aquellas que generan multicolinealidad severa.",
+            "Es el algoritmo interno de la regresión logística que transforma los coeficientes β en probabilidades utilizando la función sigmoide sobre todas las columnas continuas.",
+            "Es un objeto que permite aplicar transformaciones distintas a distintos grupos de columnas (ej. OHE a categóricas, StandardScaler a numéricas) y devuelve una sola matriz unificada.",
+            "Es una función matemática exclusiva de Pandas que elimina las variables categóricas del dataset para que la Regresión Logística pueda ejecutarse sin arrojar errores."
+          ],
+          "correct": 2,
+          "id": 1180
+        },
+        {
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (Escalado, OHE, ColumnTransformer)",
+          "text": "Al dividir tus datos con `train_test_split` en un problema de clasificación, incluyes el argumento `stratify=y`. ¿Para qué sirve esto y por qué es vital?",
+          "feedback": "Sin `stratify=y`, el azar podría hacer que tu conjunto de prueba termine solo con ejemplos de la clase mayoritaria (ej. puros créditos aprobados). Al estratificar, obligas a que si el dataset original tiene 10% de fraude, el train tenga 10% y el test tenga 10%. Es crítico para una evaluación realista.",
+          "options": [
+            "Fuerza a que las clases desbalanceadas se equilibren mágicamente al 50/50 generando datos sintéticos nuevos antes de separar el entrenamiento y la validación final.",
+            "Sirve para ordenar el dataset alfabéticamente según la variable objetivo antes de dividirlo, asegurando que el modelo logístico procese los datos más rápido en memoria.",
+            "Garantiza que la proporción de clases (ej. 80% aprobados, 20% rechazados) se mantenga exactamente igual tanto en el conjunto de entrenamiento como en el de prueba.",
+            "Transforma automáticamente la variable objetivo (y) usando One-Hot Encoding internamente, evitando tener que usar un ColumnTransformer para las columnas categóricas."
+          ],
+          "correct": 2,
+          "id": 1182
+        },
+        {
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (Escalado, OHE, ColumnTransformer)",
+          "text": "Un Pipeline encadena el preprocesamiento y el estimador final. ¿Por qué es estructuralmente superior usar un Pipeline en lugar de aplicar las transformaciones a mano línea por línea?",
+          "feedback": "Con transformaciones manuales es facilísimo cometer el error de hacer `scaler.fit_transform(X_test)`, arruinando tu evaluación por completo al filtrar información del test. El Pipeline es una 'tubería' sellada: si le haces `.fit()`, entrena lo de adentro de forma segura. Si le haces `.predict()`, solo transforma. Es disciplina forzada por código.",
+          "options": [
+            "Porque encadenar pasos reduce el peso en megabytes del archivo .pkl exportado, permitiendo que las aplicaciones web con FastAPI carguen los modelos instantáneamente en memoria.",
+            "Porque el Pipeline es el único objeto capaz de graficar automáticamente la matriz de confusión y calcular el F1-Score sin necesidad de importar la librería de métricas de scikit-learn.",
+            "Porque asegura que `.fit()` se ejecute solo en el conjunto de entrenamiento, y aplica automáticamente `.transform()` al conjunto de prueba, eliminando el riesgo de Data Leakage accidental.",
+            "Porque al usar un Pipeline, el algoritmo de Regresión Logística ignora la multicolinealidad, haciendo que el modelo se vuelva inmune al sobreajuste severo en datos nuevos."
+          ],
+          "correct": 2,
+          "id": 1196
+        },
+        {
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (Escalado, OHE, ColumnTransformer)",
+          "text": "La Regla de Oro del preprocesamiento establece que funciones como `scaler.fit()` u `ohe.fit()` deben aplicarse EXCLUSIVAMENTE sobre el conjunto de Entrenamiento (X_train). ¿Por qué?",
+          "feedback": "Data Leakage (Fuga de Datos). El test set debe ser un simulacro perfecto de la vida real (clientes nuevos del futuro). Si usas el test set para calcular la media del escalado, le estás pasando información del 'futuro' al modelo presente. En la realidad, no puedes sacar el promedio de clientes que aún no existen.",
+          "options": [
+            "Porque `.fit()` genera columnas polinomiales de forma aleatoria; si se aplica en el test, el número de columnas no coincidirá jamás con la matriz dimensional del conjunto de entrenamiento.",
+            "Porque el conjunto de prueba siempre carece de la variable objetivo (Y), haciendo matemáticamente imposible que el StandardScaler o el OneHotEncoder puedan completar su rutina interna.",
+            "Porque la función `.fit()` altera permanentemente la estructura del disco duro, y aplicarla múltiples veces sobrescribiría los archivos CSV originales alojados en Google Colab o tu PC.",
+            "Porque `.fit()` aprende parámetros de los datos (ej. el promedio y la desviación estándar). Si los aprendes del Test, el modelo conocerá información de los datos de evaluación, perdiendo validez."
+          ],
+          "correct": 3,
+          "id": 1197
+        },
+        {
+          "category": "preprocesamiento",
+          "categoryName": "Preprocesamiento (Escalado, OHE, ColumnTransformer)",
+          "text": "En el OneHotEncoder, el parámetro `handle_unknown='ignore'` es vital para modelos en producción. ¿Qué problema previene exactamente?",
+          "feedback": "Imagina entrenar tu modelo con historial crediticio 'Bueno', 'Regular' y 'Malo'. Se exporta a producción y, un año después, el sistema del banco añade el historial 'Excelente'. Si no tienes `handle_unknown='ignore'`, cuando un cliente ponga 'Excelente', el OneHotEncoder arrojará un KeyError crasheando toda tu API web.",
+          "options": [
+            "Ignora y elimina las categorías que generan multicolinealidad perfecta (Dummy Trap), haciendo innecesario el uso del parámetro clásico 'drop=first' durante la instanciación.",
+            "Evita que el modelo evalúe observaciones que contengan la variable objetivo (y) nula, ignorando automáticamente esas filas sin interrumpir el proceso del descenso de gradiente.",
+            "Ignora de manera inteligente todas las variables numéricas que no hayan sido procesadas previamente por un StandardScaler, procesándolas temporalmente en formato booleano binario.",
+            "Evita que la aplicación colapse si un cliente nuevo ingresa con una categoría que el modelo no vio durante el entrenamiento (ej. aparece una provincia nueva en el formulario)."
+          ],
+          "correct": 3,
+          "id": 1198
+        }
+      ]
+    },
+    {
       "id": "semana_1",
       "titulo": "Semana 1 - Fundamentos e Historia",
       "categorias": [
