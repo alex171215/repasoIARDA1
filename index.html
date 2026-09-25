@@ -1094,14 +1094,16 @@
                 q.options = optionsWithIndices.map(o => o.text);
                 q.correct = optionsWithIndices.findIndex(o => o.isCorrect);
             });
-            // Reiniciar respuestas
-            userAnswers = {};
+            // Reiniciar respuestas SOLO de las preguntas actuales
+            currentQuestions.forEach(q => {
+                delete userAnswers[q.id];
+            });
             currentIndex = 0;
             examFinished = false;
             saveState();
             renderGrid();
             renderCurrentQuestion();
-            showToast("¡Preguntas y opciones barajadas aleatoriamente!");
+            showToast("¡Barajado aleatorio listo! Respuestas de esta lista reiniciadas.");
         }
 
         shuffleAllBtn.addEventListener('click', () => {
@@ -1111,13 +1113,16 @@
 
         restartBtn.addEventListener('click', () => {
             sound.playClick();
-            userAnswers = {};
+            // Reiniciar respuestas SOLO de las preguntas actuales
+            currentQuestions.forEach(q => {
+                delete userAnswers[q.id];
+            });
             saveState();
             examFinished = false;
             currentIndex = 0;
             renderGrid();
             renderCurrentQuestion();
-            showToast("Cuestionario reiniciado. ¡Buena suerte!");
+            showToast("Cuestionario actual reiniciado. ¡Buena suerte!");
         });
 
         finishExamBtn.addEventListener('click', () => {
