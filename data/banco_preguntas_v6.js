@@ -57,6 +57,10 @@ window.QUIZ_DATA = {
           "label": "Preprocesamiento (OHE/Scaler)"
         },
         {
+          "value": "teoria_extra",
+          "label": "Preguntas de Refuerzo"
+        },
+        {
           "value": "bookmarked",
           "label": "Solo Preguntas Marcadas"
         }
@@ -1867,6 +1871,132 @@ window.QUIZ_DATA = {
           ],
           "correct": 3,
           "id": 1198
+        },
+        {
+          "id": "838f8e79-376c-44f0-9068-eece52f95123",
+          "category": "teoria_extra",
+          "categoryName": "Preguntas de Refuerzo",
+          "text": "En la regla de actualización del descenso de gradiente, ¿qué controla el parámetro α (tasa de aprendizaje)?",
+          "options": [
+            "El porcentaje de datos reservado para el conjunto de prueba.",
+            "El número de variables predictoras que se usan en el modelo.",
+            "El tamaño del paso que se da en cada iteración al actualizar los coeficientes.",
+            "El umbral de decisión que separa las dos clases."
+          ],
+          "correct": 2,
+          "feedback": "Respuesta correcta. α determina qué tan grande es cada ajuste de los coeficientes β en cada iteración del descenso de gradiente."
+        },
+        {
+          "id": "69430e3c-fd5e-42c4-9151-66f7aced1573",
+          "category": "teoria_extra",
+          "categoryName": "Preguntas de Refuerzo",
+          "text": "¿En qué situación conviene priorizar la métrica Recall sobre Precision?",
+          "options": [
+            "Cuando todas las clases están perfectamente balanceadas y no importa ningún tipo de error.",
+            "Cuando el dataset no tiene variables categóricas.",
+            "Cuando el modelo tiene un Accuracy del 100%.",
+            "Cuando un falso negativo (no detectar un caso positivo real) es muy costoso."
+          ],
+          "correct": 3,
+          "feedback": "Respuesta correcta. Recall mide cuántos de los casos realmente positivos fueron detectados por el modelo; es prioritario cuando dejar pasar un positivo real (ej. rechazar un buen cliente) tiene un costo alto."
+        },
+        {
+          "id": "6bd9f187-79cf-4732-823d-442d1bc835f3",
+          "category": "teoria_extra",
+          "categoryName": "Preguntas de Refuerzo",
+          "text": "¿Para qué sirve `pipeline.named_steps['modelo']` dentro de un Pipeline ya entrenado?",
+          "options": [
+            "Para acceder directamente al objeto de ese paso específico (en este caso, el modelo LogisticRegression ya entrenado).",
+            "Para cambiar el nombre asignado a ese paso.",
+            "Para reentrenar únicamente ese paso con nuevos datos.",
+            "Para eliminar ese paso del pipeline."
+          ],
+          "correct": 0,
+          "feedback": "Respuesta correcta. `named_steps` permite acceder, por su nombre, a cualquiera de los objetos que forman el pipeline — por ejemplo, para consultar atributos del modelo entrenado como `n_iter_`."
+        },
+        {
+          "id": "d50f4c53-6ec1-4e9e-b087-8ac9b0e92048",
+          "category": "teoria_extra",
+          "categoryName": "Preguntas de Refuerzo",
+          "text": "¿Qué es la \"pérdida logística\" (log-loss) que scikit-learn minimiza al entrenar una regresión logística?",
+          "options": [
+            "El tiempo que tarda el modelo en converger.",
+            "El número total de errores de clasificación cometidos por el modelo.",
+            "La diferencia entre el número de aprobados y rechazados.",
+            "El negativo de la log-verosimilitud, usado como función de costo J(β)."
+          ],
+          "correct": 3,
+          "feedback": "Respuesta correcta. Maximizar la log-verosimilitud equivale a minimizar su negativo; ese negativo es la función de costo que el algoritmo de optimización reduce iterativamente."
+        },
+        {
+          "id": "337de042-9212-4d2d-9d37-dec72690047f",
+          "category": "teoria_extra",
+          "categoryName": "Preguntas de Refuerzo",
+          "text": "¿Qué diferencia hay entre `pipeline.fit(X_train, y_train)` y `pipeline_final.fit(X, y)` (usando el DataFrame completo)?",
+          "options": [
+            "`pipeline_final.fit(X, y)` no entrena ningún modelo, solo transforma los datos.",
+            "El primero entrena con el 80% de los datos para evaluación; el segundo reentrena con el 100% de los datos para el modelo que se exportará.",
+            "`pipeline_final.fit(X, y)` solo puede usarse con variables numéricas.",
+            "Ambas líneas de código hacen exactamente lo mismo."
+          ],
+          "correct": 1,
+          "feedback": "Respuesta correcta. `X` y `y` contienen el dataset completo (sin dividir), por lo que `pipeline_final` se entrena con toda la información disponible, a diferencia del pipeline de evaluación entrenado solo con X_train/y_train."
+        },
+        {
+          "id": "2b77f1c1-905f-4ec1-b551-0317855badf2",
+          "category": "teoria_extra",
+          "categoryName": "Preguntas de Refuerzo",
+          "text": "Para calcular `roc_auc_score(y_test, y_proba)`, ¿qué debe contener `y_proba`?",
+          "options": [
+            "Los valores escalados de las variables numéricas.",
+            "El nombre de las columnas categóricas del dataset.",
+            "Las probabilidades predichas (no las clases 0/1) de que cada observación pertenezca a la clase positiva.",
+            "Las clases reales del conjunto de entrenamiento."
+          ],
+          "correct": 2,
+          "feedback": "Respuesta correcta. A diferencia de `classification_report`, que usa la clase predicha (0/1), `roc_auc_score` necesita las probabilidades (por ejemplo, de `predict_proba()[:, 1]`) para construir la curva ROC."
+        },
+        {
+          "id": "1dce5c41-71d6-48b2-9aa3-1f22ef55fdfd",
+          "category": "teoria_extra",
+          "categoryName": "Preguntas de Refuerzo",
+          "text": "En `LogisticRegression(C=1.0)`, ¿qué controla el parámetro `C`?",
+          "options": [
+            "La cantidad de iteraciones necesarias para converger.",
+            "El número de columnas categóricas que se codificarán.",
+            "El umbral de decisión usado por predict().",
+            "La fuerza de la regularización aplicada al modelo (a menor C, mayor regularización)."
+          ],
+          "correct": 3,
+          "feedback": "Respuesta correcta. `C` es el inverso de la fuerza de regularización: valores más pequeños de C aplican una regularización más fuerte sobre los coeficientes del modelo."
+        },
+        {
+          "id": "fbd5f9e3-c60d-49f2-8c96-daefa6e5e1f5",
+          "category": "teoria_extra",
+          "categoryName": "Preguntas de Refuerzo",
+          "text": "¿Para qué se utiliza la librería joblib en el flujo de trabajo de un modelo de machine learning?",
+          "options": [
+            "Para calcular automáticamente las métricas de evaluación del modelo.",
+            "Para graficar la curva ROC y la matriz de confusión.",
+            "Para dividir el dataset en conjuntos de entrenamiento y prueba.",
+            "Para guardar y cargar objetos de Python, como un modelo o pipeline ya entrenado, en un archivo reutilizable."
+          ],
+          "correct": 3,
+          "feedback": "Respuesta correcta. joblib serializa (guarda) objetos de Python como un modelo entrenado en un archivo .pkl, que luego puede cargarse y usarse sin necesidad de reentrenar."
+        },
+        {
+          "id": "7f42ab61-33c9-416a-be70-4e404579cb8e",
+          "category": "teoria_extra",
+          "categoryName": "Preguntas de Refuerzo",
+          "text": "¿Qué información entrega la función `classification_report(y_test, y_pred)` de scikit-learn?",
+          "options": [
+            "La curva ROC graficada automáticamente.",
+            "Precision, Recall, F1-Score y el número de observaciones (support) por cada clase, además del Accuracy general.",
+            "Únicamente el valor de Accuracy del modelo.",
+            "Los coeficientes β estimados por el modelo."
+          ],
+          "correct": 1,
+          "feedback": "Respuesta correcta. `classification_report` resume, para cada clase, sus métricas de Precision, Recall y F1-Score, junto con el número de observaciones y el Accuracy general del modelo."
         }
       ]
     },
@@ -4525,6 +4655,10 @@ window.QUIZ_DATA = {
           "label": "Despliegue y Producción"
         },
         {
+          "value": "repaso_extra",
+          "label": "Refuerzo Semana 4"
+        },
+        {
           "value": "bookmarked",
           "label": "Solo Preguntas Marcadas"
         }
@@ -4879,6 +5013,132 @@ window.QUIZ_DATA = {
           ],
           "correct": 2,
           "id": 1203
+        },
+        {
+          "id": "af699941-a260-4a1b-80c1-027df0482f2e",
+          "category": "repaso_extra",
+          "categoryName": "Refuerzo Semana 4",
+          "text": "En la regla de actualización del descenso de gradiente, ¿qué controla el parámetro α (tasa de aprendizaje)?",
+          "options": [
+            "El porcentaje de datos reservado para el conjunto de prueba.",
+            "El número de variables predictoras que se usan en el modelo.",
+            "El tamaño del paso que se da en cada iteración al actualizar los coeficientes.",
+            "El umbral de decisión que separa las dos clases."
+          ],
+          "correct": 2,
+          "feedback": "Respuesta correcta. α determina qué tan grande es cada ajuste de los coeficientes β en cada iteración del descenso de gradiente."
+        },
+        {
+          "id": "be6064c7-8878-4bc6-9b8d-796fc2f85530",
+          "category": "repaso_extra",
+          "categoryName": "Refuerzo Semana 4",
+          "text": "¿En qué situación conviene priorizar la métrica Recall sobre Precision?",
+          "options": [
+            "Cuando todas las clases están perfectamente balanceadas y no importa ningún tipo de error.",
+            "Cuando el dataset no tiene variables categóricas.",
+            "Cuando el modelo tiene un Accuracy del 100%.",
+            "Cuando un falso negativo (no detectar un caso positivo real) es muy costoso."
+          ],
+          "correct": 3,
+          "feedback": "Respuesta correcta. Recall mide cuántos de los casos realmente positivos fueron detectados por el modelo; es prioritario cuando dejar pasar un positivo real (ej. rechazar un buen cliente) tiene un costo alto."
+        },
+        {
+          "id": "c907ab0c-a57e-48b7-8af1-3d78c5ba3f06",
+          "category": "repaso_extra",
+          "categoryName": "Refuerzo Semana 4",
+          "text": "¿Para qué sirve `pipeline.named_steps['modelo']` dentro de un Pipeline ya entrenado?",
+          "options": [
+            "Para acceder directamente al objeto de ese paso específico (en este caso, el modelo LogisticRegression ya entrenado).",
+            "Para cambiar el nombre asignado a ese paso.",
+            "Para reentrenar únicamente ese paso con nuevos datos.",
+            "Para eliminar ese paso del pipeline."
+          ],
+          "correct": 0,
+          "feedback": "Respuesta correcta. `named_steps` permite acceder, por su nombre, a cualquiera de los objetos que forman el pipeline — por ejemplo, para consultar atributos del modelo entrenado como `n_iter_`."
+        },
+        {
+          "id": "b7596905-2b6b-4a07-b492-70140b8b8877",
+          "category": "repaso_extra",
+          "categoryName": "Refuerzo Semana 4",
+          "text": "¿Qué es la \"pérdida logística\" (log-loss) que scikit-learn minimiza al entrenar una regresión logística?",
+          "options": [
+            "El tiempo que tarda el modelo en converger.",
+            "El número total de errores de clasificación cometidos por el modelo.",
+            "La diferencia entre el número de aprobados y rechazados.",
+            "El negativo de la log-verosimilitud, usado como función de costo J(β)."
+          ],
+          "correct": 3,
+          "feedback": "Respuesta correcta. Maximizar la log-verosimilitud equivale a minimizar su negativo; ese negativo es la función de costo que el algoritmo de optimización reduce iterativamente."
+        },
+        {
+          "id": "5557aece-d94b-4084-ab29-9e8cc422fd8a",
+          "category": "repaso_extra",
+          "categoryName": "Refuerzo Semana 4",
+          "text": "¿Qué diferencia hay entre `pipeline.fit(X_train, y_train)` y `pipeline_final.fit(X, y)` (usando el DataFrame completo)?",
+          "options": [
+            "`pipeline_final.fit(X, y)` no entrena ningún modelo, solo transforma los datos.",
+            "El primero entrena con el 80% de los datos para evaluación; el segundo reentrena con el 100% de los datos para el modelo que se exportará.",
+            "`pipeline_final.fit(X, y)` solo puede usarse con variables numéricas.",
+            "Ambas líneas de código hacen exactamente lo mismo."
+          ],
+          "correct": 1,
+          "feedback": "Respuesta correcta. `X` y `y` contienen el dataset completo (sin dividir), por lo que `pipeline_final` se entrena con toda la información disponible, a diferencia del pipeline de evaluación entrenado solo con X_train/y_train."
+        },
+        {
+          "id": "613f8b44-3ca4-4f0c-a2d7-0c43ae42d7db",
+          "category": "repaso_extra",
+          "categoryName": "Refuerzo Semana 4",
+          "text": "Para calcular `roc_auc_score(y_test, y_proba)`, ¿qué debe contener `y_proba`?",
+          "options": [
+            "Los valores escalados de las variables numéricas.",
+            "El nombre de las columnas categóricas del dataset.",
+            "Las probabilidades predichas (no las clases 0/1) de que cada observación pertenezca a la clase positiva.",
+            "Las clases reales del conjunto de entrenamiento."
+          ],
+          "correct": 2,
+          "feedback": "Respuesta correcta. A diferencia de `classification_report`, que usa la clase predicha (0/1), `roc_auc_score` necesita las probabilidades (por ejemplo, de `predict_proba()[:, 1]`) para construir la curva ROC."
+        },
+        {
+          "id": "40dc24bf-4176-4a8e-a67b-4e367fe05812",
+          "category": "repaso_extra",
+          "categoryName": "Refuerzo Semana 4",
+          "text": "En `LogisticRegression(C=1.0)`, ¿qué controla el parámetro `C`?",
+          "options": [
+            "La cantidad de iteraciones necesarias para converger.",
+            "El número de columnas categóricas que se codificarán.",
+            "El umbral de decisión usado por predict().",
+            "La fuerza de la regularización aplicada al modelo (a menor C, mayor regularización)."
+          ],
+          "correct": 3,
+          "feedback": "Respuesta correcta. `C` es el inverso de la fuerza de regularización: valores más pequeños de C aplican una regularización más fuerte sobre los coeficientes del modelo."
+        },
+        {
+          "id": "8d3e4129-bb96-48b9-bc4b-80f6828ac29d",
+          "category": "repaso_extra",
+          "categoryName": "Refuerzo Semana 4",
+          "text": "¿Para qué se utiliza la librería joblib en el flujo de trabajo de un modelo de machine learning?",
+          "options": [
+            "Para calcular automáticamente las métricas de evaluación del modelo.",
+            "Para graficar la curva ROC y la matriz de confusión.",
+            "Para dividir el dataset en conjuntos de entrenamiento y prueba.",
+            "Para guardar y cargar objetos de Python, como un modelo o pipeline ya entrenado, en un archivo reutilizable."
+          ],
+          "correct": 3,
+          "feedback": "Respuesta correcta. joblib serializa (guarda) objetos de Python como un modelo entrenado en un archivo .pkl, que luego puede cargarse y usarse sin necesidad de reentrenar."
+        },
+        {
+          "id": "f132bbaa-c7ab-4ae6-b650-de111c698bff",
+          "category": "repaso_extra",
+          "categoryName": "Refuerzo Semana 4",
+          "text": "¿Qué información entrega la función `classification_report(y_test, y_pred)` de scikit-learn?",
+          "options": [
+            "La curva ROC graficada automáticamente.",
+            "Precision, Recall, F1-Score y el número de observaciones (support) por cada clase, además del Accuracy general.",
+            "Únicamente el valor de Accuracy del modelo.",
+            "Los coeficientes β estimados por el modelo."
+          ],
+          "correct": 1,
+          "feedback": "Respuesta correcta. `classification_report` resume, para cada clase, sus métricas de Precision, Recall y F1-Score, junto con el número de observaciones y el Accuracy general del modelo."
         }
       ],
       "titulo": "Semana 4"
