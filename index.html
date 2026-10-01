@@ -142,9 +142,21 @@
         </div>
     </header>
 
-    <div id="bankSelectorBar" class="bg-slate-950 border-b border-slate-800/60 py-2 px-4 sm:px-6">
-        <div class="max-w-7xl mx-auto flex flex-wrap items-center gap-2">
-            <div id="bankSelectorContainer" class="flex flex-wrap items-center gap-2"></div>
+    <div id="bankSelectorBar" class="bg-slate-950 border-b border-slate-800/60 py-2.5 px-4 sm:px-6">
+        <div class="max-w-7xl mx-auto flex flex-wrap items-center gap-4 text-xs sm:text-sm">
+            <div class="flex items-center gap-2">
+                <label class="text-slate-400 font-medium">Materia:</label>
+                <select id="materiaSelect"
+                    class="bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1 text-slate-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
+                    <option value="RDA1">Inteligencia Artificial (RDA1)</option>
+                </select>
+            </div>
+            <div class="flex items-center gap-2">
+                <label class="text-slate-400 font-medium">Sub-banco:</label>
+                <select id="bankSelectDropdown"
+                    class="bg-indigo-900/40 border border-indigo-700/50 rounded-lg px-2.5 py-1 text-indigo-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none font-medium">
+                </select>
+            </div>
         </div>
     </div>
     <div class="bg-slate-900 border-b border-slate-800 py-2.5 px-4 sm:px-6">
@@ -567,22 +579,19 @@
         }
 
         function buildBankButtons() {
-            var container = document.getElementById('bankSelectorContainer');
-            if (!container) return;
-            container.innerHTML = '';
+            var select = document.getElementById('bankSelectDropdown');
+            if (!select) return;
+            select.innerHTML = '';
             dataBancos.forEach(function(b) {
-                var btn = document.createElement('button');
-                btn.className = 'bank-btn px-3 py-1.5 rounded-lg text-xs font-medium bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700 transition';
-                btn.dataset.bank = b.id;
-                btn.textContent = b.titulo;
-                btn.addEventListener('click', function() {
-                    selectBank(b.id);
-                });
-                if (b.id === activeBank) {
-                    btn.classList.add('active-bank');
-                }
-                container.appendChild(btn);
+                var opt = document.createElement('option');
+                opt.value = b.id;
+                opt.textContent = b.titulo;
+                select.appendChild(opt);
             });
+            select.value = activeBank;
+            select.onchange = function(e) {
+                selectBank(e.target.value);
+            };
         }
 
         // BANCO COMPLETO DE 50 PREGUNTAS RIGUROSAMENTE EQUILIBRADAS
@@ -623,9 +632,8 @@
                 var sb = localStorage.getItem(getBankStorageKey('bm'));
                 if (sb) bookmarked = new Set(JSON.parse(sb));
             } catch(e) {}
-            document.querySelectorAll('.bank-btn').forEach(function(btn) {
-                btn.classList.toggle('active-bank', btn.dataset.bank === bankName);
-            });
+            var select = document.getElementById('bankSelectDropdown');
+            if (select) select.value = bankName;
             examFinished = false;
             populateCategoryDropdown();
             restoreBankState();
