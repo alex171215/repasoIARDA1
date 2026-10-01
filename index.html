@@ -149,6 +149,7 @@
                 <select id="materiaSelect"
                     class="bg-slate-800 border border-slate-700 rounded-lg px-2.5 py-1 text-slate-200 text-xs focus:ring-2 focus:ring-indigo-500 focus:outline-none">
                     <option value="RDA1">Inteligencia Artificial (RDA1)</option>
+                    <option value="RDA2">Inteligencia Artificial (RDA2)</option>
                 </select>
             </div>
             <div class="flex items-center gap-2">
@@ -490,7 +491,7 @@
     </div>
 
         <!-- Cargar banco de preguntas (con versión para forzar recarga) -->
-    <script src="data/banco_preguntas_v6.js"></script>
+    <script src="data/banco_preguntas_v7.js"></script>
     <script>
         // Sistema de Audio Sintetizado Web Audio API (Sin dependencias externas)
         class SoundFX {
@@ -559,14 +560,36 @@
         const sound = new SoundFX();
 
         function loadData() {
-            if (window.QUIZ_DATA && window.QUIZ_DATA.semanas) {
-                dataBancos = window.QUIZ_DATA.semanas;
+            if (window.QUIZ_DATA) {
+                quizData = window.QUIZ_DATA;
                 
-                // Si el activeBank en localStorage ya no existe en el JSON, fallback al primero
+                // Backward compatibility if it still has "semanas" (shouldn't happen with v7 but just in case)
+                if (quizData.semanas) {
+                    quizData = { "RDA1": quizData.semanas };
+                }
+
+                if (!quizData[activeMateria]) {
+                    activeMateria = 'RDA1';
+                }
+                dataBancos = quizData[activeMateria];
+                
                 if (!dataBancos.find(b => b.id === activeBank)) {
                     activeBank = dataBancos[0].id;
                 }
                 
+                var materiaSel = document.getElementById('materiaSelect');
+                if(materiaSel) {
+                    materiaSel.value = activeMateria;
+                    materiaSel.onchange = function(e) {
+                        activeMateria = e.target.value;
+                        localStorage.setItem('ai_quiz_active_materia', activeMateria);
+                        dataBancos = quizData[activeMateria];
+                        activeBank = dataBancos[0].id;
+                        buildBankButtons();
+                        selectBank(activeBank);
+                    };
+                }
+
                 buildBankButtons();
                 initApp();
             } else {
@@ -596,8 +619,10 @@
 
         // BANCO COMPLETO DE 50 PREGUNTAS RIGUROSAMENTE EQUILIBRADAS
         // ── Estado del banco activo ──────────────────────────────────────────
+        let quizData = {};
         let dataBancos = [];
-        let activeBank = localStorage.getItem('ai_quiz_active_bank') || 'semana_1';
+        let activeMateria = localStorage.getItem('ai_quiz_active_materia') || 'RDA1';
+        let activeBank = localStorage.getItem('ai_quiz_active_bank') || 'mega_banco';
 
         function getBankQuestions() { 
             const b = dataBancos.find(x => x.id === activeBank); 
