@@ -6794,7 +6794,7 @@ window.QUIZ_DATA = {
         {
           "id": "4b9f1d55-eb2b-4bc7-a7b3-07edca420f7d",
           "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
+          "categoryName": "Semana 5 · SVM",
           "text": "¿Cuál es la función principal del kernel lineal en un modelo SVM?",
           "options": [
             "Transformar los datos a un espacio de dimensión infinita para buscar fronteras no lineales.",
@@ -6808,7 +6808,7 @@ window.QUIZ_DATA = {
         {
           "id": "886a8774-8c4e-4bea-9fbd-36aed185a73b",
           "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
+          "categoryName": "Semana 5 · SVM",
           "text": "¿Qué caracteriza al kernel Gaussiano (RBF) frente al kernel lineal en Support Vector Machines?",
           "options": [
             "El kernel RBF solo puede generar fronteras rectas, mientras que el lineal puede generar curvas.",
@@ -6822,7 +6822,7 @@ window.QUIZ_DATA = {
         {
           "id": "81a4ec51-896f-484b-9a85-63106ed7ea14",
           "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
+          "categoryName": "Semana 5 · SVM",
           "text": "Al resolver un problema de clasificación nuevo con SVM, ¿cuál es la mejor práctica documentada para elegir el kernel inicial?",
           "options": [
             "Empezar siempre con un kernel polinómico de grado 5 para abarcar toda la complejidad posible.",
@@ -6836,7 +6836,7 @@ window.QUIZ_DATA = {
         {
           "id": "eb23ebce-c375-4b42-a786-5b7e86c73858",
           "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
+          "categoryName": "Semana 5 · SVM",
           "text": "En el taller de Fraude, el dataset tiene 71% de transacciones legítimas y 29% de fraudes. ¿Qué efecto específico tiene usar el hiperparámetro class_weight='balanced' dentro de SVC()?",
           "options": [
             "Elimina aleatoriamente transacciones legítimas del conjunto de entrenamiento hasta que ambas clases queden exactamente con la misma cantidad de filas.",
@@ -6850,7 +6850,7 @@ window.QUIZ_DATA = {
         {
           "id": "31244a30-28e7-4249-a78c-8997701e0271",
           "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
+          "categoryName": "Semana 5 · SVM",
           "text": "¿Qué significan las siglas SVC en scikit-learn y qué tarea específica de Machine Learning resuelve?",
           "options": [
             "Standard Vector Calculator, utilizado para normalizar vectores en redes neuronales.",
@@ -6864,7 +6864,7 @@ window.QUIZ_DATA = {
         {
           "id": "be76eef1-76cf-4e18-9b52-1aa4ef76f956",
           "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
+          "categoryName": "Semana 5 · SVM",
           "text": "En el taller de SVM, se predice una transacción usando decision_function() obteniendo un valor de +3.00, y otra obteniendo -1.00. Dado que la clase Fraude es 1 y Legítima es 0, ¿cómo se interpretan matemáticamente estos resultados?",
           "options": [
             "Ambos indican fraude, porque los valores son distintos de cero.",
@@ -6878,7 +6878,7 @@ window.QUIZ_DATA = {
         {
           "id": "60ccf7a0-4225-4e01-980d-f670a3e83c3d",
           "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
+          "categoryName": "Semana 5 · SVM",
           "text": "A diferencia de la Regresión Logística, el modelo SVC estándar no tiene habilitado el método predict_proba(). ¿Qué técnica usa SVC internamente si habilitamos el parámetro probability=True para poder calcular probabilidades?",
           "options": [
             "Aplica la función Sigmoide Softmax directamente a los vectores de soporte.",
@@ -6893,19 +6893,19 @@ window.QUIZ_DATA = {
     },
     {
       "id": "semana_5",
-      "titulo": "Semana 5 y 6: Multiclase y SVM",
+      "titulo": "Semana 5: Regresión Logística Multiclase y SVM",
       "categorias": [
         {
           "value": "all",
-          "label": "Todas (Semana 5 y 6)"
+          "label": "Todas (Semana 5)"
         },
         {
           "value": "semana5",
-          "label": "Multiclase y SVM Nuevas"
+          "label": "Multiclase y Nuevas de SVM"
         },
         {
           "value": "teoria_rda2",
-          "label": "SVM (Teoría RDA2 Base)"
+          "label": "SVM (Antiguas del Mega Banco)"
         },
         {
           "value": "bookmarked",
@@ -7518,7 +7518,7 @@ window.QUIZ_DATA = {
         {
           "id": "4b9f1d55-eb2b-4bc7-a7b3-07edca420f7d",
           "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
+          "categoryName": "Semana 5 · SVM",
           "text": "¿Cuál es la función principal del kernel lineal en un modelo SVM?",
           "options": [
             "Transformar los datos a un espacio de dimensión infinita para buscar fronteras no lineales.",
@@ -7532,7 +7532,7 @@ window.QUIZ_DATA = {
         {
           "id": "886a8774-8c4e-4bea-9fbd-36aed185a73b",
           "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
+          "categoryName": "Semana 5 · SVM",
           "text": "¿Qué caracteriza al kernel Gaussiano (RBF) frente al kernel lineal en Support Vector Machines?",
           "options": [
             "El kernel RBF solo puede generar fronteras rectas, mientras que el lineal puede generar curvas.",
@@ -7546,7 +7546,7 @@ window.QUIZ_DATA = {
         {
           "id": "81a4ec51-896f-484b-9a85-63106ed7ea14",
           "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
+          "categoryName": "Semana 5 · SVM",
           "text": "Al resolver un problema de clasificación nuevo con SVM, ¿cuál es la mejor práctica documentada para elegir el kernel inicial?",
           "options": [
             "Empezar siempre con un kernel polinómico de grado 5 para abarcar toda la complejidad posible.",
@@ -7560,7 +7560,7 @@ window.QUIZ_DATA = {
         {
           "id": "eb23ebce-c375-4b42-a786-5b7e86c73858",
           "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
+          "categoryName": "Semana 5 · SVM",
           "text": "En el taller de Fraude, el dataset tiene 71% de transacciones legítimas y 29% de fraudes. ¿Qué efecto específico tiene usar el hiperparámetro class_weight='balanced' dentro de SVC()?",
           "options": [
             "Elimina aleatoriamente transacciones legítimas del conjunto de entrenamiento hasta que ambas clases queden exactamente con la misma cantidad de filas.",
@@ -7574,7 +7574,7 @@ window.QUIZ_DATA = {
         {
           "id": "31244a30-28e7-4249-a78c-8997701e0271",
           "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
+          "categoryName": "Semana 5 · SVM",
           "text": "¿Qué significan las siglas SVC en scikit-learn y qué tarea específica de Machine Learning resuelve?",
           "options": [
             "Standard Vector Calculator, utilizado para normalizar vectores en redes neuronales.",
@@ -7588,7 +7588,7 @@ window.QUIZ_DATA = {
         {
           "id": "be76eef1-76cf-4e18-9b52-1aa4ef76f956",
           "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
+          "categoryName": "Semana 5 · SVM",
           "text": "En el taller de SVM, se predice una transacción usando decision_function() obteniendo un valor de +3.00, y otra obteniendo -1.00. Dado que la clase Fraude es 1 y Legítima es 0, ¿cómo se interpretan matemáticamente estos resultados?",
           "options": [
             "Ambos indican fraude, porque los valores son distintos de cero.",
@@ -7602,7 +7602,7 @@ window.QUIZ_DATA = {
         {
           "id": "60ccf7a0-4225-4e01-980d-f670a3e83c3d",
           "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
+          "categoryName": "Semana 5 · SVM",
           "text": "A diferencia de la Regresión Logística, el modelo SVC estándar no tiene habilitado el método predict_proba(). ¿Qué técnica usa SVC internamente si habilitamos el parámetro probability=True para poder calcular probabilidades?",
           "options": [
             "Aplica la función Sigmoide Softmax directamente a los vectores de soporte.",
