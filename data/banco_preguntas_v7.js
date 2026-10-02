@@ -5168,13 +5168,13 @@ window.QUIZ_DATA = {
       ],
       "preguntas": [
         {
-          "id": "9086d513-2727-42e1-9dae-a7ecc714f9b9",
+          "id": "d78234f7-c728-4875-b09c-6fcd3d5bd9d7",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "En el taller de DBSCAN se calcula el Silhouette de la siguiente forma: mascara_validos = labels != -1 sil = silhouette_score(X_scaled[mascara_validos], labels[mascara_validos]) ## ¿Por qué se filtra con labels != -1 antes de calcular el Silhouette?",
           "options": [
             "Para acelerar el cálculo excluyendo los puntos más alejados del centro del dataset.",
-            "Porque los puntos de ruido tienen etiqueta −1 y no pertenecen a ningún cluster; incluirlos distorsionaría el cálculo del Silhouette. Correcto. Los puntos de ruido (etiqueta −1) no tienen cluster asignado. El Silhouette mide cohesión y separación respecto al cluster propio y al vecino; incluir puntos sin cluster produciría un cálculo sin sentido.",
+            "Porque los puntos de ruido tienen etiqueta −1 y no pertenecen a ningún cluster; incluirlos distorsionaría el cálculo del Silhouette.",
             "Porque scikit-learn lanza un error si se incluyen etiquetas negativas en silhouette_score.",
             "Para normalizar las etiquetas entre 0 y el número de clusters antes de pasarlas a la función."
           ],
@@ -5182,21 +5182,21 @@ window.QUIZ_DATA = {
           "feedback": "Correcto. Los puntos de ruido (etiqueta −1) no tienen cluster asignado. El Silhouette mide cohesión y separación respecto al cluster propio y al vecino; incluir puntos sin cluster produciría un cálculo sin sentido."
         },
         {
-          "id": "54519bf2-a29d-4df1-a9d6-fc7afa624df8",
+          "id": "7df53218-ec78-4ace-a32d-089cc0704ad6",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Qué condición debe cumplir un punto para ser clasificado como Core Point en DBSCAN?",
           "options": [
             "No estar dentro del radio ε de ningún Core Point y no pertenecer a ningún cluster.",
             "Estar dentro del radio ε de otro punto Core, pero tener menos de MinPts vecinos propios.",
-            "Tener al menos MinPts vecinos dentro de su radio ε. Es la semilla de un cluster. Correcto. Un punto Core tiene ≥ MinPts vecinos (incluido él mismo) dentro del radio ε. Es el punto que inicia o expande un cluster.",
+            "Tener al menos MinPts vecinos dentro de su radio ε. Es la semilla de un cluster.",
             "Tener exactamente MinPts vecinos fuera de su radio ε."
           ],
           "correct": 2,
           "feedback": "Correcto. Un punto Core tiene ≥ MinPts vecinos (incluido él mismo) dentro del radio ε. Es el punto que inicia o expande un cluster."
         },
         {
-          "id": "b73bdf9b-3ae2-4e7f-9349-47efbb304f98",
+          "id": "96225eec-c57a-4c72-a068-8437f2530e25",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Cuál es la diferencia principal entre GridSearchCV y RandomizedSearchCV?",
@@ -5210,7 +5210,7 @@ window.QUIZ_DATA = {
           "feedback": "Esta es la diferencia fundamental. GridSearchCV es exhaustivo pero costoso en espacios grandes; RandomizedSearchCV es más eficiente pero no garantiza encontrar la mejor combinación posible."
         },
         {
-          "id": "626f2741-d655-414e-9847-909288a0e713",
+          "id": "49c0ea72-0e86-4973-b53f-8eb71a5bc7bd",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "En scikit-learn, KMeans tiene el parámetro n_init=10. ¿Cuál es el propósito de este parámetro?",
@@ -5218,13 +5218,13 @@ window.QUIZ_DATA = {
             "Asegurar que los 10 primeros puntos del dataset sean usados como centroides iniciales.",
             "Definir el número de clusters K que el modelo debe encontrar.",
             "Limitar el número máximo de pasos que el algoritmo ejecuta dentro de cada ejecución.",
-            "Repetir el algoritmo 10 veces con distintas inicializaciones aleatorias de centroides y conservar el resultado con menor inercia. Correcto. Como K-Means puede quedar atrapado en mínimos locales dependiendo de la inicialización, scikit-learn repite el proceso n_init veces con distintos puntos de partida y conserva el resultado con menor inercia."
+            "Repetir el algoritmo 10 veces con distintas inicializaciones aleatorias de centroides y conservar el resultado con menor inercia."
           ],
           "correct": 3,
           "feedback": "Correcto. Como K-Means puede quedar atrapado en mínimos locales dependiendo de la inicialización, scikit-learn repite el proceso n_init veces con distintos puntos de partida y conserva el resultado con menor inercia."
         },
         {
-          "id": "128f1690-9eb7-448a-a8ef-41b96fc8eef2",
+          "id": "f44dc609-86a6-445a-9fae-0b30523eb1ed",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "# Observa el siguiente código svc = SVC(random_state=42) grid_search = GridSearchCV( ``` estimator=svc, param_grid=param_grid, cv=5, scoring='f1', n_jobs=-1 ```",
@@ -5238,7 +5238,7 @@ window.QUIZ_DATA = {
           "feedback": "Tras seleccionar los mejores hiperparámetros por validación cruzada, GridSearchCV re-entrena automáticamente el modelo sobre todo X_train_s. Esto maximiza los datos de entrenamiento para el modelo final."
         },
         {
-          "id": "33725cc9-073f-4101-9eab-db3c89c82703",
+          "id": "cc4889e7-bbdf-47cb-9906-fd88afdcd327",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "En una SVM, el hiperplano de separación se define matemáticamente como w·x + b = 0. ¿Qué representa el vector w en esta ecuación?",
@@ -5252,7 +5252,7 @@ window.QUIZ_DATA = {
           "feedback": "w es el vector normal al hiperplano. Su dirección determina la orientación de la frontera de decisión en el espacio de características."
         },
         {
-          "id": "169922a0-3e8e-47e6-a653-1c6e95dfd168",
+          "id": "86384f61-8f44-4fcd-9048-ec89b6cec9fe",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "En el siguiente fragmento del flujo combinado PCA + K-Means: pca = PCA(n_components=2) X_pca = pca.fit_transform(X_scaled) kmeans = KMeans(n_clusters=k_elegido, random_state=42, n_init=10) clusters = kmeans.fit_predict(X_pca) ## ¿Por qué se aplica K-Means sobre X_pca en lugar de sobre X_scaled?",
@@ -5260,13 +5260,13 @@ window.QUIZ_DATA = {
             "Porque scikit-learn requiere que KMeans reciba exactamente 2 columnas como entrada.",
             "Porque X_pca tiene valores acotados entre -1 y 1, lo que estabiliza la convergencia de K-Means.",
             "Porque K-Means no funciona con más de 2 variables; PCA es obligatorio siempre antes de K-Means.",
-            "Porque trabajar en el espacio reducido por PCA hace que los grupos sean más separables y permite visualizar los clusters directamente en un plano 2D. Correcto. Al aplicar K-Means sobre X_pca se aprovecha que los datos quedan en un espacio 2D fácil de graficar, se eliminan dimensiones redundantes o ruidosas, y K-Means converge más rápido con menos dimensiones."
+            "Porque trabajar en el espacio reducido por PCA hace que los grupos sean más separables y permite visualizar los clusters directamente en un plano 2D."
           ],
           "correct": 3,
           "feedback": "Correcto. Al aplicar K-Means sobre X_pca se aprovecha que los datos quedan en un espacio 2D fácil de graficar, se eliminan dimensiones redundantes o ruidosas, y K-Means converge más rápido con menos dimensiones."
         },
         {
-          "id": "d0006e7c-6865-4756-b32e-41447f72cf38",
+          "id": "67f34e4f-8de3-4c4f-a52a-1b2024c25255",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Cuál es la definición formal de PCA (Principal Component Analysis)?",
@@ -5280,7 +5280,7 @@ window.QUIZ_DATA = {
           "feedback": "Esta es la definición formal (Jolliffe, 2002). Los elementos clave son: técnica estadística, reducción de dimensionalidad, variables no correlacionadas resultantes, y orden por varianza explicada decreciente."
         },
         {
-          "id": "fe2f566c-b79a-4c77-afbe-2580728a4094",
+          "id": "d526a989-216f-4b11-b06c-967c39d36296",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Cuál de los siguientes es un ejemplo de hiperparámetro, a diferencia de un parámetro del modelo?",
@@ -5294,7 +5294,7 @@ window.QUIZ_DATA = {
           "feedback": "C es un hiperparámetro porque el programador lo fija antes de entrenar. El modelo no lo ajusta al ver los datos; es una decisión de diseño externa al proceso de entrenamiento."
         },
         {
-          "id": "0a4eb4fb-ad70-4e8b-b5ee-1b1ffcf99443",
+          "id": "5c95ab2c-8ed3-4517-891d-0e18c89048c9",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Se entrenan cuatro modelos RandomForestClassifier con n_estimators = 10, 50, 100, 200 sobre el mismo dataset y se grafica la accuracy en prueba para cada valor. ¿Cuál es el objetivo principal de este experimento?",
@@ -5308,7 +5308,7 @@ window.QUIZ_DATA = {
           "feedback": "El experimento permite observar empíricamente la estabilización del accuracy. El material indica que 100-500 árboles es suficiente en la mayoría de casos; este tipo de gráfico ayuda a identificar ese punto de forma práctica."
         },
         {
-          "id": "1e0e4544-7cea-40c0-aa92-2e3c17cbfd98",
+          "id": "fad1f49d-029d-47b2-a89b-7e32a35cc154",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Cuál es la ventaja principal del **truco del kernel** frente a transformar explícitamente los datos a un espacio de mayor dimensión?",
@@ -5322,7 +5322,7 @@ window.QUIZ_DATA = {
           "feedback": "Esta es la propiedad esencial del truco del kernel: operar en el espacio transformado usando solo productos internos, sin materializar las nuevas coordenadas. Es especialmente útil cuando el espacio tiene dimensión infinita, como en el kernel RBF."
         },
         {
-          "id": "e2426543-5755-4653-bc46-04361fbe49a6",
+          "id": "1c9a89a6-b582-48ae-a808-52b8d1283a1c",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Por qué se recomienda usar escala logarítmica al definir los valores de C y gamma en param_grid?",
@@ -5336,7 +5336,7 @@ window.QUIZ_DATA = {
           "feedback": "C y gamma tienen efecto multiplicativo sobre el comportamiento del modelo. La escala logarítmica permite explorar órdenes de magnitud con pocos valores, cubriendo eficientemente un rango amplio como [0.001, 0.01, 0.1, 1, 10, 100]."
         },
         {
-          "id": "c03cd19e-de83-444e-8ad5-77a5bb24eb3e",
+          "id": "9e3e958a-a9a2-4539-80af-c8e4451935a8",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Por qué los árboles de decisión no requieren normalizar ni escalar las variables numéricas, a diferencia de SVM?",
@@ -5350,35 +5350,35 @@ window.QUIZ_DATA = {
           "feedback": "El material documenta explícitamente que no requerir escalado es una ventaja del árbol de decisión. Es una característica que lo diferencia de modelos como SVM, que sí dependen del cálculo de distancias entre puntos."
         },
         {
-          "id": "a559f7b7-56be-4ea7-935e-df5f974d1912",
+          "id": "2f1d9f5c-bb46-4931-865c-122082b3325e",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Para construir el k-dist graph antes de ejecutar DBSCAN se usa: ## MIN_PTS = 5 nbrs = NearestNeighbors(n_neighbors=MIN_PTS).fit(X_scaled) distancias, _ = nbrs.kneighbors(X_scaled) kdist = np.sort(distancias[:, MIN_PTS - 1])[::-1] ## ¿Qué contiene el array kdist después de ejecutar este código?",
           "options": [
             "Los índices de los MIN_PTS vecinos más cercanos para cada punto del dataset.",
             "La inercia de DBSCAN para distintos valores de MIN_PTS, equivalente al Método del Codo de K-Means.",
-            "Las distancias de cada punto a su MIN_PTS-ésimo vecino más cercano, ordenadas de mayor a menor, para visualizar el codo que indica ε. Correcto. kneighbors retorna las distancias a los n_neighbors vecinos; la columna [-1] o [MIN_PTS-1] es la del vecino más lejano dentro de ese grupo. Ordenar de mayor a menor y graficar produce la curva cuyo codo indica el ε óptimo.",
+            "Las distancias de cada punto a su MIN_PTS-ésimo vecino más cercano, ordenadas de mayor a menor, para visualizar el codo que indica ε.",
             "La distancia euclidiana media de cada punto a todos los demás puntos del dataset."
           ],
           "correct": 2,
           "feedback": "Correcto. kneighbors retorna las distancias a los n_neighbors vecinos; la columna [-1] o [MIN_PTS-1] es la del vecino más lejano dentro de ese grupo. Ordenar de mayor a menor y graficar produce la curva cuyo codo indica el ε óptimo."
         },
         {
-          "id": "f9cb7b96-7bbf-49be-96ed-9ea679c02a5b",
+          "id": "70c8a948-3128-4eb8-9083-36795bcc7c6a",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Al comparar los resultados de K-Means y DBSCAN sobre el mismo dataset se genera: tabla = pd.crosstab(df[**cluster_kmeans**], df[**cluster_dbscan**], ``` rownames=['K-Means'], colnames=['DBSCAN']) ``` ## ¿Qué información proporciona la columna -1 de esta tabla?",
           "options": [
             "Los puntos que K-Means clasificó incorrectamente y que deberían ser eliminados del análisis.",
             "La cantidad de puntos que DBSCAN asignó al cluster número -1, que es siempre el cluster de mayor tamaño.",
-            "En qué cluster de K-Means cayeron los puntos que DBSCAN etiquetó como ruido, revelando cómo K-Means absorbió los outliers. Correcto. La columna -1 muestra los puntos de ruido de DBSCAN (etiqueta -1) distribuidos por los clusters de K-Means. Esto revela en qué grupo K-Means **forzó** cada outlier, información útil para entender si el modelo supervisado los absorbió correctamente.",
+            "En qué cluster de K-Means cayeron los puntos que DBSCAN etiquetó como ruido, revelando cómo K-Means absorbió los outliers.",
             "Los puntos que ambos algoritmos coincidieron en clasificar como outliers y que no pertenecen a ningún cluster."
           ],
           "correct": 2,
           "feedback": "Correcto. La columna -1 muestra los puntos de ruido de DBSCAN (etiqueta -1) distribuidos por los clusters de K-Means. Esto revela en qué grupo K-Means **forzó** cada outlier, información útil para entender si el modelo supervisado los absorbió correctamente."
         },
         {
-          "id": "7c615205-6844-4937-8feb-4e0f96df5213",
+          "id": "2b329074-f47c-4ccd-ae5d-395237d01903",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "En el coeficiente de Silhouette s(i) = (b − a) / max(a, b), ¿qué representan los valores a y b para una observación dada?",
@@ -5386,18 +5386,18 @@ window.QUIZ_DATA = {
             "a es la distancia al centroide propio y b es la distancia al centroide del cluster más lejano.",
             "a es la inercia del cluster propio y b es la inercia del cluster más alejado.",
             "a es el número de puntos en su cluster y b es el número de puntos en el cluster vecino más cercano.",
-            "a es la distancia media de la observación al resto de puntos de su propio cluster, y b es la distancia media al cluster vecino más cercano. Correcto. a mide la cohesión interna (qué tan cerca está el punto de los demás miembros de su cluster) y b mide la separación (qué tan lejos está del cluster vecino más próximo). Un Silhouette alto indica que b es mucho mayor que a."
+            "a es la distancia media de la observación al resto de puntos de su propio cluster, y b es la distancia media al cluster vecino más cercano."
           ],
           "correct": 3,
           "feedback": "Correcto. a mide la cohesión interna (qué tan cerca está el punto de los demás miembros de su cluster) y b mide la separación (qué tan lejos está del cluster vecino más próximo). Un Silhouette alto indica que b es mucho mayor que a."
         },
         {
-          "id": "523fbad8-6080-4084-b984-1730b8e144bf",
+          "id": "442e5c0b-79f7-4215-8b25-3240108f8cda",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Cuándo se dice que el algoritmo K-Means ha convergido?",
           "options": [
-            "Cuando ningún punto cambia de cluster entre dos iteraciones consecutivas, o se alcanza el número máximo de iteraciones. Correcto. K-Means converge cuando las asignaciones de cluster se estabilizan: ningún punto cambia de cluster. La convergencia no garantiza el óptimo global, ya que depende de la inicialización.",
+            "Cuando ningún punto cambia de cluster entre dos iteraciones consecutivas, o se alcanza el número máximo de iteraciones.",
             "Cuando los centroides se ubican en los puntos de datos más alejados entre sí.",
             "Cuando el coeficiente de Silhouette supera el umbral de 0.5.",
             "Cuando la inercia llega exactamente a cero."
@@ -5406,7 +5406,7 @@ window.QUIZ_DATA = {
           "feedback": "Correcto. K-Means converge cuando las asignaciones de cluster se estabilizan: ningún punto cambia de cluster. La convergencia no garantiza el óptimo global, ya que depende de la inicialización."
         },
         {
-          "id": "f0764239-4563-4271-a136-2e3587c92c23",
+          "id": "09f79c29-7917-4fb9-99d1-01e052d16a76",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Qué efecto tiene usar un valor de C muy alto (por ejemplo, C = 1000) en una SVM de margen suave?",
@@ -5420,7 +5420,7 @@ window.QUIZ_DATA = {
           "feedback": "C alto hace que el modelo sea muy intolerante con los errores de entrenamiento. El hiperplano se acerca a los datos para clasificarlos todos correctamente, memorizando el ruido."
         },
         {
-          "id": "28a89800-4cc1-4693-8e45-a8fd0998b5ce",
+          "id": "3e0dd66d-bf8c-4673-a7dc-3f7b4ccd37f3",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "En la tabla de loadings de PCA, una variable tiene loading = −0.74 en PC1. ¿Qué significa esto?",
@@ -5434,7 +5434,7 @@ window.QUIZ_DATA = {
           "feedback": "El signo indica la dirección de la contribución y el valor absoluto indica su magnitud. Un loading de −0.74 supera el umbral |0.6| de alta influencia y tiene signo negativo: cuando la variable es alta, empuja PC1 hacia valores bajos."
         },
         {
-          "id": "a86cff4a-1e79-4140-91f8-3388805b9f2f",
+          "id": "bdc8572d-eb61-4083-9525-96e00d16746e",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Cuál de los siguientes problemas del exceso de dimensiones se define como **a más variables, más datos se necesitan para entrenar un modelo confiable**?",
@@ -5448,26 +5448,26 @@ window.QUIZ_DATA = {
           "feedback": "Esta es la definición exacta documentada. Al aumentar las variables, el espacio de datos crece y se necesitan más observaciones para cubrirlo adecuadamente y obtener modelos confiables."
         },
         {
-          "id": "685df9a1-eedd-4d47-ace1-154926561ae7",
+          "id": "7cc3c9d9-d16d-482f-8ed7-e8d93e3a1186",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "# Después de ejecutar DBSCAN, se calcula n_clusters = len(set(labels)) - (1 if -1 in labels else 0) n_ruido = list(labels).count(-1) ## ¿Por qué se resta 1 en el cálculo de n_clusters?",
           "options": [
             "Porque DBSCAN siempre genera un cluster vacío adicional al final que debe descartarse.",
             "Porque el primer cluster de DBSCAN tiene índice 0 y los índices empiezan en 1 en Python.",
-            "Para descontar la etiqueta −1 del conjunto de etiquetas únicas, ya que −1 representa ruido y no un cluster. Correcto. set(labels) incluye todas las etiquetas únicas, entre ellas −1 si hay puntos de ruido. Al restar 1 cuando −1 está presente, se cuenta solo el número de clusters reales, excluyendo el ruido.",
+            "Para descontar la etiqueta −1 del conjunto de etiquetas únicas, ya que −1 representa ruido y no un cluster.",
             "Para excluir el cluster número 0, que siempre es el más grande y no se considera un cluster real."
           ],
           "correct": 2,
           "feedback": "Correcto. set(labels) incluye todas las etiquetas únicas, entre ellas −1 si hay puntos de ruido. Al restar 1 cuando −1 está presente, se cuenta solo el número de clusters reales, excluyendo el ruido."
         },
         {
-          "id": "28dbe776-5320-4202-9f21-fba5b44d5849",
+          "id": "db4dc082-f891-46de-a4a2-3c40392a2abf",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Por qué K-Means falla cuando los datos forman curvas, arcos o anillos, y DBSCAN no?",
           "options": [
-            "Porque K-Means minimiza distancias a centroides y asume clusters esféricos, mientras que DBSCAN define cluster como una región densa conectada, sin importar la forma. Correcto. K-Means asume que los clusters tienen forma esférica porque trabaja con centroides y distancias euclidianas. DBSCAN define un cluster como cualquier región de alta densidad conectada, independientemente de su forma.",
+            "Porque K-Means minimiza distancias a centroides y asume clusters esféricos, mientras que DBSCAN define cluster como una región densa conectada, sin importar la forma.",
             "Porque K-Means requiere normalización previa y DBSCAN no es sensible a la escala de las variables.",
             "Porque K-Means solo funciona en espacios bidimensionales mientras que DBSCAN opera en cualquier número de dimensiones.",
             "Porque K-Means no puede manejar datasets con más de 1,000 observaciones, mientras que DBSCAN escala sin restricciones."
@@ -5476,7 +5476,7 @@ window.QUIZ_DATA = {
           "feedback": "Correcto. K-Means asume que los clusters tienen forma esférica porque trabaja con centroides y distancias euclidianas. DBSCAN define un cluster como cualquier región de alta densidad conectada, independientemente de su forma."
         },
         {
-          "id": "d68fa942-739d-4df9-93d6-5905390864c9",
+          "id": "33f3c8c8-5b5a-4762-b119-8e0f30a6cca8",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Qué indica un índice Gini = 0 en un nodo del árbol?",
@@ -5490,12 +5490,12 @@ window.QUIZ_DATA = {
           "feedback": "Gini = 0 significa que todos los ejemplos del nodo pertenecen a una sola clase. Es el estado ideal que CART intenta alcanzar con cada división."
         },
         {
-          "id": "2a8ee733-036d-491d-9016-9b5cd7396ef1",
+          "id": "e0d08f24-3acb-4f63-a60e-dd002925e7a7",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Un analista tiene un dataset con dos variables: ventas_promedio_semanal (rango 100–10,000 USD) y rotacion_inventario (rango 0.1–10). Aplica K-Means directamente sin estandarizar. ¿Cuál es la consecuencia más probable?",
           "options": [
-            "Los clusters quedan determinados casi exclusivamente por ventas_promedio_semanal, porque su escala mayor domina el cálculo de distancias euclidianas. Correcto. La distancia euclidiana suma diferencias al cuadrado. Con rangos tan distintos (10,000 vs 10), las diferencias en ventas_promedio_semanal dominan completamente la distancia, haciendo que rotacion_inventario sea prácticamente irrelevante para la asignación de clusters. StandardScaler elimina este sesgo.",
+            "Los clusters quedan determinados casi exclusivamente por ventas_promedio_semanal, porque su escala mayor domina el cálculo de distancias euclidianas.",
             "Los clusters quedan determinados casi exclusivamente por rotacion_inventario, porque las variables con valores pequeños son más precisas numéricamente.",
             "El algoritmo no converge y arroja un error de ejecución.",
             "Los clusters son idénticos a los que se obtendrían con estandarización, porque K-Means normaliza internamente las variables."
@@ -5504,7 +5504,7 @@ window.QUIZ_DATA = {
           "feedback": "Correcto. La distancia euclidiana suma diferencias al cuadrado. Con rangos tan distintos (10,000 vs 10), las diferencias en ventas_promedio_semanal dominan completamente la distancia, haciendo que rotacion_inventario sea prácticamente irrelevante para la asignación de clusters. StandardScaler elimina este sesgo."
         },
         {
-          "id": "053c0dc2-e6e2-4d3b-bc7b-4dff8f01cbdb",
+          "id": "2783be4b-9dc9-4aaa-8d64-e2047b8b6839",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Qué controla el hiperparámetro min_samples_split en un árbol de decisión?",
@@ -5518,7 +5518,7 @@ window.QUIZ_DATA = {
           "feedback": "La opción correcta es b. min_samples_split controla el número mínimo de muestras que debe tener un nodo para que el algoritmo intente dividirlo."
         },
         {
-          "id": "0bc874ba-aacd-4c23-a7fb-890c3dc24e39",
+          "id": "c031ec1f-1c6e-409d-bcde-effa1b507ac8",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "# Se instancia y ejecuta DBSCAN de la siguiente forma db = DBSCAN(eps=0.5, min_samples=5) labels = db.fit_predict(X_scaled) ## ¿Qué representan los parámetros eps y min_samples en esta llamada?",
@@ -5526,13 +5526,13 @@ window.QUIZ_DATA = {
             "eps es el número de clusters a encontrar y min_samples es el tamaño mínimo de cada cluster.",
             "eps es la desviación estándar máxima permitida dentro de un cluster y min_samples es el porcentaje mínimo de puntos por cluster.",
             "eps es la tolerancia de convergencia y min_samples es el número mínimo de iteraciones del algoritmo.",
-            "eps es el radio ε de vecindad y min_samples es el MinPts: mínimo de puntos (incluido el punto mismo) dentro del radio ε para que un punto sea Core Point. Correcto. eps define el tamaño de la **burbuja** alrededor de cada punto (radio máximo de vecindad). min_samples es el MinPts: cuántos vecinos debe tener un punto dentro de eps para ser clasificado como Core Point."
+            "eps es el radio ε de vecindad y min_samples es el MinPts: mínimo de puntos (incluido el punto mismo) dentro del radio ε para que un punto sea Core Point."
           ],
           "correct": 3,
           "feedback": "Correcto. eps define el tamaño de la **burbuja** alrededor de cada punto (radio máximo de vecindad). min_samples es el MinPts: cuántos vecinos debe tener un punto dentro de eps para ser clasificado como Core Point."
         },
         {
-          "id": "af6fb284-994f-4b41-8c2a-0ab21522dae1",
+          "id": "424ab3a6-b958-40b4-b0ac-08e394e5950d",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Un nodo de un árbol de decisión tiene 10 muestras: 7 de clase A y 3 de clase B. ¿Cuál es su índice Gini?",
@@ -5546,7 +5546,7 @@ window.QUIZ_DATA = {
           "feedback": "Con p(A) = 7/10 = 0.70 y p(B) = 3/10 = 0.30: Gini = 1 − (0.70² + 0.30²) = 1 − (0.49 + 0.09) = 1 − 0.58 = 0.42. Este es el ejemplo numérico exacto del material."
         },
         {
-          "id": "d034d674-3f05-4099-8da4-52f30fb66275",
+          "id": "72e10937-5c9a-449a-aa89-c6b2582e90ad",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "# Después de entrenar un Random Forest, se ejecuta prob = rf.predict_proba(X_test)",
@@ -5560,7 +5560,7 @@ window.QUIZ_DATA = {
           "feedback": "En Random Forest, predict_proba() devuelve la proporción de árboles que votó por cada clase. [0.28, 0.72] significa que 28 de cada 100 árboles votaron clase 0 y 72 votaron clase 1."
         },
         {
-          "id": "43093e02-2875-4de4-9cdf-a6c99fbe6039",
+          "id": "15382207-e59b-4ad7-ad36-2427ca112dca",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Cuál de las siguientes es una situación en la que NO se debe usar PCA?",
@@ -5574,7 +5574,7 @@ window.QUIZ_DATA = {
           "feedback": "PCA opera calculando covarianzas y buscando direcciones de máxima varianza, lo que solo tiene sentido con variables numéricas continuas. Las variables categóricas no tienen relaciones de varianza interpretables en ese contexto."
         },
         {
-          "id": "22b649e8-538d-4da5-9ae4-cbff57a8dcaf",
+          "id": "21fd8f01-4abc-4efe-98ee-c12ec289ff57",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Qué propiedad define matemáticamente a PC1 y PC2?",
@@ -5588,7 +5588,7 @@ window.QUIZ_DATA = {
           "feedback": "Esta es la definición matemática documentada. PC1 es la dirección de máxima varianza; PC2 es la dirección de máxima varianza restante y debe ser perpendicular (ortogonal) a PC1 para garantizar que los componentes no estén correlacionados."
         },
         {
-          "id": "48b86085-4d38-4c8a-93fd-5e8f94e94b63",
+          "id": "be94fd67-19c4-41ef-864e-6398807f2156",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Cuál de las siguientes diferencias entre SVM y Regresión Logística es correcta?",
@@ -5602,7 +5602,7 @@ window.QUIZ_DATA = {
           "feedback": "Esta afirmación recoge correctamente dos diferencias documentadas: la ventaja de SVM en alta dimensionalidad y la ventaja de Regresión Logística en producir probabilidades nativas sin configuración adicional."
         },
         {
-          "id": "ffb15adf-cf3c-4151-b714-b5b1fccc4997",
+          "id": "1956aeff-ab95-483e-8259-55e05a9e2c97",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Una SVM se entrena con 10 000 registros y al revisar el modelo se encuentra que solo 45 puntos son vectores de soporte. ¿Qué ocurriría si se eliminaran los otros 9 955 registros del dataset y se reentrenara el modelo?",
@@ -5616,7 +5616,7 @@ window.QUIZ_DATA = {
           "feedback": "Los vectores de soporte son los únicos puntos que determinan la posición del hiperplano. Todos los demás registros son irrelevantes para la frontera de decisión final."
         },
         {
-          "id": "ebe2589c-2e36-48de-8323-554bab883709",
+          "id": "1b4312a5-56f3-4dbd-b9a1-9c151110935f",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Por qué Random Forest es menos interpretable que un árbol de decisión individual?",
@@ -5630,7 +5630,7 @@ window.QUIZ_DATA = {
           "feedback": "Mientras que un árbol produce una única cadena de reglas IF-THEN verificable, Random Forest combina las decisiones de cientos de árboles distintos. El material lo describe explícitamente: **La decisión es un consenso, no una regla única.**"
         },
         {
-          "id": "d06b3b86-fb39-468b-a96d-7d24a4a263f5",
+          "id": "bc9c1158-36c7-4a33-9b39-a7c0f44f3a10",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "# En el taller se divide el dataset con X_train, X_test, y_train, y_test = train_test_split( ``` X, y, test_size=0.2, random_state=42, stratify=y ```",
@@ -5644,7 +5644,7 @@ window.QUIZ_DATA = {
           "feedback": "stratify=y hace que train_test_split mantenga la misma proporción de cada clase tanto en entrenamiento como en prueba. El taller aplica este parámetro y luego verifica la distribución resultante con y_train.value_counts()."
         },
         {
-          "id": "361fb00d-1316-4729-a817-d7fbbc200c8e",
+          "id": "da782e0e-a4e8-4a90-8800-a3a43b8c2392",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Por qué SVM elige el hiperplano con el mayor margen posible en lugar de cualquier hiperplano que separe correctamente las clases?",
@@ -5658,7 +5658,7 @@ window.QUIZ_DATA = {
           "feedback": "El margen actúa como un colchón de seguridad geométrico. Un margen amplio significa que un punto nuevo necesita alejarse bastante de la frontera para ser mal clasificado, dando robustez al modelo."
         },
         {
-          "id": "01b72b06-0f6d-45e0-ab0c-9a17084ad0a3",
+          "id": "bb0621a3-8ed3-4679-97cb-6328b337ca8f",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Qué produce la siguiente instrucción? from sklearn.tree import export_text reglas = export_text(arbol, feature_names=features)",
@@ -5672,12 +5672,12 @@ window.QUIZ_DATA = {
           "feedback": "export_text convierte la estructura del árbol en texto legible con reglas IF-THEN. El taller lo describe como una de las ventajas más importantes del árbol: su interpretabilidad en forma de reglas de decisión."
         },
         {
-          "id": "d98b1704-9bc3-40d1-8edf-66eb676090a4",
+          "id": "e73982d2-7477-4f28-b393-f7ff8ff61036",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Por qué se recomienda usar el Método del Codo y el coeficiente de Silhouette conjuntamente para elegir K, en lugar de usar solo uno?",
           "options": [
-            "Porque el Codo mide compacidad y siempre disminuye con K, mientras que el Silhouette mide cohesión y separación; juntos compensan las limitaciones individuales de cada métrica. Correcto. La inercia siempre baja con K y no tiene un máximo útil. El Silhouette tiene un máximo que indica separación óptima pero es costoso en datos grandes. Usarlos juntos permite una elección fundamentada: cuando el codo y el máximo de Silhouette coinciden en el mismo K, la decisión es sólida.",
+            "Porque el Codo mide compacidad y siempre disminuye con K, mientras que el Silhouette mide cohesión y separación; juntos compensan las limitaciones individuales de cada métrica.",
             "Porque scikit-learn solo permite calcular ambas métricas de forma simultánea, nunca por separado.",
             "Porque ambas métricas miden exactamente lo mismo, y usar las dos evita errores de cálculo.",
             "Porque el Método del Codo requiere datos estandarizados y el Silhouette no, de modo que se usan en etapas distintas del pipeline."
@@ -5686,7 +5686,7 @@ window.QUIZ_DATA = {
           "feedback": "Correcto. La inercia siempre baja con K y no tiene un máximo útil. El Silhouette tiene un máximo que indica separación óptima pero es costoso en datos grandes. Usarlos juntos permite una elección fundamentada: cuando el codo y el máximo de Silhouette coinciden en el mismo K, la decisión es sólida."
         },
         {
-          "id": "9bc55974-7a9c-4eec-b83a-5f748b0b2fb5",
+          "id": "a3e4adca-2cff-40f7-a9fa-3373e765cd9a",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Un equipo entrena una SVM para detectar diabetes. El dataset tiene 85% de pacientes sin diabetes y 15% con diabetes. ¿Qué métrica de scoring es más adecuada para GridSearchCV en este caso?",
@@ -5700,7 +5700,7 @@ window.QUIZ_DATA = {
           "feedback": "En detección de enfermedades, perder un caso real (falso negativo) es más grave que alertar a un paciente sano (falso positivo). Recall maximiza la detección de casos positivos reales."
         },
         {
-          "id": "2524d4cb-9a3b-4dad-8673-f520e4685a32",
+          "id": "4394e415-2c8d-420e-998a-9efbb3b5403f",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Qué hace PCA(n_components=0.90) en scikit-learn?",
@@ -5714,7 +5714,7 @@ window.QUIZ_DATA = {
           "feedback": "Cuando n_components es un float entre 0 y 1, scikit-learn selecciona automáticamente el número mínimo de componentes necesarios para acumular ese porcentaje de varianza. Es la forma de aplicar la regla práctica de forma automática."
         },
         {
-          "id": "3229ce88-7335-4d3d-8e14-8e712956bd13",
+          "id": "40c1c3fa-1c15-49d0-b882-67a5463b3a8e",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Cuáles son las tres propiedades clave de las componentes principales?",
@@ -5728,7 +5728,7 @@ window.QUIZ_DATA = {
           "feedback": "Estas son exactamente las tres propiedades documentadas: no correlación entre componentes, orden por varianza decreciente (PC1 mayor, PC2 siguiente), y naturaleza de combinación lineal (suma ponderada) de las variables originales."
         },
         {
-          "id": "2e64a0f6-1cf6-4342-a418-ac8c7136efe1",
+          "id": "677e283c-0acc-4042-b757-e7a1001eeabd",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "En el taller se define el siguiente param_grid para optimizar el árbol con GridSearchCV(cv=5): param_grid = { **max_depth**:         [3, 5, 7, 10, None], **min_samples_split**: [2, 5, 10], **min_samples_leaf**:  [1, 3, 5],",
@@ -5742,7 +5742,7 @@ window.QUIZ_DATA = {
           "feedback": "Producto cartesiano: 5 × 3 × 3 × 2 = 90 combinaciones. Con cv=5: 90 × 5 = 450 entrenamientos totales. El taller calcula este resultado directamente con el código que multiplica todos los len(v) del param_grid."
         },
         {
-          "id": "126fbd3f-b668-4db8-b970-143dc2a59adf",
+          "id": "fff44211-3ed1-4450-bb9a-c4cef1b8513b",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Antes de entrenar un Random Forest, se recomienda entrenar primero un árbol de decisión individual sobre el mismo dataset. ¿Cuál es el propósito principal de este paso?",
@@ -5756,7 +5756,7 @@ window.QUIZ_DATA = {
           "feedback": "El baseline permite medir objetivamente el valor agregado del ensamble respecto al modelo más simple."
         },
         {
-          "id": "ccc32632-d645-4c95-8957-a461561b817f",
+          "id": "9ccebb11-55db-48a6-86f2-63d74d8497e3",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Con un dataset de 1 000 registros, cada árbol de Random Forest se entrena con una muestra Bootstrap. Aproximadamente, ¿cuántos registros quedan fuera de esa muestra (muestras OOB)?",
@@ -5770,7 +5770,7 @@ window.QUIZ_DATA = {
           "feedback": "Con muestreo con reemplazo de N elementos, aproximadamente el 37% de las filas únicas queda fuera de cada muestra. El material documenta explícitamente esta proporción: **~37% quedan fuera** y **~370 jugadores NO seleccionados → muestras OOB**."
         },
         {
-          "id": "ed7c35cf-6664-41c7-8645-604559023e7f",
+          "id": "1922351c-d45c-4a7d-91aa-0b77e16887bd",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "# Después de entrenar el siguiente modelo modelo_rbf = SVC(kernel=**rbf**, C=1.0, gamma=**scale**, random_state=42) modelo_rbf.fit(X_train_s, y_train) print(modelo_rbf.n_support_) ## La salida es [452 410]. ¿Qué indica este resultado?",
@@ -5784,12 +5784,12 @@ window.QUIZ_DATA = {
           "feedback": "n_support_ es un atributo de SVC entrenado que indica cuántos vectores de soporte pertenecen a cada clase. Estos son los puntos del conjunto de entrenamiento que determinan el hiperplano."
         },
         {
-          "id": "0cfb82c3-7fc8-4cb0-a52e-9cd9e64ca012",
+          "id": "4415eb52-bcb6-452e-9a20-c741f6644abb",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Cuál de las siguientes afirmaciones describe correctamente qué es el clustering?",
           "options": [
-            "Una técnica no supervisada que agrupa observaciones de modo que los objetos de un mismo grupo sean más similares entre sí que con los de otros grupos. Correcto. El clustering es una técnica de aprendizaje no supervisado cuyo criterio de agrupación es la similitud interna: los objetos de un mismo cluster deben parecerse más entre sí que con los de otros clusters.",
+            "Una técnica no supervisada que agrupa observaciones de modo que los objetos de un mismo grupo sean más similares entre sí que con los de otros grupos.",
             "Un método de reducción de dimensiones que transforma variables correlacionadas en componentes ortogonales.",
             "Un algoritmo de regresión que minimiza el error cuadrático medio entre predicciones y valores reales.",
             "Una técnica supervisada que clasifica nuevas observaciones usando etiquetas aprendidas durante el entrenamiento."
@@ -5798,7 +5798,7 @@ window.QUIZ_DATA = {
           "feedback": "Correcto. El clustering es una técnica de aprendizaje no supervisado cuyo criterio de agrupación es la similitud interna: los objetos de un mismo cluster deben parecerse más entre sí que con los de otros clusters."
         },
         {
-          "id": "ab33af48-debf-4b49-8224-65cca5dc3b5f",
+          "id": "63f08570-ffaa-43cb-9af3-90c9963ba1eb",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Cuál es la diferencia fundamental entre PCA y la selección de variables?",
@@ -5812,21 +5812,21 @@ window.QUIZ_DATA = {
           "feedback": "PCA transforma el espacio de variables creando combinaciones lineales que maximizan la varianza capturada. Las variables originales siguen existiendo; lo que cambia es la representación de los datos."
         },
         {
-          "id": "230bbe2f-4fff-4497-aa4f-6980ab3f59fe",
+          "id": "4cf531e6-c7a4-4e0b-8409-9f514b2a316f",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Según la regla práctica para elegir MinPts en DBSCAN, ¿qué valor mínimo se recomienda para datos en 2 dimensiones?",
           "options": [
             "MinPts debe ser igual al número de clusters esperados más uno.",
             "MinPts = 10, porque valores bajos producen clusters con sobreajuste.",
-            "MinPts = 4 o 5, porque la regla práctica indica MinPts ≥ dimensiones + 1. Correcto. La regla práctica (Sander et al., 1998) establece MinPts ≥ dimensiones + 1. Para datos en 2D eso da MinPts ≥ 3, y el rango recomendado es 4 o 5.",
+            "MinPts = 4 o 5, porque la regla práctica indica MinPts ≥ dimensiones + 1.",
             "MinPts = 2, porque en 2D solo se necesita un vecino adicional para definir densidad."
           ],
           "correct": 2,
           "feedback": "Correcto. La regla práctica (Sander et al., 1998) establece MinPts ≥ dimensiones + 1. Para datos en 2D eso da MinPts ≥ 3, y el rango recomendado es 4 o 5."
         },
         {
-          "id": "d9c84f6c-1a6b-4a9e-a256-b35b79a533cc",
+          "id": "9ecb2e04-6b84-4e47-9389-c8fdfe2993b1",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Por qué la inercia (WCSS), usada para evaluar K-Means, no es una métrica válida para evaluar DBSCAN?",
@@ -5834,19 +5834,19 @@ window.QUIZ_DATA = {
             "Porque la inercia no puede calcularse con scikit-learn para objetos DBSCAN.",
             "Porque la inercia solo es válida cuando todos los puntos están asignados a un cluster, y DBSCAN produce puntos de ruido sin asignar.",
             "Porque DBSCAN no utiliza distancias euclidianas en su proceso de agrupamiento.",
-            "Porque DBSCAN no tiene centroides, por lo que no existe la distancia de cada punto a su centroide que define la inercia. Correcto. La inercia es la suma de distancias al cuadrado de cada punto a su centroide. DBSCAN no genera centroides: agrupa por densidad, no por proximidad a un punto representativo. Por eso se usan métricas como Silhouette o Davies-Bouldin."
+            "Porque DBSCAN no tiene centroides, por lo que no existe la distancia de cada punto a su centroide que define la inercia."
           ],
           "correct": 3,
           "feedback": "Correcto. La inercia es la suma de distancias al cuadrado de cada punto a su centroide. DBSCAN no genera centroides: agrupa por densidad, no por proximidad a un punto representativo. Por eso se usan métricas como Silhouette o Davies-Bouldin."
         },
         {
-          "id": "01e8e058-27fd-4c99-b2b5-fc1c74ed194e",
+          "id": "bbee3986-38c0-4657-a42f-24a42d41e64d",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "En el algoritmo K-Means, después de asignar cada observación al centroide más cercano, ¿cómo se actualiza la posición de cada centroide?",
           "options": [
             "Se desplaza al punto más cercano a la media del cluster anterior.",
-            "Se mueve al promedio de todas las observaciones asignadas a ese cluster. Correcto. En K-Means, el centroide se actualiza como el promedio (media aritmética) de todos los puntos asignados a ese cluster. Por eso el algoritmo se llama K-Means (K-medias).",
+            "Se mueve al promedio de todas las observaciones asignadas a ese cluster.",
             "Se reposiciona aleatoriamente para evitar mínimos locales.",
             "Se calcula como el punto más alejado del centroide del cluster vecino más cercano."
           ],
@@ -5854,7 +5854,7 @@ window.QUIZ_DATA = {
           "feedback": "Correcto. En K-Means, el centroide se actualiza como el promedio (media aritmética) de todos los puntos asignados a ese cluster. Por eso el algoritmo se llama K-Means (K-medias)."
         },
         {
-          "id": "bfcd3f40-abcf-452b-b053-228a428a1820",
+          "id": "20026114-38ef-4f5c-a2d9-aa286abc11c2",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Dos modelos SVM producen los siguientes resultados sobre el mismo conjunto de prueba: Modelo              Accuracy   Recall fraude   F1 fraude LinearSVC            0.7475        0.2818        0.3804 SVC (Kernel RBF)     0.7325        0.2182        0.3097 ¿Cuál modelo es preferible para un sistema de detección de fraude bancario y por qué?",
@@ -5868,7 +5868,7 @@ window.QUIZ_DATA = {
           "feedback": "LinearSVC supera al RBF en las tres métricas: accuracy (0.7475 vs 0.7325), recall de fraude (0.2818 vs 0.2182) y F1 de fraude (0.3804 vs 0.3097). El kernel más complejo no siempre gana; la elección debe basarse en evidencia empírica."
         },
         {
-          "id": "fbad5b07-f040-4de4-8fed-b2fb18cdd248",
+          "id": "7c5fd583-7fd2-4f6d-acd4-e977a6d1332f",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Cuál es el orden correcto del pipeline de preprocesamiento para entrenar una SVM?",
@@ -5882,7 +5882,7 @@ window.QUIZ_DATA = {
           "feedback": "El OHE se aplica primero (no aprende estadísticas de los datos), luego se divide, y finalmente se escala ajustando el scaler solo sobre los datos de entrenamiento para evitar fuga de información."
         },
         {
-          "id": "cb384583-5138-4701-b898-a72c5ce51fdd",
+          "id": "ca87de74-8910-4f75-874d-a56f362bb182",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "En un Random Forest de 100 árboles, 72 predicen la clase 1 y 28 predicen la clase 0 para un registro. ¿Cuál es la predicción final y qué devuelve predict_proba()?",
@@ -5896,7 +5896,7 @@ window.QUIZ_DATA = {
           "feedback": "La clase con más votos gana (72 > 28 → clase 1). predict_proba() devuelve la proporción de votos por clase: [0.28, 0.72], donde el primer valor corresponde a la clase 0 y el segundo a la clase 1."
         },
         {
-          "id": "8a3d0ae7-717e-45f6-9407-68d4a581a5f3",
+          "id": "02f2f394-6e1c-4589-8ec5-e16c6819ab6d",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Qué representa el valor rf.oob_score_ después de entrenar un RandomForestClassifier con oob_score=True?",
@@ -5910,7 +5910,7 @@ window.QUIZ_DATA = {
           "feedback": "oob_score_ es la accuracy estimada usando las muestras que el Bootstrap dejó fuera de cada árbol. El material lo describe como **87.3% de accuracy estimada sin tocar X_test** y lo compara con un k-fold cross-validation sin costo adicional."
         },
         {
-          "id": "46b186ca-b466-4c43-95c3-fb07acb90ff0",
+          "id": "18e81a6b-05f0-42fa-b32b-bd937dfdcef7",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Qué son los loadings en PCA y dónde se encuentran en scikit-learn?",
@@ -5924,7 +5924,7 @@ window.QUIZ_DATA = {
           "feedback": "Los loadings definen cómo se construye cada componente a partir de las variables originales. pca.components_ es una matriz donde cada fila es un componente y cada columna es una variable original."
         },
         {
-          "id": "16c2941a-9116-42f1-bd9f-871485af6f5d",
+          "id": "741e415e-eefc-422c-b423-f70c1c7aae4c",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "En un biplot de PCA, ¿qué indica que dos flechas de variables apunten en la misma dirección?",
@@ -5938,7 +5938,7 @@ window.QUIZ_DATA = {
           "feedback": "Cuando dos flechas apuntan en la misma dirección, ambas variables aumentan o disminuyen juntas. Esto indica correlación positiva: las observaciones con alto valor en una tienden a tener alto valor en la otra."
         },
         {
-          "id": "7ff60e7a-8ebb-412e-95bd-94483c30e693",
+          "id": "05b72a3e-597d-4e3f-bcef-671bf6cf1d20",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Según el material, ¿qué ocurre al agregar más árboles (aumentar n_estimators) en un Random Forest?",
@@ -5952,7 +5952,7 @@ window.QUIZ_DATA = {
           "feedback": "El material documenta que agregar más árboles nunca empeora el modelo. Con n_estimators suficientemente alto, el error generaliza bien. Sin embargo, el costo computacional y de memoria sí aumenta, por lo que 100-500 es suficiente en la mayoría de casos."
         },
         {
-          "id": "d3754059-0c8a-46fa-98e4-0769d55af54b",
+          "id": "003bbb35-cb17-4cef-8979-3b1805abeed5",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Si se configura un valor de ε muy grande en DBSCAN, manteniendo MinPts fijo, ¿qué resultado se espera?",
@@ -5960,19 +5960,19 @@ window.QUIZ_DATA = {
             "Clusters coherentes con ruido justo, correspondiente a outliers reales.",
             "Muchos puntos de ruido y clusters muy fragmentados.",
             "El algoritmo no converge y produce un error de ejecución.",
-            "Todo se fusiona en un solo cluster y se pierde la estructura de los datos. Correcto. Con ε muy grande, la vecindad de cada punto abarca prácticamente todos los demás puntos del dataset, por lo que todo queda conectado en un único cluster sin estructura."
+            "Todo se fusiona en un solo cluster y se pierde la estructura de los datos."
           ],
           "correct": 3,
           "feedback": "Correcto. Con ε muy grande, la vecindad de cada punto abarca prácticamente todos los demás puntos del dataset, por lo que todo queda conectado en un único cluster sin estructura."
         },
         {
-          "id": "c4463f57-8b84-46a8-99fa-277d3c8ed3cf",
+          "id": "6da9812c-def3-43a6-8673-90455fce6262",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿En cuál de los siguientes escenarios K-Means produciría resultados incorrectos aunque los grupos sean claramente distinguibles visualmente?",
           "options": [
             "Cuando la variable con mayor rango numérico no ha sido estandarizada antes de aplicar el algoritmo.",
-            "Cuando los grupos reales tienen forma de anillo o de media luna en el espacio de variables. Correcto. K-Means asume que los clusters tienen forma de esfera. Para estructuras como anillos o medias lunas, el algoritmo divide mal los grupos aunque sean visualmente evidentes. Para esos casos el material sugiere explorar DBSCAN o clustering jerárquico.",
+            "Cuando los grupos reales tienen forma de anillo o de media luna en el espacio de variables.",
             "Cuando el dataset tiene más de 1,000 observaciones y pocas variables.",
             "Cuando se usa random_state=42 en lugar de un valor aleatorio."
           ],
@@ -5980,21 +5980,21 @@ window.QUIZ_DATA = {
           "feedback": "Correcto. K-Means asume que los clusters tienen forma de esfera. Para estructuras como anillos o medias lunas, el algoritmo divide mal los grupos aunque sean visualmente evidentes. Para esos casos el material sugiere explorar DBSCAN o clustering jerárquico."
         },
         {
-          "id": "82e6db71-ac14-4cda-b727-d069abdc9f4c",
+          "id": "333c8ea6-a061-4428-aea4-31cc3f9ccec3",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "El índice Davies-Bouldin y el coeficiente de Silhouette son dos métricas para evaluar clustering. ¿Cuál es la diferencia principal entre ellas?",
           "options": [
             "El Silhouette va de 0 a 1 y Davies-Bouldin de -1 a 1; en ambos casos valores más altos son mejores.",
             "Davies-Bouldin solo puede usarse con K-Means, mientras que Silhouette es válido para cualquier algoritmo de clustering.",
-            "El Silhouette evalúa cada punto individualmente comparando cohesión y separación, mientras que Davies-Bouldin evalúa explícitamente la separación entre cada par de clusters. En Davies-Bouldin, valores más bajos indican mejor separación. Correcto. El Silhouette mide por punto: (b-a)/max(a,b). Davies-Bouldin calcula el promedio de la razón entre dispersión intra-cluster y distancia entre clusters para cada par; valores más bajos son mejores.",
+            "El Silhouette evalúa cada punto individualmente comparando cohesión y separación, mientras que Davies-Bouldin evalúa explícitamente la separación entre cada par de clusters. En Davies-Bouldin, valores más bajos indican mejor separación.",
             "Son equivalentes en los resultados que producen; la única diferencia es la escala numérica."
           ],
           "correct": 2,
           "feedback": "Correcto. El Silhouette mide por punto: (b-a)/max(a,b). Davies-Bouldin calcula el promedio de la razón entre dispersión intra-cluster y distancia entre clusters para cada par; valores más bajos son mejores."
         },
         {
-          "id": "4ae9b866-41fa-49c3-bc61-2f290f8b3142",
+          "id": "3bcea8e2-d72f-4f28-aa7c-31c22699b386",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "# Un estudiante escribe el siguiente código scaler = StandardScaler() X_scaled = scaler.fit_transform(X)  # sobre todo el dataset X_train, X_test, y_train, y_test = train_test_split( ``` X_scaled, y, test_size=0.2, random_state=42 ```",
@@ -6008,7 +6008,7 @@ window.QUIZ_DATA = {
           "feedback": "Al hacer fit_transform(X) antes del split, el scaler aprende la media y desviación de todo el dataset incluyendo X_test. Esto contamina la evaluación: el modelo conoce indirectamente estadísticas del conjunto de prueba."
         },
         {
-          "id": "b0b001d4-9d6a-4d6b-9509-6c7f1148610e",
+          "id": "089a5d90-9874-4cf8-a477-c8efccd7590d",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Cuál es la principal razón por la que el margen suave (soft margin) es el estándar en la práctica, mientras que el margen duro (hard margin) casi no se usa?",
@@ -6022,7 +6022,7 @@ window.QUIZ_DATA = {
           "feedback": "En datos reales siempre hay ruido y outliers. El margen duro exige clasificación perfecta de todos los puntos, condición imposible de cumplir en casi cualquier problema práctico."
         },
         {
-          "id": "d0130753-ca1f-4293-b20d-8f69390a6859",
+          "id": "01e80d10-e679-4aa1-b9f4-6c8c3b80716d",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Un modelo SVM tiene buen desempeño en entrenamiento pero generaliza mal en datos nuevos. ¿Qué ajuste al parámetro C es recomendable?",
@@ -6036,7 +6036,7 @@ window.QUIZ_DATA = {
           "feedback": "Buen entrenamiento y mala generalización es la señal clásica de overfitting. Reducir C amplía el margen y hace al modelo más tolerante con errores de entrenamiento, mejorando la generalización."
         },
         {
-          "id": "b4abe601-0682-4a5d-8745-152e9cd6fd28",
+          "id": "07965293-c87b-476d-955f-d5a170f4b854",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Qué es el muestreo Bootstrap en el contexto de Random Forest?",
@@ -6050,7 +6050,7 @@ window.QUIZ_DATA = {
           "feedback": "Bootstrap es el muestreo con reemplazo. Con N filas originales, se extraen N filas permitiendo repeticiones. Esto produce un dataset distinto del original para cada árbol del bosque."
         },
         {
-          "id": "7e154b18-a63e-420f-915c-53f730e5e642",
+          "id": "3409ad24-5d6c-48c3-8cba-ca75c7674d45",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Un analista aplica DBSCAN a un dataset con dos grupos: uno muy denso (500 puntos en un área pequeña) y otro disperso (200 puntos en un área grande). ¿Qué limitación de DBSCAN es relevante aquí?",
@@ -6064,7 +6064,7 @@ window.QUIZ_DATA = {
           "feedback": "Correcto. DBSCAN usa un único ε global. Si ε es lo suficientemente grande para capturar el cluster disperso, probablemente fusionará el denso con sus vecinos. Si es pequeño para el denso, el disperso quedará como ruido. Un ε único no captura bien densidades muy distintas."
         },
         {
-          "id": "533530c7-5051-4918-a672-d208054f3fba",
+          "id": "970a5a01-94ef-47d6-8db5-7d234b605abb",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Cuál es el orden correcto del flujo de PCA en scikit-learn?",
@@ -6078,7 +6078,7 @@ window.QUIZ_DATA = {
           "feedback": "El flujo documentado es: primero estandarizar con StandardScaler, luego aplicar PCA sobre los datos escalados, y finalmente leer la varianza explicada con explained_variance_ratio_."
         },
         {
-          "id": "db75e62e-2b00-4b6e-993f-12285b2355bb",
+          "id": "1e071e00-1504-4fda-8c2e-627572b4f3d6",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Cuál es la definición formal de un árbol de decisión según el material?",
@@ -6092,7 +6092,7 @@ window.QUIZ_DATA = {
           "feedback": "Esta es la definición formal de Breiman et al. (1984 — CART). El árbol es supervisado, usa preguntas binarias jerarquizadas, y cada ruta completa se traduce en una regla IF-THEN interpretable."
         },
         {
-          "id": "4aafbf48-e6f6-41d9-9f90-33e187e5df60",
+          "id": "f5672d5f-b57f-4a35-a45e-e85808576771",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Después de ejecutar GridSearchCV, ¿qué representa grid_search.best_score_?",
@@ -6106,7 +6106,7 @@ window.QUIZ_DATA = {
           "feedback": "best_score_ es el promedio de los k scores obtenidos en los k folds de validación cruzada, calculado sobre particiones de X_train. Nunca involucra X_test."
         },
         {
-          "id": "a66805a8-d4d2-48ab-a5d4-f52cfea403d2",
+          "id": "83cbe5a7-949e-4547-921a-7cf1db4ed27a",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Qué hace el siguiente fragmento de código? from sklearn.svm import LinearSVC from sklearn.preprocessing import StandardScaler sc = StandardScaler() X_train_s = sc.fit_transform(X_train) X_test_s  = sc.transform(X_test) modelo = LinearSVC(C=1.0, max_iter=2000, random_state=42) modelo.fit(X_train_s, y_train)",
@@ -6120,7 +6120,7 @@ window.QUIZ_DATA = {
           "feedback": "fit_transform en X_train ajusta y transforma; transform en X_test aplica la misma escala sin reaprender. LinearSVC implementa un kernel lineal, no RBF ni polinómico."
         },
         {
-          "id": "329aecdc-3878-478c-9cfe-faca5845051a",
+          "id": "6a546374-1c2e-4c04-b9b5-b42bcb5fb310",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Cuál es el valor por defecto de max_features en RandomForestClassifier para tareas de clasificación?",
@@ -6134,7 +6134,7 @@ window.QUIZ_DATA = {
           "feedback": "La opción correcta es d. En clasificación, el valor por defecto es **sqrt**, que evalúa √p variables en cada nodo."
         },
         {
-          "id": "49459071-adc9-4fec-a359-3404ef48eefe",
+          "id": "1293814b-29da-46c7-b219-261989261808",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Qué ventaja ofrece DBSCAN frente a K-Means para la detección de anomalías en los datos?",
@@ -6148,7 +6148,7 @@ window.QUIZ_DATA = {
           "feedback": "Correcto. DBSCAN clasifica los puntos que no entran en ninguna región densa como ruido (etiqueta −1), identificándolos automáticamente como outliers. K-Means asigna todos los puntos a algún cluster, incluso los atípicos."
         },
         {
-          "id": "6147c2cb-7091-45dc-b88e-da0ad19b5398",
+          "id": "5b3ff3ad-60b2-4edf-b43e-6b376a5de024",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Después de ajustar pca = PCA(n_components=2) sobre un dataset con 10 variables, ¿cuál es la estructura de pca.components_?",
@@ -6162,7 +6162,7 @@ window.QUIZ_DATA = {
           "feedback": "La opción correcta es c. pca.components_ tiene forma (n_components, n_features): una fila por componente y una columna por variable original."
         },
         {
-          "id": "598af9e5-a8b6-4cce-8a00-bf6a5fbf95b4",
+          "id": "40fc6a2c-6aa7-4c8a-9366-b966a549be64",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Un analista entrena K-Means para K = 1, 2, 3, …, 10 y observa que la inercia disminuye en todos los casos al aumentar K. ¿Cuál es la conclusión correcta?",
@@ -6176,7 +6176,7 @@ window.QUIZ_DATA = {
           "feedback": "Correcto. La inercia siempre disminuye al aumentar K porque con más clusters cada punto puede estar más cerca de su centroide. Con K = n la inercia llega a 0. Por eso se necesita el método del Codo para identificar el punto donde la reducción se vuelve marginal."
         },
         {
-          "id": "654e5893-be1a-4e94-a2f8-297fbc94cdc6",
+          "id": "4d48271b-3b3c-4acf-a4c5-72d6c12e4f6e",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Por qué el Bootstrap garantiza que los árboles de un Random Forest sean distintos entre sí?",
@@ -6190,7 +6190,7 @@ window.QUIZ_DATA = {
           "feedback": "Al muestrear con reemplazo, cada árbol ve un conjunto de datos diferente: algunas filas aparecen varias veces, otras no aparecen. El material lo documenta: **Con 100 árboles, hay 100 datasets ligeramente distintos → 100 árboles distintos.**"
         },
         {
-          "id": "f12f89b0-dfbd-49b3-86e3-8979cc45e724",
+          "id": "7c5a47e5-b578-4ff6-94b5-65e9955be892",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Qué produce el siguiente código? arbol = DecisionTreeClassifier(max_depth=3, random_state=42) arbol.fit(X_train, y_train) print(arbol.get_depth()) print(arbol.get_n_leaves())",
@@ -6204,7 +6204,7 @@ window.QUIZ_DATA = {
           "feedback": "max_depth=3 limita la profundidad máxima. get_depth() devuelve la profundidad real alcanzada (puede ser ≤ 3 si los datos se vuelven puros antes) y get_n_leaves() devuelve el número de nodos hoja del árbol entrenado."
         },
         {
-          "id": "0ca3abcc-f690-4bff-ac1c-a517ae8f40b0",
+          "id": "f43ddc28-3135-40e3-9123-cdf441182163",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Cuál es la diferencia principal entre el aprendizaje supervisado y el clustering en cuanto a los datos de entrenamiento?",
@@ -6218,7 +6218,7 @@ window.QUIZ_DATA = {
           "feedback": "Correcto. En supervisado, y es conocida antes de entrenar. En clustering, no existen etiquetas: el algoritmo descubre la estructura en X por sí mismo, sin respuestas predefinidas."
         },
         {
-          "id": "6c9eadd7-a15b-42d3-b748-f609eb4879cf",
+          "id": "57753b1e-9b62-46c9-a44d-0244892cd6ab",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "# En el siguiente fragmento score = silhouette_score(X_scaled, labels) ## ¿Por qué se pasa X_scaled en lugar de X (los datos sin estandarizar)?",
@@ -6232,7 +6232,7 @@ window.QUIZ_DATA = {
           "feedback": "La opción correcta es d. El Silhouette se basa en distancias euclidianas; sin estandarizar, una variable con rango mayor dominaría artificialmente esas distancias."
         },
         {
-          "id": "940ddd4b-16b7-4bb7-bfdc-26e627aedd3d",
+          "id": "f412100a-30e7-4733-9282-b87930240c70",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Por qué la función objetivo de K-Means usa las distancias elevadas al cuadrado en lugar de las distancias simples?",
@@ -6246,7 +6246,7 @@ window.QUIZ_DATA = {
           "feedback": "Correcto. Al elevar al cuadrado, las distancias grandes penalizan proporcionalmente más que las pequeñas. Un punto muy lejano al centroide contribuye mucho más al WCSS que varios puntos moderadamente lejanos."
         },
         {
-          "id": "528600bd-11cf-4005-bb8f-2be7e5831f4a",
+          "id": "1bf87b86-c790-42ef-8095-ba355e7bfbb6",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Qué visualiza el siguiente código? resultados = pd.DataFrame(grid_search.cv_results_) rbf_df = resultados[resultados[**param_kernel**] == **rbf**] pivot_rbf = rbf_df.pivot_table( ``` values='mean_test_score', index='param_C', columns='param_gamma' ```",
@@ -6260,7 +6260,7 @@ window.QUIZ_DATA = {
           "feedback": "El código filtra cv_results_ para kernel RBF, construye una tabla pivote con mean_test_score (el F1 CV promedio) en función de C y gamma, y lo visualiza como heatmap. Permite identificar visualmente las mejores combinaciones."
         },
         {
-          "id": "2e6cb44b-c522-4a93-b667-e38a00a810ad",
+          "id": "f1da6550-a41c-40d1-88f8-38ea8c1a6b81",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Cuando PCA se usa como preproceso antes de un modelo supervisado, ¿cuál es la práctica correcta para evitar data leakage?",
@@ -6274,7 +6274,7 @@ window.QUIZ_DATA = {
           "feedback": "La opción correcta es b. Se ajusta PCA solo sobre X_train y se transforma X_test con los mismos componentes, evitando data leakage."
         },
         {
-          "id": "c8f9bbb4-3cb1-4273-a684-767e9a3fa850",
+          "id": "dc92c9bb-f359-48b7-9f54-395755c05039",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Qué cantidad minimiza el algoritmo K-Means en cada iteración?",
@@ -6288,7 +6288,7 @@ window.QUIZ_DATA = {
           "feedback": "Correcto. K-Means minimiza el WCSS (Within-Cluster Sum of Squares): la suma de las distancias al cuadrado de cada punto a su centroide. Cada iteración de asignación y actualización garantiza que esta cantidad no aumente."
         },
         {
-          "id": "b989fa47-091b-4732-a71a-150238e818e0",
+          "id": "76ac0f98-0899-4547-87bd-ae3035da43c1",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Qué ventaja ofrece activar oob_score=True en RandomForestClassifier?",
@@ -6302,7 +6302,7 @@ window.QUIZ_DATA = {
           "feedback": "El OOB score aprovecha las muestras que el Bootstrap dejó fuera de cada árbol para evaluarlo. El material lo describe como **validación sin necesidad de separar un conjunto adicional** y comparable a un k-fold cross-validation sin costo adicional."
         },
         {
-          "id": "cb0964a9-7445-4124-9ff7-9473ce671915",
+          "id": "84c424a9-d57b-48e4-a596-801a3cbfcc29",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "En un árbol de decisión, ¿qué es un nodo hoja?",
@@ -6316,7 +6316,7 @@ window.QUIZ_DATA = {
           "feedback": "El nodo hoja es el punto final de un camino en el árbol. No realiza más divisiones; predice la clase más frecuente entre los ejemplos que lo alcanzaron."
         },
         {
-          "id": "37f0a3f1-a7fc-4e0e-a868-e2d1004ec50a",
+          "id": "9d2a1c4c-3eba-455b-a536-7aa710a3c699",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Qué garantiza el atributo pca.explained_variance_ratio_ sobre la suma de todos sus valores cuando se calculan todos los componentes posibles?",
@@ -6330,7 +6330,7 @@ window.QUIZ_DATA = {
           "feedback": "Si se calculan todos los componentes posibles (igual al número de variables), en conjunto capturan el 100% de la varianza. El material lo documenta explícitamente: **La suma de todos los componentes siempre es 100%.**"
         },
         {
-          "id": "72bc652d-4042-4e8e-a6a2-fbe8ced07a7c",
+          "id": "83c35da6-24a3-477b-a723-100c78c6a321",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Cuál es el valor por defecto de max_depth en DecisionTreeClassifier y qué riesgo implica?",
@@ -6344,7 +6344,7 @@ window.QUIZ_DATA = {
           "feedback": "La opción correcta es b. Por defecto max_depth=None, sin límite, lo que permite que el árbol crezca hasta memorizar el entrenamiento y aumenta el riesgo de overfitting."
         },
         {
-          "id": "474154b4-4a86-480f-8a0e-e89b36651d53",
+          "id": "efc9c87a-f8ac-4f61-afb4-5dfe0a393a02",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Un punto está dentro del radio ε de un Core Point, pero cuando se calcula su propia vecindad tiene menos de MinPts vecinos. ¿Cómo clasifica DBSCAN a ese punto?",
@@ -6358,7 +6358,7 @@ window.QUIZ_DATA = {
           "feedback": "Correcto. El punto Borde está dentro del radio ε de un Core (y por eso pertenece al cluster) pero tiene menos de MinPts vecinos propios, por lo que no puede ser semilla de expansión."
         },
         {
-          "id": "5653ca60-070a-422f-9763-2f2586b13800",
+          "id": "526796bc-acce-437f-b0e9-c7820671efd0",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Por qué es obligatorio aplicar StandardScaler antes de entrenar una SVM?",
@@ -6372,7 +6372,7 @@ window.QUIZ_DATA = {
           "feedback": "El margen se define en términos de distancias euclidianas. Si una variable tiene un rango mucho mayor que las demás, domina el cálculo del margen independientemente de su relevancia predictiva."
         },
         {
-          "id": "5778c7d6-7fe5-4cc7-bfcf-30dbcceea1e8",
+          "id": "8707877f-cbc5-43ca-9c17-ebec1ef46d42",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "# Dado el siguiente fragmento de código modelo = KMeans(n_clusters=3, random_state=42, n_init=10) labels = modelo.fit_predict(X_scaled) ## ¿Cuál es el resultado almacenado en la variable labels?",
@@ -6386,7 +6386,7 @@ window.QUIZ_DATA = {
           "feedback": "La opción correcta es b. fit_predict() devuelve la asignación de cada observación a un cluster, no las posiciones de los centroides."
         },
         {
-          "id": "d3de3055-f4ea-4277-ac44-4ad84f081fff",
+          "id": "b08d6ad2-f70e-42c5-b97f-481796676c0a",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Por qué GridSearchCV evalúa cada combinación de hiperparámetros con validación cruzada en lugar de una sola partición de validación?",
@@ -6400,7 +6400,7 @@ window.QUIZ_DATA = {
           "feedback": "Si se usara una sola partición de validación, la mejor combinación podría ser la que mejor funciona para ese subconjunto específico de datos. La validación cruzada evalúa sobre k subconjuntos distintos para una estimación más confiable."
         },
         {
-          "id": "75822192-c880-4772-806e-9ca60a9cf636",
+          "id": "99cfc209-4a19-4103-a3de-7561d823d24c",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "¿Qué hace el siguiente código? rf = RandomForestClassifier( ``` n_estimators=100, max_features='sqrt', oob_score=True, random_state=42, n_jobs=-1 ```",
@@ -6414,7 +6414,7 @@ window.QUIZ_DATA = {
           "feedback": "n_estimators=100 construye 100 árboles, max_features=**sqrt** evalúa √p variables por nodo, oob_score=True activa el cálculo OOB, n_jobs=-1 usa todos los núcleos disponibles, y oob_score_ imprime el accuracy estimado sobre las muestras OOB."
         },
         {
-          "id": "66fdd26f-451e-4ef0-953c-e4143849ad94",
+          "id": "df2ca779-8b57-4307-882c-59699d7f04e8",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Al aplicar K-Means y DBSCAN al mismo dataset, K-Means produce Silhouette = 0.652 y DBSCAN produce Silhouette = 0.675 (excluyendo outliers). ¿Cuál es la diferencia conceptual más relevante entre ambos resultados?",
@@ -6428,7 +6428,7 @@ window.QUIZ_DATA = {
           "feedback": "Correcto. Esta es la diferencia conceptual clave: K-Means fuerza todos los puntos a pertenecer a algún cluster, absorbiendo los outliers en el grupo más cercano. DBSCAN identifica explícitamente los puntos que no pertenecen a ninguna región densa y los etiqueta con -1."
         },
         {
-          "id": "e046343e-0369-4423-8461-007cc7658e22",
+          "id": "bdbdbf1e-f267-48b3-92f7-39e0e164d90d",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
           "text": "Un estudiante entrena GridSearchCV y reporta best_score_ = 0.93 como el rendimiento final de su modelo. ¿Por qué este reporte es incorrecto?",
