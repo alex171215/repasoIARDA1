@@ -5158,6 +5158,10 @@ window.QUIZ_DATA = {
           "label": "Teoría y Conceptos"
         },
         {
+          "value": "semana5",
+          "label": "Semana 5 · Multiclase"
+        },
+        {
           "value": "bookmarked",
           "label": "Solo Preguntas Marcadas"
         }
@@ -6436,6 +6440,726 @@ window.QUIZ_DATA = {
           ],
           "correct": 2,
           "feedback": "best_score_ es un estimado de validación cruzada calculado sobre particiones de X_train. Para reportar el rendimiento real del modelo hay que evaluarlo sobre X_test, que no participó en ningún momento de la búsqueda."
+        },
+        {
+          "id": "a70d3a4b-b91d-4dae-97d0-fa7ea716e2e0",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Cuál es la diferencia fundamental entre la estrategia OvR (OneVsRestClassifier) y Softmax (LogisticRegression por defecto) al clasificar con 3 o más clases?",
+          "options": [
+            "OvR entrena un único modelo que produce probabilidades para todas las clases simultáneamente; Softmax entrena K modelos separados.",
+            "OvR entrena K modelos binarios, uno por clase (esa clase vs. todas las demás); Softmax entrena un único modelo que asigna probabilidades a todas las clases a la vez, garantizando que sumen 1.",
+            "OvR y Softmax son idénticos en su funcionamiento; la única diferencia es el nombre del parámetro en scikit-learn.",
+            "Softmax solo funciona cuando las clases están perfectamente balanceadas; OvR no tiene esta restricción."
+          ],
+          "correct": 1,
+          "feedback": "OvR (One-vs-Rest) entrena K clasificadores binarios independientes, uno por clase. Softmax extiende la regresión logística para producir directamente probabilidades para K clases en un solo modelo, con la restricción de que siempre sumen 1.0."
+        },
+        {
+          "id": "2a0ca74f-1e2b-4400-81c0-1dc6e0e588cd",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Por qué NO se puede calcular directamente la probabilidad calibrada con OvR (OneVsRestClassifier), mientras que Softmax sí lo garantiza?",
+          "options": [
+            "Porque OneVsRestClassifier no implementa el método predict_proba() en scikit-learn.",
+            "Porque OvR entrena K modelos binarios independientes cuyos scores no necesariamente suman 1.0; Softmax sí garantiza que las probabilidades de todas las clases sumen exactamente 1.0 por construcción matemática.",
+            "Porque OvR solo funciona con variables numéricas y no puede procesar variables categóricas.",
+            "Porque Softmax usa la función sigmoide mientras que OvR usa una función de umbral, lo que hace imposible el cálculo de probabilidades en OvR."
+          ],
+          "correct": 1,
+          "feedback": "Los K modelos de OvR son independientes entre sí y sus probabilidades no están coordinadas, por lo que pueden sumar más o menos de 1.0. Softmax, al usar la función exponencial normalizada, garantiza matemáticamente que P(Alto) + P(Bajo) + P(Medio) = 1.0 exactamente."
+        },
+        {
+          "id": "2214b8c0-f8b5-4565-9a02-94e5a141ef27",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En scikit-learn 1.7+, ¿qué ocurre si se instancia LogisticRegression() sin ningún parámetro adicional y se entrena con una variable objetivo y que tiene 3 clases distintas?",
+          "options": [
+            "El modelo lanza un error porque LogisticRegression solo soporta clasificación binaria de forma nativa.",
+            "El modelo entrena en modo OvR automáticamente, porque ese es el comportamiento por defecto.",
+            "El modelo entrena en modo Softmax (multinomial) automáticamente, porque es el comportamiento nativo cuando y tiene 3 o más clases.",
+            "El modelo requiere que se especifique explícitamente multi_class='multinomial' para activar Softmax."
+          ],
+          "correct": 2,
+          "feedback": "Desde scikit-learn 1.5+, el parámetro multi_class fue eliminado (deprecado). LogisticRegression() detecta automáticamente que y tiene 3 clases y entrena en modo Softmax (multinomial). El parámetro multi_class='ovr'/'multinomial' ya no existe."
+        },
+        {
+          "id": "e8776ce0-70f8-4ff6-9a84-2f00609aabf3",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Qué es pipeline.classes_ y para qué es crítico conocerlo al interpretar predict_proba() en clasificación multiclase?",
+          "options": [
+            "Es el número total de clases del dataset, necesario para configurar el número de neuronas de salida del modelo.",
+            "Es un atributo que se configura antes del entrenamiento para definir el orden de las clases.",
+            "Es un atributo post-entrenamiento que guarda el orden alfabético en que el modelo indexó las clases. La columna i de predict_proba() corresponde siempre a classes_[i], por lo que confundirlo genera interpretaciones incorrectas.",
+            "Es una lista de las clases mal predichas por el modelo, útil para identificar errores sistemáticos."
+          ],
+          "correct": 2,
+          "feedback": "classes_ solo existe después de .fit(). En el taller el output fue ['Alto' 'Bajo' 'Medio'] — orden alfabético. Esto significa que predict_proba() devuelve [P(Alto), P(Bajo), P(Medio)] en ese orden. Si asumes el orden incorrecto, interpretas las probabilidades de forma equivocada."
+        },
+        {
+          "id": "41462464-bf06-47f7-90a8-b5673639041f",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Qué mide macro avg en classification_report y cuándo deberías priorizarlo sobre weighted avg?",
+          "options": [
+            "macro avg es el promedio ponderado por el número de muestras por clase; se usa cuando las clases mayoritarias son más importantes.",
+            "macro avg es el promedio simple entre clases (todas pesan igual, independientemente de su tamaño); se usa cuando todas las clases tienen la misma importancia clínica o de negocio, aunque estén desbalanceadas.",
+            "macro avg mide la varianza de las métricas entre clases; valores altos indican que el modelo tiene rendimiento irregular.",
+            "macro avg solo se puede calcular cuando el número de clases es par."
+          ],
+          "correct": 1,
+          "feedback": "macro avg promedia Precision, Recall y F1 de cada clase con igual peso. En el taller de triaje, detectar un Riesgo Alto (solo 12 pacientes en test) es tan crítico como detectar un Riesgo Bajo (239 pacientes). macro avg penaliza por igual fallar en cualquier clase."
+        },
+        {
+          "id": "f7f2fe7f-ccb0-48a4-889d-e12cdc2a83e7",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En el reporte del modelo Softmax sobre el dataset de triaje, se observa Accuracy = 0.742, macro avg F1 = 0.569 y weighted avg F1 = 0.724. ¿Por qué el Accuracy y el weighted avg son tan superiores al macro avg?",
+          "options": [
+            "Porque el modelo tiene sobreajuste: memorizó bien el entrenamiento pero no generaliza en prueba.",
+            "Porque hay un error en el cálculo de las métricas; matemáticamente no pueden diferir tanto.",
+            "Porque el dataset está desbalanceado: Riesgo Bajo representa ~66% de los datos. El Accuracy y weighted avg están dominados por esa clase mayoritaria; el macro avg revela que el modelo falla severamente con Riesgo Alto (Recall=0.250).",
+            "Porque macro avg excluye automáticamente la clase con más muestras para evitar sesgos."
+          ],
+          "correct": 2,
+          "feedback": "Con un dataset donde Bajo=66%, Medio=30%, Alto=3.4%, un modelo que predice bien 'Bajo' obtiene Accuracy alto. Pero el macro avg revela la verdad: F1(Alto)=0.353, F1(Medio)=0.519, F1(Bajo)=0.837 → promedio simple = 0.569, muy inferior al 0.724 ponderado por volumen."
+        },
+        {
+          "id": "fe845457-6525-4394-b303-d790ab3feb30",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Qué calcula el Precision de una clase específica (por ejemplo, Precision de 'Alto' = 0.600 en el reporte)?",
+          "options": [
+            "De todos los pacientes que REALMENTE son Riesgo Alto, ¿qué proporción el modelo detectó correctamente?",
+            "De todos los pacientes que el modelo PREDIJO como Riesgo Alto, ¿qué proporción realmente lo era? (TP / (TP + FP))",
+            "La proporción de pacientes de Riesgo Alto en el total del dataset.",
+            "El número total de aciertos del modelo dividido entre el total de predicciones realizadas."
+          ],
+          "correct": 1,
+          "feedback": "Precision = TP / (TP + FP): de todos los que el modelo clasificó como 'Alto', el 60% realmente lo eran. Es el costo de las falsas alarmas. Si Precision=0.600 para Alto, el 40% de las veces que el modelo dijo 'Alto' estaba equivocado."
+        },
+        {
+          "id": "6aa5a60c-5f63-4386-ae92-9c1058f07c6d",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En el taller de triaje hospitalario, el modelo OvR obtuvo Recall(Alto) = 0.000 mientras que Softmax obtuvo Recall(Alto) = 0.250. ¿Por qué el Recall es la métrica más crítica para la clase 'Alto' en este contexto?",
+          "options": [
+            "Porque el Recall es siempre la métrica más importante en cualquier problema de clasificación médica.",
+            "Porque Recall = TP / (TP + FN): mide cuántos pacientes de Riesgo Alto REAL fueron detectados. Un Recall bajo significa que el modelo deja pasar pacientes en peligro sin clasificarlos correctamente — los falsos negativos son clínicamente inaceptables.",
+            "Porque el Recall incluye automáticamente la corrección por desbalance de clases que el Precision no considera.",
+            "Porque Recall = 0.000 indica que el modelo tiene sobreajuste severo y debe descartarse completamente."
+          ],
+          "correct": 1,
+          "feedback": "Recall(Alto) = 0.000 en OvR significa que de los 12 pacientes de Riesgo Alto en el conjunto de prueba, el modelo no detectó ninguno — todos fueron clasificados como Medio o Bajo. Un Recall de 0 en la clase más crítica hace al modelo inutilizable en triaje hospitalario."
+        },
+        {
+          "id": "6a7ff7a3-3845-407f-9ab3-a320caade9f5",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Qué mide el F1-Score y por qué es más informativo que usar Precision o Recall de forma aislada?",
+          "options": [
+            "F1-Score es la suma de Precision y Recall; valores mayores a 1.5 indican un modelo excelente.",
+            "F1-Score es la media armónica de Precision y Recall: F1 = 2·P·R / (P+R). Equilibra ambas métricas; un modelo que sacrifica una para maximizar la otra obtiene un F1 bajo, reflejando el trade-off real.",
+            "F1-Score es el porcentaje de predicciones correctas totales, equivalente al Accuracy pero calculado clase por clase.",
+            "F1-Score penaliza únicamente los falsos positivos, haciéndolo ideal para problemas donde la Precision es más importante que el Recall."
+          ],
+          "correct": 1,
+          "feedback": "La media armónica penaliza los desequilibrios: si Precision=1.0 y Recall=0.0, F1=0 (no 0.5). Esto evita que un modelo que nunca predice una clase obtenga puntuaciones engañosamente altas al reportar solo una de las dos métricas."
+        },
+        {
+          "id": "c7c7f1f8-0f5d-4a98-9a34-4f6cf280b9cf",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Para qué sirve StandardScaler en el pipeline de preprocesamiento y a qué variables se aplica en el taller de triaje?",
+          "options": [
+            "StandardScaler convierte variables categóricas (como sexo y provincia) en números enteros para que el modelo pueda procesarlas.",
+            "StandardScaler transforma las variables numéricas para que tengan media 0 y varianza 1, eliminando diferencias de escala que afectarían al modelo. En el taller se aplica a: edad, frecuencia_cardiaca, presion_sistolica, temperatura y saturacion_o2.",
+            "StandardScaler elimina los valores atípicos (outliers) del dataset normalizando todos los valores al rango [0, 1].",
+            "StandardScaler se aplica a la variable objetivo y (riesgo) para codificarla numéricamente antes del entrenamiento."
+          ],
+          "correct": 1,
+          "feedback": "Sin estandarización, una variable como presion_sistolica (rango 60-200 mmHg) dominaría sobre temperatura (rango 35-40°C) solo por su escala. StandardScaler centra y escala las variables numéricas: X_std = (X - media) / desviación_estándar."
+        },
+        {
+          "id": "cbf89b9b-5623-4263-8fe0-96dac41e56db",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En el taller de triaje, la variable objetivo y contiene los textos 'Bajo', 'Medio', 'Alto'. ¿Necesita aplicarse One-Hot Encoding (OHE) a y antes de entrenar LogisticRegression?",
+          "options": [
+            "Sí, obligatoriamente. scikit-learn requiere que y sea numérica (0, 1, 2) antes de poder entrenar cualquier modelo supervisado.",
+            "No. scikit-learn acepta directamente etiquetas de texto en y para clasificación multiclase. El OHE solo se aplica a las variables predictoras categóricas de X (como sexo, provincia, motivo_consulta).",
+            "Sí, pero solo cuando se usa OvR. Para Softmax, y puede dejarse en texto.",
+            "No aplica, porque y siempre debe ser de tipo float para que funcione classification_report."
+          ],
+          "correct": 1,
+          "feedback": "El notebook lo confirma explícitamente: 'La variable objetivo y contiene texto (Bajo, Medio, Alto). scikit-learn la acepta directamente — no necesita One-Hot Encoding.' Solo se aplica OHE a variables categóricas de X que son predictoras."
+        },
+        {
+          "id": "9fe0fa22-c058-47a4-8b07-6588bcfe3aaa",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Cuál es la ventaja crítica de usar ColumnTransformer dentro de un Pipeline sobre pd.get_dummies() al predecir datos nuevos en producción?",
+          "options": [
+            "ColumnTransformer es más rápido computacionalmente que pd.get_dummies() al procesar datasets grandes.",
+            "pd.get_dummies() puede generar columnas distintas si los datos nuevos no tienen todas las categorías del entrenamiento, causando predicciones silenciosamente incorrectas. ColumnTransformer aprende las categorías con .fit() y aplica exactamente esa misma transformación a cualquier dato nuevo con .transform().",
+            "ColumnTransformer puede codificar variables numéricas en categóricas, funcionalidad que pd.get_dummies() no tiene.",
+            "pd.get_dummies() solo funciona con Python 2; ColumnTransformer fue introducido para compatibilidad con Python 3."
+          ],
+          "correct": 1,
+          "feedback": "Si un paciente nuevo llega de una provincia no vista en entrenamiento, pd.get_dummies() generaría columnas faltantes o extras sin ningún error ni aviso. ColumnTransformer con handle_unknown='ignore' maneja este caso graciosamente, devolviendo 0 para categorías desconocidas."
+        },
+        {
+          "id": "7e076f98-72a4-43a8-ba09-f6b279cbb168",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En clasificación multiclase con 3 clases, pipeline_soft.predict_proba(paciente) devuelve [0.073, 0.059, 0.868]. ¿Qué propiedad matemática garantiza Softmax sobre estos valores?",
+          "options": [
+            "Los valores están normalizados entre -1 y 1, y su promedio es siempre 0.",
+            "Los tres valores siempre suman exactamente 1.0, ya que cada uno representa la probabilidad de pertenecer a una clase y son mutuamente excluyentes.",
+            "El valor más alto siempre es mayor a 0.5, garantizando que el modelo siempre tenga certeza sobre su predicción.",
+            "Los valores están ordenados de menor a mayor automáticamente, independientemente del orden de classes_."
+          ],
+          "correct": 1,
+          "feedback": "0.073 + 0.059 + 0.868 = 1.000. Softmax garantiza esto por diseño matemático: divide cada exponencial por la suma de todas las exponenciales. En OvR esto no se garantiza — los K scores independientes no necesariamente suman 1."
+        },
+        {
+          "id": "5bf4e1aa-3d51-4cc6-9daa-e055863d1e6d",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "El modelo Softmax predice un paciente con probabilidades: P(Alto)=0.073, P(Bajo)=0.059, P(Medio)=0.868. La clase predicha es 'Medio'. ¿Qué debería hacerse si un modelo predice P(Bajo)=0.52 y P(Medio)=0.41 para un paciente hospitalario?",
+          "options": [
+            "Dar al paciente de alta inmediatamente con la clase Bajo, porque es la más probable.",
+            "Ignorar la predicción del modelo porque la incertidumbre invalida cualquier resultado.",
+            "Solicitar revisión clínica presencial: cuando las probabilidades son muy cercanas entre sí, el modelo no tiene certeza suficiente y un profesional de salud debe tomar la decisión final.",
+            "Reentrenar el modelo con más datos porque cualquier probabilidad por debajo de 0.8 indica que el modelo está mal calibrado."
+          ],
+          "correct": 2,
+          "feedback": "El notebook lo documenta explícitamente: 'Si las probabilidades están muy cerca entre sí, el caso debe revisarse manualmente.' Una diferencia de solo 11 puntos porcentuales (52% vs 41%) en un paciente hospitalario no justifica una decisión clínica automatizada."
+        },
+        {
+          "id": "ca08def5-2eaa-46dd-8b63-17cda95bfb3a",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En la matriz de confusión multiclase del taller (clases: Bajo, Medio, Alto), el valor cm[2, 0] = 2 representa pacientes de 'Riesgo Alto clasificados como Bajo'. ¿Por qué este error es el más grave del modelo?",
+          "options": [
+            "Porque el valor 2 es el más alto de toda la matriz, indicando que es el error más frecuente.",
+            "Porque clasificar un paciente que realmente necesita atención urgente (Riesgo Alto) como Riesgo Bajo podría resultar en que se le dé de alta o no se le atienda prioritariamente, con consecuencias potencialmente fatales.",
+            "Porque el modelo debería siempre predecir la clase de la diagonal, y cm[2,0] indica que el modelo no aprendió la clase Alto.",
+            "Porque los errores fuera de la diagonal siempre son más graves que los de la diagonal en cualquier problema de clasificación."
+          ],
+          "correct": 1,
+          "feedback": "El taller lo documenta como 'el más grave': cm[2, 0] = Riesgo Alto → predicho como Bajo. El costo asimétrico de los errores es clave: clasificar Alto como Bajo en triaje hospitalario puede costar vidas. No todos los errores fuera de la diagonal son igualmente críticos."
+        },
+        {
+          "id": "3d53ef77-c92c-4cf3-81b4-b6956d6ee2c9",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Qué representan los valores que están EN la diagonal de la matriz de confusión y los que están FUERA de ella?",
+          "options": [
+            "Los valores en la diagonal son falsos positivos; los valores fuera de la diagonal son verdaderos positivos.",
+            "Los valores en la diagonal son predicciones correctas (el modelo predijo la misma clase que era real); los valores fuera de la diagonal son errores (el modelo predijo una clase diferente a la real).",
+            "Los valores en la diagonal miden el Precision por clase; los fuera de la diagonal miden el Recall.",
+            "Los valores en la diagonal son el soporte de cada clase (número total de muestras reales); los fuera son las muestras mal clasificadas por ambos modelos."
+          ],
+          "correct": 1,
+          "feedback": "Diagonal = TP por clase (real=X, predicho=X). Fuera de diagonal = errores. En el taller: cm[0,0]=215 (Bajo correctos), cm[1,1]=49 (Medio correctos), cm[2,2]=3 (Alto correctos). El resto son errores de clasificación."
+        },
+        {
+          "id": "73edc91a-51f4-4ef0-94a7-ad4179b69693",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "Observa este código del taller:\n\npreproc = ColumnTransformer([\n    ('cat', OneHotEncoder(drop='first', handle_unknown='ignore'), cat_cols),\n    ('num', StandardScaler(), num_cols),\n])\n\n¿Qué hace el parámetro drop='first' en OneHotEncoder?",
+          "options": [
+            "Elimina la primera columna del DataFrame original antes de aplicar el encoding.",
+            "Elimina la primera categoría de cada variable categórica al crear las columnas dummy, evitando la multicolinealidad perfecta (trampa de las variables dummy).",
+            "Hace que el OneHotEncoder procese primero las columnas numéricas antes que las categóricas.",
+            "Descarta las observaciones donde la primera categoría sea la más frecuente para balancear las clases."
+          ],
+          "correct": 1,
+          "feedback": "drop='first' elimina la primera categoría de cada variable. Por ejemplo, para 'sexo' (M/F), crea solo una columna: sexo_M=1 significa M, sexo_M=0 significa F. Sin drop='first', el modelo tendría multicolinealidad perfecta entre las columnas dummy."
+        },
+        {
+          "id": "c36a4184-b2d9-4aeb-b4ef-e5e8bac3b72d",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "Dado este fragmento de código del taller:\n\npipeline_ovr.fit(X_train, y_train)\npipeline_soft.fit(X_train, y_train)\nprint('Orden de clases:', pipeline_soft.classes_)\n# Output: ['Alto' 'Bajo' 'Medio']\n\n¿Por qué el orden de clases es alfabético y no el orden en que aparecen en el dataset?",
+          "options": [
+            "Porque el programador configuró sort=True como parámetro del Pipeline.",
+            "Porque scikit-learn ordena internamente las clases en orden alfabético al hacer .fit(), independientemente del orden en que aparezcan en y_train.",
+            "Porque Python ordena automáticamente cualquier array de strings al asignarlo a una variable.",
+            "Porque el taller usa random_state=42 que fuerza el orden alfabético para reproducibilidad."
+          ],
+          "correct": 1,
+          "feedback": "scikit-learn siempre ordena las etiquetas de clase alfabéticamente durante el entrenamiento. Por eso classes_ = ['Alto', 'Bajo', 'Medio'] aunque en los datos aparezcan en orden ['Medio', 'Bajo', 'Alto']. La columna 0 de predict_proba() es siempre P(Alto)."
+        },
+        {
+          "id": "61e33580-8b99-4d25-b2e8-f1897fd3d56d",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En el taller se usa train_test_split(X, y, test_size=0.2, random_state=42, stratify=y). ¿Por qué es especialmente importante el parámetro stratify=y cuando hay una clase minoritaria como 'Riesgo Alto' (solo el 3.4% del dataset)?",
+          "options": [
+            "Para que X_train y X_test tengan exactamente la misma cantidad de filas.",
+            "Para garantizar que la proporción de las 3 clases en train y test sea representativa de la distribución original. Sin stratify, podría ocurrir que 'Riesgo Alto' quede completamente excluida del test, haciendo imposible evaluar el modelo en esa clase crítica.",
+            "Para ordenar las filas del dataset por nivel de riesgo antes de dividirlo.",
+            "Para aplicar el mismo escalado de StandardScaler tanto a X_train como a X_test durante la división."
+          ],
+          "correct": 1,
+          "feedback": "Sin stratify, con solo 61 pacientes de Riesgo Alto (3.4%), una división aleatoria simple podría poner todos en train y ninguno en test. El output del taller confirma: train tiene 49 Altos y test tiene 12 Altos, manteniendo la proporción ~80/20 en cada clase."
+        },
+        {
+          "id": "04a762b9-edc7-44f1-b700-f6084b5085cc",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En el bloque C del taller se crea pipeline_final.fit(X, y) usando el dataset COMPLETO, mientras que en A3 se usó pipeline_soft.fit(X_train, y_train). ¿Por qué se reentrena con el 100% de los datos para producción?",
+          "options": [
+            "Porque el modelo no funcionará correctamente en producción si fue entrenado con menos del 100% de los datos disponibles.",
+            "Porque el train/test split (80/20) sirve para MEDIR la capacidad de generalización del modelo. Una vez validado ese resultado, el modelo de producción se reentrena con el 100% de los datos: ya no se necesita reservar una porción para medir, y más datos producen un modelo más robusto.",
+            "Porque joblib solo puede serializar modelos entrenados con el dataset completo.",
+            "Porque scikit-learn requiere que el pipeline_final use los mismos datos que el pipeline de evaluación para mantener consistencia."
+          ],
+          "correct": 1,
+          "feedback": "El principio es claro: evalúas con el 80% para estimar cómo generaliza, luego usas el 100% para producción porque ya no necesitas medir. pipeline_final.fit(X, y) vio todos los 1800 pacientes del taller, mientras pipeline_soft solo vio los 1440 del train."
+        },
+        {
+          "id": "986fc3d9-b819-4715-b81e-f844e3f9f0b2",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Cuál es la ventaja de exportar pipeline_final completo con joblib.dump() en lugar de guardar el modelo y el preprocesador por separado?",
+          "options": [
+            "joblib.dump() comprime el archivo a un tamaño menor que si se guardaran los objetos por separado.",
+            "Al guardar el Pipeline completo (preproc + modelo), ambos objetos están sincronizados y no pueden cargarse en el orden equivocado. El sistema de producción solo llama predict() sobre el pipeline y obtiene el resultado — sin repetir OHE ni escalado manualmente.",
+            "joblib solo puede serializar objetos Pipeline; no puede guardar modelos ni scalers de forma independiente.",
+            "Guardar el pipeline completo evita que otros programadores puedan acceder a los parámetros del modelo entrenado."
+          ],
+          "correct": 1,
+          "feedback": "El taller lo documenta: 'Al exportar pipeline_final se guardan preproc y modelo juntos, como un solo objeto: nunca pueden desincronizarse ni cargarse en el orden equivocado.' Esto es la clave de un flujo de producción robusto."
+        },
+        {
+          "id": "f7e9aa43-9c93-484f-9373-97dc2b287e30",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "Observa este código de producción del bloque C:\n\npipeline_prod = joblib.load('modelo_triaje.pkl')\npred = pipeline_prod.predict(paciente_nuevo)\nproba = pipeline_prod.predict_proba(paciente_nuevo)\n\n¿Por qué no es necesario aplicar OHE ni StandardScaler manualmente a paciente_nuevo antes de llamar predict()?",
+          "options": [
+            "Porque predict() ignora automáticamente las variables categóricas y solo usa las numéricas.",
+            "Porque el Pipeline ya incluye el preprocesamiento internamente. Al llamar predict(), aplica preproc (OHE + StandardScaler) con las mismas categorías y escala aprendidas durante el entrenamiento, antes de pasarlos al modelo.",
+            "Porque en producción los datos siempre llegan ya preprocesados desde la base de datos.",
+            "Porque joblib.load() aplica automáticamente el preprocesamiento al cargar el modelo."
+          ],
+          "correct": 1,
+          "feedback": "Este es el beneficio central del Pipeline: encapsula todo el flujo. paciente_nuevo es un DataFrame con columnas originales (edad=24, sexo='M', etc.) y el pipeline internamente hace OHE a categóricas y StandardScaler a numéricas antes de predecir."
+        },
+        {
+          "id": "a43b5c6a-ba20-40c0-a6f9-57c096f6e78f",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "Comparando los resultados del taller de triaje: OvR obtuvo Recall(Alto)=0.000 y Softmax obtuvo Recall(Alto)=0.250. ¿Qué conclusión práctica extrae el taller de esta comparación?",
+          "options": [
+            "OvR es superior en todos los casos de clasificación médica porque tiene más parámetros ajustables.",
+            "Softmax es preferible para este problema porque detecta aunque sea el 25% de los pacientes de Riesgo Alto, mientras que OvR no detecta ninguno. En triaje, la estrategia que mejor identifica la clase más crítica es la correcta.",
+            "Ambos modelos son equivalentes porque su Accuracy general es casi idéntico (0.739 vs 0.742).",
+            "La diferencia entre ambos es irrelevante porque el Recall de Alto es bajo en ambos casos."
+          ],
+          "correct": 1,
+          "feedback": "El taller concluye explícitamente: 'el Recall de la clase Alto es la métrica que más cambia entre OvR y Softmax, y la más importante clínicamente.' OvR con Recall(Alto)=0 es inútil para triaje hospitalario aunque tenga Accuracy similar."
+        },
+        {
+          "id": "17b183e7-bf91-4e56-89d7-4d3ed952a27d",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "El dataset de triaje tiene Bajo=66.5%, Medio=30.2%, Alto=3.4%. El taller advierte que 'un modelo que siempre prediga Bajo tendría Accuracy ≈ 66% aunque sea inútil'. ¿Qué métrica deberías revisar PRIMERO para detectar este problema?",
+          "options": [
+            "Accuracy, porque es la métrica más completa disponible en classification_report.",
+            "weighted avg F1, porque pondera por número de muestras y refleja el rendimiento real.",
+            "macro avg F1 o el Recall por clase. Un modelo que siempre predice 'Bajo' tendría Recall(Medio)=0 y Recall(Alto)=0, haciendo que el macro avg F1 sea muy bajo aunque el Accuracy sea 66%.",
+            "La inercia del clustering, porque indica qué tan separadas están las 3 clases en el espacio de variables."
+          ],
+          "correct": 2,
+          "feedback": "El Accuracy del 66% de ese modelo 'dummy' engañaría. El macro avg F1 y el Recall por clase lo desenmascaran: Recall(Medio)=0/109=0, Recall(Alto)=0/12=0. macro avg F1 ≈ 0.26, revelando que el modelo no sirve para las clases minoritarias."
+        },
+        {
+          "id": "39668123-a8df-44ea-a42c-13ae1f700a67",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En el bloque B1 del taller se construye un pipeline simplificado:\n\npipeline2 = Pipeline([\n    ('scaler', StandardScaler()),\n    ('modelo', LogisticRegression(solver='lbfgs', max_iter=1000, random_state=42)),\n])\n\nEste pipeline solo usa variables numéricas y obtiene macro F1 = 0.630, mejor que el modelo completo (0.569). ¿Qué lección metodológica enseña este resultado?",
+          "options": [
+            "Agregar más variables siempre mejora el modelo; el resultado del B1 contradice esta afirmación, indicando un error en el taller.",
+            "Variables categóricas como provincia y sexo pueden introducir ruido o no aportar información relevante para el problema. Más variables no siempre significan mejor modelo — la selección de variables y el contexto del problema importan.",
+            "El modelo completo debe descartarse porque el modelo simplificado siempre supera al complejo.",
+            "StandardScaler es superior a ColumnTransformer en todos los escenarios de clasificación multiclase."
+          ],
+          "correct": 1,
+          "feedback": "Los signos vitales (saturacion_o2, frecuencia_cardiaca, presion_sistolica) son predictores clínicamente más directos del riesgo que la provincia o el motivo de consulta. El resultado empírico confirma la intuición médica: las variables fisiológicas objetivas pesan más que las administrativas."
+        }
+      ]
+    },
+    {
+      "id": "semana_5",
+      "titulo": "Semana 5: Regresión Logística Multiclase",
+      "categorias": [
+        {
+          "value": "all",
+          "label": "Todas (Semana 5)"
+        },
+        {
+          "value": "semana5",
+          "label": "Conceptos y Código Multiclase"
+        },
+        {
+          "value": "bookmarked",
+          "label": "Solo Preguntas Marcadas"
+        }
+      ],
+      "preguntas": [
+        {
+          "id": "a70d3a4b-b91d-4dae-97d0-fa7ea716e2e0",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Cuál es la diferencia fundamental entre la estrategia OvR (OneVsRestClassifier) y Softmax (LogisticRegression por defecto) al clasificar con 3 o más clases?",
+          "options": [
+            "OvR entrena un único modelo que produce probabilidades para todas las clases simultáneamente; Softmax entrena K modelos separados.",
+            "OvR entrena K modelos binarios, uno por clase (esa clase vs. todas las demás); Softmax entrena un único modelo que asigna probabilidades a todas las clases a la vez, garantizando que sumen 1.",
+            "OvR y Softmax son idénticos en su funcionamiento; la única diferencia es el nombre del parámetro en scikit-learn.",
+            "Softmax solo funciona cuando las clases están perfectamente balanceadas; OvR no tiene esta restricción."
+          ],
+          "correct": 1,
+          "feedback": "OvR (One-vs-Rest) entrena K clasificadores binarios independientes, uno por clase. Softmax extiende la regresión logística para producir directamente probabilidades para K clases en un solo modelo, con la restricción de que siempre sumen 1.0."
+        },
+        {
+          "id": "2a0ca74f-1e2b-4400-81c0-1dc6e0e588cd",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Por qué NO se puede calcular directamente la probabilidad calibrada con OvR (OneVsRestClassifier), mientras que Softmax sí lo garantiza?",
+          "options": [
+            "Porque OneVsRestClassifier no implementa el método predict_proba() en scikit-learn.",
+            "Porque OvR entrena K modelos binarios independientes cuyos scores no necesariamente suman 1.0; Softmax sí garantiza que las probabilidades de todas las clases sumen exactamente 1.0 por construcción matemática.",
+            "Porque OvR solo funciona con variables numéricas y no puede procesar variables categóricas.",
+            "Porque Softmax usa la función sigmoide mientras que OvR usa una función de umbral, lo que hace imposible el cálculo de probabilidades en OvR."
+          ],
+          "correct": 1,
+          "feedback": "Los K modelos de OvR son independientes entre sí y sus probabilidades no están coordinadas, por lo que pueden sumar más o menos de 1.0. Softmax, al usar la función exponencial normalizada, garantiza matemáticamente que P(Alto) + P(Bajo) + P(Medio) = 1.0 exactamente."
+        },
+        {
+          "id": "2214b8c0-f8b5-4565-9a02-94e5a141ef27",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En scikit-learn 1.7+, ¿qué ocurre si se instancia LogisticRegression() sin ningún parámetro adicional y se entrena con una variable objetivo y que tiene 3 clases distintas?",
+          "options": [
+            "El modelo lanza un error porque LogisticRegression solo soporta clasificación binaria de forma nativa.",
+            "El modelo entrena en modo OvR automáticamente, porque ese es el comportamiento por defecto.",
+            "El modelo entrena en modo Softmax (multinomial) automáticamente, porque es el comportamiento nativo cuando y tiene 3 o más clases.",
+            "El modelo requiere que se especifique explícitamente multi_class='multinomial' para activar Softmax."
+          ],
+          "correct": 2,
+          "feedback": "Desde scikit-learn 1.5+, el parámetro multi_class fue eliminado (deprecado). LogisticRegression() detecta automáticamente que y tiene 3 clases y entrena en modo Softmax (multinomial). El parámetro multi_class='ovr'/'multinomial' ya no existe."
+        },
+        {
+          "id": "e8776ce0-70f8-4ff6-9a84-2f00609aabf3",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Qué es pipeline.classes_ y para qué es crítico conocerlo al interpretar predict_proba() en clasificación multiclase?",
+          "options": [
+            "Es el número total de clases del dataset, necesario para configurar el número de neuronas de salida del modelo.",
+            "Es un atributo que se configura antes del entrenamiento para definir el orden de las clases.",
+            "Es un atributo post-entrenamiento que guarda el orden alfabético en que el modelo indexó las clases. La columna i de predict_proba() corresponde siempre a classes_[i], por lo que confundirlo genera interpretaciones incorrectas.",
+            "Es una lista de las clases mal predichas por el modelo, útil para identificar errores sistemáticos."
+          ],
+          "correct": 2,
+          "feedback": "classes_ solo existe después de .fit(). En el taller el output fue ['Alto' 'Bajo' 'Medio'] — orden alfabético. Esto significa que predict_proba() devuelve [P(Alto), P(Bajo), P(Medio)] en ese orden. Si asumes el orden incorrecto, interpretas las probabilidades de forma equivocada."
+        },
+        {
+          "id": "41462464-bf06-47f7-90a8-b5673639041f",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Qué mide macro avg en classification_report y cuándo deberías priorizarlo sobre weighted avg?",
+          "options": [
+            "macro avg es el promedio ponderado por el número de muestras por clase; se usa cuando las clases mayoritarias son más importantes.",
+            "macro avg es el promedio simple entre clases (todas pesan igual, independientemente de su tamaño); se usa cuando todas las clases tienen la misma importancia clínica o de negocio, aunque estén desbalanceadas.",
+            "macro avg mide la varianza de las métricas entre clases; valores altos indican que el modelo tiene rendimiento irregular.",
+            "macro avg solo se puede calcular cuando el número de clases es par."
+          ],
+          "correct": 1,
+          "feedback": "macro avg promedia Precision, Recall y F1 de cada clase con igual peso. En el taller de triaje, detectar un Riesgo Alto (solo 12 pacientes en test) es tan crítico como detectar un Riesgo Bajo (239 pacientes). macro avg penaliza por igual fallar en cualquier clase."
+        },
+        {
+          "id": "f7f2fe7f-ccb0-48a4-889d-e12cdc2a83e7",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En el reporte del modelo Softmax sobre el dataset de triaje, se observa Accuracy = 0.742, macro avg F1 = 0.569 y weighted avg F1 = 0.724. ¿Por qué el Accuracy y el weighted avg son tan superiores al macro avg?",
+          "options": [
+            "Porque el modelo tiene sobreajuste: memorizó bien el entrenamiento pero no generaliza en prueba.",
+            "Porque hay un error en el cálculo de las métricas; matemáticamente no pueden diferir tanto.",
+            "Porque el dataset está desbalanceado: Riesgo Bajo representa ~66% de los datos. El Accuracy y weighted avg están dominados por esa clase mayoritaria; el macro avg revela que el modelo falla severamente con Riesgo Alto (Recall=0.250).",
+            "Porque macro avg excluye automáticamente la clase con más muestras para evitar sesgos."
+          ],
+          "correct": 2,
+          "feedback": "Con un dataset donde Bajo=66%, Medio=30%, Alto=3.4%, un modelo que predice bien 'Bajo' obtiene Accuracy alto. Pero el macro avg revela la verdad: F1(Alto)=0.353, F1(Medio)=0.519, F1(Bajo)=0.837 → promedio simple = 0.569, muy inferior al 0.724 ponderado por volumen."
+        },
+        {
+          "id": "fe845457-6525-4394-b303-d790ab3feb30",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Qué calcula el Precision de una clase específica (por ejemplo, Precision de 'Alto' = 0.600 en el reporte)?",
+          "options": [
+            "De todos los pacientes que REALMENTE son Riesgo Alto, ¿qué proporción el modelo detectó correctamente?",
+            "De todos los pacientes que el modelo PREDIJO como Riesgo Alto, ¿qué proporción realmente lo era? (TP / (TP + FP))",
+            "La proporción de pacientes de Riesgo Alto en el total del dataset.",
+            "El número total de aciertos del modelo dividido entre el total de predicciones realizadas."
+          ],
+          "correct": 1,
+          "feedback": "Precision = TP / (TP + FP): de todos los que el modelo clasificó como 'Alto', el 60% realmente lo eran. Es el costo de las falsas alarmas. Si Precision=0.600 para Alto, el 40% de las veces que el modelo dijo 'Alto' estaba equivocado."
+        },
+        {
+          "id": "6aa5a60c-5f63-4386-ae92-9c1058f07c6d",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En el taller de triaje hospitalario, el modelo OvR obtuvo Recall(Alto) = 0.000 mientras que Softmax obtuvo Recall(Alto) = 0.250. ¿Por qué el Recall es la métrica más crítica para la clase 'Alto' en este contexto?",
+          "options": [
+            "Porque el Recall es siempre la métrica más importante en cualquier problema de clasificación médica.",
+            "Porque Recall = TP / (TP + FN): mide cuántos pacientes de Riesgo Alto REAL fueron detectados. Un Recall bajo significa que el modelo deja pasar pacientes en peligro sin clasificarlos correctamente — los falsos negativos son clínicamente inaceptables.",
+            "Porque el Recall incluye automáticamente la corrección por desbalance de clases que el Precision no considera.",
+            "Porque Recall = 0.000 indica que el modelo tiene sobreajuste severo y debe descartarse completamente."
+          ],
+          "correct": 1,
+          "feedback": "Recall(Alto) = 0.000 en OvR significa que de los 12 pacientes de Riesgo Alto en el conjunto de prueba, el modelo no detectó ninguno — todos fueron clasificados como Medio o Bajo. Un Recall de 0 en la clase más crítica hace al modelo inutilizable en triaje hospitalario."
+        },
+        {
+          "id": "6a7ff7a3-3845-407f-9ab3-a320caade9f5",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Qué mide el F1-Score y por qué es más informativo que usar Precision o Recall de forma aislada?",
+          "options": [
+            "F1-Score es la suma de Precision y Recall; valores mayores a 1.5 indican un modelo excelente.",
+            "F1-Score es la media armónica de Precision y Recall: F1 = 2·P·R / (P+R). Equilibra ambas métricas; un modelo que sacrifica una para maximizar la otra obtiene un F1 bajo, reflejando el trade-off real.",
+            "F1-Score es el porcentaje de predicciones correctas totales, equivalente al Accuracy pero calculado clase por clase.",
+            "F1-Score penaliza únicamente los falsos positivos, haciéndolo ideal para problemas donde la Precision es más importante que el Recall."
+          ],
+          "correct": 1,
+          "feedback": "La media armónica penaliza los desequilibrios: si Precision=1.0 y Recall=0.0, F1=0 (no 0.5). Esto evita que un modelo que nunca predice una clase obtenga puntuaciones engañosamente altas al reportar solo una de las dos métricas."
+        },
+        {
+          "id": "c7c7f1f8-0f5d-4a98-9a34-4f6cf280b9cf",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Para qué sirve StandardScaler en el pipeline de preprocesamiento y a qué variables se aplica en el taller de triaje?",
+          "options": [
+            "StandardScaler convierte variables categóricas (como sexo y provincia) en números enteros para que el modelo pueda procesarlas.",
+            "StandardScaler transforma las variables numéricas para que tengan media 0 y varianza 1, eliminando diferencias de escala que afectarían al modelo. En el taller se aplica a: edad, frecuencia_cardiaca, presion_sistolica, temperatura y saturacion_o2.",
+            "StandardScaler elimina los valores atípicos (outliers) del dataset normalizando todos los valores al rango [0, 1].",
+            "StandardScaler se aplica a la variable objetivo y (riesgo) para codificarla numéricamente antes del entrenamiento."
+          ],
+          "correct": 1,
+          "feedback": "Sin estandarización, una variable como presion_sistolica (rango 60-200 mmHg) dominaría sobre temperatura (rango 35-40°C) solo por su escala. StandardScaler centra y escala las variables numéricas: X_std = (X - media) / desviación_estándar."
+        },
+        {
+          "id": "cbf89b9b-5623-4263-8fe0-96dac41e56db",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En el taller de triaje, la variable objetivo y contiene los textos 'Bajo', 'Medio', 'Alto'. ¿Necesita aplicarse One-Hot Encoding (OHE) a y antes de entrenar LogisticRegression?",
+          "options": [
+            "Sí, obligatoriamente. scikit-learn requiere que y sea numérica (0, 1, 2) antes de poder entrenar cualquier modelo supervisado.",
+            "No. scikit-learn acepta directamente etiquetas de texto en y para clasificación multiclase. El OHE solo se aplica a las variables predictoras categóricas de X (como sexo, provincia, motivo_consulta).",
+            "Sí, pero solo cuando se usa OvR. Para Softmax, y puede dejarse en texto.",
+            "No aplica, porque y siempre debe ser de tipo float para que funcione classification_report."
+          ],
+          "correct": 1,
+          "feedback": "El notebook lo confirma explícitamente: 'La variable objetivo y contiene texto (Bajo, Medio, Alto). scikit-learn la acepta directamente — no necesita One-Hot Encoding.' Solo se aplica OHE a variables categóricas de X que son predictoras."
+        },
+        {
+          "id": "9fe0fa22-c058-47a4-8b07-6588bcfe3aaa",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Cuál es la ventaja crítica de usar ColumnTransformer dentro de un Pipeline sobre pd.get_dummies() al predecir datos nuevos en producción?",
+          "options": [
+            "ColumnTransformer es más rápido computacionalmente que pd.get_dummies() al procesar datasets grandes.",
+            "pd.get_dummies() puede generar columnas distintas si los datos nuevos no tienen todas las categorías del entrenamiento, causando predicciones silenciosamente incorrectas. ColumnTransformer aprende las categorías con .fit() y aplica exactamente esa misma transformación a cualquier dato nuevo con .transform().",
+            "ColumnTransformer puede codificar variables numéricas en categóricas, funcionalidad que pd.get_dummies() no tiene.",
+            "pd.get_dummies() solo funciona con Python 2; ColumnTransformer fue introducido para compatibilidad con Python 3."
+          ],
+          "correct": 1,
+          "feedback": "Si un paciente nuevo llega de una provincia no vista en entrenamiento, pd.get_dummies() generaría columnas faltantes o extras sin ningún error ni aviso. ColumnTransformer con handle_unknown='ignore' maneja este caso graciosamente, devolviendo 0 para categorías desconocidas."
+        },
+        {
+          "id": "7e076f98-72a4-43a8-ba09-f6b279cbb168",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En clasificación multiclase con 3 clases, pipeline_soft.predict_proba(paciente) devuelve [0.073, 0.059, 0.868]. ¿Qué propiedad matemática garantiza Softmax sobre estos valores?",
+          "options": [
+            "Los valores están normalizados entre -1 y 1, y su promedio es siempre 0.",
+            "Los tres valores siempre suman exactamente 1.0, ya que cada uno representa la probabilidad de pertenecer a una clase y son mutuamente excluyentes.",
+            "El valor más alto siempre es mayor a 0.5, garantizando que el modelo siempre tenga certeza sobre su predicción.",
+            "Los valores están ordenados de menor a mayor automáticamente, independientemente del orden de classes_."
+          ],
+          "correct": 1,
+          "feedback": "0.073 + 0.059 + 0.868 = 1.000. Softmax garantiza esto por diseño matemático: divide cada exponencial por la suma de todas las exponenciales. En OvR esto no se garantiza — los K scores independientes no necesariamente suman 1."
+        },
+        {
+          "id": "5bf4e1aa-3d51-4cc6-9daa-e055863d1e6d",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "El modelo Softmax predice un paciente con probabilidades: P(Alto)=0.073, P(Bajo)=0.059, P(Medio)=0.868. La clase predicha es 'Medio'. ¿Qué debería hacerse si un modelo predice P(Bajo)=0.52 y P(Medio)=0.41 para un paciente hospitalario?",
+          "options": [
+            "Dar al paciente de alta inmediatamente con la clase Bajo, porque es la más probable.",
+            "Ignorar la predicción del modelo porque la incertidumbre invalida cualquier resultado.",
+            "Solicitar revisión clínica presencial: cuando las probabilidades son muy cercanas entre sí, el modelo no tiene certeza suficiente y un profesional de salud debe tomar la decisión final.",
+            "Reentrenar el modelo con más datos porque cualquier probabilidad por debajo de 0.8 indica que el modelo está mal calibrado."
+          ],
+          "correct": 2,
+          "feedback": "El notebook lo documenta explícitamente: 'Si las probabilidades están muy cerca entre sí, el caso debe revisarse manualmente.' Una diferencia de solo 11 puntos porcentuales (52% vs 41%) en un paciente hospitalario no justifica una decisión clínica automatizada."
+        },
+        {
+          "id": "ca08def5-2eaa-46dd-8b63-17cda95bfb3a",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En la matriz de confusión multiclase del taller (clases: Bajo, Medio, Alto), el valor cm[2, 0] = 2 representa pacientes de 'Riesgo Alto clasificados como Bajo'. ¿Por qué este error es el más grave del modelo?",
+          "options": [
+            "Porque el valor 2 es el más alto de toda la matriz, indicando que es el error más frecuente.",
+            "Porque clasificar un paciente que realmente necesita atención urgente (Riesgo Alto) como Riesgo Bajo podría resultar en que se le dé de alta o no se le atienda prioritariamente, con consecuencias potencialmente fatales.",
+            "Porque el modelo debería siempre predecir la clase de la diagonal, y cm[2,0] indica que el modelo no aprendió la clase Alto.",
+            "Porque los errores fuera de la diagonal siempre son más graves que los de la diagonal en cualquier problema de clasificación."
+          ],
+          "correct": 1,
+          "feedback": "El taller lo documenta como 'el más grave': cm[2, 0] = Riesgo Alto → predicho como Bajo. El costo asimétrico de los errores es clave: clasificar Alto como Bajo en triaje hospitalario puede costar vidas. No todos los errores fuera de la diagonal son igualmente críticos."
+        },
+        {
+          "id": "3d53ef77-c92c-4cf3-81b4-b6956d6ee2c9",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Qué representan los valores que están EN la diagonal de la matriz de confusión y los que están FUERA de ella?",
+          "options": [
+            "Los valores en la diagonal son falsos positivos; los valores fuera de la diagonal son verdaderos positivos.",
+            "Los valores en la diagonal son predicciones correctas (el modelo predijo la misma clase que era real); los valores fuera de la diagonal son errores (el modelo predijo una clase diferente a la real).",
+            "Los valores en la diagonal miden el Precision por clase; los fuera de la diagonal miden el Recall.",
+            "Los valores en la diagonal son el soporte de cada clase (número total de muestras reales); los fuera son las muestras mal clasificadas por ambos modelos."
+          ],
+          "correct": 1,
+          "feedback": "Diagonal = TP por clase (real=X, predicho=X). Fuera de diagonal = errores. En el taller: cm[0,0]=215 (Bajo correctos), cm[1,1]=49 (Medio correctos), cm[2,2]=3 (Alto correctos). El resto son errores de clasificación."
+        },
+        {
+          "id": "73edc91a-51f4-4ef0-94a7-ad4179b69693",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "Observa este código del taller:\n\npreproc = ColumnTransformer([\n    ('cat', OneHotEncoder(drop='first', handle_unknown='ignore'), cat_cols),\n    ('num', StandardScaler(), num_cols),\n])\n\n¿Qué hace el parámetro drop='first' en OneHotEncoder?",
+          "options": [
+            "Elimina la primera columna del DataFrame original antes de aplicar el encoding.",
+            "Elimina la primera categoría de cada variable categórica al crear las columnas dummy, evitando la multicolinealidad perfecta (trampa de las variables dummy).",
+            "Hace que el OneHotEncoder procese primero las columnas numéricas antes que las categóricas.",
+            "Descarta las observaciones donde la primera categoría sea la más frecuente para balancear las clases."
+          ],
+          "correct": 1,
+          "feedback": "drop='first' elimina la primera categoría de cada variable. Por ejemplo, para 'sexo' (M/F), crea solo una columna: sexo_M=1 significa M, sexo_M=0 significa F. Sin drop='first', el modelo tendría multicolinealidad perfecta entre las columnas dummy."
+        },
+        {
+          "id": "c36a4184-b2d9-4aeb-b4ef-e5e8bac3b72d",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "Dado este fragmento de código del taller:\n\npipeline_ovr.fit(X_train, y_train)\npipeline_soft.fit(X_train, y_train)\nprint('Orden de clases:', pipeline_soft.classes_)\n# Output: ['Alto' 'Bajo' 'Medio']\n\n¿Por qué el orden de clases es alfabético y no el orden en que aparecen en el dataset?",
+          "options": [
+            "Porque el programador configuró sort=True como parámetro del Pipeline.",
+            "Porque scikit-learn ordena internamente las clases en orden alfabético al hacer .fit(), independientemente del orden en que aparezcan en y_train.",
+            "Porque Python ordena automáticamente cualquier array de strings al asignarlo a una variable.",
+            "Porque el taller usa random_state=42 que fuerza el orden alfabético para reproducibilidad."
+          ],
+          "correct": 1,
+          "feedback": "scikit-learn siempre ordena las etiquetas de clase alfabéticamente durante el entrenamiento. Por eso classes_ = ['Alto', 'Bajo', 'Medio'] aunque en los datos aparezcan en orden ['Medio', 'Bajo', 'Alto']. La columna 0 de predict_proba() es siempre P(Alto)."
+        },
+        {
+          "id": "61e33580-8b99-4d25-b2e8-f1897fd3d56d",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En el taller se usa train_test_split(X, y, test_size=0.2, random_state=42, stratify=y). ¿Por qué es especialmente importante el parámetro stratify=y cuando hay una clase minoritaria como 'Riesgo Alto' (solo el 3.4% del dataset)?",
+          "options": [
+            "Para que X_train y X_test tengan exactamente la misma cantidad de filas.",
+            "Para garantizar que la proporción de las 3 clases en train y test sea representativa de la distribución original. Sin stratify, podría ocurrir que 'Riesgo Alto' quede completamente excluida del test, haciendo imposible evaluar el modelo en esa clase crítica.",
+            "Para ordenar las filas del dataset por nivel de riesgo antes de dividirlo.",
+            "Para aplicar el mismo escalado de StandardScaler tanto a X_train como a X_test durante la división."
+          ],
+          "correct": 1,
+          "feedback": "Sin stratify, con solo 61 pacientes de Riesgo Alto (3.4%), una división aleatoria simple podría poner todos en train y ninguno en test. El output del taller confirma: train tiene 49 Altos y test tiene 12 Altos, manteniendo la proporción ~80/20 en cada clase."
+        },
+        {
+          "id": "04a762b9-edc7-44f1-b700-f6084b5085cc",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En el bloque C del taller se crea pipeline_final.fit(X, y) usando el dataset COMPLETO, mientras que en A3 se usó pipeline_soft.fit(X_train, y_train). ¿Por qué se reentrena con el 100% de los datos para producción?",
+          "options": [
+            "Porque el modelo no funcionará correctamente en producción si fue entrenado con menos del 100% de los datos disponibles.",
+            "Porque el train/test split (80/20) sirve para MEDIR la capacidad de generalización del modelo. Una vez validado ese resultado, el modelo de producción se reentrena con el 100% de los datos: ya no se necesita reservar una porción para medir, y más datos producen un modelo más robusto.",
+            "Porque joblib solo puede serializar modelos entrenados con el dataset completo.",
+            "Porque scikit-learn requiere que el pipeline_final use los mismos datos que el pipeline de evaluación para mantener consistencia."
+          ],
+          "correct": 1,
+          "feedback": "El principio es claro: evalúas con el 80% para estimar cómo generaliza, luego usas el 100% para producción porque ya no necesitas medir. pipeline_final.fit(X, y) vio todos los 1800 pacientes del taller, mientras pipeline_soft solo vio los 1440 del train."
+        },
+        {
+          "id": "986fc3d9-b819-4715-b81e-f844e3f9f0b2",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Cuál es la ventaja de exportar pipeline_final completo con joblib.dump() en lugar de guardar el modelo y el preprocesador por separado?",
+          "options": [
+            "joblib.dump() comprime el archivo a un tamaño menor que si se guardaran los objetos por separado.",
+            "Al guardar el Pipeline completo (preproc + modelo), ambos objetos están sincronizados y no pueden cargarse en el orden equivocado. El sistema de producción solo llama predict() sobre el pipeline y obtiene el resultado — sin repetir OHE ni escalado manualmente.",
+            "joblib solo puede serializar objetos Pipeline; no puede guardar modelos ni scalers de forma independiente.",
+            "Guardar el pipeline completo evita que otros programadores puedan acceder a los parámetros del modelo entrenado."
+          ],
+          "correct": 1,
+          "feedback": "El taller lo documenta: 'Al exportar pipeline_final se guardan preproc y modelo juntos, como un solo objeto: nunca pueden desincronizarse ni cargarse en el orden equivocado.' Esto es la clave de un flujo de producción robusto."
+        },
+        {
+          "id": "f7e9aa43-9c93-484f-9373-97dc2b287e30",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "Observa este código de producción del bloque C:\n\npipeline_prod = joblib.load('modelo_triaje.pkl')\npred = pipeline_prod.predict(paciente_nuevo)\nproba = pipeline_prod.predict_proba(paciente_nuevo)\n\n¿Por qué no es necesario aplicar OHE ni StandardScaler manualmente a paciente_nuevo antes de llamar predict()?",
+          "options": [
+            "Porque predict() ignora automáticamente las variables categóricas y solo usa las numéricas.",
+            "Porque el Pipeline ya incluye el preprocesamiento internamente. Al llamar predict(), aplica preproc (OHE + StandardScaler) con las mismas categorías y escala aprendidas durante el entrenamiento, antes de pasarlos al modelo.",
+            "Porque en producción los datos siempre llegan ya preprocesados desde la base de datos.",
+            "Porque joblib.load() aplica automáticamente el preprocesamiento al cargar el modelo."
+          ],
+          "correct": 1,
+          "feedback": "Este es el beneficio central del Pipeline: encapsula todo el flujo. paciente_nuevo es un DataFrame con columnas originales (edad=24, sexo='M', etc.) y el pipeline internamente hace OHE a categóricas y StandardScaler a numéricas antes de predecir."
+        },
+        {
+          "id": "a43b5c6a-ba20-40c0-a6f9-57c096f6e78f",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "Comparando los resultados del taller de triaje: OvR obtuvo Recall(Alto)=0.000 y Softmax obtuvo Recall(Alto)=0.250. ¿Qué conclusión práctica extrae el taller de esta comparación?",
+          "options": [
+            "OvR es superior en todos los casos de clasificación médica porque tiene más parámetros ajustables.",
+            "Softmax es preferible para este problema porque detecta aunque sea el 25% de los pacientes de Riesgo Alto, mientras que OvR no detecta ninguno. En triaje, la estrategia que mejor identifica la clase más crítica es la correcta.",
+            "Ambos modelos son equivalentes porque su Accuracy general es casi idéntico (0.739 vs 0.742).",
+            "La diferencia entre ambos es irrelevante porque el Recall de Alto es bajo en ambos casos."
+          ],
+          "correct": 1,
+          "feedback": "El taller concluye explícitamente: 'el Recall de la clase Alto es la métrica que más cambia entre OvR y Softmax, y la más importante clínicamente.' OvR con Recall(Alto)=0 es inútil para triaje hospitalario aunque tenga Accuracy similar."
+        },
+        {
+          "id": "17b183e7-bf91-4e56-89d7-4d3ed952a27d",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "El dataset de triaje tiene Bajo=66.5%, Medio=30.2%, Alto=3.4%. El taller advierte que 'un modelo que siempre prediga Bajo tendría Accuracy ≈ 66% aunque sea inútil'. ¿Qué métrica deberías revisar PRIMERO para detectar este problema?",
+          "options": [
+            "Accuracy, porque es la métrica más completa disponible en classification_report.",
+            "weighted avg F1, porque pondera por número de muestras y refleja el rendimiento real.",
+            "macro avg F1 o el Recall por clase. Un modelo que siempre predice 'Bajo' tendría Recall(Medio)=0 y Recall(Alto)=0, haciendo que el macro avg F1 sea muy bajo aunque el Accuracy sea 66%.",
+            "La inercia del clustering, porque indica qué tan separadas están las 3 clases en el espacio de variables."
+          ],
+          "correct": 2,
+          "feedback": "El Accuracy del 66% de ese modelo 'dummy' engañaría. El macro avg F1 y el Recall por clase lo desenmascaran: Recall(Medio)=0/109=0, Recall(Alto)=0/12=0. macro avg F1 ≈ 0.26, revelando que el modelo no sirve para las clases minoritarias."
+        },
+        {
+          "id": "39668123-a8df-44ea-a42c-13ae1f700a67",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En el bloque B1 del taller se construye un pipeline simplificado:\n\npipeline2 = Pipeline([\n    ('scaler', StandardScaler()),\n    ('modelo', LogisticRegression(solver='lbfgs', max_iter=1000, random_state=42)),\n])\n\nEste pipeline solo usa variables numéricas y obtiene macro F1 = 0.630, mejor que el modelo completo (0.569). ¿Qué lección metodológica enseña este resultado?",
+          "options": [
+            "Agregar más variables siempre mejora el modelo; el resultado del B1 contradice esta afirmación, indicando un error en el taller.",
+            "Variables categóricas como provincia y sexo pueden introducir ruido o no aportar información relevante para el problema. Más variables no siempre significan mejor modelo — la selección de variables y el contexto del problema importan.",
+            "El modelo completo debe descartarse porque el modelo simplificado siempre supera al complejo.",
+            "StandardScaler es superior a ColumnTransformer en todos los escenarios de clasificación multiclase."
+          ],
+          "correct": 1,
+          "feedback": "Los signos vitales (saturacion_o2, frecuencia_cardiaca, presion_sistolica) son predictores clínicamente más directos del riesgo que la provincia o el motivo de consulta. El resultado empírico confirma la intuición médica: las variables fisiológicas objetivas pesan más que las administrativas."
         }
       ]
     }
