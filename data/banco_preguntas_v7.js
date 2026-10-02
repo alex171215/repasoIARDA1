@@ -6820,76 +6820,6 @@ window.QUIZ_DATA = {
           "feedback": "Radial Basis Function (RBF) es el kernel por defecto de SVC. Mide la similitud (distancia) entre puntos y permite fronteras altamente curvas. Si las clases están mezcladas, el RBF suele adaptarse mucho mejor que el lineal."
         },
         {
-          "id": "a6771100-7053-4e29-955e-ae7163a05f11",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "En el contexto de SVM, ¿cuándo es más útil emplear un kernel polinómico en lugar de un kernel lineal?",
-          "options": [
-            "Cuando el conjunto de datos tiene millones de registros y se necesita un entrenamiento rápido.",
-            "Cuando la relación entre las variables y las clases implica interacciones multiplicativas entre variables y fronteras curvas, pero con una complejidad controlada por el parámetro 'degree'.",
-            "Cuando todas las variables predictoras son categóricas y no hay variables numéricas continuas.",
-            "Cuando los datos son perfectamente separables por una línea recta."
-          ],
-          "correct": 1,
-          "feedback": "El kernel polinómico proyecta los datos a un espacio de dimensiones basado en combinaciones polinómicas (grado 2, 3, etc.) de las variables originales, siendo útil para descubrir relaciones no lineales y multiplicativas."
-        },
-        {
-          "id": "fe7d907a-fb11-48ab-a781-01c98690b11b",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "Al configurar un modelo SVM (como SVC en scikit-learn), ¿qué efecto tiene disminuir drásticamente el valor del parámetro C (ej. C = 0.001)?",
-          "options": [
-            "Aumenta la probabilidad de sobreajuste (overfitting) memorizando los datos de entrenamiento.",
-            "Fuerza al modelo a ignorar todas las variables numéricas y basarse solo en las categóricas.",
-            "Genera un margen más amplio y tolera más errores (violaciones del margen) en el conjunto de entrenamiento, produciendo un modelo más simple y generalizado.",
-            "Cambia el kernel activo del modelo automáticamente a kernel RBF."
-          ],
-          "correct": 2,
-          "feedback": "El hiperparámetro C controla la penalización por clasificar mal un punto de entrenamiento. Un C muy bajo es muy tolerante: permite errores a cambio de un margen más ancho (soft margin). Un C muy alto castiga estrictamente los errores (hard margin)."
-        },
-        {
-          "id": "fb9d2d07-fa8d-42f5-9e95-7f8ed5ad5918",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "En un modelo SVC con kernel polinómico, ¿para qué sirve el hiperparámetro 'degree'?",
-          "options": [
-            "Determina el número de iteraciones máximas del algoritmo de optimización.",
-            "Controla el grado del polinomio; a mayor grado, más flexible y compleja es la frontera de decisión (ej. degree=3 es un polinomio cúbico).",
-            "Especifica el porcentaje de datos que se usarán como vectores de soporte.",
-            "Activa o desactiva la ponderación balanceada de clases."
-          ],
-          "correct": 1,
-          "feedback": "El parámetro 'degree' especifica la máxima potencia a la que se elevarán las características. Grados más altos generan fronteras más sinuosas pero aumentan drásticamente el riesgo de sobreajuste."
-        },
-        {
-          "id": "593cdd5b-2de4-4a23-bcad-0b5c1c682033",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "¿Qué efecto tiene el hiperparámetro 'gamma' en un modelo SVM con kernel RBF?",
-          "options": [
-            "Define la influencia de una sola observación. Un gamma alto significa que la influencia de cada punto es de corto alcance (fronteras muy ajustadas/rugosas), mientras que un gamma bajo implica largo alcance (fronteras suaves).",
-            "Establece el número máximo de errores tolerados por el modelo dentro del margen de separación.",
-            "Regula el peso que se le da a la clase minoritaria para combatir el desbalance de clases.",
-            "Transforma los datos continuos a valores discretos (0 y 1)."
-          ],
-          "correct": 0,
-          "feedback": "Gamma define qué tan 'lejos' llega la influencia de un solo punto de entrenamiento. Gamma muy alto ajusta la frontera minuciosamente alrededor de los puntos (riesgo de overfitting), gamma bajo suaviza la frontera abarcando regiones grandes."
-        },
-        {
-          "id": "3c5001f5-fcaa-421d-912b-cffa61863a15",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "¿Cuál es el principio fundamental de funcionamiento de una Máquina de Vectores de Soporte (SVM) para clasificación?",
-          "options": [
-            "Calcular la probabilidad de pertenencia a cada clase usando el Teorema de Bayes asumiendo independencia entre variables.",
-            "Encontrar el hiperplano que separe las clases maximizando el 'margen' o distancia entre las clases más cercanas a la frontera, buscando la máxima generalización posible.",
-            "Construir múltiples árboles de decisión y promediar sus predicciones para reducir la varianza.",
-            "Encontrar el centroide de cada clase y asignar las nuevas muestras al centroide que tenga la menor distancia euclidiana."
-          ],
-          "correct": 1,
-          "feedback": "SVM es un clasificador de 'margen máximo'. No busca cualquier línea que separe los datos, sino la línea 'más ancha' posible que mantenga las clases separadas. Esa zona de seguridad (margen) mejora la capacidad del modelo para predecir casos nuevos."
-        },
-        {
           "id": "81a4ec51-896f-484b-9a85-63106ed7ea14",
           "category": "semana5",
           "categoryName": "Semana 5 y 6 · Multiclase y SVM",
@@ -6904,48 +6834,6 @@ window.QUIZ_DATA = {
           "feedback": "En la práctica de Data Science, se debe empezar por lo más simple ('Navaja de Ockham'). El kernel lineal evalúa si los datos son separables fácilmente. En el taller, vimos que a veces el modelo lineal balanceado incluso supera o iguala al RBF, siendo mucho más rápido y ligero."
         },
         {
-          "id": "9c42886f-5632-47ff-902a-6ebb35d32c89",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "En la terminología de SVM, ¿qué es un 'vector de soporte'?",
-          "options": [
-            "Es cualquier variable de entrada (columna) que tiene una correlación alta con la variable objetivo.",
-            "Son exclusivamente los puntos que el modelo predijo de forma incorrecta durante el entrenamiento.",
-            "Son los puntos de datos de entrenamiento que están situados exactamente sobre los límites del margen o violándolo. Son los únicos que definen la posición y orientación del hiperplano.",
-            "Es el vector perpendicular al hiperplano (denominado W) que determina la dirección del modelo."
-          ],
-          "correct": 2,
-          "feedback": "Si se eliminaran todos los puntos de datos excepto los vectores de soporte, el hiperplano resultante sería exactamente el mismo. Son las muestras 'críticas' que sostienen el margen. En scikit-learn se cuentan con el atributo n_support_."
-        },
-        {
-          "id": "f668f058-ff41-4549-a241-9b9f10de24a2",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "¿A qué se refiere el término 'Margen Suave' (Soft Margin) en contraste con el 'Margen Duro' (Hard Margin) en un modelo SVM?",
-          "options": [
-            "El Margen Suave se usa solo cuando el hiperplano es una curva (kernel RBF), mientras que el Margen Duro es exclusivo del kernel lineal.",
-            "El Margen Duro exige que no haya ningún punto dentro del espacio del margen ni mal clasificado (solo funciona si los datos son perfectamente separables). El Margen Suave permite cierta cantidad de errores o puntos dentro del margen para lograr un modelo que generalice mejor ante el ruido.",
-            "El Margen Suave es el resultado de usar probabilidades (predict_proba) en lugar de decisiones binarias.",
-            "El Margen Suave siempre penaliza menos a la clase mayoritaria que a la clase minoritaria."
-          ],
-          "correct": 1,
-          "feedback": "En el mundo real, los datos siempre tienen ruido y outliers, haciendo imposible la separación perfecta (Hard Margin). El Margen Suave (controlado por el parámetro C) permite violaciones del margen para que el hiperplano no se desvíe locamente por culpa de un outlier."
-        },
-        {
-          "id": "2ad6d8aa-ce0e-4d34-9cd9-9f5c3d6a4c7c",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "En el contexto matemático de SVM, ¿qué representa el término 'hiperplano'?",
-          "options": [
-            "La frontera de decisión que separa el espacio. Si hay 2 dimensiones (2 variables), es una línea recta. Si hay 3 dimensiones, es un plano. En N dimensiones, es un subespacio plano de dimensión N-1.",
-            "El algoritmo de optimización que encuentra la distancia euclidiana entre dos clusters.",
-            "El espacio proyectado a infinitas dimensiones que genera el kernel Gaussiano.",
-            "Una métrica de evaluación que mide el área bajo la curva (ROC-AUC)."
-          ],
-          "correct": 0,
-          "feedback": "Un hiperplano es la generalización de un plano en múltiples dimensiones. Es la frontera de decisión principal. Su ecuación general es w·x + b = 0, donde 'w' es el vector normal y 'b' es el sesgo."
-        },
-        {
           "id": "eb23ebce-c375-4b42-a786-5b7e86c73858",
           "category": "semana5",
           "categoryName": "Semana 5 y 6 · Multiclase y SVM",
@@ -6958,20 +6846,6 @@ window.QUIZ_DATA = {
           ],
           "correct": 2,
           "feedback": "El peso se calcula como n_total / (k × n_clase). Para Fraude, el peso fue 1.74, es decir, equivocarse en un caso de fraude penalizaba 1.74 veces más al algoritmo que equivocarse en una transacción legítima (peso 0.70). Es vital en clases desbalanceadas para mejorar el Recall de la clase minoritaria."
-        },
-        {
-          "id": "15d017f5-6a9a-4417-b35b-32b036b26ecf",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "Al entrenar un SVM (SVC) con kernel lineal, el uso de class_weight='balanced' en el taller provocó un incremento notable en el Recall de Fraude. ¿Cuál suele ser la compensación (trade-off) clínica o de negocio de este incremento?",
-          "options": [
-            "El modelo reduce su complejidad y pierde la capacidad de predecir cualquier transacción nueva.",
-            "El tiempo de entrenamiento se multiplica exponencialmente haciéndolo inviable en producción.",
-            "Al volverse más sensible a detectar fraudes, el modelo suele generar más falsas alarmas (aumentan los falsos positivos), lo que reduce la Precision general o el Accuracy.",
-            "Se requiere aplicar un Kernel RBF obligatoriamente, ya que el lineal no soporta el parámetro class_weight."
-          ],
-          "correct": 2,
-          "feedback": "No hay magia: al penalizar fuertemente fallar en un fraude, el modelo mueve el hiperplano para atrapar más fraudes (sube el Recall), pero al hacerlo, inevitablemente atrapa transacciones legítimas dentro de esa zona, bajando el Precision (aumentan los Falsos Positivos)."
         },
         {
           "id": "31244a30-28e7-4249-a78c-8997701e0271",
@@ -7014,132 +6888,6 @@ window.QUIZ_DATA = {
           ],
           "correct": 1,
           "feedback": "El Platt Scaling ajusta una curva sigmoide sobre las distancias del SVM (decision_function). Sin embargo, habilitar probability=True vuelve el entrenamiento mucho más lento (porque requiere validación cruzada interna en 5 iteraciones) y las probabilidades resultantes a veces pueden ser inconsistentes con el resultado de predict()."
-        },
-        {
-          "id": "414772bf-ff1b-48ba-8940-83b96ad1b8c1",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "En el contexto de las SVM, ¿por qué es ABSOLUTAMENTE CRÍTICO usar StandardScaler() (o MinMaxScaler) antes de pasar los datos a SVC()?",
-          "options": [
-            "Para eliminar los valores atípicos (outliers) que siempre causan que la SVM produzca un error de compilación.",
-            "Porque la SVM es un modelo basado en la maximización de distancias geométricas (el margen) entre puntos. Si una variable tiene un rango de 0 a 10,000 (monto_usd) y otra de 0 a 24 (hora), la variable con valores más grandes dominará completamente la forma del hiperplano, ignorando la de valores pequeños.",
-            "Porque StandardScaler automatiza la conversión de texto a número (One Hot Encoding) requerido por la SVM.",
-            "Porque scikit-learn lanza un error interno `NotScaledException` si se le pasan datos brutos al clasificador SVC."
-          ],
-          "correct": 1,
-          "feedback": "SVM, al igual que KNN o K-Means, es hiper-sensible a las escalas. No normalizar/escalar es uno de los errores más mortales al usar algoritmos basados en distancias euclidianas."
-        },
-        {
-          "id": "2487bfbf-987c-4762-be15-959bd812eb7a",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "Al entrenar un modelo SVM en un dataset con características de diferentes tipos, se usa un ColumnTransformer dentro de un Pipeline. ¿Qué sucede si un paciente nuevo llega con una categoría de provincia (ej. 'Pastaza') que no existía en los datos de entrenamiento (X_train)?",
-          "options": [
-            "El modelo se bloquea y retorna 'NULL' para proteger el sistema.",
-            "El OneHotEncoder, configurado con handle_unknown='ignore', procesará 'Pastaza' creando un vector de todo ceros para las columnas de provincias aprendidas, permitiendo al Pipeline predecir sin lanzar un error.",
-            "La SVM asume automáticamente que la clase resultante es la más frecuente en el historial.",
-            "El modelo reclasifica 'Pastaza' a la provincia que se encuentre alfabéticamente más cercana en el dataset original."
-          ],
-          "correct": 1,
-          "feedback": "Esta es la ventaja de la programación orientada a pipelines en producción. Al configurar handle_unknown='ignore' en el OneHotEncoder, las categorías desconocidas no rompen el código; simplemente se ignoran (todas las columnas dummy de provincia reciben valor 0)."
-        },
-        {
-          "id": "6d76caf5-d2c9-4c0f-b7b8-0c70a63a413f",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "Al sintonizar hiperparámetros (Tuning) de una SVM RBF usando GridSearchCV, un analista nota que el modelo tiene un rendimiento del 100% en entrenamiento, pero apenas 50% en prueba (Overfitting severo). ¿Qué ajuste de hiperparámetros es el más lógico probar?",
-          "options": [
-            "Incrementar drásticamente tanto C como Gamma.",
-            "Reducir C (para aumentar la tolerancia y suavizar el margen) y reducir Gamma (para incrementar el radio de influencia y que la frontera sea menos arrugada).",
-            "Cambiar a un kernel polinómico de grado muy alto (degree=15).",
-            "Remover la estandarización del pipeline."
-          ],
-          "correct": 1,
-          "feedback": "Alto C (hard margin) + Alto Gamma (frontera muy sinuosa ajustada a cada punto) es la receta perfecta para el sobreajuste masivo en un kernel RBF. La solución clásica de regularización es bajar la complejidad reduciendo C y/o Gamma."
-        },
-        {
-          "id": "b053027e-cd15-4b41-bff1-5dbf5b9cf221",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "Después de hacer fit() a un Pipeline con SVM, ejecutamos `pipe.named_steps['modelo'].n_support_` y obtenemos [458, 414]. Sabiendo que el total de registros en X_train era 1600, ¿qué conclusión podemos sacar?",
-          "options": [
-            "El modelo descartó 728 registros por estar sucios o tener nulos.",
-            "El modelo encontró 458 vectores de soporte de la clase 0 y 414 de la clase 1. Que más de la mitad (872/1600) de los datos sean vectores de soporte sugiere que las clases están muy solapadas (mezcladas) y es difícil trazar una frontera limpia.",
-            "El modelo predijo correctamente 458 casos negativos y 414 casos positivos en el conjunto de prueba.",
-            "Significa que el modelo necesitó exactamente 872 iteraciones para converger hacia el margen máximo."
-          ],
-          "correct": 1,
-          "feedback": "n_support_ lista los vectores de soporte retenidos. En una SVM, una proporción enorme de vectores de soporte en relación al total del dataset indica que muchos puntos caen dentro o sobre el margen, es decir, el problema de clasificación es 'duro' y confuso."
-        },
-        {
-          "id": "e5035751-e963-4d55-9d5b-7863beabdcef",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "Una vez evaluados los kernels lineal y RBF con train_test_split (80/20) en el taller, se elige como ganador al kernel lineal con class_weight='balanced'. Para su despliegue en producción con joblib, ¿qué paso crítico debe ejecutarse?",
-          "options": [
-            "Debe exportarse el modelo exacto que se entrenó con el 80% (X_train) para no alterar sus métricas.",
-            "Debe entrenarse un nuevo `Pipeline` completo haciendo `fit(X, y)` sobre el 100% de los datos disponibles, sin reservar datos para prueba, para darle al modelo toda la información posible antes de exportarlo.",
-            "Se deben fusionar las predicciones del modelo lineal y el RBF en un ensamble (Voting Classifier).",
-            "Debe guardarse el GridSearchCV, y no el Pipeline."
-          ],
-          "correct": 1,
-          "feedback": "El propósito del conjunto de prueba (20%) es solo medir/simular la capacidad de generalización del algoritmo. Una vez que sabemos que el algoritmo es bueno y estamos satisfechos, reentrenamos con todo el dataset (100%) porque más datos alimentan un modelo de producción más maduro y preciso."
-        },
-        {
-          "id": "6597b890-851e-4302-a42e-05a111140b6a",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "¿Qué función o métrica interna de la SVM matemática intenta minimizar el algoritmo SVC por debajo del capó (Under the hood)?",
-          "options": [
-            "Minimizar la suma de errores cuadráticos medios, similar a una regresión lineal OLS.",
-            "Minimizar la entropía o la impureza Gini en cada nodo para maximizar la pureza del subconjunto.",
-            "Minimizar la norma del vector 'w' (lo que equivale a maximizar el ancho del margen) sujeto a que las clases queden correctamente separadas según el umbral C.",
-            "Minimizar el coeficiente Silhouette de los clústeres."
-          ],
-          "correct": 2,
-          "feedback": "Matemáticamente, el ancho del margen de una SVM lineal es proporcional a 1/||w||. Por lo tanto, para maximizar el margen (y ganar capacidad de generalización), el optimizador (como SMO o L-BFGS) debe buscar reducir al mínimo posible el tamaño (norma) del vector de pesos 'w', penalizado por el hiperparámetro C ante errores de clasificación."
-        },
-        {
-          "id": "e9439187-fd5c-4771-9ab7-9c65592500fe",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "¿Cuál es la afirmación verdadera respecto a los atributos `coef_` e `intercept_` de un modelo SVC?",
-          "options": [
-            "Están siempre disponibles sin importar el kernel que se utilice, y permiten saber la importancia de cada variable.",
-            "Solo están disponibles cuando se utiliza un kernel='linear'. Para kernels como RBF o polinómico, el espacio de características implícito no permite obtener los coeficientes originales directos de la ecuación lineal.",
-            "Representan las probabilidades en formato Softmax que el modelo asigna a cada observación.",
-            "Solo se activan si se entrena el modelo con `probability=True`."
-          ],
-          "correct": 1,
-          "feedback": "En el kernel lineal, la frontera es una ecuación plana sencilla: Wx + b = 0. W es `coef_` y b es `intercept_`. Pero en RBF o Poly, debido a la alta dimensión generada por el truco del kernel, no existen coeficientes W simples que correspondan 1 a 1 a las columnas del dataset de origen."
-        },
-        {
-          "id": "70c94902-b152-4966-a8ab-d301d0c4a336",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "Se entrena una SVM con un dataset sintético para detectar fraudes financieros. Si se eliminaran 50,000 transacciones de entrenamiento que estaban correctamente clasificadas, lejanas y profundamente hundidas en la zona 'segura' del hiperplano, ¿cómo cambiaría la posición de la frontera de decisión?",
-          "options": [
-            "La frontera de decisión no cambiaría en absoluto (suponiendo que no sean vectores de soporte), ya que el hiperplano está determinado EXCLUSIVAMENTE por los vectores de soporte.",
-            "El modelo colapsaría produciendo una recta vertical aleatoria.",
-            "El hiperplano rotaría para acercarse más a los puntos restantes porque el promedio o centroide de las clases se habría desplazado fuertemente.",
-            "Se convertiría automáticamente en un modelo de Soft Margins obligando a cambiar el valor de C."
-          ],
-          "correct": 0,
-          "feedback": "La maravilla matemática de SVM es que descarta la 'abundancia'. A diferencia de Logistic Regression que se ve afectada (ligeramente) por todos los puntos, la SVM literalmente olvida los puntos que no son vectores de soporte. Es un algoritmo 'escaso' o 'sparse' guiado solo por los casos más difíciles."
-        },
-        {
-          "id": "28c1fedc-0628-4122-a21e-5513b10d48de",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "En el contexto de modelado en scikit-learn, ¿qué ventaja fundamental tiene la clase `LinearSVC` respecto a `SVC(kernel='linear')` al trabajar con datasets masivos de cientos de miles de registros?",
-          "options": [
-            "LinearSVC usa el truco del kernel, pero SVC(kernel='linear') no lo hace.",
-            "LinearSVC tiene una implementación interna basada en la librería liblinear que escala mucho mejor y es dramáticamente más rápida que libsvm (usado por SVC) para datasets inmensos (O(N) vs O(N^2)).",
-            "LinearSVC permite clasificar múltiples objetivos simultáneamente sin usar estrategias OvR.",
-            "No existe ninguna diferencia; son simples alias que llaman a la misma función binaria en C++."
-          ],
-          "correct": 1,
-          "feedback": "En la práctica avanzada, si tienes un conjunto masivo (ej. 1 millón de registros) y necesitas un kernel lineal, usar `SVC(kernel='linear')` puede tardar horas o días (complejidad cúbica o cuadrática). `LinearSVC` se diseñó específicamente para ser veloz con grandes volúmenes de datos usando el método del Descenso de Coordenadas."
         }
       ]
     },
@@ -7149,11 +6897,15 @@ window.QUIZ_DATA = {
       "categorias": [
         {
           "value": "all",
-          "label": "Todas (Semana 5)"
+          "label": "Todas (Semana 5 y 6)"
         },
         {
           "value": "semana5",
-          "label": "Semana 5 y 6 · Multiclase y SVM"
+          "label": "Multiclase y SVM Nuevas"
+        },
+        {
+          "value": "teoria_rda2",
+          "label": "SVM (Teoría RDA2 Base)"
         },
         {
           "value": "bookmarked",
@@ -7512,6 +7264,258 @@ window.QUIZ_DATA = {
           "feedback": "Los signos vitales (saturacion_o2, frecuencia_cardiaca, presion_sistolica) son predictores clínicamente más directos del riesgo que la provincia o el motivo de consulta. El resultado empírico confirma la intuición médica: las variables fisiológicas objetivas pesan más que las administrativas."
         },
         {
+          "id": "f44dc609-86a6-445a-9fae-0b30523eb1ed",
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "# Observa el siguiente código svc = SVC(random_state=42) grid_search = GridSearchCV( ``` estimator=svc, param_grid=param_grid, cv=5, scoring='f1', n_jobs=-1 ```",
+          "options": [
+            ")",
+            "grid_search.fit(X_train_s, y_train) mejor_modelo = grid_search.best_estimator_ y_pred = mejor_modelo.predict(X_test_s) ## ¿Sobre qué datos se entrena el modelo final que queda en mejor_modelo?",
+            "Sobre todo X_train_s, después de identificar los mejores hiperparámetros mediante validación cruzada. Tras seleccionar los mejores hiperparámetros por validación cruzada, GridSearchCV re-entrena automáticamente el modelo sobre todo X_train_s. Esto maximiza los datos de entrenamiento para el modelo final.",
+            "Sobre X_test_s, para garantizar que el modelo visto por el evaluador sea el mismo que predice."
+          ],
+          "correct": 2,
+          "feedback": "Tras seleccionar los mejores hiperparámetros por validación cruzada, GridSearchCV re-entrena automáticamente el modelo sobre todo X_train_s. Esto maximiza los datos de entrenamiento para el modelo final."
+        },
+        {
+          "id": "cc4889e7-bbdf-47cb-9906-fd88afdcd327",
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "En una SVM, el hiperplano de separación se define matemáticamente como w·x + b = 0. ¿Qué representa el vector w en esta ecuación?",
+          "options": [
+            "El vector de distancias de cada punto al centroide de su clase.",
+            "El vector de probabilidades de clase calculado por el modelo.",
+            "El vector perpendicular al hiperplano que define su dirección en el espacio. w es el vector normal al hiperplano. Su dirección determina la orientación de la frontera de decisión en el espacio de características.",
+            "El vector de medias de cada variable del dataset de entrenamiento."
+          ],
+          "correct": 2,
+          "feedback": "w es el vector normal al hiperplano. Su dirección determina la orientación de la frontera de decisión en el espacio de características."
+        },
+        {
+          "id": "fad1f49d-029d-47b2-a89b-7e32a35cc154",
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Cuál es la ventaja principal del **truco del kernel** frente a transformar explícitamente los datos a un espacio de mayor dimensión?",
+          "options": [
+            "Permite visualizar los datos en el espacio transformado mediante gráficos de dispersión en 3D.",
+            "Reduce automáticamente el número de variables del dataset original para acelerar el entrenamiento.",
+            "Calcula el producto interno en el espacio transformado sin necesidad de calcular las coordenadas de los puntos en ese espacio. Esta es la propiedad esencial del truco del kernel: operar en el espacio transformado usando solo productos internos, sin materializar las nuevas coordenadas. Es especialmente útil cuando el espacio tiene dimensión infinita, como en el kernel RBF.",
+            "Elimina la necesidad de escalar los datos antes del entrenamiento."
+          ],
+          "correct": 2,
+          "feedback": "Esta es la propiedad esencial del truco del kernel: operar en el espacio transformado usando solo productos internos, sin materializar las nuevas coordenadas. Es especialmente útil cuando el espacio tiene dimensión infinita, como en el kernel RBF."
+        },
+        {
+          "id": "1c9a89a6-b582-48ae-a808-52b8d1283a1c",
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Por qué se recomienda usar escala logarítmica al definir los valores de C y gamma en param_grid?",
+          "options": [
+            "Porque con escala logarítmica el heatmap de cv_results_ siempre muestra un gradiente de color más uniforme.",
+            "Porque estos parámetros actúan en órdenes de magnitud; la diferencia entre C=1 y C=10 es mucho más significativa que entre C=1 y C=2. C y gamma tienen efecto multiplicativo sobre el comportamiento del modelo. La escala logarítmica permite explorar órdenes de magnitud con pocos valores, cubriendo eficientemente un rango amplio como [0.001, 0.01, 0.1, 1, 10, 100].",
+            "Porque scikit-learn requiere que los valores de C y gamma estén en escala logarítmica para funcionar correctamente.",
+            "Porque la escala logarítmica reduce el número de combinaciones totales, acelerando GridSearchCV."
+          ],
+          "correct": 1,
+          "feedback": "C y gamma tienen efecto multiplicativo sobre el comportamiento del modelo. La escala logarítmica permite explorar órdenes de magnitud con pocos valores, cubriendo eficientemente un rango amplio como [0.001, 0.01, 0.1, 1, 10, 100]."
+        },
+        {
+          "id": "9e3e958a-a9a2-4539-80af-c8e4451935a8",
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Por qué los árboles de decisión no requieren normalizar ni escalar las variables numéricas, a diferencia de SVM?",
+          "options": [
+            "Porque los árboles no requieren escalar datos; esta es una de sus ventajas sobre modelos basados en distancias como SVM. El material documenta explícitamente que no requerir escalado es una ventaja del árbol de decisión. Es una característica que lo diferencia de modelos como SVM, que sí dependen del cálculo de distancias entre puntos.",
+            "Porque los árboles transforman internamente todas las variables a una escala logarítmica antes de calcular las divisiones.",
+            "Porque los árboles solo pueden procesar variables binarias, que por definición ya están en la misma escala.",
+            "Porque el índice Gini normaliza automáticamente las proporciones de clase, compensando cualquier diferencia de escala entre variables."
+          ],
+          "correct": 0,
+          "feedback": "El material documenta explícitamente que no requerir escalado es una ventaja del árbol de decisión. Es una característica que lo diferencia de modelos como SVM, que sí dependen del cálculo de distancias entre puntos."
+        },
+        {
+          "id": "09f79c29-7917-4fb9-99d1-01e052d16a76",
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Qué efecto tiene usar un valor de C muy alto (por ejemplo, C = 1000) en una SVM de margen suave?",
+          "options": [
+            "El modelo produce un margen muy amplio y tolera muchas violaciones, lo que puede llevar a underfitting.",
+            "El modelo penaliza duramente cada error de clasificación, ajustando el hiperplano muy cerca de los datos, con riesgo de overfitting. C alto hace que el modelo sea muy intolerante con los errores de entrenamiento. El hiperplano se acerca a los datos para clasificarlos todos correctamente, memorizando el ruido.",
+            "El modelo reduce automáticamente el número de vectores de soporte a cero, simplificando la frontera de decisión.",
+            "El modelo ignora el parámetro kernel y se comporta siempre como un clasificador lineal."
+          ],
+          "correct": 1,
+          "feedback": "C alto hace que el modelo sea muy intolerante con los errores de entrenamiento. El hiperplano se acerca a los datos para clasificarlos todos correctamente, memorizando el ruido."
+        },
+        {
+          "id": "be94fd67-19c4-41ef-864e-6398807f2156",
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Cuál de las siguientes diferencias entre SVM y Regresión Logística es correcta?",
+          "options": [
+            "SVM es más rápida que la Regresión Logística en datasets con más de 100 000 registros.",
+            "SVM produce probabilidades de clase directamente, mientras que la Regresión Logística no.",
+            "La Regresión Logística maximiza el margen entre clases; SVM maximiza la verosimilitud.",
+            "SVM es más eficiente en espacios de alta dimensionalidad; la Regresión Logística produce probabilidades directamente. Esta afirmación recoge correctamente dos diferencias documentadas: la ventaja de SVM en alta dimensionalidad y la ventaja de Regresión Logística en producir probabilidades nativas sin configuración adicional."
+          ],
+          "correct": 3,
+          "feedback": "Esta afirmación recoge correctamente dos diferencias documentadas: la ventaja de SVM en alta dimensionalidad y la ventaja de Regresión Logística en producir probabilidades nativas sin configuración adicional."
+        },
+        {
+          "id": "1956aeff-ab95-483e-8259-55e05a9e2c97",
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "Una SVM se entrena con 10 000 registros y al revisar el modelo se encuentra que solo 45 puntos son vectores de soporte. ¿Qué ocurriría si se eliminaran los otros 9 955 registros del dataset y se reentrenara el modelo?",
+          "options": [
+            "El modelo cambiaría completamente porque necesita todos los datos para calcular el hiperplano óptimo.",
+            "El modelo fallaría porque scikit-learn requiere un mínimo de registros para entrenar una SVM.",
+            "El modelo sería exactamente el mismo, porque el hiperplano queda determinado únicamente por los vectores de soporte. Los vectores de soporte son los únicos puntos que determinan la posición del hiperplano. Todos los demás registros son irrelevantes para la frontera de decisión final.",
+            "El modelo mejoraría su accuracy porque eliminar datos reduce el ruido en el entrenamiento."
+          ],
+          "correct": 2,
+          "feedback": "Los vectores de soporte son los únicos puntos que determinan la posición del hiperplano. Todos los demás registros son irrelevantes para la frontera de decisión final."
+        },
+        {
+          "id": "da782e0e-a4e8-4a90-8800-a3a43b8c2392",
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Por qué SVM elige el hiperplano con el mayor margen posible en lugar de cualquier hiperplano que separe correctamente las clases?",
+          "options": [
+            "Porque un margen mayor garantiza que el modelo producirá probabilidades más calibradas para cada clase.",
+            "Porque un margen mayor actúa como zona de seguridad, reduciendo el riesgo de clasificar mal puntos nuevos y mejorando la generalización. El margen actúa como un colchón de seguridad geométrico. Un margen amplio significa que un punto nuevo necesita alejarse bastante de la frontera para ser mal clasificado, dando robustez al modelo.",
+            "Porque un margen mayor reduce el tiempo de entrenamiento al necesitar menos iteraciones del optimizador.",
+            "Porque un margen mayor implica que el modelo encontró menos vectores de soporte, lo que siempre indica menor complejidad del modelo."
+          ],
+          "correct": 1,
+          "feedback": "El margen actúa como un colchón de seguridad geométrico. Un margen amplio significa que un punto nuevo necesita alejarse bastante de la frontera para ser mal clasificado, dando robustez al modelo."
+        },
+        {
+          "id": "a3e4adca-2cff-40f7-a9fa-3373e765cd9a",
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "Un equipo entrena una SVM para detectar diabetes. El dataset tiene 85% de pacientes sin diabetes y 15% con diabetes. ¿Qué métrica de scoring es más adecuada para GridSearchCV en este caso?",
+          "options": [
+            "**accuracy**, porque mide el porcentaje global de predicciones correctas y siempre es la métrica más informativa.",
+            "**recall**, porque en detección de enfermedad los falsos negativos (no detectar diabetes real) son más costosos que los falsos positivos. En detección de enfermedades, perder un caso real (falso negativo) es más grave que alertar a un paciente sano (falso positivo). Recall maximiza la detección de casos positivos reales.",
+            "**accuracy**, porque con datasets desbalanceados esta métrica es más confiable que recall o f1.",
+            "**precision**, porque en detección de enfermedad lo más importante es no alarmar innecesariamente a pacientes sanos."
+          ],
+          "correct": 1,
+          "feedback": "En detección de enfermedades, perder un caso real (falso negativo) es más grave que alertar a un paciente sano (falso positivo). Recall maximiza la detección de casos positivos reales."
+        },
+        {
+          "id": "1922351c-d45c-4a7d-91aa-0b77e16887bd",
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "# Después de entrenar el siguiente modelo modelo_rbf = SVC(kernel=**rbf**, C=1.0, gamma=**scale**, random_state=42) modelo_rbf.fit(X_train_s, y_train) print(modelo_rbf.n_support_) ## La salida es [452 410]. ¿Qué indica este resultado?",
+          "options": [
+            "El modelo clasificó correctamente 452 registros de la clase 0 y 410 de la clase 1 en el conjunto de prueba.",
+            "El modelo descartó 452 y 410 registros por ser outliers antes de encontrar el hiperplano.",
+            "El modelo necesitó 452 iteraciones para converger en la clase 0 y 410 para la clase 1.",
+            "El modelo encontró 452 vectores de soporte de la clase 0 (Legítima) y 410 de la clase 1 (Fraude) en el conjunto de entrenamiento. n_support_ es un atributo de SVC entrenado que indica cuántos vectores de soporte pertenecen a cada clase. Estos son los puntos del conjunto de entrenamiento que determinan el hiperplano."
+          ],
+          "correct": 3,
+          "feedback": "n_support_ es un atributo de SVC entrenado que indica cuántos vectores de soporte pertenecen a cada clase. Estos son los puntos del conjunto de entrenamiento que determinan el hiperplano."
+        },
+        {
+          "id": "20026114-38ef-4f5c-a2d9-aa286abc11c2",
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "Dos modelos SVM producen los siguientes resultados sobre el mismo conjunto de prueba: Modelo              Accuracy   Recall fraude   F1 fraude LinearSVC            0.7475        0.2818        0.3804 SVC (Kernel RBF)     0.7325        0.2182        0.3097 ¿Cuál modelo es preferible para un sistema de detección de fraude bancario y por qué?",
+          "options": [
+            "SVC (Kernel RBF), porque el kernel RBF siempre supera al lineal cuando los datos tienen variables categóricas.",
+            "Ninguno de los dos; ambos deben descartarse porque el recall de fraude es inferior al 50%.",
+            "SVC (Kernel RBF), porque tiene menor accuracy, lo que indica que el modelo no está sobreajustado.",
+            "LinearSVC, porque tiene mayor accuracy, recall de fraude y F1 de fraude en todas las métricas. LinearSVC supera al RBF en las tres métricas: accuracy (0.7475 vs 0.7325), recall de fraude (0.2818 vs 0.2182) y F1 de fraude (0.3804 vs 0.3097). El kernel más complejo no siempre gana; la elección debe basarse en evidencia empírica."
+          ],
+          "correct": 3,
+          "feedback": "LinearSVC supera al RBF en las tres métricas: accuracy (0.7475 vs 0.7325), recall de fraude (0.2818 vs 0.2182) y F1 de fraude (0.3804 vs 0.3097). El kernel más complejo no siempre gana; la elección debe basarse en evidencia empírica."
+        },
+        {
+          "id": "7c5fd583-7fd2-4f6d-acd4-e977a6d1332f",
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Cuál es el orden correcto del pipeline de preprocesamiento para entrenar una SVM?",
+          "options": [
+            "OHE → Train/Test Split → StandardScaler (fit solo en train) → entrenar SVM El OHE se aplica primero (no aprende estadísticas de los datos), luego se divide, y finalmente se escala ajustando el scaler solo sobre los datos de entrenamiento para evitar fuga de información.",
+            "StandardScaler → OHE → Train/Test Split → entrenar SVM",
+            "Train/Test Split → StandardScaler → OHE → entrenar SVM",
+            "OHE → StandardScaler (fit en todo X) → Train/Test Split → entrenar SVM"
+          ],
+          "correct": 0,
+          "feedback": "El OHE se aplica primero (no aprende estadísticas de los datos), luego se divide, y finalmente se escala ajustando el scaler solo sobre los datos de entrenamiento para evitar fuga de información."
+        },
+        {
+          "id": "089a5d90-9874-4cf8-a477-c8efccd7590d",
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Cuál es la principal razón por la que el margen suave (soft margin) es el estándar en la práctica, mientras que el margen duro (hard margin) casi no se usa?",
+          "options": [
+            "El margen suave es más rápido de calcular porque no requiere resolver el problema de optimización completo.",
+            "El margen duro solo funciona si los datos son perfectamente separables; un único outlier puede hacer que no exista solución.",
+            "El margen suave siempre produce un margen más amplio que el duro, lo que garantiza mejor generalización en todos los casos.",
+            "El margen duro produce probabilidades incorrectas porque no incorpora variables de holgura."
+          ],
+          "correct": 1,
+          "feedback": "En datos reales siempre hay ruido y outliers. El margen duro exige clasificación perfecta de todos los puntos, condición imposible de cumplir en casi cualquier problema práctico."
+        },
+        {
+          "id": "01e80d10-e679-4aa1-b9f4-6c8c3b80716d",
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "Un modelo SVM tiene buen desempeño en entrenamiento pero generaliza mal en datos nuevos. ¿Qué ajuste al parámetro C es recomendable?",
+          "options": [
+            "Fijar C = 0 para eliminar toda penalización y obtener el margen máximo posible.",
+            "Aumentar C para que el modelo penalice más los errores y mejore en datos nuevos.",
+            "Mantener C fijo y cambiar únicamente el tipo de kernel a uno más simple.",
+            "Reducir C para ampliar el margen y reducir el overfitting."
+          ],
+          "correct": 3,
+          "feedback": "Buen entrenamiento y mala generalización es la señal clásica de overfitting. Reducir C amplía el margen y hace al modelo más tolerante con errores de entrenamiento, mejorando la generalización."
+        },
+        {
+          "id": "83cbe5a7-949e-4547-921a-7cf1db4ed27a",
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Qué hace el siguiente fragmento de código? from sklearn.svm import LinearSVC from sklearn.preprocessing import StandardScaler sc = StandardScaler() X_train_s = sc.fit_transform(X_train) X_test_s  = sc.transform(X_test) modelo = LinearSVC(C=1.0, max_iter=2000, random_state=42) modelo.fit(X_train_s, y_train)",
+          "options": [
+            "Escala los datos ajustando el scaler solo sobre el entrenamiento, y entrena una SVM lineal con C=1.0.",
+            "Entrena el scaler sobre el conjunto de prueba y luego entrena la SVM sobre el conjunto de entrenamiento.",
+            "Entrena una SVM con kernel RBF después de escalar los datos de entrenamiento y prueba con el mismo scaler.",
+            "Escala todo el dataset completo y entrena una SVM polinómica de grado 2."
+          ],
+          "correct": 0,
+          "feedback": "fit_transform en X_train ajusta y transforma; transform en X_test aplica la misma escala sin reaprender. LinearSVC implementa un kernel lineal, no RBF ni polinómico."
+        },
+        {
+          "id": "1bf87b86-c790-42ef-8095-ba355e7bfbb6",
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Qué visualiza el siguiente código? resultados = pd.DataFrame(grid_search.cv_results_) rbf_df = resultados[resultados[**param_kernel**] == **rbf**] pivot_rbf = rbf_df.pivot_table( ``` values='mean_test_score', index='param_C', columns='param_gamma' ```",
+          "options": [
+            ") sns.heatmap(pivot_rbf, annot=True, fmt=**.3f**, cmap=**Blues**)",
+            "El número de vectores de soporte encontrados por cada combinación de C y gamma con kernel RBF.",
+            "La distribución de probabilidades de clase para cada combinación de hiperparámetros probada.",
+            "La matriz de confusión del mejor modelo evaluado sobre X_test."
+          ],
+          "correct": 4,
+          "feedback": "El código filtra cv_results_ para kernel RBF, construye una tabla pivote con mean_test_score (el F1 CV promedio) en función de C y gamma, y lo visualiza como heatmap. Permite identificar visualmente las mejores combinaciones."
+        },
+        {
+          "id": "526796bc-acce-437f-b0e9-c7820671efd0",
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Por qué es obligatorio aplicar StandardScaler antes de entrenar una SVM?",
+          "options": [
+            "Porque sin escalado, la función de kernel RBF produce siempre similitud = 1 entre todos los puntos.",
+            "Porque SVM calcula distancias entre puntos para encontrar el margen, y variables con mayor rango dominarían ese cálculo injustamente.",
+            "Porque el escalado convierte las variables categóricas a numéricas, paso previo necesario para SVM.",
+            "Porque scikit-learn lanza un error si las variables no están escaladas antes de llamar a fit()."
+          ],
+          "correct": 1,
+          "feedback": "El margen se define en términos de distancias euclidianas. Si una variable tiene un rango mucho mayor que las demás, domina el cálculo del margen independientemente de su relevancia predictiva."
+        },
+        {
           "id": "4b9f1d55-eb2b-4bc7-a7b3-07edca420f7d",
           "category": "semana5",
           "categoryName": "Semana 5 y 6 · Multiclase y SVM",
@@ -7540,76 +7544,6 @@ window.QUIZ_DATA = {
           "feedback": "Radial Basis Function (RBF) es el kernel por defecto de SVC. Mide la similitud (distancia) entre puntos y permite fronteras altamente curvas. Si las clases están mezcladas, el RBF suele adaptarse mucho mejor que el lineal."
         },
         {
-          "id": "a6771100-7053-4e29-955e-ae7163a05f11",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "En el contexto de SVM, ¿cuándo es más útil emplear un kernel polinómico en lugar de un kernel lineal?",
-          "options": [
-            "Cuando el conjunto de datos tiene millones de registros y se necesita un entrenamiento rápido.",
-            "Cuando la relación entre las variables y las clases implica interacciones multiplicativas entre variables y fronteras curvas, pero con una complejidad controlada por el parámetro 'degree'.",
-            "Cuando todas las variables predictoras son categóricas y no hay variables numéricas continuas.",
-            "Cuando los datos son perfectamente separables por una línea recta."
-          ],
-          "correct": 1,
-          "feedback": "El kernel polinómico proyecta los datos a un espacio de dimensiones basado en combinaciones polinómicas (grado 2, 3, etc.) de las variables originales, siendo útil para descubrir relaciones no lineales y multiplicativas."
-        },
-        {
-          "id": "fe7d907a-fb11-48ab-a781-01c98690b11b",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "Al configurar un modelo SVM (como SVC en scikit-learn), ¿qué efecto tiene disminuir drásticamente el valor del parámetro C (ej. C = 0.001)?",
-          "options": [
-            "Aumenta la probabilidad de sobreajuste (overfitting) memorizando los datos de entrenamiento.",
-            "Fuerza al modelo a ignorar todas las variables numéricas y basarse solo en las categóricas.",
-            "Genera un margen más amplio y tolera más errores (violaciones del margen) en el conjunto de entrenamiento, produciendo un modelo más simple y generalizado.",
-            "Cambia el kernel activo del modelo automáticamente a kernel RBF."
-          ],
-          "correct": 2,
-          "feedback": "El hiperparámetro C controla la penalización por clasificar mal un punto de entrenamiento. Un C muy bajo es muy tolerante: permite errores a cambio de un margen más ancho (soft margin). Un C muy alto castiga estrictamente los errores (hard margin)."
-        },
-        {
-          "id": "fb9d2d07-fa8d-42f5-9e95-7f8ed5ad5918",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "En un modelo SVC con kernel polinómico, ¿para qué sirve el hiperparámetro 'degree'?",
-          "options": [
-            "Determina el número de iteraciones máximas del algoritmo de optimización.",
-            "Controla el grado del polinomio; a mayor grado, más flexible y compleja es la frontera de decisión (ej. degree=3 es un polinomio cúbico).",
-            "Especifica el porcentaje de datos que se usarán como vectores de soporte.",
-            "Activa o desactiva la ponderación balanceada de clases."
-          ],
-          "correct": 1,
-          "feedback": "El parámetro 'degree' especifica la máxima potencia a la que se elevarán las características. Grados más altos generan fronteras más sinuosas pero aumentan drásticamente el riesgo de sobreajuste."
-        },
-        {
-          "id": "593cdd5b-2de4-4a23-bcad-0b5c1c682033",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "¿Qué efecto tiene el hiperparámetro 'gamma' en un modelo SVM con kernel RBF?",
-          "options": [
-            "Define la influencia de una sola observación. Un gamma alto significa que la influencia de cada punto es de corto alcance (fronteras muy ajustadas/rugosas), mientras que un gamma bajo implica largo alcance (fronteras suaves).",
-            "Establece el número máximo de errores tolerados por el modelo dentro del margen de separación.",
-            "Regula el peso que se le da a la clase minoritaria para combatir el desbalance de clases.",
-            "Transforma los datos continuos a valores discretos (0 y 1)."
-          ],
-          "correct": 0,
-          "feedback": "Gamma define qué tan 'lejos' llega la influencia de un solo punto de entrenamiento. Gamma muy alto ajusta la frontera minuciosamente alrededor de los puntos (riesgo de overfitting), gamma bajo suaviza la frontera abarcando regiones grandes."
-        },
-        {
-          "id": "3c5001f5-fcaa-421d-912b-cffa61863a15",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "¿Cuál es el principio fundamental de funcionamiento de una Máquina de Vectores de Soporte (SVM) para clasificación?",
-          "options": [
-            "Calcular la probabilidad de pertenencia a cada clase usando el Teorema de Bayes asumiendo independencia entre variables.",
-            "Encontrar el hiperplano que separe las clases maximizando el 'margen' o distancia entre las clases más cercanas a la frontera, buscando la máxima generalización posible.",
-            "Construir múltiples árboles de decisión y promediar sus predicciones para reducir la varianza.",
-            "Encontrar el centroide de cada clase y asignar las nuevas muestras al centroide que tenga la menor distancia euclidiana."
-          ],
-          "correct": 1,
-          "feedback": "SVM es un clasificador de 'margen máximo'. No busca cualquier línea que separe los datos, sino la línea 'más ancha' posible que mantenga las clases separadas. Esa zona de seguridad (margen) mejora la capacidad del modelo para predecir casos nuevos."
-        },
-        {
           "id": "81a4ec51-896f-484b-9a85-63106ed7ea14",
           "category": "semana5",
           "categoryName": "Semana 5 y 6 · Multiclase y SVM",
@@ -7624,48 +7558,6 @@ window.QUIZ_DATA = {
           "feedback": "En la práctica de Data Science, se debe empezar por lo más simple ('Navaja de Ockham'). El kernel lineal evalúa si los datos son separables fácilmente. En el taller, vimos que a veces el modelo lineal balanceado incluso supera o iguala al RBF, siendo mucho más rápido y ligero."
         },
         {
-          "id": "9c42886f-5632-47ff-902a-6ebb35d32c89",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "En la terminología de SVM, ¿qué es un 'vector de soporte'?",
-          "options": [
-            "Es cualquier variable de entrada (columna) que tiene una correlación alta con la variable objetivo.",
-            "Son exclusivamente los puntos que el modelo predijo de forma incorrecta durante el entrenamiento.",
-            "Son los puntos de datos de entrenamiento que están situados exactamente sobre los límites del margen o violándolo. Son los únicos que definen la posición y orientación del hiperplano.",
-            "Es el vector perpendicular al hiperplano (denominado W) que determina la dirección del modelo."
-          ],
-          "correct": 2,
-          "feedback": "Si se eliminaran todos los puntos de datos excepto los vectores de soporte, el hiperplano resultante sería exactamente el mismo. Son las muestras 'críticas' que sostienen el margen. En scikit-learn se cuentan con el atributo n_support_."
-        },
-        {
-          "id": "f668f058-ff41-4549-a241-9b9f10de24a2",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "¿A qué se refiere el término 'Margen Suave' (Soft Margin) en contraste con el 'Margen Duro' (Hard Margin) en un modelo SVM?",
-          "options": [
-            "El Margen Suave se usa solo cuando el hiperplano es una curva (kernel RBF), mientras que el Margen Duro es exclusivo del kernel lineal.",
-            "El Margen Duro exige que no haya ningún punto dentro del espacio del margen ni mal clasificado (solo funciona si los datos son perfectamente separables). El Margen Suave permite cierta cantidad de errores o puntos dentro del margen para lograr un modelo que generalice mejor ante el ruido.",
-            "El Margen Suave es el resultado de usar probabilidades (predict_proba) en lugar de decisiones binarias.",
-            "El Margen Suave siempre penaliza menos a la clase mayoritaria que a la clase minoritaria."
-          ],
-          "correct": 1,
-          "feedback": "En el mundo real, los datos siempre tienen ruido y outliers, haciendo imposible la separación perfecta (Hard Margin). El Margen Suave (controlado por el parámetro C) permite violaciones del margen para que el hiperplano no se desvíe locamente por culpa de un outlier."
-        },
-        {
-          "id": "2ad6d8aa-ce0e-4d34-9cd9-9f5c3d6a4c7c",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "En el contexto matemático de SVM, ¿qué representa el término 'hiperplano'?",
-          "options": [
-            "La frontera de decisión que separa el espacio. Si hay 2 dimensiones (2 variables), es una línea recta. Si hay 3 dimensiones, es un plano. En N dimensiones, es un subespacio plano de dimensión N-1.",
-            "El algoritmo de optimización que encuentra la distancia euclidiana entre dos clusters.",
-            "El espacio proyectado a infinitas dimensiones que genera el kernel Gaussiano.",
-            "Una métrica de evaluación que mide el área bajo la curva (ROC-AUC)."
-          ],
-          "correct": 0,
-          "feedback": "Un hiperplano es la generalización de un plano en múltiples dimensiones. Es la frontera de decisión principal. Su ecuación general es w·x + b = 0, donde 'w' es el vector normal y 'b' es el sesgo."
-        },
-        {
           "id": "eb23ebce-c375-4b42-a786-5b7e86c73858",
           "category": "semana5",
           "categoryName": "Semana 5 y 6 · Multiclase y SVM",
@@ -7678,20 +7570,6 @@ window.QUIZ_DATA = {
           ],
           "correct": 2,
           "feedback": "El peso se calcula como n_total / (k × n_clase). Para Fraude, el peso fue 1.74, es decir, equivocarse en un caso de fraude penalizaba 1.74 veces más al algoritmo que equivocarse en una transacción legítima (peso 0.70). Es vital en clases desbalanceadas para mejorar el Recall de la clase minoritaria."
-        },
-        {
-          "id": "15d017f5-6a9a-4417-b35b-32b036b26ecf",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "Al entrenar un SVM (SVC) con kernel lineal, el uso de class_weight='balanced' en el taller provocó un incremento notable en el Recall de Fraude. ¿Cuál suele ser la compensación (trade-off) clínica o de negocio de este incremento?",
-          "options": [
-            "El modelo reduce su complejidad y pierde la capacidad de predecir cualquier transacción nueva.",
-            "El tiempo de entrenamiento se multiplica exponencialmente haciéndolo inviable en producción.",
-            "Al volverse más sensible a detectar fraudes, el modelo suele generar más falsas alarmas (aumentan los falsos positivos), lo que reduce la Precision general o el Accuracy.",
-            "Se requiere aplicar un Kernel RBF obligatoriamente, ya que el lineal no soporta el parámetro class_weight."
-          ],
-          "correct": 2,
-          "feedback": "No hay magia: al penalizar fuertemente fallar en un fraude, el modelo mueve el hiperplano para atrapar más fraudes (sube el Recall), pero al hacerlo, inevitablemente atrapa transacciones legítimas dentro de esa zona, bajando el Precision (aumentan los Falsos Positivos)."
         },
         {
           "id": "31244a30-28e7-4249-a78c-8997701e0271",
@@ -7734,132 +7612,6 @@ window.QUIZ_DATA = {
           ],
           "correct": 1,
           "feedback": "El Platt Scaling ajusta una curva sigmoide sobre las distancias del SVM (decision_function). Sin embargo, habilitar probability=True vuelve el entrenamiento mucho más lento (porque requiere validación cruzada interna en 5 iteraciones) y las probabilidades resultantes a veces pueden ser inconsistentes con el resultado de predict()."
-        },
-        {
-          "id": "414772bf-ff1b-48ba-8940-83b96ad1b8c1",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "En el contexto de las SVM, ¿por qué es ABSOLUTAMENTE CRÍTICO usar StandardScaler() (o MinMaxScaler) antes de pasar los datos a SVC()?",
-          "options": [
-            "Para eliminar los valores atípicos (outliers) que siempre causan que la SVM produzca un error de compilación.",
-            "Porque la SVM es un modelo basado en la maximización de distancias geométricas (el margen) entre puntos. Si una variable tiene un rango de 0 a 10,000 (monto_usd) y otra de 0 a 24 (hora), la variable con valores más grandes dominará completamente la forma del hiperplano, ignorando la de valores pequeños.",
-            "Porque StandardScaler automatiza la conversión de texto a número (One Hot Encoding) requerido por la SVM.",
-            "Porque scikit-learn lanza un error interno `NotScaledException` si se le pasan datos brutos al clasificador SVC."
-          ],
-          "correct": 1,
-          "feedback": "SVM, al igual que KNN o K-Means, es hiper-sensible a las escalas. No normalizar/escalar es uno de los errores más mortales al usar algoritmos basados en distancias euclidianas."
-        },
-        {
-          "id": "2487bfbf-987c-4762-be15-959bd812eb7a",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "Al entrenar un modelo SVM en un dataset con características de diferentes tipos, se usa un ColumnTransformer dentro de un Pipeline. ¿Qué sucede si un paciente nuevo llega con una categoría de provincia (ej. 'Pastaza') que no existía en los datos de entrenamiento (X_train)?",
-          "options": [
-            "El modelo se bloquea y retorna 'NULL' para proteger el sistema.",
-            "El OneHotEncoder, configurado con handle_unknown='ignore', procesará 'Pastaza' creando un vector de todo ceros para las columnas de provincias aprendidas, permitiendo al Pipeline predecir sin lanzar un error.",
-            "La SVM asume automáticamente que la clase resultante es la más frecuente en el historial.",
-            "El modelo reclasifica 'Pastaza' a la provincia que se encuentre alfabéticamente más cercana en el dataset original."
-          ],
-          "correct": 1,
-          "feedback": "Esta es la ventaja de la programación orientada a pipelines en producción. Al configurar handle_unknown='ignore' en el OneHotEncoder, las categorías desconocidas no rompen el código; simplemente se ignoran (todas las columnas dummy de provincia reciben valor 0)."
-        },
-        {
-          "id": "6d76caf5-d2c9-4c0f-b7b8-0c70a63a413f",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "Al sintonizar hiperparámetros (Tuning) de una SVM RBF usando GridSearchCV, un analista nota que el modelo tiene un rendimiento del 100% en entrenamiento, pero apenas 50% en prueba (Overfitting severo). ¿Qué ajuste de hiperparámetros es el más lógico probar?",
-          "options": [
-            "Incrementar drásticamente tanto C como Gamma.",
-            "Reducir C (para aumentar la tolerancia y suavizar el margen) y reducir Gamma (para incrementar el radio de influencia y que la frontera sea menos arrugada).",
-            "Cambiar a un kernel polinómico de grado muy alto (degree=15).",
-            "Remover la estandarización del pipeline."
-          ],
-          "correct": 1,
-          "feedback": "Alto C (hard margin) + Alto Gamma (frontera muy sinuosa ajustada a cada punto) es la receta perfecta para el sobreajuste masivo en un kernel RBF. La solución clásica de regularización es bajar la complejidad reduciendo C y/o Gamma."
-        },
-        {
-          "id": "b053027e-cd15-4b41-bff1-5dbf5b9cf221",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "Después de hacer fit() a un Pipeline con SVM, ejecutamos `pipe.named_steps['modelo'].n_support_` y obtenemos [458, 414]. Sabiendo que el total de registros en X_train era 1600, ¿qué conclusión podemos sacar?",
-          "options": [
-            "El modelo descartó 728 registros por estar sucios o tener nulos.",
-            "El modelo encontró 458 vectores de soporte de la clase 0 y 414 de la clase 1. Que más de la mitad (872/1600) de los datos sean vectores de soporte sugiere que las clases están muy solapadas (mezcladas) y es difícil trazar una frontera limpia.",
-            "El modelo predijo correctamente 458 casos negativos y 414 casos positivos en el conjunto de prueba.",
-            "Significa que el modelo necesitó exactamente 872 iteraciones para converger hacia el margen máximo."
-          ],
-          "correct": 1,
-          "feedback": "n_support_ lista los vectores de soporte retenidos. En una SVM, una proporción enorme de vectores de soporte en relación al total del dataset indica que muchos puntos caen dentro o sobre el margen, es decir, el problema de clasificación es 'duro' y confuso."
-        },
-        {
-          "id": "e5035751-e963-4d55-9d5b-7863beabdcef",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "Una vez evaluados los kernels lineal y RBF con train_test_split (80/20) en el taller, se elige como ganador al kernel lineal con class_weight='balanced'. Para su despliegue en producción con joblib, ¿qué paso crítico debe ejecutarse?",
-          "options": [
-            "Debe exportarse el modelo exacto que se entrenó con el 80% (X_train) para no alterar sus métricas.",
-            "Debe entrenarse un nuevo `Pipeline` completo haciendo `fit(X, y)` sobre el 100% de los datos disponibles, sin reservar datos para prueba, para darle al modelo toda la información posible antes de exportarlo.",
-            "Se deben fusionar las predicciones del modelo lineal y el RBF en un ensamble (Voting Classifier).",
-            "Debe guardarse el GridSearchCV, y no el Pipeline."
-          ],
-          "correct": 1,
-          "feedback": "El propósito del conjunto de prueba (20%) es solo medir/simular la capacidad de generalización del algoritmo. Una vez que sabemos que el algoritmo es bueno y estamos satisfechos, reentrenamos con todo el dataset (100%) porque más datos alimentan un modelo de producción más maduro y preciso."
-        },
-        {
-          "id": "6597b890-851e-4302-a42e-05a111140b6a",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "¿Qué función o métrica interna de la SVM matemática intenta minimizar el algoritmo SVC por debajo del capó (Under the hood)?",
-          "options": [
-            "Minimizar la suma de errores cuadráticos medios, similar a una regresión lineal OLS.",
-            "Minimizar la entropía o la impureza Gini en cada nodo para maximizar la pureza del subconjunto.",
-            "Minimizar la norma del vector 'w' (lo que equivale a maximizar el ancho del margen) sujeto a que las clases queden correctamente separadas según el umbral C.",
-            "Minimizar el coeficiente Silhouette de los clústeres."
-          ],
-          "correct": 2,
-          "feedback": "Matemáticamente, el ancho del margen de una SVM lineal es proporcional a 1/||w||. Por lo tanto, para maximizar el margen (y ganar capacidad de generalización), el optimizador (como SMO o L-BFGS) debe buscar reducir al mínimo posible el tamaño (norma) del vector de pesos 'w', penalizado por el hiperparámetro C ante errores de clasificación."
-        },
-        {
-          "id": "e9439187-fd5c-4771-9ab7-9c65592500fe",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "¿Cuál es la afirmación verdadera respecto a los atributos `coef_` e `intercept_` de un modelo SVC?",
-          "options": [
-            "Están siempre disponibles sin importar el kernel que se utilice, y permiten saber la importancia de cada variable.",
-            "Solo están disponibles cuando se utiliza un kernel='linear'. Para kernels como RBF o polinómico, el espacio de características implícito no permite obtener los coeficientes originales directos de la ecuación lineal.",
-            "Representan las probabilidades en formato Softmax que el modelo asigna a cada observación.",
-            "Solo se activan si se entrena el modelo con `probability=True`."
-          ],
-          "correct": 1,
-          "feedback": "En el kernel lineal, la frontera es una ecuación plana sencilla: Wx + b = 0. W es `coef_` y b es `intercept_`. Pero en RBF o Poly, debido a la alta dimensión generada por el truco del kernel, no existen coeficientes W simples que correspondan 1 a 1 a las columnas del dataset de origen."
-        },
-        {
-          "id": "70c94902-b152-4966-a8ab-d301d0c4a336",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "Se entrena una SVM con un dataset sintético para detectar fraudes financieros. Si se eliminaran 50,000 transacciones de entrenamiento que estaban correctamente clasificadas, lejanas y profundamente hundidas en la zona 'segura' del hiperplano, ¿cómo cambiaría la posición de la frontera de decisión?",
-          "options": [
-            "La frontera de decisión no cambiaría en absoluto (suponiendo que no sean vectores de soporte), ya que el hiperplano está determinado EXCLUSIVAMENTE por los vectores de soporte.",
-            "El modelo colapsaría produciendo una recta vertical aleatoria.",
-            "El hiperplano rotaría para acercarse más a los puntos restantes porque el promedio o centroide de las clases se habría desplazado fuertemente.",
-            "Se convertiría automáticamente en un modelo de Soft Margins obligando a cambiar el valor de C."
-          ],
-          "correct": 0,
-          "feedback": "La maravilla matemática de SVM es que descarta la 'abundancia'. A diferencia de Logistic Regression que se ve afectada (ligeramente) por todos los puntos, la SVM literalmente olvida los puntos que no son vectores de soporte. Es un algoritmo 'escaso' o 'sparse' guiado solo por los casos más difíciles."
-        },
-        {
-          "id": "28c1fedc-0628-4122-a21e-5513b10d48de",
-          "category": "semana5",
-          "categoryName": "Semana 5 y 6 · Multiclase y SVM",
-          "text": "En el contexto de modelado en scikit-learn, ¿qué ventaja fundamental tiene la clase `LinearSVC` respecto a `SVC(kernel='linear')` al trabajar con datasets masivos de cientos de miles de registros?",
-          "options": [
-            "LinearSVC usa el truco del kernel, pero SVC(kernel='linear') no lo hace.",
-            "LinearSVC tiene una implementación interna basada en la librería liblinear que escala mucho mejor y es dramáticamente más rápida que libsvm (usado por SVC) para datasets inmensos (O(N) vs O(N^2)).",
-            "LinearSVC permite clasificar múltiples objetivos simultáneamente sin usar estrategias OvR.",
-            "No existe ninguna diferencia; son simples alias que llaman a la misma función binaria en C++."
-          ],
-          "correct": 1,
-          "feedback": "En la práctica avanzada, si tienes un conjunto masivo (ej. 1 millón de registros) y necesitas un kernel lineal, usar `SVC(kernel='linear')` puede tardar horas o días (complejidad cúbica o cuadrática). `LinearSVC` se diseñó específicamente para ser veloz con grandes volúmenes de datos usando el método del Descenso de Coordenadas."
         }
       ]
     }
