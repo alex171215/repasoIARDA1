@@ -768,8 +768,18 @@
                     currentQuestions = [];
                     var bankMap = {};
                     bank.forEach(function(q) { bankMap[q.id] = q; });
+                    var addedIds = new Set();
                     orderIds.forEach(function(id) {
-                        if (bankMap[id]) currentQuestions.push(bankMap[id]);
+                        if (bankMap[id]) {
+                            currentQuestions.push(bankMap[id]);
+                            addedIds.add(id);
+                        }
+                    });
+                    // Append any new questions that are not in the saved order
+                    bank.forEach(function(q) {
+                        if (!addedIds.has(q.id) && (categoryFilter.value === 'all' || q.category === categoryFilter.value)) {
+                            currentQuestions.push(q);
+                        }
                     });
                     
                     if (currentQuestions.length === 0) {
