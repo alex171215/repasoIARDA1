@@ -5166,6 +5166,10 @@ window.QUIZ_DATA = {
           "label": "Semana 6 · GridSearch"
         },
         {
+          "value": "semana7",
+          "label": "Semana 7 · Árboles de Decisión"
+        },
+        {
           "value": "bookmarked",
           "label": "Solo Preguntas Marcadas"
         }
@@ -7452,6 +7456,356 @@ window.QUIZ_DATA = {
           ],
           "correct": 1,
           "feedback": "El orden correcto del taller: 1) Dividir 80/20, 2) Construir Pipeline, 3) Definir param_grid con notación 'paso__param', 4) GridSearchCV.fit(X_train) — nunca X_test, 5) Comparar base vs optimizado en X_test, 6) Reentrenar pipeline_final con el 100% de los datos, 7) Exportar solo pipeline_final con joblib."
+        },
+        {
+          "id": "17ba6773-f928-4d1b-9500-3f204a13e85f",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "¿Cuál de las siguientes describe mejor cómo clasifica un Árbol de Decisión una nueva observación?",
+          "options": [
+            "Calcula la distancia euclidiana entre la nueva observación y cada punto del conjunto de entrenamiento, asignando la clase del vecino más cercano.",
+            "La observación recorre el árbol respondiendo preguntas Sí/No en cada nodo interno hasta llegar a una hoja, que determina la clase predicha.",
+            "Multiplica cada variable predictora por un coeficiente aprendido durante el entrenamiento y aplica una función sigmoide al resultado.",
+            "Proyecta la observación en un espacio de mayor dimensión usando un kernel y clasifica según su posición respecto al hiperplano de margen máximo."
+          ],
+          "correct": 1,
+          "feedback": "Un árbol de decisión aplica reglas Sí/No (o ≤/>) en cada nodo interno. Cada rama representa una respuesta; se sigue el camino correspondiente hasta una hoja, que contiene la clase mayoritaria de los ejemplos de entrenamiento que llegaron a ella."
+        },
+        {
+          "id": "ae80a17c-1e91-44a3-bd3b-6b9e59e09eab",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El taller usa DecisionTreeClassifier de scikit-learn, que implementa el algoritmo CART. ¿Cuál es el criterio que CART utiliza para elegir en qué variable y en qué umbral dividir en cada nodo?",
+          "options": [
+            "Elige la variable con mayor correlación de Pearson con la variable objetivo y divide en la mediana de esa variable.",
+            "Prueba todas las divisiones posibles y elige la que produce la mayor reducción de la impureza de Gini entre el nodo padre y sus dos hijos resultantes.",
+            "Selecciona aleatoriamente una variable y un umbral en cada nodo, repitiendo el proceso hasta que todas las hojas sean puras.",
+            "Divide siempre por la variable con mayor varianza, usando como umbral el valor promedio de toda la columna en el conjunto de entrenamiento."
+          ],
+          "correct": 1,
+          "feedback": "CART (Classification and Regression Trees) evalúa todas las divisiones posibles en todas las variables. Para cada división calcula el Gini ponderado de los dos hijos y elige la que produce la mayor reducción respecto al nodo padre (máximo ΔGini). En el taller, la raíz es 'deuda_actual ≤ 5975.5' porque produce ΔGini = 0.125."
+        },
+        {
+          "id": "6d9f70d7-2428-43d3-966d-97789a7e406e",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "En la visualización del árbol con plot_tree(), un nodo muestra gini = 0.0 y class = Riesgoso. ¿Qué significa ese valor de Gini?",
+          "options": [
+            "El nodo tiene exactamente el mismo número de observaciones de cada clase; la división fue perfectamente equitativa.",
+            "Ese nodo es una hoja completamente impura que contiene todos los tipos de error posibles del modelo.",
+            "El nodo es una hoja perfectamente pura: todas las observaciones que llegaron a él pertenecen a una sola clase, por lo que la impureza es cero.",
+            "El modelo no utilizó ese nodo durante el entrenamiento porque no había suficientes datos para calcular el Gini."
+          ],
+          "correct": 2,
+          "feedback": "Gini = 0 indica impureza nula: todas las observaciones que llegaron a ese nodo son de la misma clase. El árbol no puede mejorar más esa clasificación. En el plot_tree el color es muy intenso (azul oscuro para Riesgoso, naranja oscuro para No riesgoso) cuando el nodo está cerca de la pureza."
+        },
+        {
+          "id": "5dc4fe03-7e13-4faf-aa3e-920f965fe017",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El taller destaca que, a diferencia de SVM o Regresión Logística, el Árbol de Decisión no requiere aplicar StandardScaler antes de entrenar. ¿Por qué?",
+          "options": [
+            "Porque DecisionTreeClassifier aplica el escalado internamente antes de calcular las divisiones.",
+            "Porque el árbol solo usa variables binarias (0/1) y el escalado no tiene efecto en ese tipo de datos.",
+            "Porque el árbol compara cada variable contra un umbral (ej. deuda_actual ≤ 5975.5): escalar cambia los valores numéricos pero no el orden relativo de las observaciones, por lo que las divisiones identificadas serían exactamente las mismas.",
+            "Porque scikit-learn obliga a usar Pipeline cuando se aplica StandardScaler, y en este taller no se usa Pipeline."
+          ],
+          "correct": 2,
+          "feedback": "Los árboles de decisión operan con comparaciones ordinales (≤/>) sin calcular distancias ni productos punto. Escalar transforma 5975.5 a otro número, pero el orden de los datos no cambia, por lo que el algoritmo identificaría exactamente las mismas divisiones. Esto los hace invariantes a la escala."
+        },
+        {
+          "id": "344e6ed6-5450-4e62-aa67-d1219105342b",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "En el Bloque A6, el árbol sin límite (max_depth=None) produce Accuracy en entrenamiento = 1.000 y en prueba = 0.822. ¿Cuál es el problema y cómo se llama?",
+          "options": [
+            "Underfitting: el modelo es tan simple que no logra aprender los patrones ni en entrenamiento ni en prueba.",
+            "Sobreajuste (Overfitting): el árbol memorizó los datos de entrenamiento caso por caso, incluyendo el ruido; cuando ve datos nuevos, no generaliza y su rendimiento cae.",
+            "Data Leakage: los datos del conjunto de prueba filtraron información al árbol durante el entrenamiento.",
+            "Multicolinealidad: las variables predictoras están altamente correlacionadas y el árbol no puede distinguir cuál usar primero."
+          ],
+          "correct": 1,
+          "feedback": "Un árbol sin límite crece hasta tener hojas puras para cada caso: profundidad 11 y 85 hojas. Alcanza 100% en entrenamiento porque literalmente memoriza cada dato. Al predecir datos nuevos no vistos, fracasa porque aprendió ruido y excepciones en lugar de patrones generales: la definición de sobreajuste."
+        },
+        {
+          "id": "f5b26deb-e156-4a47-bf5b-0447e08240a0",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "La curva de profundidad del Bloque A6 muestra que con max_depth=1 y 2 ambas curvas (entrenamiento y prueba) están bajas, pero desde max_depth=6 el entrenamiento sube hacia 1.0 mientras la prueba baja. ¿Qué indica cada uno de estos comportamientos?",
+          "options": [
+            "max_depth=1–2: underfitting (el árbol es demasiado simple). max_depth≥6: sobreajuste (la brecha creciente entre entrenamiento y prueba indica que el modelo memoriza en lugar de generalizar).",
+            "max_depth=1–2: sobreajuste severo. max_depth≥6: underfitting porque el árbol tiene demasiadas hojas vacías.",
+            "Ambas zonas representan sobreajuste; la diferencia es que en max_depth bajo el sobreajuste afecta solo a entrenamiento.",
+            "max_depth=1–2: el árbol funciona correctamente. max_depth≥6: el modelo alcanzó convergencia y el accuracy se estabiliza."
+          ],
+          "correct": 0,
+          "feedback": "La zona de underfitting (profundidad baja) muestra que el modelo es tan restrictivo que no puede aprender los patrones relevantes. La zona de sobreajuste (profundidad alta) muestra la señal clásica: la brecha entre las curvas de entrenamiento y prueba crece porque el árbol memoriza ruido. La profundidad óptima está donde la prueba alcanza su máximo (≈4–5 en el taller)."
+        },
+        {
+          "id": "173cbe28-0798-4801-9e15-e744d5c06283",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "¿Qué controla el hiperparámetro max_depth en DecisionTreeClassifier y qué riesgo representa un valor demasiado alto?",
+          "options": [
+            "Controla el número mínimo de observaciones necesarias en una hoja para que el árbol pueda hacer una predicción; un valor alto produce predicciones menos confiables.",
+            "Controla cuántas variables predictoras puede usar el árbol en total; un valor alto aumenta la multicolinealidad.",
+            "Controla la profundidad máxima del árbol (número de niveles de preguntas): un valor alto permite árboles muy complejos que memorizan los datos de entrenamiento en lugar de generalizar (sobreajuste).",
+            "Controla la métrica de impureza usada en cada nodo; un valor alto cambia de Gini a Entropía automáticamente."
+          ],
+          "correct": 2,
+          "feedback": "max_depth limita cuántos niveles de preguntas puede tener el árbol. Con max_depth=3 hay máximo 8 hojas; sin límite (None) el árbol del taller llegó a profundidad 11 y 85 hojas, memorizando el conjunto de entrenamiento. Controlar max_depth es el mecanismo de regularización más directo en árboles."
+        },
+        {
+          "id": "38f04a6e-69d4-4a2e-97bf-d80f26f4fcba",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El GridSearchCV del Bloque A8 incluye min_samples_leaf en el param_grid. ¿Qué efecto tiene este hiperparámetro sobre el árbol resultante?",
+          "options": [
+            "Define cuántas variables se usan en cada división; min_samples_leaf=10 significa que el árbol solo usa las 10 variables más importantes.",
+            "Establece el número mínimo de observaciones de entrenamiento que debe tener una hoja para ser válida. Valores mayores producen árboles más simples porque impiden divisiones que generarían hojas con muy pocos datos (que suelen ser ruido).",
+            "Controla cuántas veces se repite el proceso de validación cruzada dentro de cada nodo del árbol.",
+            "Indica el número mínimo de variables numéricas que deben estar presentes en el dataset para que el árbol pueda entrenarse."
+          ],
+          "correct": 1,
+          "feedback": "min_samples_leaf=10 significa que el árbol no realizará ninguna división que produzca una hoja con menos de 10 observaciones. Esto actúa como regularización: evita crear hojas que representan excepciones o ruido del conjunto de entrenamiento. En el taller, la mejor combinación fue max_depth=5 con min_samples_leaf=10."
+        },
+        {
+          "id": "7c0fa493-6005-48fd-9cca-7be19db1c2b7",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El Bloque A4 muestra la siguiente regla del árbol de crédito:\n\n|--- deuda_actual <= 5975.50\n|   |--- ingresos_mensuales > 1574.50\n|   |   |--- num_creditos_previos <= 0.50\n|   |   |   |--- class: 0\n\n¿Cómo se interpreta en palabras esta regla?",
+          "options": [
+            "Si la deuda supera $5.975,50 Y los ingresos son mayores a $1.574,50 Y tiene al menos 1 crédito previo → No riesgoso.",
+            "Si la deuda es mayor a $5.975,50 Y los ingresos son menores a $1.574,50 → No riesgoso.",
+            "Si la deuda es menor o igual a $5.975,50 Y los ingresos son mayores a $1.574,50 Y el número de créditos previos es menor o igual a 0,5 (es decir, ninguno) → el solicitante se clasifica como No riesgoso (clase 0).",
+            "Si la deuda es menor o igual a $5.975,50 Y los ingresos son menores a $1.574,50 → Riesgoso."
+          ],
+          "correct": 2,
+          "feedback": "En export_text, el sangrado indica los niveles del árbol y el '>' a la izquierda indica la rama falsa. La regla leída de arriba a abajo es: deuda ≤ 5975.5 (rama izquierda/Sí), ingresos > 1574.5 (rama derecha/No), num_creditos_previos ≤ 0.5 (ningún crédito, ≤0.5 = 0) → clase 0 (No riesgoso)."
+        },
+        {
+          "id": "4c90ff87-65fc-443f-ba52-ac5926514207",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El Bloque A7 muestra: deuda_actual=0.609, ingresos_mensuales=0.385, num_creditos_previos=0.006, edad=0.000, meses_empleo=0.000. ¿Qué mide feature_importances_ y qué significa que edad y meses_empleo tengan importancia 0?",
+          "options": [
+            "Mide la correlación entre cada variable y la variable objetivo. Importancia 0 significa correlación perfectamente nula, por lo que esas variables son numéricamente idénticas a cero.",
+            "Mide cuánto redujo cada variable la impureza Gini en todo el árbol, normalizado para que la suma sea 1. Importancia 0 en edad y meses_empleo significa que ese árbol de profundidad 3 nunca las usó en ninguna pregunta de ningún nodo.",
+            "Mide el número de veces que cada variable aparece en el árbol dividido por el total de nodos. Cero significa que fueron excluidas del entrenamiento por tener demasiados valores nulos.",
+            "Mide el accuracy que pierde el modelo si se elimina esa variable. Cero indica que eliminarlas no afectaría el rendimiento en ningún escenario posible."
+          ],
+          "correct": 1,
+          "feedback": "feature_importances_ suma la reducción de Gini de todos los nodos donde se usa cada variable, ponderada por el número de muestras. Suma exactamente 1. Que edad=0.000 no significa que la edad sea irrelevante para el crédito, sino que en este árbol específico de max_depth=3 el algoritmo no necesitó usarla: con deuda e ingresos fue suficiente para clasificar bien."
+        },
+        {
+          "id": "3d9074e0-a7a6-4567-9ac9-80dcb7d17756",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El taller usa plot_tree(arbol, filled=True, class_names=['No riesgoso', 'Riesgoso']). ¿Qué indican los colores del gráfico y su intensidad?",
+          "options": [
+            "El color indica el nivel del árbol: nivel 0 es blanco, nivel 1 es gris claro, nivel 2 es gris oscuro y el nivel 3 (hojas) es negro.",
+            "El color representa la clase mayoritaria del nodo (naranja = No riesgoso, azul = Riesgoso) y la intensidad refleja la pureza: cuanto más intenso, más puro el nodo (más dominante es una clase).",
+            "El color muestra la métrica de accuracy de cada nodo: verde = accuracy alto, rojo = accuracy bajo.",
+            "El color indica si el nodo fue usado en el entrenamiento (azul) o en la prueba (naranja); los nodos blancos son compartidos."
+          ],
+          "correct": 1,
+          "feedback": "El parámetro filled=True colorea los nodos según su clase mayoritaria. El taller especifica que naranja = No riesgoso, azul = Riesgoso. La saturación del color es proporcional a la pureza del nodo: Gini=0 da el color más intenso; Gini=0.5 (mezcla perfecta al 50/50) da el color más pálido."
+        },
+        {
+          "id": "a040c265-c384-4ba3-827f-2bc3f92622bc",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "En el árbol de crédito, la raíz es 'deuda_actual ≤ 5975.5'. El taller menciona que esto es la división con ΔGini = 0.125. ¿Por qué CART elige esta variable como raíz y no, por ejemplo, ingresos_mensuales?",
+          "options": [
+            "Porque deuda_actual es la variable con mayor número de valores únicos en el dataset, lo que garantiza más puntos de corte posibles.",
+            "Porque es la variable listada en la primera columna del DataFrame, y CART siempre comienza desde la columna izquierda.",
+            "Porque deuda_actual producía la mayor reducción de impureza Gini (ΔGini = 0.125) entre todas las posibles divisiones en todas las variables. CART evalúa sistemáticamente cada posible umbral de cada variable y elige la combinación óptima.",
+            "Porque el analista del taller configuró manualmente la raíz del árbol antes de llamar a fit()."
+          ],
+          "correct": 2,
+          "feedback": "CART es un algoritmo greedy: en cada nodo evalúa todos los posibles puntos de corte en todas las variables. Calcula el Gini ponderado de los dos hijos resultantes y elige la división que maximiza la reducción de impureza. Ningún parámetro permite fijar manualmente la raíz; es siempre la mejor división disponible en ese momento."
+        },
+        {
+          "id": "af516c7b-4b46-42d4-a1ab-47954427564b",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El Bloque A3 imprime: 'Profundidad real: 3 | Número de hojas: 8'. ¿Por qué un árbol con max_depth=3 tiene exactamente 8 hojas en el caso ideal?",
+          "options": [
+            "Porque scikit-learn limita por defecto el número de hojas a 8 cuando max_depth es menor a 5.",
+            "Porque en un árbol binario perfectamente balanceado de profundidad 3, cada nivel duplica el número de nodos: 2¹=2, 2²=4, 2³=8 hojas máximas. Si todas las ramas alcanzan el nivel 3, el total es 8.",
+            "Porque el dataset tiene exactamente 8 categorías en la variable objetivo riesgo_crediticio.",
+            "Porque min_samples_leaf se inicializa automáticamente a 8 cuando no se especifica, limitando el árbol a 8 divisiones."
+          ],
+          "correct": 1,
+          "feedback": "Un árbol binario de profundidad d puede tener como máximo 2^d hojas. Con max_depth=3: 2³=8 hojas en el caso ideal (árbol completamente balanceado). En la práctica puede tener menos si alguna rama alcanza la pureza antes del nivel 3 o si min_samples_leaf lo impide."
+        },
+        {
+          "id": "5f6f6b9c-e4b4-4358-b6e4-695050e07838",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El árbol de triaje (Parte B) produce la regla: frecuencia_cardiaca > 110.5 → motivo_consulta_fiebre <= 0.5 → class: Urgente. Considerando que motivo_consulta_fiebre es una columna One-Hot (1=fiebre, 0=otro motivo), ¿cómo se lee esta regla en términos clínicos?",
+          "options": [
+            "Si el pulso supera 110.5 ppm Y el paciente tiene fiebre → Urgente.",
+            "Si el pulso supera 110.5 ppm Y el paciente NO tiene fiebre como motivo de consulta (motivo_fiebre=0) → el árbol clasifica al paciente como Urgente.",
+            "Si el pulso es menor a 110.5 ppm Y el paciente tiene fiebre → Urgente.",
+            "Si el motivo es fiebre (motivo_consulta_fiebre=1) → siempre Urgente, independientemente del pulso."
+          ],
+          "correct": 1,
+          "feedback": "motivo_consulta_fiebre ≤ 0.5 equivale a motivo_fiebre = 0 (el valor 0 es ≤ 0.5, el valor 1 es > 0.5). La regla clínica es: taquicardia severa (pulso > 110.5) Y el motivo NO es fiebre (lo que descartaría la taquicardia reactiva a la fiebre) → el árbol clasifica como Urgente, sugiriendo otra causa más grave."
+        },
+        {
+          "id": "b3e7d785-a88f-4b55-8e87-fa705e462b55",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El árbol del taller de triaje hospitalario elige frecuencia_cardiaca como nodo raíz (importancia = 0.353). El taller pregunta si tiene sentido clínicamente. ¿Cuál es la justificación correcta?",
+          "options": [
+            "No tiene sentido clínico porque en emergencias se debe priorizar primero el motivo de consulta del paciente, que es la información más confiable.",
+            "Sí tiene sentido: la frecuencia cardíaca es uno de los signos vitales más directos del estado hemodinámico del paciente. Una taquicardia severa (>110 ppm) es señal objetiva de que el cuerpo está bajo estrés fisiológico importante, independientemente del motivo declarado de consulta.",
+            "Tiene sentido solo si el dataset incluye pacientes con problemas cardíacos; para otros motivos de consulta, el pulso no es relevante.",
+            "No tiene sentido porque la frecuencia cardíaca varía naturalmente con el ejercicio previo y no es confiable como primer criterio de triaje."
+          ],
+          "correct": 1,
+          "feedback": "La frecuencia cardíaca es un signo vital continuo y objetivo. En los sistemas de triaje reales (como el Canadian Triage and Acuity Scale), los signos vitales —incluyendo el pulso— son criterios primarios. El árbol identificó esto estadísticamente porque el pulso separó mejor las clases en el dataset. El alineamiento con el criterio clínico valida el modelo."
+        },
+        {
+          "id": "9a30efb5-4b46-418d-a09c-b6b92829d067",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El Bloque C.3 usa predict_proba() para obtener la probabilidad de riesgo de cada solicitud. ¿Qué devuelve exactamente predict_proba() en un árbol de decisión?",
+          "options": [
+            "La probabilidad calibrada mediante Platt Scaling, igual que cuando se activa probability=True en SVC.",
+            "La proporción de observaciones de entrenamiento de cada clase que llegaron a la hoja en la que termina la nueva observación. No es una probabilidad estadística rigurosa, sino la frecuencia de clases en esa hoja.",
+            "El valor del Gini de la hoja final, transformado al rango [0, 1] mediante una función sigmoide.",
+            "La distancia normalizada entre la observación y el nodo raíz del árbol, interpretada como nivel de confianza."
+          ],
+          "correct": 1,
+          "feedback": "En árboles de decisión, predict_proba()[i] devuelve [n_clase0/n_total, n_clase1/n_total] de la hoja donde cae la observación. Si en una hoja llegaron 80 riesgosos y 20 no riesgosos, predict_proba devuelve [0.20, 0.80]. No hay función sigmoide ni calibración; es simplemente la distribución de clases en esa hoja."
+        },
+        {
+          "id": "465759d3-4061-4b86-934d-b40e2b7e3b08",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "En el Bloque A8, el param_grid del árbol usa 'max_depth' directamente (sin prefijo 'modelo__'), a diferencia del taller de SVM donde se usaba 'modelo__C'. ¿Por qué no se necesita el prefijo aquí?",
+          "options": [
+            "Porque DecisionTreeClassifier es un modelo especial de scikit-learn que ignora los prefijos del param_grid.",
+            "Porque en este taller no se usa un Pipeline: el estimator de GridSearchCV es directamente el DecisionTreeClassifier, así que los hiperparámetros se referencian sin prefijo. El prefijo 'paso__parámetro' solo es necesario cuando el estimator es un Pipeline.",
+            "Porque max_depth y min_samples_leaf son hiperparámetros globales de GridSearchCV, no del árbol.",
+            "Porque el árbol no requiere escalado y, sin StandardScaler, scikit-learn suprime automáticamente el requisito del prefijo."
+          ],
+          "correct": 1,
+          "feedback": "La notación 'nombre_paso__hiperparámetro' (doble guion bajo) es específica de los Pipelines de scikit-learn. Cuando GridSearchCV recibe directamente un estimator (sin Pipeline), los parámetros se nombran tal como aparecen en el constructor: 'max_depth', 'min_samples_leaf'. El árbol no necesita escalado, así que no hay Pipeline."
+        },
+        {
+          "id": "63b16af0-5d5c-4bdf-992c-d93875a6ef02",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "En el Bloque B3, GridSearchCV usa scoring='recall' para optimizar el triaje, y obtiene best_params_ = {'max_depth': None, 'min_samples_leaf': 10}. ¿Por qué tiene sentido priorizar el Recall en un sistema de triaje hospitalario?",
+          "options": [
+            "Porque el Recall es siempre superior al F1 en datasets con más de 1000 registros, independientemente del contexto clínico.",
+            "Porque en triaje hospitalario, un falso negativo (clasificar como no urgente a un paciente que sí lo es) puede costar una vida. El Recall mide exactamente la proporción de urgentes reales que el modelo detecta, por lo que maximizarlo reduce al mínimo esos errores fatales.",
+            "Porque el dataset de triaje está desbalanceado (724 urgentes vs 476 no urgentes) y el Recall es la única métrica válida para datasets con más positivos que negativos.",
+            "Porque scoring='recall' le indica a GridSearchCV que use únicamente los folds que contienen casos urgentes, haciendo la búsqueda más rápida."
+          ],
+          "correct": 1,
+          "feedback": "En medicina de urgencias, el costo de un falso negativo (enviar a casa a alguien con una emergencia real) es drásticamente mayor que el de un falso positivo (atender antes de lo necesario). El Recall = TP/(TP+FN) cuantifica exactamente la capacidad del modelo de detectar todos los verdaderos positivos, que es el objetivo prioritario en triaje."
+        },
+        {
+          "id": "8765c5a9-a6cb-451e-a24e-f713872b96ff",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El Bloque C.1 observa: con el 80% de datos la raíz del árbol final era 'deuda_actual ≤ 5975.5', pero con el 100% de datos la raíz cambió a 'deuda_actual ≤ 8014'. El taller llama a esto 'inestabilidad'. ¿Qué implica esta propiedad para el uso práctico de los árboles de decisión?",
+          "options": [
+            "Que el árbol es incorrecto y debe recalcularse; la raíz no puede cambiar si el modelo fue correctamente optimizado con GridSearchCV.",
+            "Que pequeños cambios en el conjunto de datos (agregar el 20% reservado para prueba) pueden producir un árbol estructuralmente diferente. Por eso se copian los hiperparámetros óptimos (max_depth, min_samples_leaf) para el modelo final, no la estructura específica del árbol de evaluación.",
+            "Que el árbol con el 80% de datos siempre es superior al entrenado con el 100%, porque los árboles se vuelven inestables con más datos.",
+            "Que se debe evitar reentrenar el árbol con datos nuevos en producción; una vez exportado el .pkl, no debe modificarse."
+          ],
+          "correct": 1,
+          "feedback": "La inestabilidad es una limitación conocida de los árboles de decisión: son sensibles a variaciones en los datos de entrenamiento. Agregar el 20% de datos que antes era el conjunto de prueba cambia las distribuciones y puede hacer que una variable diferente sea la más informativa en la raíz. Por eso se transfieren hiperparámetros, no el árbol concreto."
+        },
+        {
+          "id": "f7b6d800-d69c-4580-bd5f-b7afc47c0461",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "Un equipo está comparando Árbol de Decisión y SVM para un nuevo proyecto. ¿Cuál de las siguientes afirmaciones describe correctamente una diferencia entre ambos modelos según el taller?",
+          "options": [
+            "El árbol de decisión siempre tiene mejor Accuracy que SVM en datasets con variables categóricas.",
+            "Tanto el árbol como el SVM requieren StandardScaler obligatoriamente; omitirlo en cualquiera de los dos produce resultados inválidos.",
+            "El árbol de decisión no requiere escalado de variables (compara por umbral), es interpretable mediante plot_tree y export_text, y puede exportarse sin un Pipeline. SVM requiere escalado obligatorio, opera en espacios de alta dimensión y no produce reglas legibles directamente.",
+            "La única diferencia es que el árbol usa Gini como criterio mientras que SVM usa la función sigmoide."
+          ],
+          "correct": 2,
+          "feedback": "Las diferencias clave del taller: 1) Escalado: árbol no lo necesita, SVM sí (obligatorio). 2) Interpretabilidad: el árbol genera reglas Sí/No legibles; el SVM (especialmente con kernel RBF) opera en espacios de alta dimensión sin reglas legibles. 3) Pipeline: el árbol puede entrar directamente a GridSearchCV; el SVM necesita Pipeline para evitar data leakage."
+        },
+        {
+          "id": "a216177c-ba45-4178-b5fd-8871c4e9bfec",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "En el Bloque B1, el taller usa pd.get_dummies() para codificar la columna motivo_consulta antes de entrenar el árbol. El taller añade una advertencia: 'para predecir un solo paciente nuevo en producción se usa OneHotEncoder'. ¿Por qué pd.get_dummies() no es ideal para producción?",
+          "options": [
+            "Porque pd.get_dummies() solo funciona en Jupyter Notebook y falla en scripts de Python estándar.",
+            "Porque pd.get_dummies() aplica la codificación a todo el dataset de una vez, sin 'aprender' los valores posibles. Si en producción llega un paciente con un motivo_consulta nuevo (ej. 'fractura'), get_dummies crearía una columna nueva que el árbol no conoce. OneHotEncoder 'recuerda' los valores del entrenamiento y puede manejar categorías nuevas de forma controlada.",
+            "Porque pd.get_dummies() produce columnas con nombres distintos a los que DecisionTreeClassifier espera internamente.",
+            "Porque pd.get_dummies() no es compatible con train_test_split cuando se usa stratify=y."
+          ],
+          "correct": 1,
+          "feedback": "pd.get_dummies() es stateless: no recuerda qué categorías vio en el entrenamiento. Si en producción aparece una categoría nueva, genera columnas diferentes, causando un error de incompatibilidad con el árbol exportado. OneHotEncoder (de scikit-learn) aprende las categorías durante fit() y puede configurarse para ignorar o marcar categorías desconocidas en transform()."
+        },
+        {
+          "id": "15b428da-e2dd-4da3-b6b6-8371f343d211",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "¿Cuál de los siguientes bloques de código entrena correctamente un árbol de decisión para el dataset de crédito del taller y muestra su profundidad real?",
+          "options": [
+            "from sklearn.tree import DecisionTreeClassifier\narbol = DecisionTreeClassifier(max_depth=3, random_state=42)\narbol.fit(X_train, y_train)\nprint('Profundidad real:', arbol.get_depth())\nprint('Número de hojas: ', arbol.get_n_leaves())",
+            "from sklearn.tree import DecisionTreeClassifier\narbol = DecisionTreeClassifier(max_depth=3)\narbol.fit(X_train_scaled, y_train)  # Con escalado obligatorio\nprint('Profundidad:', arbol.depth_)",
+            "from sklearn.tree import DecisionTree\narbol = DecisionTree(depth=3, seed=42)\narbol.train(X_train, y_train)\nprint('Depth:', arbol.depth)",
+            "from sklearn.tree import DecisionTreeClassifier\narbol = DecisionTreeClassifier()\narbol.max_depth = 3\narbol.fit(X_train, y_train)\nprint('Profundidad:', arbol.max_depth_)"
+          ],
+          "correct": 0,
+          "feedback": "La importación correcta es 'from sklearn.tree import DecisionTreeClassifier'. Los hiperparámetros van en el constructor. Los datos NO se escalan. get_depth() devuelve la profundidad real del árbol entrenado (puede ser menor a max_depth si alcanzó pureza antes). get_n_leaves() devuelve el número de hojas."
+        },
+        {
+          "id": "7192310c-175b-438d-a708-b11242d02fa2",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "Se ejecuta el siguiente código:\n\narbol_libre = DecisionTreeClassifier(random_state=42)\narbol_libre.fit(X_train, y_train)\nprint(f'Accuracy entrenamiento: {arbol_libre.score(X_train, y_train):.3f}')\nprint(f'Accuracy prueba: {arbol_libre.score(X_test, y_test):.3f}')\n\nEl taller muestra como salida: Accuracy entrenamiento: 1.000 | Accuracy prueba: 0.822. ¿Qué conclusión se saca de esta salida?",
+          "options": [
+            "El modelo está perfectamente calibrado: 100% en entrenamiento indica que generalizará perfectamente a cualquier dato nuevo.",
+            "El árbol sin límite (max_depth=None) tiene sobreajuste severo: memoriza el 100% de los datos de entrenamiento, pero su rendimiento cae casi 18 puntos porcentuales en el conjunto de prueba. Es necesario limitar su profundidad.",
+            "El modelo tuvo data leakage: los datos de prueba filtraron información durante el entrenamiento, lo que elevó artificialmente el accuracy de entrenamiento.",
+            "El resultado es esperado y correcto; la diferencia de 0.178 entre entrenamiento y prueba está dentro del margen de error aceptable para clasificación binaria."
+          ],
+          "correct": 1,
+          "feedback": "Accuracy=1.000 en entrenamiento con DecisionTreeClassifier sin límite es la señal más clara de sobreajuste: el árbol creció hasta tener hojas perfectamente puras, memorizando cada registro. La caída a 0.822 en prueba confirma que aprendió ruido, no patrones generalizables. La solución es controlar max_depth y/o min_samples_leaf."
+        },
+        {
+          "id": "1a5129f0-99ea-4725-ac41-23b6a133eb9d",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El Bloque A8 define:\n\nparam_grid = {'max_depth': [3, 4, 5, 6, None], 'min_samples_leaf': [1, 5, 10, 20]}\nbase = DecisionTreeClassifier(random_state=42)\ngrid = GridSearchCV(base, param_grid, cv=5, scoring='f1')\ngrid.fit(X_train, y_train)\n\n¿Cuántos entrenamientos totales ejecuta GridSearchCV en este código?",
+          "options": [
+            "20 entrenamientos (5 valores de max_depth × 4 valores de min_samples_leaf).",
+            "101 entrenamientos: 100 de la búsqueda (20 combinaciones × 5 folds) más 1 entrenamiento final con toda X_train usando los mejores hiperparámetros (refit=True por defecto).",
+            "25 entrenamientos, uno por cada valor del param_grid combinado con 5 folds.",
+            "4 entrenamientos, uno por cada valor de min_samples_leaf, ignorando max_depth."
+          ],
+          "correct": 1,
+          "feedback": "5 valores de max_depth × 4 valores de min_samples_leaf = 20 combinaciones. Con cv=5: 20 × 5 = 100 entrenamientos de evaluación. Más el refit final (refit=True por defecto) con toda X_train usando la mejor combinación (max_depth=5, min_samples_leaf=10): total = 101 entrenamientos."
+        },
+        {
+          "id": "d68ada2c-7c3e-486a-87a4-1cfdcf324ad9",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "En el Bloque C.2, el taller exporta el árbol final con:\n\njoblib.dump(arbol_final, 'modelo_riesgo_arbol.pkl')\n\nEl taller señala: 'a diferencia de SVM, no hay escalador que guardar'. ¿Qué implicación tiene esto al cargar el modelo en producción con joblib.load()?",
+          "options": [
+            "Al cargar el modelo, se debe aplicar manualmente StandardScaler con los parámetros del entrenamiento original antes de llamar a predict().",
+            "El archivo .pkl del árbol es más grande que el de SVM porque guarda la estructura completa del árbol con todos sus umbrales, a diferencia del SVM que solo guarda los vectores de soporte.",
+            "Al cargar el modelo con joblib.load(), el árbol está listo para recibir directamente el DataFrame con los datos en su escala original (sin preprocesamiento adicional) y predecir llamando a predict() o predict_proba().",
+            "No es posible exportar un árbol de decisión con joblib; se debe usar pickle directamente para serializar la estructura de nodos del árbol."
+          ],
+          "correct": 2,
+          "feedback": "Dado que el árbol no requiere escalado, el .pkl contiene solo el árbol (sus preguntas, umbrales y hojas): no hay ningún StandardScaler ajustado que deba acompañarlo. Al cargar con joblib.load() y llamar a predict() o predict_proba(), el árbol opera directamente sobre los datos crudos con las mismas columnas del entrenamiento."
         }
       ]
     },
@@ -8756,6 +9110,376 @@ window.QUIZ_DATA = {
           ],
           "correct": 1,
           "feedback": "El orden correcto del taller: 1) Dividir 80/20, 2) Construir Pipeline, 3) Definir param_grid con notación 'paso__param', 4) GridSearchCV.fit(X_train) — nunca X_test, 5) Comparar base vs optimizado en X_test, 6) Reentrenar pipeline_final con el 100% de los datos, 7) Exportar solo pipeline_final con joblib."
+        }
+      ]
+    },
+    {
+      "id": "semana_7",
+      "titulo": "Semana 7: Árboles de Decisión",
+      "categorias": [
+        {
+          "value": "all",
+          "label": "Todas (Semana 7)"
+        },
+        {
+          "value": "semana7",
+          "label": "Árboles de Decisión · Conceptos y Código"
+        },
+        {
+          "value": "bookmarked",
+          "label": "Solo Preguntas Marcadas"
+        }
+      ],
+      "preguntas": [
+        {
+          "id": "17ba6773-f928-4d1b-9500-3f204a13e85f",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "¿Cuál de las siguientes describe mejor cómo clasifica un Árbol de Decisión una nueva observación?",
+          "options": [
+            "Calcula la distancia euclidiana entre la nueva observación y cada punto del conjunto de entrenamiento, asignando la clase del vecino más cercano.",
+            "La observación recorre el árbol respondiendo preguntas Sí/No en cada nodo interno hasta llegar a una hoja, que determina la clase predicha.",
+            "Multiplica cada variable predictora por un coeficiente aprendido durante el entrenamiento y aplica una función sigmoide al resultado.",
+            "Proyecta la observación en un espacio de mayor dimensión usando un kernel y clasifica según su posición respecto al hiperplano de margen máximo."
+          ],
+          "correct": 1,
+          "feedback": "Un árbol de decisión aplica reglas Sí/No (o ≤/>) en cada nodo interno. Cada rama representa una respuesta; se sigue el camino correspondiente hasta una hoja, que contiene la clase mayoritaria de los ejemplos de entrenamiento que llegaron a ella."
+        },
+        {
+          "id": "ae80a17c-1e91-44a3-bd3b-6b9e59e09eab",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El taller usa DecisionTreeClassifier de scikit-learn, que implementa el algoritmo CART. ¿Cuál es el criterio que CART utiliza para elegir en qué variable y en qué umbral dividir en cada nodo?",
+          "options": [
+            "Elige la variable con mayor correlación de Pearson con la variable objetivo y divide en la mediana de esa variable.",
+            "Prueba todas las divisiones posibles y elige la que produce la mayor reducción de la impureza de Gini entre el nodo padre y sus dos hijos resultantes.",
+            "Selecciona aleatoriamente una variable y un umbral en cada nodo, repitiendo el proceso hasta que todas las hojas sean puras.",
+            "Divide siempre por la variable con mayor varianza, usando como umbral el valor promedio de toda la columna en el conjunto de entrenamiento."
+          ],
+          "correct": 1,
+          "feedback": "CART (Classification and Regression Trees) evalúa todas las divisiones posibles en todas las variables. Para cada división calcula el Gini ponderado de los dos hijos y elige la que produce la mayor reducción respecto al nodo padre (máximo ΔGini). En el taller, la raíz es 'deuda_actual ≤ 5975.5' porque produce ΔGini = 0.125."
+        },
+        {
+          "id": "6d9f70d7-2428-43d3-966d-97789a7e406e",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "En la visualización del árbol con plot_tree(), un nodo muestra gini = 0.0 y class = Riesgoso. ¿Qué significa ese valor de Gini?",
+          "options": [
+            "El nodo tiene exactamente el mismo número de observaciones de cada clase; la división fue perfectamente equitativa.",
+            "Ese nodo es una hoja completamente impura que contiene todos los tipos de error posibles del modelo.",
+            "El nodo es una hoja perfectamente pura: todas las observaciones que llegaron a él pertenecen a una sola clase, por lo que la impureza es cero.",
+            "El modelo no utilizó ese nodo durante el entrenamiento porque no había suficientes datos para calcular el Gini."
+          ],
+          "correct": 2,
+          "feedback": "Gini = 0 indica impureza nula: todas las observaciones que llegaron a ese nodo son de la misma clase. El árbol no puede mejorar más esa clasificación. En el plot_tree el color es muy intenso (azul oscuro para Riesgoso, naranja oscuro para No riesgoso) cuando el nodo está cerca de la pureza."
+        },
+        {
+          "id": "5dc4fe03-7e13-4faf-aa3e-920f965fe017",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El taller destaca que, a diferencia de SVM o Regresión Logística, el Árbol de Decisión no requiere aplicar StandardScaler antes de entrenar. ¿Por qué?",
+          "options": [
+            "Porque DecisionTreeClassifier aplica el escalado internamente antes de calcular las divisiones.",
+            "Porque el árbol solo usa variables binarias (0/1) y el escalado no tiene efecto en ese tipo de datos.",
+            "Porque el árbol compara cada variable contra un umbral (ej. deuda_actual ≤ 5975.5): escalar cambia los valores numéricos pero no el orden relativo de las observaciones, por lo que las divisiones identificadas serían exactamente las mismas.",
+            "Porque scikit-learn obliga a usar Pipeline cuando se aplica StandardScaler, y en este taller no se usa Pipeline."
+          ],
+          "correct": 2,
+          "feedback": "Los árboles de decisión operan con comparaciones ordinales (≤/>) sin calcular distancias ni productos punto. Escalar transforma 5975.5 a otro número, pero el orden de los datos no cambia, por lo que el algoritmo identificaría exactamente las mismas divisiones. Esto los hace invariantes a la escala."
+        },
+        {
+          "id": "344e6ed6-5450-4e62-aa67-d1219105342b",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "En el Bloque A6, el árbol sin límite (max_depth=None) produce Accuracy en entrenamiento = 1.000 y en prueba = 0.822. ¿Cuál es el problema y cómo se llama?",
+          "options": [
+            "Underfitting: el modelo es tan simple que no logra aprender los patrones ni en entrenamiento ni en prueba.",
+            "Sobreajuste (Overfitting): el árbol memorizó los datos de entrenamiento caso por caso, incluyendo el ruido; cuando ve datos nuevos, no generaliza y su rendimiento cae.",
+            "Data Leakage: los datos del conjunto de prueba filtraron información al árbol durante el entrenamiento.",
+            "Multicolinealidad: las variables predictoras están altamente correlacionadas y el árbol no puede distinguir cuál usar primero."
+          ],
+          "correct": 1,
+          "feedback": "Un árbol sin límite crece hasta tener hojas puras para cada caso: profundidad 11 y 85 hojas. Alcanza 100% en entrenamiento porque literalmente memoriza cada dato. Al predecir datos nuevos no vistos, fracasa porque aprendió ruido y excepciones en lugar de patrones generales: la definición de sobreajuste."
+        },
+        {
+          "id": "f5b26deb-e156-4a47-bf5b-0447e08240a0",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "La curva de profundidad del Bloque A6 muestra que con max_depth=1 y 2 ambas curvas (entrenamiento y prueba) están bajas, pero desde max_depth=6 el entrenamiento sube hacia 1.0 mientras la prueba baja. ¿Qué indica cada uno de estos comportamientos?",
+          "options": [
+            "max_depth=1–2: underfitting (el árbol es demasiado simple). max_depth≥6: sobreajuste (la brecha creciente entre entrenamiento y prueba indica que el modelo memoriza en lugar de generalizar).",
+            "max_depth=1–2: sobreajuste severo. max_depth≥6: underfitting porque el árbol tiene demasiadas hojas vacías.",
+            "Ambas zonas representan sobreajuste; la diferencia es que en max_depth bajo el sobreajuste afecta solo a entrenamiento.",
+            "max_depth=1–2: el árbol funciona correctamente. max_depth≥6: el modelo alcanzó convergencia y el accuracy se estabiliza."
+          ],
+          "correct": 0,
+          "feedback": "La zona de underfitting (profundidad baja) muestra que el modelo es tan restrictivo que no puede aprender los patrones relevantes. La zona de sobreajuste (profundidad alta) muestra la señal clásica: la brecha entre las curvas de entrenamiento y prueba crece porque el árbol memoriza ruido. La profundidad óptima está donde la prueba alcanza su máximo (≈4–5 en el taller)."
+        },
+        {
+          "id": "173cbe28-0798-4801-9e15-e744d5c06283",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "¿Qué controla el hiperparámetro max_depth en DecisionTreeClassifier y qué riesgo representa un valor demasiado alto?",
+          "options": [
+            "Controla el número mínimo de observaciones necesarias en una hoja para que el árbol pueda hacer una predicción; un valor alto produce predicciones menos confiables.",
+            "Controla cuántas variables predictoras puede usar el árbol en total; un valor alto aumenta la multicolinealidad.",
+            "Controla la profundidad máxima del árbol (número de niveles de preguntas): un valor alto permite árboles muy complejos que memorizan los datos de entrenamiento en lugar de generalizar (sobreajuste).",
+            "Controla la métrica de impureza usada en cada nodo; un valor alto cambia de Gini a Entropía automáticamente."
+          ],
+          "correct": 2,
+          "feedback": "max_depth limita cuántos niveles de preguntas puede tener el árbol. Con max_depth=3 hay máximo 8 hojas; sin límite (None) el árbol del taller llegó a profundidad 11 y 85 hojas, memorizando el conjunto de entrenamiento. Controlar max_depth es el mecanismo de regularización más directo en árboles."
+        },
+        {
+          "id": "38f04a6e-69d4-4a2e-97bf-d80f26f4fcba",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El GridSearchCV del Bloque A8 incluye min_samples_leaf en el param_grid. ¿Qué efecto tiene este hiperparámetro sobre el árbol resultante?",
+          "options": [
+            "Define cuántas variables se usan en cada división; min_samples_leaf=10 significa que el árbol solo usa las 10 variables más importantes.",
+            "Establece el número mínimo de observaciones de entrenamiento que debe tener una hoja para ser válida. Valores mayores producen árboles más simples porque impiden divisiones que generarían hojas con muy pocos datos (que suelen ser ruido).",
+            "Controla cuántas veces se repite el proceso de validación cruzada dentro de cada nodo del árbol.",
+            "Indica el número mínimo de variables numéricas que deben estar presentes en el dataset para que el árbol pueda entrenarse."
+          ],
+          "correct": 1,
+          "feedback": "min_samples_leaf=10 significa que el árbol no realizará ninguna división que produzca una hoja con menos de 10 observaciones. Esto actúa como regularización: evita crear hojas que representan excepciones o ruido del conjunto de entrenamiento. En el taller, la mejor combinación fue max_depth=5 con min_samples_leaf=10."
+        },
+        {
+          "id": "7c0fa493-6005-48fd-9cca-7be19db1c2b7",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El Bloque A4 muestra la siguiente regla del árbol de crédito:\n\n|--- deuda_actual <= 5975.50\n|   |--- ingresos_mensuales > 1574.50\n|   |   |--- num_creditos_previos <= 0.50\n|   |   |   |--- class: 0\n\n¿Cómo se interpreta en palabras esta regla?",
+          "options": [
+            "Si la deuda supera $5.975,50 Y los ingresos son mayores a $1.574,50 Y tiene al menos 1 crédito previo → No riesgoso.",
+            "Si la deuda es mayor a $5.975,50 Y los ingresos son menores a $1.574,50 → No riesgoso.",
+            "Si la deuda es menor o igual a $5.975,50 Y los ingresos son mayores a $1.574,50 Y el número de créditos previos es menor o igual a 0,5 (es decir, ninguno) → el solicitante se clasifica como No riesgoso (clase 0).",
+            "Si la deuda es menor o igual a $5.975,50 Y los ingresos son menores a $1.574,50 → Riesgoso."
+          ],
+          "correct": 2,
+          "feedback": "En export_text, el sangrado indica los niveles del árbol y el '>' a la izquierda indica la rama falsa. La regla leída de arriba a abajo es: deuda ≤ 5975.5 (rama izquierda/Sí), ingresos > 1574.5 (rama derecha/No), num_creditos_previos ≤ 0.5 (ningún crédito, ≤0.5 = 0) → clase 0 (No riesgoso)."
+        },
+        {
+          "id": "4c90ff87-65fc-443f-ba52-ac5926514207",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El Bloque A7 muestra: deuda_actual=0.609, ingresos_mensuales=0.385, num_creditos_previos=0.006, edad=0.000, meses_empleo=0.000. ¿Qué mide feature_importances_ y qué significa que edad y meses_empleo tengan importancia 0?",
+          "options": [
+            "Mide la correlación entre cada variable y la variable objetivo. Importancia 0 significa correlación perfectamente nula, por lo que esas variables son numéricamente idénticas a cero.",
+            "Mide cuánto redujo cada variable la impureza Gini en todo el árbol, normalizado para que la suma sea 1. Importancia 0 en edad y meses_empleo significa que ese árbol de profundidad 3 nunca las usó en ninguna pregunta de ningún nodo.",
+            "Mide el número de veces que cada variable aparece en el árbol dividido por el total de nodos. Cero significa que fueron excluidas del entrenamiento por tener demasiados valores nulos.",
+            "Mide el accuracy que pierde el modelo si se elimina esa variable. Cero indica que eliminarlas no afectaría el rendimiento en ningún escenario posible."
+          ],
+          "correct": 1,
+          "feedback": "feature_importances_ suma la reducción de Gini de todos los nodos donde se usa cada variable, ponderada por el número de muestras. Suma exactamente 1. Que edad=0.000 no significa que la edad sea irrelevante para el crédito, sino que en este árbol específico de max_depth=3 el algoritmo no necesitó usarla: con deuda e ingresos fue suficiente para clasificar bien."
+        },
+        {
+          "id": "3d9074e0-a7a6-4567-9ac9-80dcb7d17756",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El taller usa plot_tree(arbol, filled=True, class_names=['No riesgoso', 'Riesgoso']). ¿Qué indican los colores del gráfico y su intensidad?",
+          "options": [
+            "El color indica el nivel del árbol: nivel 0 es blanco, nivel 1 es gris claro, nivel 2 es gris oscuro y el nivel 3 (hojas) es negro.",
+            "El color representa la clase mayoritaria del nodo (naranja = No riesgoso, azul = Riesgoso) y la intensidad refleja la pureza: cuanto más intenso, más puro el nodo (más dominante es una clase).",
+            "El color muestra la métrica de accuracy de cada nodo: verde = accuracy alto, rojo = accuracy bajo.",
+            "El color indica si el nodo fue usado en el entrenamiento (azul) o en la prueba (naranja); los nodos blancos son compartidos."
+          ],
+          "correct": 1,
+          "feedback": "El parámetro filled=True colorea los nodos según su clase mayoritaria. El taller especifica que naranja = No riesgoso, azul = Riesgoso. La saturación del color es proporcional a la pureza del nodo: Gini=0 da el color más intenso; Gini=0.5 (mezcla perfecta al 50/50) da el color más pálido."
+        },
+        {
+          "id": "a040c265-c384-4ba3-827f-2bc3f92622bc",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "En el árbol de crédito, la raíz es 'deuda_actual ≤ 5975.5'. El taller menciona que esto es la división con ΔGini = 0.125. ¿Por qué CART elige esta variable como raíz y no, por ejemplo, ingresos_mensuales?",
+          "options": [
+            "Porque deuda_actual es la variable con mayor número de valores únicos en el dataset, lo que garantiza más puntos de corte posibles.",
+            "Porque es la variable listada en la primera columna del DataFrame, y CART siempre comienza desde la columna izquierda.",
+            "Porque deuda_actual producía la mayor reducción de impureza Gini (ΔGini = 0.125) entre todas las posibles divisiones en todas las variables. CART evalúa sistemáticamente cada posible umbral de cada variable y elige la combinación óptima.",
+            "Porque el analista del taller configuró manualmente la raíz del árbol antes de llamar a fit()."
+          ],
+          "correct": 2,
+          "feedback": "CART es un algoritmo greedy: en cada nodo evalúa todos los posibles puntos de corte en todas las variables. Calcula el Gini ponderado de los dos hijos resultantes y elige la división que maximiza la reducción de impureza. Ningún parámetro permite fijar manualmente la raíz; es siempre la mejor división disponible en ese momento."
+        },
+        {
+          "id": "af516c7b-4b46-42d4-a1ab-47954427564b",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El Bloque A3 imprime: 'Profundidad real: 3 | Número de hojas: 8'. ¿Por qué un árbol con max_depth=3 tiene exactamente 8 hojas en el caso ideal?",
+          "options": [
+            "Porque scikit-learn limita por defecto el número de hojas a 8 cuando max_depth es menor a 5.",
+            "Porque en un árbol binario perfectamente balanceado de profundidad 3, cada nivel duplica el número de nodos: 2¹=2, 2²=4, 2³=8 hojas máximas. Si todas las ramas alcanzan el nivel 3, el total es 8.",
+            "Porque el dataset tiene exactamente 8 categorías en la variable objetivo riesgo_crediticio.",
+            "Porque min_samples_leaf se inicializa automáticamente a 8 cuando no se especifica, limitando el árbol a 8 divisiones."
+          ],
+          "correct": 1,
+          "feedback": "Un árbol binario de profundidad d puede tener como máximo 2^d hojas. Con max_depth=3: 2³=8 hojas en el caso ideal (árbol completamente balanceado). En la práctica puede tener menos si alguna rama alcanza la pureza antes del nivel 3 o si min_samples_leaf lo impide."
+        },
+        {
+          "id": "5f6f6b9c-e4b4-4358-b6e4-695050e07838",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El árbol de triaje (Parte B) produce la regla: frecuencia_cardiaca > 110.5 → motivo_consulta_fiebre <= 0.5 → class: Urgente. Considerando que motivo_consulta_fiebre es una columna One-Hot (1=fiebre, 0=otro motivo), ¿cómo se lee esta regla en términos clínicos?",
+          "options": [
+            "Si el pulso supera 110.5 ppm Y el paciente tiene fiebre → Urgente.",
+            "Si el pulso supera 110.5 ppm Y el paciente NO tiene fiebre como motivo de consulta (motivo_fiebre=0) → el árbol clasifica al paciente como Urgente.",
+            "Si el pulso es menor a 110.5 ppm Y el paciente tiene fiebre → Urgente.",
+            "Si el motivo es fiebre (motivo_consulta_fiebre=1) → siempre Urgente, independientemente del pulso."
+          ],
+          "correct": 1,
+          "feedback": "motivo_consulta_fiebre ≤ 0.5 equivale a motivo_fiebre = 0 (el valor 0 es ≤ 0.5, el valor 1 es > 0.5). La regla clínica es: taquicardia severa (pulso > 110.5) Y el motivo NO es fiebre (lo que descartaría la taquicardia reactiva a la fiebre) → el árbol clasifica como Urgente, sugiriendo otra causa más grave."
+        },
+        {
+          "id": "b3e7d785-a88f-4b55-8e87-fa705e462b55",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El árbol del taller de triaje hospitalario elige frecuencia_cardiaca como nodo raíz (importancia = 0.353). El taller pregunta si tiene sentido clínicamente. ¿Cuál es la justificación correcta?",
+          "options": [
+            "No tiene sentido clínico porque en emergencias se debe priorizar primero el motivo de consulta del paciente, que es la información más confiable.",
+            "Sí tiene sentido: la frecuencia cardíaca es uno de los signos vitales más directos del estado hemodinámico del paciente. Una taquicardia severa (>110 ppm) es señal objetiva de que el cuerpo está bajo estrés fisiológico importante, independientemente del motivo declarado de consulta.",
+            "Tiene sentido solo si el dataset incluye pacientes con problemas cardíacos; para otros motivos de consulta, el pulso no es relevante.",
+            "No tiene sentido porque la frecuencia cardíaca varía naturalmente con el ejercicio previo y no es confiable como primer criterio de triaje."
+          ],
+          "correct": 1,
+          "feedback": "La frecuencia cardíaca es un signo vital continuo y objetivo. En los sistemas de triaje reales (como el Canadian Triage and Acuity Scale), los signos vitales —incluyendo el pulso— son criterios primarios. El árbol identificó esto estadísticamente porque el pulso separó mejor las clases en el dataset. El alineamiento con el criterio clínico valida el modelo."
+        },
+        {
+          "id": "9a30efb5-4b46-418d-a09c-b6b92829d067",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El Bloque C.3 usa predict_proba() para obtener la probabilidad de riesgo de cada solicitud. ¿Qué devuelve exactamente predict_proba() en un árbol de decisión?",
+          "options": [
+            "La probabilidad calibrada mediante Platt Scaling, igual que cuando se activa probability=True en SVC.",
+            "La proporción de observaciones de entrenamiento de cada clase que llegaron a la hoja en la que termina la nueva observación. No es una probabilidad estadística rigurosa, sino la frecuencia de clases en esa hoja.",
+            "El valor del Gini de la hoja final, transformado al rango [0, 1] mediante una función sigmoide.",
+            "La distancia normalizada entre la observación y el nodo raíz del árbol, interpretada como nivel de confianza."
+          ],
+          "correct": 1,
+          "feedback": "En árboles de decisión, predict_proba()[i] devuelve [n_clase0/n_total, n_clase1/n_total] de la hoja donde cae la observación. Si en una hoja llegaron 80 riesgosos y 20 no riesgosos, predict_proba devuelve [0.20, 0.80]. No hay función sigmoide ni calibración; es simplemente la distribución de clases en esa hoja."
+        },
+        {
+          "id": "465759d3-4061-4b86-934d-b40e2b7e3b08",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "En el Bloque A8, el param_grid del árbol usa 'max_depth' directamente (sin prefijo 'modelo__'), a diferencia del taller de SVM donde se usaba 'modelo__C'. ¿Por qué no se necesita el prefijo aquí?",
+          "options": [
+            "Porque DecisionTreeClassifier es un modelo especial de scikit-learn que ignora los prefijos del param_grid.",
+            "Porque en este taller no se usa un Pipeline: el estimator de GridSearchCV es directamente el DecisionTreeClassifier, así que los hiperparámetros se referencian sin prefijo. El prefijo 'paso__parámetro' solo es necesario cuando el estimator es un Pipeline.",
+            "Porque max_depth y min_samples_leaf son hiperparámetros globales de GridSearchCV, no del árbol.",
+            "Porque el árbol no requiere escalado y, sin StandardScaler, scikit-learn suprime automáticamente el requisito del prefijo."
+          ],
+          "correct": 1,
+          "feedback": "La notación 'nombre_paso__hiperparámetro' (doble guion bajo) es específica de los Pipelines de scikit-learn. Cuando GridSearchCV recibe directamente un estimator (sin Pipeline), los parámetros se nombran tal como aparecen en el constructor: 'max_depth', 'min_samples_leaf'. El árbol no necesita escalado, así que no hay Pipeline."
+        },
+        {
+          "id": "63b16af0-5d5c-4bdf-992c-d93875a6ef02",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "En el Bloque B3, GridSearchCV usa scoring='recall' para optimizar el triaje, y obtiene best_params_ = {'max_depth': None, 'min_samples_leaf': 10}. ¿Por qué tiene sentido priorizar el Recall en un sistema de triaje hospitalario?",
+          "options": [
+            "Porque el Recall es siempre superior al F1 en datasets con más de 1000 registros, independientemente del contexto clínico.",
+            "Porque en triaje hospitalario, un falso negativo (clasificar como no urgente a un paciente que sí lo es) puede costar una vida. El Recall mide exactamente la proporción de urgentes reales que el modelo detecta, por lo que maximizarlo reduce al mínimo esos errores fatales.",
+            "Porque el dataset de triaje está desbalanceado (724 urgentes vs 476 no urgentes) y el Recall es la única métrica válida para datasets con más positivos que negativos.",
+            "Porque scoring='recall' le indica a GridSearchCV que use únicamente los folds que contienen casos urgentes, haciendo la búsqueda más rápida."
+          ],
+          "correct": 1,
+          "feedback": "En medicina de urgencias, el costo de un falso negativo (enviar a casa a alguien con una emergencia real) es drásticamente mayor que el de un falso positivo (atender antes de lo necesario). El Recall = TP/(TP+FN) cuantifica exactamente la capacidad del modelo de detectar todos los verdaderos positivos, que es el objetivo prioritario en triaje."
+        },
+        {
+          "id": "8765c5a9-a6cb-451e-a24e-f713872b96ff",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El Bloque C.1 observa: con el 80% de datos la raíz del árbol final era 'deuda_actual ≤ 5975.5', pero con el 100% de datos la raíz cambió a 'deuda_actual ≤ 8014'. El taller llama a esto 'inestabilidad'. ¿Qué implica esta propiedad para el uso práctico de los árboles de decisión?",
+          "options": [
+            "Que el árbol es incorrecto y debe recalcularse; la raíz no puede cambiar si el modelo fue correctamente optimizado con GridSearchCV.",
+            "Que pequeños cambios en el conjunto de datos (agregar el 20% reservado para prueba) pueden producir un árbol estructuralmente diferente. Por eso se copian los hiperparámetros óptimos (max_depth, min_samples_leaf) para el modelo final, no la estructura específica del árbol de evaluación.",
+            "Que el árbol con el 80% de datos siempre es superior al entrenado con el 100%, porque los árboles se vuelven inestables con más datos.",
+            "Que se debe evitar reentrenar el árbol con datos nuevos en producción; una vez exportado el .pkl, no debe modificarse."
+          ],
+          "correct": 1,
+          "feedback": "La inestabilidad es una limitación conocida de los árboles de decisión: son sensibles a variaciones en los datos de entrenamiento. Agregar el 20% de datos que antes era el conjunto de prueba cambia las distribuciones y puede hacer que una variable diferente sea la más informativa en la raíz. Por eso se transfieren hiperparámetros, no el árbol concreto."
+        },
+        {
+          "id": "f7b6d800-d69c-4580-bd5f-b7afc47c0461",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "Un equipo está comparando Árbol de Decisión y SVM para un nuevo proyecto. ¿Cuál de las siguientes afirmaciones describe correctamente una diferencia entre ambos modelos según el taller?",
+          "options": [
+            "El árbol de decisión siempre tiene mejor Accuracy que SVM en datasets con variables categóricas.",
+            "Tanto el árbol como el SVM requieren StandardScaler obligatoriamente; omitirlo en cualquiera de los dos produce resultados inválidos.",
+            "El árbol de decisión no requiere escalado de variables (compara por umbral), es interpretable mediante plot_tree y export_text, y puede exportarse sin un Pipeline. SVM requiere escalado obligatorio, opera en espacios de alta dimensión y no produce reglas legibles directamente.",
+            "La única diferencia es que el árbol usa Gini como criterio mientras que SVM usa la función sigmoide."
+          ],
+          "correct": 2,
+          "feedback": "Las diferencias clave del taller: 1) Escalado: árbol no lo necesita, SVM sí (obligatorio). 2) Interpretabilidad: el árbol genera reglas Sí/No legibles; el SVM (especialmente con kernel RBF) opera en espacios de alta dimensión sin reglas legibles. 3) Pipeline: el árbol puede entrar directamente a GridSearchCV; el SVM necesita Pipeline para evitar data leakage."
+        },
+        {
+          "id": "a216177c-ba45-4178-b5fd-8871c4e9bfec",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "En el Bloque B1, el taller usa pd.get_dummies() para codificar la columna motivo_consulta antes de entrenar el árbol. El taller añade una advertencia: 'para predecir un solo paciente nuevo en producción se usa OneHotEncoder'. ¿Por qué pd.get_dummies() no es ideal para producción?",
+          "options": [
+            "Porque pd.get_dummies() solo funciona en Jupyter Notebook y falla en scripts de Python estándar.",
+            "Porque pd.get_dummies() aplica la codificación a todo el dataset de una vez, sin 'aprender' los valores posibles. Si en producción llega un paciente con un motivo_consulta nuevo (ej. 'fractura'), get_dummies crearía una columna nueva que el árbol no conoce. OneHotEncoder 'recuerda' los valores del entrenamiento y puede manejar categorías nuevas de forma controlada.",
+            "Porque pd.get_dummies() produce columnas con nombres distintos a los que DecisionTreeClassifier espera internamente.",
+            "Porque pd.get_dummies() no es compatible con train_test_split cuando se usa stratify=y."
+          ],
+          "correct": 1,
+          "feedback": "pd.get_dummies() es stateless: no recuerda qué categorías vio en el entrenamiento. Si en producción aparece una categoría nueva, genera columnas diferentes, causando un error de incompatibilidad con el árbol exportado. OneHotEncoder (de scikit-learn) aprende las categorías durante fit() y puede configurarse para ignorar o marcar categorías desconocidas en transform()."
+        },
+        {
+          "id": "15b428da-e2dd-4da3-b6b6-8371f343d211",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "¿Cuál de los siguientes bloques de código entrena correctamente un árbol de decisión para el dataset de crédito del taller y muestra su profundidad real?",
+          "options": [
+            "from sklearn.tree import DecisionTreeClassifier\narbol = DecisionTreeClassifier(max_depth=3, random_state=42)\narbol.fit(X_train, y_train)\nprint('Profundidad real:', arbol.get_depth())\nprint('Número de hojas: ', arbol.get_n_leaves())",
+            "from sklearn.tree import DecisionTreeClassifier\narbol = DecisionTreeClassifier(max_depth=3)\narbol.fit(X_train_scaled, y_train)  # Con escalado obligatorio\nprint('Profundidad:', arbol.depth_)",
+            "from sklearn.tree import DecisionTree\narbol = DecisionTree(depth=3, seed=42)\narbol.train(X_train, y_train)\nprint('Depth:', arbol.depth)",
+            "from sklearn.tree import DecisionTreeClassifier\narbol = DecisionTreeClassifier()\narbol.max_depth = 3\narbol.fit(X_train, y_train)\nprint('Profundidad:', arbol.max_depth_)"
+          ],
+          "correct": 0,
+          "feedback": "La importación correcta es 'from sklearn.tree import DecisionTreeClassifier'. Los hiperparámetros van en el constructor. Los datos NO se escalan. get_depth() devuelve la profundidad real del árbol entrenado (puede ser menor a max_depth si alcanzó pureza antes). get_n_leaves() devuelve el número de hojas."
+        },
+        {
+          "id": "7192310c-175b-438d-a708-b11242d02fa2",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "Se ejecuta el siguiente código:\n\narbol_libre = DecisionTreeClassifier(random_state=42)\narbol_libre.fit(X_train, y_train)\nprint(f'Accuracy entrenamiento: {arbol_libre.score(X_train, y_train):.3f}')\nprint(f'Accuracy prueba: {arbol_libre.score(X_test, y_test):.3f}')\n\nEl taller muestra como salida: Accuracy entrenamiento: 1.000 | Accuracy prueba: 0.822. ¿Qué conclusión se saca de esta salida?",
+          "options": [
+            "El modelo está perfectamente calibrado: 100% en entrenamiento indica que generalizará perfectamente a cualquier dato nuevo.",
+            "El árbol sin límite (max_depth=None) tiene sobreajuste severo: memoriza el 100% de los datos de entrenamiento, pero su rendimiento cae casi 18 puntos porcentuales en el conjunto de prueba. Es necesario limitar su profundidad.",
+            "El modelo tuvo data leakage: los datos de prueba filtraron información durante el entrenamiento, lo que elevó artificialmente el accuracy de entrenamiento.",
+            "El resultado es esperado y correcto; la diferencia de 0.178 entre entrenamiento y prueba está dentro del margen de error aceptable para clasificación binaria."
+          ],
+          "correct": 1,
+          "feedback": "Accuracy=1.000 en entrenamiento con DecisionTreeClassifier sin límite es la señal más clara de sobreajuste: el árbol creció hasta tener hojas perfectamente puras, memorizando cada registro. La caída a 0.822 en prueba confirma que aprendió ruido, no patrones generalizables. La solución es controlar max_depth y/o min_samples_leaf."
+        },
+        {
+          "id": "1a5129f0-99ea-4725-ac41-23b6a133eb9d",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "El Bloque A8 define:\n\nparam_grid = {'max_depth': [3, 4, 5, 6, None], 'min_samples_leaf': [1, 5, 10, 20]}\nbase = DecisionTreeClassifier(random_state=42)\ngrid = GridSearchCV(base, param_grid, cv=5, scoring='f1')\ngrid.fit(X_train, y_train)\n\n¿Cuántos entrenamientos totales ejecuta GridSearchCV en este código?",
+          "options": [
+            "20 entrenamientos (5 valores de max_depth × 4 valores de min_samples_leaf).",
+            "101 entrenamientos: 100 de la búsqueda (20 combinaciones × 5 folds) más 1 entrenamiento final con toda X_train usando los mejores hiperparámetros (refit=True por defecto).",
+            "25 entrenamientos, uno por cada valor del param_grid combinado con 5 folds.",
+            "4 entrenamientos, uno por cada valor de min_samples_leaf, ignorando max_depth."
+          ],
+          "correct": 1,
+          "feedback": "5 valores de max_depth × 4 valores de min_samples_leaf = 20 combinaciones. Con cv=5: 20 × 5 = 100 entrenamientos de evaluación. Más el refit final (refit=True por defecto) con toda X_train usando la mejor combinación (max_depth=5, min_samples_leaf=10): total = 101 entrenamientos."
+        },
+        {
+          "id": "d68ada2c-7c3e-486a-87a4-1cfdcf324ad9",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles de Decisión",
+          "text": "En el Bloque C.2, el taller exporta el árbol final con:\n\njoblib.dump(arbol_final, 'modelo_riesgo_arbol.pkl')\n\nEl taller señala: 'a diferencia de SVM, no hay escalador que guardar'. ¿Qué implicación tiene esto al cargar el modelo en producción con joblib.load()?",
+          "options": [
+            "Al cargar el modelo, se debe aplicar manualmente StandardScaler con los parámetros del entrenamiento original antes de llamar a predict().",
+            "El archivo .pkl del árbol es más grande que el de SVM porque guarda la estructura completa del árbol con todos sus umbrales, a diferencia del SVM que solo guarda los vectores de soporte.",
+            "Al cargar el modelo con joblib.load(), el árbol está listo para recibir directamente el DataFrame con los datos en su escala original (sin preprocesamiento adicional) y predecir llamando a predict() o predict_proba().",
+            "No es posible exportar un árbol de decisión con joblib; se debe usar pickle directamente para serializar la estructura de nodos del árbol."
+          ],
+          "correct": 2,
+          "feedback": "Dado que el árbol no requiere escalado, el .pkl contiene solo el árbol (sus preguntas, umbrales y hojas): no hay ningún StandardScaler ajustado que deba acompañarlo. Al cargar con joblib.load() y llamar a predict() o predict_proba(), el árbol opera directamente sobre los datos crudos con las mismas columnas del entrenamiento."
         }
       ]
     }
