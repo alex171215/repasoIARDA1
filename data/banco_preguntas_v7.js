@@ -5167,7 +5167,7 @@ window.QUIZ_DATA = {
         },
         {
           "value": "semana7",
-          "label": "Semana 7 · Árboles de Decisión"
+          "label": "Semana 7 · Árboles de Decisión y Random Forest"
         },
         {
           "value": "bookmarked",
@@ -7806,6 +7806,356 @@ window.QUIZ_DATA = {
           ],
           "correct": 2,
           "feedback": "Correcto. Debido a la inestabilidad de los árboles (donde agregar datos cambia los umbrales de división), se transfieren los hiperparámetros descubiertos en CV (max_depth=5, min_samples_leaf=10), no la estructura gráfica previa. Además, al no necesitar escalado, el .pkl se despliega de forma autónoma."
+        },
+        {
+          "id": "292567d5-9a4b-4674-88f8-8838c0010039",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Qué es el muestreo Bootstrap y cómo funciona durante el entrenamiento de los árboles en Random Forest?",
+          "options": [
+            "Es un algoritmo de clustering iterativo que agrupa las observaciones más similares antes de particionar los nodos.",
+            "Es una técnica de reducción dimensional que proyecta las variables hacia los componentes principales de mayor varianza.",
+            "Es un muestreo aleatorio con reemplazo de tamaño N que genera un dataset de entrenamiento diferente para cada árbol.",
+            "Es un muestreo estratificado sin reemplazo que divide el dataset en K pliegues secuenciales para evitar el sobreajuste."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Bootstrap es el muestreo aleatorio con reemplazo. Si el dataset original tiene N filas, se extraen N observaciones al azar permitiendo que una misma fila sea elegida varias veces. Esto produce un subconjunto de entrenamiento con ligeras variaciones para cada uno de los árboles del bosque."
+        },
+        {
+          "id": "4efe598e-b50e-47ab-9df5-5fe342dd1425",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "Al aplicar el muestreo Bootstrap para entrenar un árbol individual, ¿cuáles son los tres tipos de datos que se generan siempre respecto al dataset original?",
+          "options": [
+            "Datos de entrenamiento, datos de validación cruzada y datos reservados para la matriz de confusión.",
+            "Datos continuos, datos discretos y datos categóricos codificados mediante One-Hot.",
+            "Datos repetidos (más de una vez), datos únicos (exactamente una vez) y datos excluidos (Out-of-Bag).",
+            "Datos normales, datos atípicos (outliers) y datos imputados por la media aritmética global."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Debido al sorteo con reemplazo, en la muestra de cada árbol siempre aparecen: 1) observaciones repetidas (salen dos o más veces), 2) observaciones únicas (salen exactamente una vez) y 3) observaciones excluidas u Out-of-Bag (OOB, aquellas que no fueron seleccionadas para ese árbol)."
+        },
+        {
+          "id": "01b9bebc-25cb-449d-b561-2d2b1d43743c",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Cuál es la función y utilidad primordial de los datos excluidos (muestras Out-of-Bag o OOB) en Random Forest?",
+          "options": [
+            "Se reservan para recalcular los umbrales de partición de Gini en caso de que ocurra un empate numérico.",
+            "Se asignan automáticamente a las hojas terminales para sustituir las predicciones dudosas del bosque.",
+            "Se utilizan como conjunto de validación honesto para evaluar el rendimiento de los árboles que no los vieron.",
+            "Se eliminan permanentemente del proceso para acelerar la velocidad de convergencia del modelo."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Las observaciones excluidas (OOB) actúan como un conjunto de prueba integrado y gratuito. Permiten medir el desempeño de forma rigurosa y honesta, evaluando cada registro exclusivamente con los árboles en cuyo entrenamiento esa observación no participó."
+        },
+        {
+          "id": "bbfc0528-4ac9-4dcf-8b40-1af60c5193d0",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Cuál es una diferencia esencial en el control del sobreajuste entre un Árbol de Decisión simple y Random Forest?",
+          "options": [
+            "En un árbol simple más profundidad provoca sobreajuste; en Random Forest agregar más árboles estabiliza el modelo.",
+            "En un árbol simple la frontera es lineal; en Random Forest las fronteras de decisión son siempre hiperplanos duros.",
+            "En un árbol simple más profundidad reduce el error; en Random Forest más árboles genera sobreajuste.",
+            "En un árbol simple se requiere estandarizar variables; en Random Forest las variables deben normalizarse siempre."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. En un árbol de decisión individual, aumentar la profundidad sin límite causa que memorice el ruido (sobreajuste severo). En contraste, en Random Forest agregar más árboles (n_estimators) no incrementa el sobreajuste; por el contrario, reduce la varianza y estabiliza el accuracy general."
+        },
+        {
+          "id": "1bda17da-4ef7-4cc5-a033-f6468ff7ee23",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "En RandomForestClassifier, ¿qué representa el parámetro oob_score=True y qué información proporciona el atributo oob_score_ tras el ajuste?",
+          "options": [
+            "Activa la poda de ramas impuras y devuelve el porcentaje de hojas podadas durante el entrenamiento del ensamble.",
+            "Define el número de pliegues estratificados para GridSearchCV y reporta el mejor parámetro encontrado por el modelo.",
+            "Calcula la correlación de Pearson entre árboles y devuelve la distancia euclidiana promedio entre sus predicciones.",
+            "Habilita el cálculo del score de validación interna con muestras fuera de bolsa y devuelve su accuracy estimado."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. oob_score=True instruye a scikit-learn a evaluar internamente el modelo usando las muestras Out-of-Bag. Tras llamar a fit(), el atributo oob_score_ almacena el accuracy de esa evaluación, brindando una métrica de generalización confiable sin requerir un split de validación adicional."
+        },
+        {
+          "id": "ffe079fc-68aa-4885-8e60-53752c261a93",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Qué contiene el atributo estimators_ en un modelo RandomForestClassifier después de haber completado la fase de entrenamiento?",
+          "options": [
+            "El arreglo con los mejores hiperparámetros encontrados tras optimizar el modelo mediante validación cruzada interna.",
+            "La matriz de confusión acumulada con los aciertos y fallos de cada uno de los árboles construidos en el bosque.",
+            "La lista de los pesos analíticos calculados por descenso de gradiente para cada una de las variables predictoras.",
+            "La lista de todos los objetos DecisionTreeClassifier individuales que fueron ajustados y conforman el ensamble."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. estimators_ es una lista de Python que contiene todos los árboles base individuales (cada uno es una instancia entrenada de DecisionTreeClassifier). Esto permite acceder, inspeccionar, graficar o analizar las reglas de cualquier árbol específico del bosque."
+        },
+        {
+          "id": "b8afada8-bcc4-421b-8217-e30431b2b230",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Cómo se calcula y qué refleja el atributo feature_importances_ generado por RandomForestClassifier tras el entrenamiento?",
+          "options": [
+            "Contabiliza cuántas veces aparece cada variable en la raíz de los árboles sin considerar su aporte en divisiones secundarias.",
+            "Promedia la reducción de impureza Gini aportada por cada variable en todos los árboles del bosque, sumando en total uno.",
+            "Mide el p-valor de la prueba F de Fisher para cada variable, descartando aquellas con significancia menor al cinco por ciento.",
+            "Expresa la varianza explicada por cada columna tras aplicar descomposición en valores singulares sobre la matriz de datos."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. feature_importances_ calcula la reducción total de impureza (Gini) lograda por cada variable, ponderada por la cantidad de muestras que llegan a cada nodo y promediada a lo largo de todos los árboles del ensamble. Todas las importancias están normalizadas y su suma es exactamente 1.0."
+        },
+        {
+          "id": "0f131d65-d54e-4147-b553-99ea0eb7103c",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Qué almacena el atributo classes_ en un clasificador de Random Forest tras invocar el método fit(X, y)?",
+          "options": [
+            "La lista con los nombres de las columnas categóricas que fueron transformadas internamente con OneHotEncoder.",
+            "Un arreglo con las etiquetas únicas de las clases aprendidas por el modelo durante el entrenamiento (ej. [0, 1]).",
+            "El número total de particiones binarias ejecutadas en las hojas terminales a lo largo de todo el bosque.",
+            "Un diccionario con la cantidad de árboles que votaron a favor de cada categoría en el conjunto de entrenamiento."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. classes_ contiene el array unidimensional con las etiquetas únicas del vector objetivo y que el clasificador identificó y aprendió durante el fit() (por ejemplo, array([0, 1]) en el caso de la clasificación binaria de convocatoria de jugadores)."
+        },
+        {
+          "id": "fa5fed90-63ff-40a3-8e6b-0bf42e32059e",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Qué función cumple el hiperparámetro n_estimators en el constructor de RandomForestClassifier y cuál es su valor por defecto?",
+          "options": [
+            "Establece la cantidad total de árboles de decisión que se construirán en el ensamble; por defecto en scikit-learn es 100.",
+            "Indica el número de variables que se sortearán en cada nodo durante la partición; por defecto toma la raíz cuadrada.",
+            "Define el número máximo de niveles o profundidad que puede alcanzar cada árbol del bosque; por defecto es 10.",
+            "Determina cuántos subconjuntos de datos se crearán para realizar la validación cruzada; por defecto su valor es 5."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. n_estimators define cuántos árboles individuales formarán el bosque (por defecto 100 en scikit-learn). Aumentar n_estimators mejora la estabilidad y el desempeño del ensamble hasta alcanzar una meseta, sin incurrir en riesgo de sobreajuste."
+        },
+        {
+          "id": "a309f339-5273-4809-9a02-ce47f0c5cca0",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Qué controla el hiperparámetro max_features en RandomForestClassifier y cuál es su configuración predeterminada para clasificación?",
+          "options": [
+            "Fija cuántas variables se seleccionan al azar en cada división de cada nodo; por defecto usa 'sqrt' (raíz cuadrada de p).",
+            "Controla el umbral mínimo de varianza requerido para que una columna numérica no sea descartada por el Pipeline.",
+            "Determina el número máximo de variables con importancia mayor a cero que pueden ser admitidas en las hojas finales.",
+            "Limita la cantidad de columnas del dataset original que se conservarán antes de iniciar el preprocesamiento."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. max_features determina el subconjunto de variables candidatas sorteadas al azar en CADA nodo individual al buscar la mejor división. Para clasificación, el valor por defecto es 'sqrt' (la raíz cuadrada del número total de variables p). Esto descorrelaciona los árboles e incrementa la diversidad."
+        },
+        {
+          "id": "486a590e-4a6c-40ff-a46e-78d634d948e5",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Cómo genera RandomForestClassifier la predicción probabilística de clase mediante el método predict_proba()?",
+          "options": [
+            "Cuenta los votos de la clase ganadora y los divide para la cantidad de observaciones del conjunto de prueba.",
+            "Mide la distancia del vector de entrada al hiperplano separador óptimo y la normaliza en el rango de cero a uno.",
+            "Aplica una transformación logística sigmoide sobre la suma ponderada de las decisiones booleanas de las hojas.",
+            "Calcula el promedio aritmético de las probabilidades estimadas por cada uno de los B árboles del bosque."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. En scikit-learn, predict_proba() no cuenta simplemente votos duros; promedia las distribuciones de probabilidad de las hojas terminales donde cae la instancia a lo largo de los B árboles del ensamble: P(y=c|x) = (1/B) * Σ p_b(x)."
+        },
+        {
+          "id": "b33770f8-13da-47f1-b365-5449ae14fd08",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "Un árbol individual sufre de alta varianza frente a ligeros cambios en los datos. ¿Cómo resuelve Random Forest este problema estructural?",
+          "options": [
+            "Entrena un único árbol pero restringiendo estrictamente las variables a una escala estandarizada con media cero.",
+            "Combina múltiples árboles diversos (mediante Bootstrap y variables aleatorias) para que sus errores individuales se anulen.",
+            "Aplica una penalización de regularización Ridge sobre los coeficientes de las preguntas en cada nodo interno.",
+            "Sustituye el algoritmo de partición CART por una aproximación lineal de vectores de soporte con margen suave."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El principio del ensamble se apoya en la diversidad: al usar Bootstrap para cambiar los datos y sortear variables en cada nodo, los árboles cometen errores diferentes e independientes. Al promediar sus predicciones en la votación, los errores se cancelan y la varianza se reduce drásticamente."
+        },
+        {
+          "id": "96776634-6354-455d-803e-268ddaa2f500",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "Al igual que en un árbol individual, el taller indica que Random Forest no requiere aplicar StandardScaler. ¿Cuál es el motivo?",
+          "options": [
+            "Porque las variables numéricas son convertidas automáticamente a valores binarios discretos antes de ajustar el modelo.",
+            "Porque RandomForestClassifier ejecuta internamente una estandarización automática previa a la partición de cada árbol.",
+            "Porque los árboles dividen evaluando umbrales ordinales (≤), propiedad que no cambia bajo transformaciones de escala.",
+            "Porque scikit-learn prohíbe el uso de StandardScaler cuando el estimador se integra dentro de un ColumnTransformer."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Los estimadores base son árboles de decisión. Cada decisión es una comparación de orden (ej. pases ≤ 85.65). Escalar o normalizar las variables modifica la magnitud numérica pero preserva exactamente el orden relativo de los registros, por lo que las divisiones elegidas son idénticas."
+        },
+        {
+          "id": "cabf86f2-4ce7-45b1-a3e2-ffcde3162ac9",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "En el dataset de jugadores, equipo y posicion son texto. ¿Por qué el taller advierte usar OneHotEncoder y NO LabelEncoder sobre X?",
+          "options": [
+            "Porque LabelEncoder solo admite números flotantes y arroja un error de sintaxis si recibe cadenas de texto crudas.",
+            "Porque DecisionTreeClassifier descarta sistemáticamente cualquier variable codificada con valores enteros no binarios.",
+            "Porque LabelEncoder asigna números enteros (0, 1, 2...) inventando un orden ficticio inexistente entre las categorías.",
+            "Porque OneHotEncoder reduce la dimensionalidad del dataset comprimiendo múltiples columnas en una sola serie numérica."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. LabelEncoder está diseñado exclusivamente para la variable objetivo unidimensional y. Si se aplica sobre variables de entrada en X (como equipos), asigna 0, 1, 2..., creando una relación de orden arbitraria (Aucas < Emelec) que falsea las divisiones del árbol. Para X se debe usar OneHotEncoder."
+        },
+        {
+          "id": "ae53eb92-7b73-4c6c-b7f3-98ab00fe73bd",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "En Random Forest, el subconjunto de variables candidatas se sortea en CADA división de cada nodo, no una sola vez por árbol. ¿Por qué?",
+          "options": [
+            "Para evitar que el modelo entre en bucles infinitos durante el cálculo de la impureza de Gini en variables continuas.",
+            "Para garantizar que el tiempo de ejecución en procesadores con múltiples núcleos sea estrictamente determinista.",
+            "Para obligar a que todos los árboles alcancen de forma exacta el mismo número de niveles y hojas terminales simétricas.",
+            "Para evitar que las variables predictoras más fuertes monopolicen todas las divisiones, dando oportunidad a variables secundarias."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Si se sortearan las variables una única vez al inicio de cada árbol, una variable altamente predictora (como pases completados) sería elegida casi siempre como raíz en todos los árboles donde esté disponible, correlacionándolos. Sortear en cada nodo individual descorrelaciona efectivamente los árboles."
+        },
+        {
+          "id": "80b81a6f-e3ae-4819-abbf-367167d5a8f1",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "Matemáticamente, al extraer una muestra Bootstrap con reemplazo de tamaño N sobre N datos, ¿qué porcentaje de observaciones queda fuera (OOB)?",
+          "options": [
+            "Cerca del 5.0%, ya que el sorteo con reemplazo asegura que casi la totalidad del dataset sea elegido al menos una vez.",
+            "Exactamente el 20.0%, correspondiente a la proporción estándar empleada en particiones convencionales de train y test.",
+            "Aproximadamente el 36.8%, dado por el límite matemático (1 - 1/N)^N que converge a 1/e cuando N es grande.",
+            "Aproximadamente el 50.0%, debido a que cada observación tiene una probabilidad simétrica de ser o no ser seleccionada."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. La probabilidad de que un registro no sea extraído en un sorteo es (1 - 1/N). Para N sorteos independientes, la probabilidad de no salir nunca es (1 - 1/N)^N ≈ 1/e ≈ 0.368 (36.8%). Por lo tanto, cada árbol se entrena aproximadamente con el 63.2% de los datos únicos del dataset."
+        },
+        {
+          "id": "f6aaa3d8-fb6e-4977-9709-11a59e7b30ff",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "La curva empírica de número de árboles vs. accuracy muestra: 1 árbol (0.706), 10 árboles (0.817), 100 árboles (0.878) y 300 árboles (0.878). ¿Qué concluye?",
+          "options": [
+            "Superar los 100 árboles desencadena un sobreajuste severo que perjudica la precisión en nuevos datos de prueba.",
+            "El rendimiento crece rápidamente y luego se estabiliza; agregar más árboles no induce sobreajuste en el modelo.",
+            "El modelo óptimo es de un solo árbol, dado que presenta el menor costo computacional con idéntica generalización.",
+            "El cálculo de validación OOB es idéntico e infalible tanto si se entrena un solo árbol como si se entrenan trescientos."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. A diferencia de aumentar la profundidad de un árbol simple, añadir árboles a un Random Forest no empeora el rendimiento ni causa sobreajuste: el error se estabiliza asintóticamente. Además, el taller señala que se necesitan al menos 25 árboles para calcular confiablemente el oob_score_."
+        },
+        {
+          "id": "a5777d7e-8d83-4d77-9a98-bc1f6ca6b9f4",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Cuál es la sintaxis correcta en scikit-learn para ensamblar un Pipeline que codifique columnas de texto y entrene un RandomForestClassifier?",
+          "options": [
+            "Pipeline([('preproc', ColumnTransformer([('cat', OneHotEncoder(), cols)])), ('modelo', RandomForestClassifier())])",
+            "Pipeline([('modelo', RandomForestClassifier()), ('scaler', StandardScaler()), ('encoder', OneHotEncoder())])",
+            "Pipeline([('clean', SimpleImputer()), ('norm', Normalizer()), ('trees', DecisionTreeClassifier(n_estimators=100))])",
+            "Pipeline([('split', train_test_split()), ('ohe', OneHotEncoder()), ('rf', RandomForestClassifier(bootstrap=False))])"
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La arquitectura adecuada acopla primero el ColumnTransformer con OneHotEncoder para las columnas de texto (y remainder='passthrough' para conservar las numéricas), seguido del estimador RandomForestClassifier como paso final del Pipeline."
+        },
+        {
+          "id": "cf2ae8a0-9486-4316-bf13-530ba1847523",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "Si se entrena bosque = Pipeline([('preproc', preproc), ('modelo', RandomForestClassifier(...))]), ¿cómo se accede a los atributos del bosque?",
+          "options": [
+            "Ejecutando bosque.steps[0].feature_importances_, ya que el estimador ocupa por convención el primer índice del Pipeline.",
+            "Invocando directamente bosque.oob_score_ sin necesidad de hacer referencia a los pasos internos del Pipeline ajustado.",
+            "Extrayendo el diccionario de parámetros con bosque.get_params()['modelo__oob_score_'] antes de llamar a fit().",
+            "Accediendo mediante bosque.named_steps['modelo'], permitiendo consultar propiedades como oob_score_ o feature_importances_."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Para inspeccionar estimadores dentro de un Pipeline entrenado se usa named_steps con la clave asignada: bosque.named_steps['modelo'].oob_score_ para el score OOB, y bosque.named_steps['preproc'].get_feature_names_out() para las columnas codificadas."
+        },
+        {
+          "id": "8ea61c7e-ee87-41fc-b05e-5a1b6c5e50de",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "En el dataset de jugadores hay 75% no convocados y 25% convocados. ¿Por qué el taller advierte no confiar únicamente en el Accuracy?",
+          "options": [
+            "Porque en datasets con proporciones desiguales scikit-learn calcula el accuracy usando una fórmula de media armónica sesgada.",
+            "Porque un modelo trivial que prediga siempre 'no convocado' obtendría 75% de accuracy sin haber aprendido a identificar ningún convocado.",
+            "Porque el accuracy no puede computarse cuando se utilizan estimadores por ensamble que combinan más de cincuenta árboles.",
+            "Porque la presencia de clases minoritarias invalida la convergencia numérica de los árboles que utilizan el criterio de Gini."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El desbalance de clases hace que el Accuracy sea una métrica engañosa: un clasificador ingenuo que diga siempre '0' acertaría el 75% de los casos pero fallaría en el 100% de los convocados reales. Por ello es indispensable analizar Precision, Recall y F1-Score sobre la clase minoritaria (1)."
+        },
+        {
+          "id": "ab267dfd-876c-4be7-b8ac-4ef9e6791108",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "En la evaluación del taller, el árbol sin límite obtuvo test 0.778 y Precision 0.549, mientras Random Forest obtuvo test 0.878 y Precision 0.897. ¿Cómo se interpreta?",
+          "options": [
+            "El árbol individual es superior porque genera un mayor número de falsos positivos en el conjunto de prueba independiente.",
+            "Ambos modelos presentan exactamente el mismo rendimiento práctico, atribuyéndose las diferencias únicamente al azar del split.",
+            "El bosque sobreajustó severamente los datos porque su precisión en entrenamiento alcanzó el 100% con hojas puras.",
+            "Random Forest es mucho más prudente: cuando predice que un jugador será convocado, acierta casi en el 90% de los casos."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. La precisión del bosque saltó de 0.549 a 0.897. Esto significa que el ensamble es mucho más conservador y certero: casi 9 de cada 10 jugadores señalados como convocados lo son en la realidad, eliminando gran parte de los falsos positivos que cometía el árbol simple."
+        },
+        {
+          "id": "fbaec28b-3e89-429d-a550-1f5f9f9b8066",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Cuáles son las ventajas más destacadas de Random Forest que lo convierten en uno de los algoritmos más robustos en Machine Learning tabular?",
+          "options": [
+            "Ejecuta predicciones en tiempo real con archivos de serialización minúsculos y garantiza fronteras de decisión puramente lineales.",
+            "Ofrece alta precisión y estabilidad, no sobreajusta al sumar árboles, no requiere escalado e integra OOB e importancias de variables.",
+            "Genera explicaciones basadas en una única regla transparente y requiere obligatoriamente transformar los datos con StandardScaler.",
+            "Elimina automáticamente los datos atípicos del entrenamiento y no requiere codificar variables categóricas de tipo texto."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Entre sus grandes virtudes destacan: precisión elevada, estabilidad ante variaciones muestrales, invulnerabilidad al sobreajuste al incrementar árboles, ausencia de escalado numérico, estimación honesta interna vía OOB y cálculo directo de la importancia de variables."
+        },
+        {
+          "id": "ee17ca3e-fed0-4fac-b102-7da7ed2e9683",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "A pesar de su alto rendimiento, ¿cuáles son las principales desventajas o limitaciones prácticas asociadas al uso de Random Forest?",
+          "options": [
+            "Incapacidad absoluta para modelar relaciones no lineales y obligación estricta de utilizar datasets con millones de registros.",
+            "Pérdida de interpretabilidad directa (caja negra de muchos árboles), mayor lentitud de entrenamiento y archivos .pkl pesados.",
+            "Sensibilidad extrema a la escala de las variables continuas y vulnerabilidad severa al sobreajuste si se añaden más árboles.",
+            "Imposibilidad de predecir probabilidades continuas mediante predict_proba y descarte obligatorio de variables categóricas."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Las limitaciones clave de Random Forest son: 1) no se puede leer como un árbol simple de reglas SI/NO (es una caja negra de 100 o más árboles); 2) el entrenamiento y la inferencia son más lentos y consumen más memoria; y 3) el archivo .pkl exportado es significativamente más pesado."
+        },
+        {
+          "id": "03d83944-bef0-4f51-8cd4-8f562ae15b7b",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "Una vez evaluado y validado el modelo con el 80% de datos, ¿por qué el taller entrena un modelo_final ajustándolo con el 100% de observaciones (X, y)?",
+          "options": [
+            "Para aprovechar la totalidad de la información disponible para producción, preservando los hiperparámetros ya validados.",
+            "Para forzar que el score de validación OOB alcance obligatoriamente el valor perfecto de 1.000 antes de exportarlo.",
+            "Para obligar a que el preprocesador OneHotEncoder descarte las categorías aprendidas durante la partición de prueba.",
+            "Para verificar que el estimador no presente errores de sintaxis antes de generar los gráficos de matriz de confusión."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La partición 80/20 sirvió exclusivamente para auditar y validar el comportamiento del modelo. Una vez confirmada la configuración óptima, el modelo para despliegue final se reentrena con todas las filas (900 jugadores) para que cuente con el máximo aprendizaje posible en producción."
+        },
+        {
+          "id": "dd9a3b75-2fed-442e-ade9-2a1b2e9d26d4",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "Al exportar el Pipeline entrenado con joblib.dump(modelo_final, 'modelo_convocatoria_rf.pkl'), ¿cómo se utiliza este archivo en producción?",
+          "options": [
+            "Solo puede ser ejecutado en el mismo entorno de Colab donde se entrenó, ya que los archivos .pkl no son compatibles con scripts externos.",
+            "Se carga con joblib.load() y procesa directamente un DataFrame nuevo con texto crudo, aplicando la codificación y predicción internamente.",
+            "Se carga con joblib.load() pero exige que los datos nuevos sean codificados a mano con OneHotEncoder antes de llamar a predict().",
+            "Requiere guardar un segundo archivo independiente con los árboles para que el Pipeline pueda deserializar los estimadores del ensamble."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Como el Pipeline encapsula tanto el ColumnTransformer (con OneHotEncoder) como el RandomForestClassifier, un servicio web solo necesita cargar el .pkl y suministrarle el DataFrame con las columnas originales en texto. El Pipeline se encarga de transformar las variables y devolver las predicciones de forma autónoma."
         }
       ]
     },
@@ -9115,15 +9465,15 @@ window.QUIZ_DATA = {
     },
     {
       "id": "semana_7",
-      "titulo": "Semana 7: Árboles de Decisión",
+      "titulo": "Semana 7: Árboles de Decisión y Random Forest",
       "categorias": [
         {
           "value": "all",
-          "label": "Todas (Semana 7)"
+          "label": "Todas (Semana 7 · 50 preguntas)"
         },
         {
           "value": "semana7",
-          "label": "Árboles de Decisión · Conceptos y Código"
+          "label": "Árboles y Random Forest · Conceptos y Código"
         },
         {
           "value": "bookmarked",
@@ -9134,7 +9484,7 @@ window.QUIZ_DATA = {
         {
           "id": "06fdf90b-160a-4ba0-ba24-69b4dc35af63",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "A diferencia de modelos como la regresión lineal o logística, el árbol de decisión es un algoritmo no paramétrico. ¿Por qué recibe esta denominación?",
           "options": [
             "Porque procesa únicamente variables predictoras de naturaleza cualitativa que carecen de parámetros o escalas numéricas reales.",
@@ -9148,7 +9498,7 @@ window.QUIZ_DATA = {
         {
           "id": "54753dd9-98c4-4a2e-9f63-2f818ec4f9ae",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "En la anatomía de un Árbol de Decisión binario, ¿cómo se definen con exactitud sus cinco componentes estructurales fundamentales?",
           "options": [
             "Raíz: variable con mayor correlación. Nodos internos: divisiones multiclasificadas. Ramas: márgenes calculados. Hojas: registros atípicos. Profundidad: número de ramas.",
@@ -9162,7 +9512,7 @@ window.QUIZ_DATA = {
         {
           "id": "a2f995b7-4cee-4e84-aba7-1629fdb601ae",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "Scikit-learn utiliza el algoritmo CART (Breiman et al., 1984) para construir árboles de decisión. ¿Qué es este algoritmo y qué busca en cada división?",
           "options": [
             "Es un algoritmo codicioso (greedy) que construye divisiones binarias buscando maximizar la reducción de impureza local en cada nodo.",
@@ -9176,7 +9526,7 @@ window.QUIZ_DATA = {
         {
           "id": "b7c8c2db-4408-46dd-9684-5b2f40af021f",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "¿Cuál es la secuencia ordenada de pasos que ejecuta el algoritmo CART para entrenar un árbol de clasificación sobre los datos?",
           "options": [
             "1. Inicia con todos los datos en la raíz. 2. Prueba variables y umbrales. 3. Elige el corte más puro. 4. Repite en los hijos. 5. Asigna clase a cada hoja.",
@@ -9190,7 +9540,7 @@ window.QUIZ_DATA = {
         {
           "id": "ed6f54f2-9d4a-4ac8-bf5b-f8249158c5a6",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "El índice de impureza de Gini es la métrica de división por defecto en scikit-learn. ¿Qué mide conceptualmente y qué valor numérico se busca?",
           "options": [
             "Mide la probabilidad de clasificar mal un dato asignado según las proporciones del nodo; varía entre 0 y 0.5 en 2 clases, y se busca Gini = 0.",
@@ -9204,7 +9554,7 @@ window.QUIZ_DATA = {
         {
           "id": "1286d3e5-4743-4f4e-b46a-d323eba92c51",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "En el dataset de crédito, el nodo raíz contiene 720 solicitudes: 382 no riesgosas (clase 0) y 338 riesgosas (clase 1). ¿Cómo se calcula su Gini paso a paso?",
           "options": [
             "Paso 1: Calcular proporciones (p0 = 382/720 = 0.531; p1 = 338/720 = 0.469). Paso 2: Aplicar 1 - (p0² + p1²), obteniendo Gini = 0.498.",
@@ -9218,7 +9568,7 @@ window.QUIZ_DATA = {
         {
           "id": "2fd7abee-9904-486a-92ac-b14e5440233c",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "En CART, «menorar la impureza» es el objetivo principal al probar divisiones. ¿Cómo se define la ganancia de Gini (ΔGini) que guía esta elección?",
           "options": [
             "Es el porcentaje de instancias que cambian de clase al dividirse: ΔGini = (casos_clase_1 / casos_clase_0) × 100.",
@@ -9232,7 +9582,7 @@ window.QUIZ_DATA = {
         {
           "id": "2bc15968-0bf1-4a4d-be5b-93abad96965c",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "¿Qué caracteriza a un «nodo puro» dentro de un árbol de decisión y qué acción toma el algoritmo al encontrarlo?",
           "options": [
             "Contiene observaciones que pertenecen exclusivamente a una sola clase; su Gini es 0, no se divide más y se convierte en hoja.",
@@ -9246,7 +9596,7 @@ window.QUIZ_DATA = {
         {
           "id": "f9b8a3a9-ac6e-462f-b45b-56ea6d85c36d",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "Desde el punto de vista del aprendizaje automático, ¿cuándo se considera que una división binaria en un nodo es de alta calidad?",
           "options": [
             "Cuando distribuye la misma cantidad exacta de datos en cada hijo, manteniendo las proporciones originales del nodo padre intactas.",
@@ -9260,7 +9610,7 @@ window.QUIZ_DATA = {
         {
           "id": "3e7b9a6a-ad29-4f2c-8429-dfbb837b1fd6",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "Scikit-learn permite usar criterion='entropy' en DecisionTreeClassifier. ¿Qué mide la Entropía en este contexto y cuáles son sus propiedades?",
           "options": [
             "Mide el error de calibración probabilística; varía de 0 a infinito, y un valor alto indica que el modelo no requiere poda.",
@@ -9274,7 +9624,7 @@ window.QUIZ_DATA = {
         {
           "id": "f91d569d-0b1a-4870-949b-939d33e81edc",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "¿Cuál es el flujo metódico de pasos que se sigue para evaluar una división candidata empleando el criterio de Entropía?",
           "options": [
             "1. Restar las frecuencias de los hijos. 2. Dividir por la entropía inicial. 3. Normalizar entre 0 y 1. 4. Seleccionar la menor ganancia calculada.",
@@ -9288,7 +9638,7 @@ window.QUIZ_DATA = {
         {
           "id": "c48ba604-2253-429c-8b4a-7dc8a1ae23cb",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "Al instanciar DecisionTreeClassifier(), ¿qué función cumple cada uno de los hiperparámetros que controlan el crecimiento estructural del modelo?",
           "options": [
             "max_depth: iteraciones de fit; min_samples_split: umbrales continuos; min_samples_leaf: penalización L1; criterion: función kernel; random_state: desvío estándar.",
@@ -9302,7 +9652,7 @@ window.QUIZ_DATA = {
         {
           "id": "bb985fc5-cf41-4142-bfb8-aa4e645b31ea",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "Luego de ejecutar arbol.fit(X_train, y_train), ¿qué información proporcionan los atributos y métodos feature_importances_, get_depth(), get_n_leaves() y classes_?",
           "options": [
             "feature_importances_: pesos w calculados; get_depth(): número de variables; get_n_leaves(): divisiones descartadas; classes_: umbrales óptimos.",
@@ -9316,7 +9666,7 @@ window.QUIZ_DATA = {
         {
           "id": "dfbc942e-cf16-43ad-8fda-4e3f69472b6a",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "Por defecto, DecisionTreeClassifier usa max_depth=None y min_samples_leaf=1. ¿Cuál es la regla práctica indispensable sobre sus hiperparámetros?",
           "options": [
             "Aumentar max_depth al número total de filas del dataset y reducir min_samples_split a cero para capturar cada anomalía del negocio.",
@@ -9330,7 +9680,7 @@ window.QUIZ_DATA = {
         {
           "id": "fa5b942e-be25-4f90-8ec8-4132bd721595",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "En el marco del aprendizaje supervisado, ¿cuáles son las principales ventajas competitivas de un Árbol de Decisión frente a otros clasificadores?",
           "options": [
             "Produce siempre un rendimiento predictivo superior a los ensambles complejos y sus fronteras de decisión son perfectamente suaves y curvas.",
@@ -9344,7 +9694,7 @@ window.QUIZ_DATA = {
         {
           "id": "6fcd89da-1833-43d3-bcad-cfba1c814f97",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "A pesar de su claridad y rapidez, los árboles de decisión individuales presentan desventajas notorias. ¿Cuáles son sus principales limitaciones?",
           "options": [
             "Solo admiten variables predictoras binarias y rechazan por completo valores continuos como ingresos o frecuencias cardíacas.",
@@ -9358,7 +9708,7 @@ window.QUIZ_DATA = {
         {
           "id": "f6603ecb-e2fc-4a24-ac93-1af960fa01d5",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "En el taller se destaca que no se debe aplicar StandardScaler antes de entrenar un DecisionTreeClassifier. ¿Cuál es el fundamento técnico de esto?",
           "options": [
             "Porque el árbol divide comparando con un umbral ordinal (≤): escalar cambia los valores numéricos pero no el orden relativo de los casos.",
@@ -9372,7 +9722,7 @@ window.QUIZ_DATA = {
         {
           "id": "45001707-e18e-4f46-9c45-4df758820991",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "La curva de profundidad del Bloque A6 muestra accuracy bajo en train y test con max_depth=1-2, y brecha creciente desde profundidad 6 (train=1.000 vs test=0.822). ¿Qué diagnósticos corresponden?",
           "options": [
             "Profundidad 1-2: underfitting (árbol demasiado simple). Profundidad alta: sobreajuste (memoriza ruido y se degrada su capacidad de generalizar).",
@@ -9386,7 +9736,7 @@ window.QUIZ_DATA = {
         {
           "id": "a47b574e-c3eb-45c4-a7cd-08e21c78da45",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "Al visualizar el árbol con plot_tree(arbol, filled=True, class_names=['No riesgoso', 'Riesgoso']), ¿qué significado tienen los colores y su intensidad?",
           "options": [
             "El color indica si la predicción fue correcta en test (azul = acierto, naranja = error); los nodos blancos señalan casos ambiguos.",
@@ -9400,7 +9750,7 @@ window.QUIZ_DATA = {
         {
           "id": "44620375-d780-4663-97ae-da6e875ae580",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "La función export_text() muestra:\n|--- deuda_actual <= 5975.50\n|   |--- ingresos_mensuales > 1574.50\n|   |   |--- num_creditos_previos <= 0.50\n|   |   |   |--- class: 0\n¿Cómo se traduce esta regla?",
           "options": [
             "Si la deuda supera $5975.50 y gana más de $1574.50 con varios créditos previos, el solicitante es catalogado como No riesgoso.",
@@ -9414,7 +9764,7 @@ window.QUIZ_DATA = {
         {
           "id": "43bd82a6-aa42-4b9d-a2e8-eefa048f5f63",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "Al evaluar un nuevo cliente con arbol.predict_proba(nuevo), ¿qué representa con exactitud el vector de probabilidades retornado por el modelo?",
           "options": [
             "El valor de la función sigmoide evaluada sobre la combinación lineal de las características del cliente.",
@@ -9428,7 +9778,7 @@ window.QUIZ_DATA = {
         {
           "id": "e55390e8-1af2-4b88-afbd-8da1bb6dd20a",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "En el taller de triaje, se usa pd.get_dummies() para codificar motivo_consulta, pero se advierte usar OneHotEncoder en producción. ¿A qué se debe esto?",
           "options": [
             "Porque pd.get_dummies() convierte los valores a números flotantes que generan lentitud durante la inferencia en tiempo real.",
@@ -9442,7 +9792,7 @@ window.QUIZ_DATA = {
         {
           "id": "93389d52-7f31-4681-8c49-55af002105f7",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "En el Bloque A8, el diccionario param_grid usa 'max_depth' directamente, sin prefijos como 'modelo__max_depth'. ¿Por qué es válida esta sintaxis?",
           "options": [
             "Porque al no requerir escalado numérico, el estimador es directamente el árbol y sus hiperparámetros se declaran con sus nombres originales.",
@@ -9456,7 +9806,7 @@ window.QUIZ_DATA = {
         {
           "id": "54972664-f4b9-42f3-809f-34b5788889f4",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "En el taller de triaje hospitalario (Parte B), GridSearchCV se optimiza con scoring='recall' en lugar de accuracy. ¿Cuál es la justificación técnica de esto?",
           "options": [
             "Porque el dataset de triaje presenta balance perfecto entre clases y el recall es la única métrica matemáticamente admisible en este caso.",
@@ -9470,7 +9820,7 @@ window.QUIZ_DATA = {
         {
           "id": "ce084a69-c4bc-4629-8bb7-b57ab562085c",
           "category": "semana7",
-          "categoryName": "Semana 7 · Árboles de Decisión",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
           "text": "Al culminar la validación, el árbol final se entrena con el 100% de datos usando los mejores hiperparámetros y se guarda con joblib. ¿Qué principio rige esta etapa?",
           "options": [
             "Se debe entrenar el modelo final exclusivamente con el conjunto de prueba para verificar que no existan errores de generalización pendientes.",
@@ -9480,6 +9830,356 @@ window.QUIZ_DATA = {
           ],
           "correct": 2,
           "feedback": "Correcto. Debido a la inestabilidad de los árboles (donde agregar datos cambia los umbrales de división), se transfieren los hiperparámetros descubiertos en CV (max_depth=5, min_samples_leaf=10), no la estructura gráfica previa. Además, al no necesitar escalado, el .pkl se despliega de forma autónoma."
+        },
+        {
+          "id": "292567d5-9a4b-4674-88f8-8838c0010039",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Qué es el muestreo Bootstrap y cómo funciona durante el entrenamiento de los árboles en Random Forest?",
+          "options": [
+            "Es un algoritmo de clustering iterativo que agrupa las observaciones más similares antes de particionar los nodos.",
+            "Es una técnica de reducción dimensional que proyecta las variables hacia los componentes principales de mayor varianza.",
+            "Es un muestreo aleatorio con reemplazo de tamaño N que genera un dataset de entrenamiento diferente para cada árbol.",
+            "Es un muestreo estratificado sin reemplazo que divide el dataset en K pliegues secuenciales para evitar el sobreajuste."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Bootstrap es el muestreo aleatorio con reemplazo. Si el dataset original tiene N filas, se extraen N observaciones al azar permitiendo que una misma fila sea elegida varias veces. Esto produce un subconjunto de entrenamiento con ligeras variaciones para cada uno de los árboles del bosque."
+        },
+        {
+          "id": "4efe598e-b50e-47ab-9df5-5fe342dd1425",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "Al aplicar el muestreo Bootstrap para entrenar un árbol individual, ¿cuáles son los tres tipos de datos que se generan siempre respecto al dataset original?",
+          "options": [
+            "Datos de entrenamiento, datos de validación cruzada y datos reservados para la matriz de confusión.",
+            "Datos continuos, datos discretos y datos categóricos codificados mediante One-Hot.",
+            "Datos repetidos (más de una vez), datos únicos (exactamente una vez) y datos excluidos (Out-of-Bag).",
+            "Datos normales, datos atípicos (outliers) y datos imputados por la media aritmética global."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Debido al sorteo con reemplazo, en la muestra de cada árbol siempre aparecen: 1) observaciones repetidas (salen dos o más veces), 2) observaciones únicas (salen exactamente una vez) y 3) observaciones excluidas u Out-of-Bag (OOB, aquellas que no fueron seleccionadas para ese árbol)."
+        },
+        {
+          "id": "01b9bebc-25cb-449d-b561-2d2b1d43743c",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Cuál es la función y utilidad primordial de los datos excluidos (muestras Out-of-Bag o OOB) en Random Forest?",
+          "options": [
+            "Se reservan para recalcular los umbrales de partición de Gini en caso de que ocurra un empate numérico.",
+            "Se asignan automáticamente a las hojas terminales para sustituir las predicciones dudosas del bosque.",
+            "Se utilizan como conjunto de validación honesto para evaluar el rendimiento de los árboles que no los vieron.",
+            "Se eliminan permanentemente del proceso para acelerar la velocidad de convergencia del modelo."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Las observaciones excluidas (OOB) actúan como un conjunto de prueba integrado y gratuito. Permiten medir el desempeño de forma rigurosa y honesta, evaluando cada registro exclusivamente con los árboles en cuyo entrenamiento esa observación no participó."
+        },
+        {
+          "id": "bbfc0528-4ac9-4dcf-8b40-1af60c5193d0",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Cuál es una diferencia esencial en el control del sobreajuste entre un Árbol de Decisión simple y Random Forest?",
+          "options": [
+            "En un árbol simple más profundidad provoca sobreajuste; en Random Forest agregar más árboles estabiliza el modelo.",
+            "En un árbol simple la frontera es lineal; en Random Forest las fronteras de decisión son siempre hiperplanos duros.",
+            "En un árbol simple más profundidad reduce el error; en Random Forest más árboles genera sobreajuste.",
+            "En un árbol simple se requiere estandarizar variables; en Random Forest las variables deben normalizarse siempre."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. En un árbol de decisión individual, aumentar la profundidad sin límite causa que memorice el ruido (sobreajuste severo). En contraste, en Random Forest agregar más árboles (n_estimators) no incrementa el sobreajuste; por el contrario, reduce la varianza y estabiliza el accuracy general."
+        },
+        {
+          "id": "1bda17da-4ef7-4cc5-a033-f6468ff7ee23",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "En RandomForestClassifier, ¿qué representa el parámetro oob_score=True y qué información proporciona el atributo oob_score_ tras el ajuste?",
+          "options": [
+            "Activa la poda de ramas impuras y devuelve el porcentaje de hojas podadas durante el entrenamiento del ensamble.",
+            "Define el número de pliegues estratificados para GridSearchCV y reporta el mejor parámetro encontrado por el modelo.",
+            "Calcula la correlación de Pearson entre árboles y devuelve la distancia euclidiana promedio entre sus predicciones.",
+            "Habilita el cálculo del score de validación interna con muestras fuera de bolsa y devuelve su accuracy estimado."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. oob_score=True instruye a scikit-learn a evaluar internamente el modelo usando las muestras Out-of-Bag. Tras llamar a fit(), el atributo oob_score_ almacena el accuracy de esa evaluación, brindando una métrica de generalización confiable sin requerir un split de validación adicional."
+        },
+        {
+          "id": "ffe079fc-68aa-4885-8e60-53752c261a93",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Qué contiene el atributo estimators_ en un modelo RandomForestClassifier después de haber completado la fase de entrenamiento?",
+          "options": [
+            "El arreglo con los mejores hiperparámetros encontrados tras optimizar el modelo mediante validación cruzada interna.",
+            "La matriz de confusión acumulada con los aciertos y fallos de cada uno de los árboles construidos en el bosque.",
+            "La lista de los pesos analíticos calculados por descenso de gradiente para cada una de las variables predictoras.",
+            "La lista de todos los objetos DecisionTreeClassifier individuales que fueron ajustados y conforman el ensamble."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. estimators_ es una lista de Python que contiene todos los árboles base individuales (cada uno es una instancia entrenada de DecisionTreeClassifier). Esto permite acceder, inspeccionar, graficar o analizar las reglas de cualquier árbol específico del bosque."
+        },
+        {
+          "id": "b8afada8-bcc4-421b-8217-e30431b2b230",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Cómo se calcula y qué refleja el atributo feature_importances_ generado por RandomForestClassifier tras el entrenamiento?",
+          "options": [
+            "Contabiliza cuántas veces aparece cada variable en la raíz de los árboles sin considerar su aporte en divisiones secundarias.",
+            "Promedia la reducción de impureza Gini aportada por cada variable en todos los árboles del bosque, sumando en total uno.",
+            "Mide el p-valor de la prueba F de Fisher para cada variable, descartando aquellas con significancia menor al cinco por ciento.",
+            "Expresa la varianza explicada por cada columna tras aplicar descomposición en valores singulares sobre la matriz de datos."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. feature_importances_ calcula la reducción total de impureza (Gini) lograda por cada variable, ponderada por la cantidad de muestras que llegan a cada nodo y promediada a lo largo de todos los árboles del ensamble. Todas las importancias están normalizadas y su suma es exactamente 1.0."
+        },
+        {
+          "id": "0f131d65-d54e-4147-b553-99ea0eb7103c",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Qué almacena el atributo classes_ en un clasificador de Random Forest tras invocar el método fit(X, y)?",
+          "options": [
+            "La lista con los nombres de las columnas categóricas que fueron transformadas internamente con OneHotEncoder.",
+            "Un arreglo con las etiquetas únicas de las clases aprendidas por el modelo durante el entrenamiento (ej. [0, 1]).",
+            "El número total de particiones binarias ejecutadas en las hojas terminales a lo largo de todo el bosque.",
+            "Un diccionario con la cantidad de árboles que votaron a favor de cada categoría en el conjunto de entrenamiento."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. classes_ contiene el array unidimensional con las etiquetas únicas del vector objetivo y que el clasificador identificó y aprendió durante el fit() (por ejemplo, array([0, 1]) en el caso de la clasificación binaria de convocatoria de jugadores)."
+        },
+        {
+          "id": "fa5fed90-63ff-40a3-8e6b-0bf42e32059e",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Qué función cumple el hiperparámetro n_estimators en el constructor de RandomForestClassifier y cuál es su valor por defecto?",
+          "options": [
+            "Establece la cantidad total de árboles de decisión que se construirán en el ensamble; por defecto en scikit-learn es 100.",
+            "Indica el número de variables que se sortearán en cada nodo durante la partición; por defecto toma la raíz cuadrada.",
+            "Define el número máximo de niveles o profundidad que puede alcanzar cada árbol del bosque; por defecto es 10.",
+            "Determina cuántos subconjuntos de datos se crearán para realizar la validación cruzada; por defecto su valor es 5."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. n_estimators define cuántos árboles individuales formarán el bosque (por defecto 100 en scikit-learn). Aumentar n_estimators mejora la estabilidad y el desempeño del ensamble hasta alcanzar una meseta, sin incurrir en riesgo de sobreajuste."
+        },
+        {
+          "id": "a309f339-5273-4809-9a02-ce47f0c5cca0",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Qué controla el hiperparámetro max_features en RandomForestClassifier y cuál es su configuración predeterminada para clasificación?",
+          "options": [
+            "Fija cuántas variables se seleccionan al azar en cada división de cada nodo; por defecto usa 'sqrt' (raíz cuadrada de p).",
+            "Controla el umbral mínimo de varianza requerido para que una columna numérica no sea descartada por el Pipeline.",
+            "Determina el número máximo de variables con importancia mayor a cero que pueden ser admitidas en las hojas finales.",
+            "Limita la cantidad de columnas del dataset original que se conservarán antes de iniciar el preprocesamiento."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. max_features determina el subconjunto de variables candidatas sorteadas al azar en CADA nodo individual al buscar la mejor división. Para clasificación, el valor por defecto es 'sqrt' (la raíz cuadrada del número total de variables p). Esto descorrelaciona los árboles e incrementa la diversidad."
+        },
+        {
+          "id": "486a590e-4a6c-40ff-a46e-78d634d948e5",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Cómo genera RandomForestClassifier la predicción probabilística de clase mediante el método predict_proba()?",
+          "options": [
+            "Cuenta los votos de la clase ganadora y los divide para la cantidad de observaciones del conjunto de prueba.",
+            "Mide la distancia del vector de entrada al hiperplano separador óptimo y la normaliza en el rango de cero a uno.",
+            "Aplica una transformación logística sigmoide sobre la suma ponderada de las decisiones booleanas de las hojas.",
+            "Calcula el promedio aritmético de las probabilidades estimadas por cada uno de los B árboles del bosque."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. En scikit-learn, predict_proba() no cuenta simplemente votos duros; promedia las distribuciones de probabilidad de las hojas terminales donde cae la instancia a lo largo de los B árboles del ensamble: P(y=c|x) = (1/B) * Σ p_b(x)."
+        },
+        {
+          "id": "b33770f8-13da-47f1-b365-5449ae14fd08",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "Un árbol individual sufre de alta varianza frente a ligeros cambios en los datos. ¿Cómo resuelve Random Forest este problema estructural?",
+          "options": [
+            "Entrena un único árbol pero restringiendo estrictamente las variables a una escala estandarizada con media cero.",
+            "Combina múltiples árboles diversos (mediante Bootstrap y variables aleatorias) para que sus errores individuales se anulen.",
+            "Aplica una penalización de regularización Ridge sobre los coeficientes de las preguntas en cada nodo interno.",
+            "Sustituye el algoritmo de partición CART por una aproximación lineal de vectores de soporte con margen suave."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El principio del ensamble se apoya en la diversidad: al usar Bootstrap para cambiar los datos y sortear variables en cada nodo, los árboles cometen errores diferentes e independientes. Al promediar sus predicciones en la votación, los errores se cancelan y la varianza se reduce drásticamente."
+        },
+        {
+          "id": "96776634-6354-455d-803e-268ddaa2f500",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "Al igual que en un árbol individual, el taller indica que Random Forest no requiere aplicar StandardScaler. ¿Cuál es el motivo?",
+          "options": [
+            "Porque las variables numéricas son convertidas automáticamente a valores binarios discretos antes de ajustar el modelo.",
+            "Porque RandomForestClassifier ejecuta internamente una estandarización automática previa a la partición de cada árbol.",
+            "Porque los árboles dividen evaluando umbrales ordinales (≤), propiedad que no cambia bajo transformaciones de escala.",
+            "Porque scikit-learn prohíbe el uso de StandardScaler cuando el estimador se integra dentro de un ColumnTransformer."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Los estimadores base son árboles de decisión. Cada decisión es una comparación de orden (ej. pases ≤ 85.65). Escalar o normalizar las variables modifica la magnitud numérica pero preserva exactamente el orden relativo de los registros, por lo que las divisiones elegidas son idénticas."
+        },
+        {
+          "id": "cabf86f2-4ce7-45b1-a3e2-ffcde3162ac9",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "En el dataset de jugadores, equipo y posicion son texto. ¿Por qué el taller advierte usar OneHotEncoder y NO LabelEncoder sobre X?",
+          "options": [
+            "Porque LabelEncoder solo admite números flotantes y arroja un error de sintaxis si recibe cadenas de texto crudas.",
+            "Porque DecisionTreeClassifier descarta sistemáticamente cualquier variable codificada con valores enteros no binarios.",
+            "Porque LabelEncoder asigna números enteros (0, 1, 2...) inventando un orden ficticio inexistente entre las categorías.",
+            "Porque OneHotEncoder reduce la dimensionalidad del dataset comprimiendo múltiples columnas en una sola serie numérica."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. LabelEncoder está diseñado exclusivamente para la variable objetivo unidimensional y. Si se aplica sobre variables de entrada en X (como equipos), asigna 0, 1, 2..., creando una relación de orden arbitraria (Aucas < Emelec) que falsea las divisiones del árbol. Para X se debe usar OneHotEncoder."
+        },
+        {
+          "id": "ae53eb92-7b73-4c6c-b7f3-98ab00fe73bd",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "En Random Forest, el subconjunto de variables candidatas se sortea en CADA división de cada nodo, no una sola vez por árbol. ¿Por qué?",
+          "options": [
+            "Para evitar que el modelo entre en bucles infinitos durante el cálculo de la impureza de Gini en variables continuas.",
+            "Para garantizar que el tiempo de ejecución en procesadores con múltiples núcleos sea estrictamente determinista.",
+            "Para obligar a que todos los árboles alcancen de forma exacta el mismo número de niveles y hojas terminales simétricas.",
+            "Para evitar que las variables predictoras más fuertes monopolicen todas las divisiones, dando oportunidad a variables secundarias."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Si se sortearan las variables una única vez al inicio de cada árbol, una variable altamente predictora (como pases completados) sería elegida casi siempre como raíz en todos los árboles donde esté disponible, correlacionándolos. Sortear en cada nodo individual descorrelaciona efectivamente los árboles."
+        },
+        {
+          "id": "80b81a6f-e3ae-4819-abbf-367167d5a8f1",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "Matemáticamente, al extraer una muestra Bootstrap con reemplazo de tamaño N sobre N datos, ¿qué porcentaje de observaciones queda fuera (OOB)?",
+          "options": [
+            "Cerca del 5.0%, ya que el sorteo con reemplazo asegura que casi la totalidad del dataset sea elegido al menos una vez.",
+            "Exactamente el 20.0%, correspondiente a la proporción estándar empleada en particiones convencionales de train y test.",
+            "Aproximadamente el 36.8%, dado por el límite matemático (1 - 1/N)^N que converge a 1/e cuando N es grande.",
+            "Aproximadamente el 50.0%, debido a que cada observación tiene una probabilidad simétrica de ser o no ser seleccionada."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. La probabilidad de que un registro no sea extraído en un sorteo es (1 - 1/N). Para N sorteos independientes, la probabilidad de no salir nunca es (1 - 1/N)^N ≈ 1/e ≈ 0.368 (36.8%). Por lo tanto, cada árbol se entrena aproximadamente con el 63.2% de los datos únicos del dataset."
+        },
+        {
+          "id": "f6aaa3d8-fb6e-4977-9709-11a59e7b30ff",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "La curva empírica de número de árboles vs. accuracy muestra: 1 árbol (0.706), 10 árboles (0.817), 100 árboles (0.878) y 300 árboles (0.878). ¿Qué concluye?",
+          "options": [
+            "Superar los 100 árboles desencadena un sobreajuste severo que perjudica la precisión en nuevos datos de prueba.",
+            "El rendimiento crece rápidamente y luego se estabiliza; agregar más árboles no induce sobreajuste en el modelo.",
+            "El modelo óptimo es de un solo árbol, dado que presenta el menor costo computacional con idéntica generalización.",
+            "El cálculo de validación OOB es idéntico e infalible tanto si se entrena un solo árbol como si se entrenan trescientos."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. A diferencia de aumentar la profundidad de un árbol simple, añadir árboles a un Random Forest no empeora el rendimiento ni causa sobreajuste: el error se estabiliza asintóticamente. Además, el taller señala que se necesitan al menos 25 árboles para calcular confiablemente el oob_score_."
+        },
+        {
+          "id": "a5777d7e-8d83-4d77-9a98-bc1f6ca6b9f4",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Cuál es la sintaxis correcta en scikit-learn para ensamblar un Pipeline que codifique columnas de texto y entrene un RandomForestClassifier?",
+          "options": [
+            "Pipeline([('preproc', ColumnTransformer([('cat', OneHotEncoder(), cols)])), ('modelo', RandomForestClassifier())])",
+            "Pipeline([('modelo', RandomForestClassifier()), ('scaler', StandardScaler()), ('encoder', OneHotEncoder())])",
+            "Pipeline([('clean', SimpleImputer()), ('norm', Normalizer()), ('trees', DecisionTreeClassifier(n_estimators=100))])",
+            "Pipeline([('split', train_test_split()), ('ohe', OneHotEncoder()), ('rf', RandomForestClassifier(bootstrap=False))])"
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La arquitectura adecuada acopla primero el ColumnTransformer con OneHotEncoder para las columnas de texto (y remainder='passthrough' para conservar las numéricas), seguido del estimador RandomForestClassifier como paso final del Pipeline."
+        },
+        {
+          "id": "cf2ae8a0-9486-4316-bf13-530ba1847523",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "Si se entrena bosque = Pipeline([('preproc', preproc), ('modelo', RandomForestClassifier(...))]), ¿cómo se accede a los atributos del bosque?",
+          "options": [
+            "Ejecutando bosque.steps[0].feature_importances_, ya que el estimador ocupa por convención el primer índice del Pipeline.",
+            "Invocando directamente bosque.oob_score_ sin necesidad de hacer referencia a los pasos internos del Pipeline ajustado.",
+            "Extrayendo el diccionario de parámetros con bosque.get_params()['modelo__oob_score_'] antes de llamar a fit().",
+            "Accediendo mediante bosque.named_steps['modelo'], permitiendo consultar propiedades como oob_score_ o feature_importances_."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Para inspeccionar estimadores dentro de un Pipeline entrenado se usa named_steps con la clave asignada: bosque.named_steps['modelo'].oob_score_ para el score OOB, y bosque.named_steps['preproc'].get_feature_names_out() para las columnas codificadas."
+        },
+        {
+          "id": "8ea61c7e-ee87-41fc-b05e-5a1b6c5e50de",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "En el dataset de jugadores hay 75% no convocados y 25% convocados. ¿Por qué el taller advierte no confiar únicamente en el Accuracy?",
+          "options": [
+            "Porque en datasets con proporciones desiguales scikit-learn calcula el accuracy usando una fórmula de media armónica sesgada.",
+            "Porque un modelo trivial que prediga siempre 'no convocado' obtendría 75% de accuracy sin haber aprendido a identificar ningún convocado.",
+            "Porque el accuracy no puede computarse cuando se utilizan estimadores por ensamble que combinan más de cincuenta árboles.",
+            "Porque la presencia de clases minoritarias invalida la convergencia numérica de los árboles que utilizan el criterio de Gini."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El desbalance de clases hace que el Accuracy sea una métrica engañosa: un clasificador ingenuo que diga siempre '0' acertaría el 75% de los casos pero fallaría en el 100% de los convocados reales. Por ello es indispensable analizar Precision, Recall y F1-Score sobre la clase minoritaria (1)."
+        },
+        {
+          "id": "ab267dfd-876c-4be7-b8ac-4ef9e6791108",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "En la evaluación del taller, el árbol sin límite obtuvo test 0.778 y Precision 0.549, mientras Random Forest obtuvo test 0.878 y Precision 0.897. ¿Cómo se interpreta?",
+          "options": [
+            "El árbol individual es superior porque genera un mayor número de falsos positivos en el conjunto de prueba independiente.",
+            "Ambos modelos presentan exactamente el mismo rendimiento práctico, atribuyéndose las diferencias únicamente al azar del split.",
+            "El bosque sobreajustó severamente los datos porque su precisión en entrenamiento alcanzó el 100% con hojas puras.",
+            "Random Forest es mucho más prudente: cuando predice que un jugador será convocado, acierta casi en el 90% de los casos."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. La precisión del bosque saltó de 0.549 a 0.897. Esto significa que el ensamble es mucho más conservador y certero: casi 9 de cada 10 jugadores señalados como convocados lo son en la realidad, eliminando gran parte de los falsos positivos que cometía el árbol simple."
+        },
+        {
+          "id": "fbaec28b-3e89-429d-a550-1f5f9f9b8066",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "¿Cuáles son las ventajas más destacadas de Random Forest que lo convierten en uno de los algoritmos más robustos en Machine Learning tabular?",
+          "options": [
+            "Ejecuta predicciones en tiempo real con archivos de serialización minúsculos y garantiza fronteras de decisión puramente lineales.",
+            "Ofrece alta precisión y estabilidad, no sobreajusta al sumar árboles, no requiere escalado e integra OOB e importancias de variables.",
+            "Genera explicaciones basadas en una única regla transparente y requiere obligatoriamente transformar los datos con StandardScaler.",
+            "Elimina automáticamente los datos atípicos del entrenamiento y no requiere codificar variables categóricas de tipo texto."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Entre sus grandes virtudes destacan: precisión elevada, estabilidad ante variaciones muestrales, invulnerabilidad al sobreajuste al incrementar árboles, ausencia de escalado numérico, estimación honesta interna vía OOB y cálculo directo de la importancia de variables."
+        },
+        {
+          "id": "ee17ca3e-fed0-4fac-b102-7da7ed2e9683",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "A pesar de su alto rendimiento, ¿cuáles son las principales desventajas o limitaciones prácticas asociadas al uso de Random Forest?",
+          "options": [
+            "Incapacidad absoluta para modelar relaciones no lineales y obligación estricta de utilizar datasets con millones de registros.",
+            "Pérdida de interpretabilidad directa (caja negra de muchos árboles), mayor lentitud de entrenamiento y archivos .pkl pesados.",
+            "Sensibilidad extrema a la escala de las variables continuas y vulnerabilidad severa al sobreajuste si se añaden más árboles.",
+            "Imposibilidad de predecir probabilidades continuas mediante predict_proba y descarte obligatorio de variables categóricas."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Las limitaciones clave de Random Forest son: 1) no se puede leer como un árbol simple de reglas SI/NO (es una caja negra de 100 o más árboles); 2) el entrenamiento y la inferencia son más lentos y consumen más memoria; y 3) el archivo .pkl exportado es significativamente más pesado."
+        },
+        {
+          "id": "03d83944-bef0-4f51-8cd4-8f562ae15b7b",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "Una vez evaluado y validado el modelo con el 80% de datos, ¿por qué el taller entrena un modelo_final ajustándolo con el 100% de observaciones (X, y)?",
+          "options": [
+            "Para aprovechar la totalidad de la información disponible para producción, preservando los hiperparámetros ya validados.",
+            "Para forzar que el score de validación OOB alcance obligatoriamente el valor perfecto de 1.000 antes de exportarlo.",
+            "Para obligar a que el preprocesador OneHotEncoder descarte las categorías aprendidas durante la partición de prueba.",
+            "Para verificar que el estimador no presente errores de sintaxis antes de generar los gráficos de matriz de confusión."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La partición 80/20 sirvió exclusivamente para auditar y validar el comportamiento del modelo. Una vez confirmada la configuración óptima, el modelo para despliegue final se reentrena con todas las filas (900 jugadores) para que cuente con el máximo aprendizaje posible en producción."
+        },
+        {
+          "id": "dd9a3b75-2fed-442e-ade9-2a1b2e9d26d4",
+          "category": "semana7",
+          "categoryName": "Semana 7 · Árboles y Random Forest",
+          "text": "Al exportar el Pipeline entrenado con joblib.dump(modelo_final, 'modelo_convocatoria_rf.pkl'), ¿cómo se utiliza este archivo en producción?",
+          "options": [
+            "Solo puede ser ejecutado en el mismo entorno de Colab donde se entrenó, ya que los archivos .pkl no son compatibles con scripts externos.",
+            "Se carga con joblib.load() y procesa directamente un DataFrame nuevo con texto crudo, aplicando la codificación y predicción internamente.",
+            "Se carga con joblib.load() pero exige que los datos nuevos sean codificados a mano con OneHotEncoder antes de llamar a predict().",
+            "Requiere guardar un segundo archivo independiente con los árboles para que el Pipeline pueda deserializar los estimadores del ensamble."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Como el Pipeline encapsula tanto el ColumnTransformer (con OneHotEncoder) como el RandomForestClassifier, un servicio web solo necesita cargar el .pkl y suministrarle el DataFrame con las columnas originales en texto. El Pipeline se encarga de transformar las variables y devolver las predicciones de forma autónoma."
         }
       ]
     }
