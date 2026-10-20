@@ -61,6 +61,10 @@ window.QUIZ_DATA = {
           "label": "Preguntas de Refuerzo"
         },
         {
+          "value": "incorrect",
+          "label": "Solo Preguntas Erradas"
+        },
+        {
           "value": "bookmarked",
           "label": "Solo Preguntas Marcadas"
         }
@@ -2029,6 +2033,10 @@ window.QUIZ_DATA = {
           "label": "Taller: Python para Datos"
         },
         {
+          "value": "incorrect",
+          "label": "Solo Preguntas Erradas"
+        },
+        {
           "value": "bookmarked",
           "label": "Solo Preguntas Marcadas"
         }
@@ -3081,6 +3089,10 @@ window.QUIZ_DATA = {
           "label": "Pipeline de Scikit-Learn"
         },
         {
+          "value": "incorrect",
+          "label": "Solo Preguntas Erradas"
+        },
+        {
           "value": "bookmarked",
           "label": "Solo Preguntas Marcadas"
         }
@@ -3755,6 +3767,10 @@ window.QUIZ_DATA = {
         {
           "value": "comandos",
           "label": "Implementación en Scikit-Learn"
+        },
+        {
+          "value": "incorrect",
+          "label": "Solo Preguntas Erradas"
         },
         {
           "value": "bookmarked",
@@ -4535,6 +4551,10 @@ window.QUIZ_DATA = {
           "label": "Teoría Básica"
         },
         {
+          "value": "incorrect",
+          "label": "Solo Preguntas Erradas"
+        },
+        {
           "value": "bookmarked",
           "label": "Solo Preguntas Marcadas"
         }
@@ -4657,6 +4677,10 @@ window.QUIZ_DATA = {
         {
           "value": "repaso_extra",
           "label": "Refuerzo Semana 4"
+        },
+        {
+          "value": "incorrect",
+          "label": "Solo Preguntas Erradas"
         },
         {
           "value": "bookmarked",
@@ -5168,6 +5192,10 @@ window.QUIZ_DATA = {
         {
           "value": "semana7",
           "label": "Semana 7 · Árboles de Decisión y Random Forest"
+        },
+        {
+          "value": "incorrect",
+          "label": "Solo Preguntas Erradas"
         },
         {
           "value": "bookmarked",
@@ -8176,6 +8204,10 @@ window.QUIZ_DATA = {
           "label": "SVM (Antiguas del Mega Banco)"
         },
         {
+          "value": "incorrect",
+          "label": "Solo Preguntas Erradas"
+        },
+        {
           "value": "bookmarked",
           "label": "Solo Preguntas Marcadas"
         }
@@ -8896,6 +8928,10 @@ window.QUIZ_DATA = {
           "label": "GridSearch · Conceptos y Código"
         },
         {
+          "value": "incorrect",
+          "label": "Solo Preguntas Erradas"
+        },
+        {
           "value": "bookmarked",
           "label": "Solo Preguntas Marcadas"
         }
@@ -9474,6 +9510,10 @@ window.QUIZ_DATA = {
         {
           "value": "semana7",
           "label": "Árboles y Random Forest · Conceptos y Código"
+        },
+        {
+          "value": "incorrect",
+          "label": "Solo Preguntas Erradas"
         },
         {
           "value": "bookmarked",

@@ -175,6 +175,7 @@
                     <option value="u2_clasificacion">U2: Clasificación (Narrow, Fuerte, AGI)</option>
                     <option value="u2_ml_tipos">U2: Disciplinas y Tipos de ML</option>
                     <option value="ecuador">Contexto y Casos Ecuador</option>
+                    <option value="incorrect">Solo Preguntas Erradas</option>
                     <option value="bookmarked">Marcadas para Duda</option>
                 </select>
 
@@ -488,7 +489,7 @@
     </div>
 
         <!-- Cargar banco de preguntas (con versión para forzar recarga) -->
-    <script src="data/banco_preguntas_v7.js?v=7"></script>
+    <script src="data/banco_preguntas_v7.js?v=8"></script>
     <script>
         // Sistema de Audio Sintetizado Web Audio API (Sin dependencias externas)
         class SoundFX {
@@ -635,12 +636,37 @@
         }
         function populateCategoryDropdown() {
             categoryFilter.innerHTML = '';
-            getBankCategories().forEach(function(c) {
+            var cats = getBankCategories();
+            var hasIncorrect = false;
+            var hasBookmarked = false;
+
+            cats.forEach(function(c) {
+                if (c.value === 'incorrect') hasIncorrect = true;
+                if (c.value === 'bookmarked') hasBookmarked = true;
                 var opt = document.createElement('option');
                 opt.value = c.value;
                 opt.textContent = c.label;
                 categoryFilter.appendChild(opt);
             });
+
+            if (!hasIncorrect) {
+                var errOpt = document.createElement('option');
+                errOpt.value = 'incorrect';
+                errOpt.textContent = 'Solo Preguntas Erradas';
+                var bmElem = categoryFilter.querySelector('option[value="bookmarked"]');
+                if (bmElem) {
+                    categoryFilter.insertBefore(errOpt, bmElem);
+                } else {
+                    categoryFilter.appendChild(errOpt);
+                }
+            }
+
+            if (!hasBookmarked) {
+                var bmOpt = document.createElement('option');
+                bmOpt.value = 'bookmarked';
+                bmOpt.textContent = 'Solo Preguntas Marcadas';
+                categoryFilter.appendChild(bmOpt);
+            }
         }
         function selectBank(bankName) {
             saveState();
@@ -845,6 +871,16 @@
                 if (currentQuestions.length === 0) {
                     currentQuestions = [...bank];
                     showToast("No tienes preguntas marcadas con duda. Mostrando todas.");
+                    categoryFilter.value = 'all';
+                }
+            } else if (cat === 'incorrect') {
+                currentQuestions = bank.filter(function(q) {
+                    var ans = userAnswers[q.id];
+                    return ans !== undefined && ans !== q.correct;
+                });
+                if (currentQuestions.length === 0) {
+                    currentQuestions = [...bank];
+                    showToast("No tienes preguntas respondidas incorrectamente en este banco. Mostrando todas.");
                     categoryFilter.value = 'all';
                 }
             } else {
