@@ -5194,6 +5194,10 @@ window.QUIZ_DATA = {
           "label": "Semana 7 · Árboles de Decisión y Random Forest"
         },
         {
+          "value": "semana8",
+          "label": "Semana 8 · Análisis de Componentes Principales (PCA)"
+        },
+        {
           "value": "incorrect",
           "label": "Solo Preguntas Erradas"
         },
@@ -8184,6 +8188,398 @@ window.QUIZ_DATA = {
           ],
           "correct": 1,
           "feedback": "Correcto. Como el Pipeline encapsula tanto el ColumnTransformer (con OneHotEncoder) como el RandomForestClassifier, un servicio web solo necesita cargar el .pkl y suministrarle el DataFrame con las columnas originales en texto. El Pipeline se encarga de transformar las variables y devolver las predicciones de forma autónoma."
+        },
+        {
+          "id": "7677e59c-58c7-4a25-a6ae-0358f9118bb8",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "¿De qué manera el Análisis de Componentes Principales (PCA) soluciona el problema de la multicolinealidad severa entre las variables predictoras de un conjunto de datos?",
+          "options": [
+            "Elimina sistemáticamente las columnas redundantes basándose en umbrales prefijados de varianza.",
+            "Aplica una regularización penalizada L1 o L2 que anula los coeficientes fuertemente duplicados.",
+            "Proyecta los datos originales sobre ejes ortogonales con covarianza y correlación lineal nulas.",
+            "Reemplaza los valores numéricos colineales por transformaciones polinomiales no correlacionadas."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. PCA descompone la matriz de covarianza en autovectores perpendiculares (ortogonales) entre sí. Al proyectar las variables sobre estos nuevos ejes, las componentes principales resultantes tienen una correlación de Pearson exactamente igual a cero (r = 0), erradicando la multicolinealidad."
+        },
+        {
+          "id": "d908dd8e-97df-45fa-a6b9-a5c59e8c8afb",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "¿Cuál es el objetivo principal del algoritmo de PCA al aplicarse sobre un espacio de características con p variables numéricas continuas?",
+          "options": [
+            "Predecir la clase de cada observación supervisada minimizando los errores de clasificación global.",
+            "Calcular grupos no supervisados compactos optimizando las distancias euclidianas a los centros.",
+            "Reducir la dimensionalidad a k componentes reteniendo la mayor cantidad posible de la varianza.",
+            "Separar linealmente los datos hacia un espacio dimensional infinito mediante funciones kernel."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. El objetivo esencial de PCA es la reducción de dimensionalidad no supervisada: transformar p variables correlacionadas en k nuevas variables (k < p) no correlacionadas que capturen la máxima variabilidad (información) original con la menor pérdida posible."
+        },
+        {
+          "id": "32fa5fcd-8492-4f6c-9374-679a6427c80c",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "En la formulación matemática de PCA, ¿qué son formalmente las componentes principales y cómo se definen sus denominaciones (PC1, PC2, etc.)?",
+          "options": [
+            "Son subconjuntos óptimos de las columnas originales seleccionadas según su coeficiente de correlación.",
+            "Son combinaciones lineales ponderadas de variables, ordenadas de mayor a menor varianza explicada.",
+            "Son agrupaciones jerárquicas de observaciones ordenadas según la distancia calculada entre centroides.",
+            "Son transformaciones polinomiales ordenadas de forma ascendente según el error de reconstrucción final."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Cada componente principal es una suma ponderada (combinación lineal) de todas las variables originales estandarizadas. Se ordenan de forma decreciente según la varianza capturada: PC1 captura la máxima varianza posible, PC2 la segunda mayor sujeta a ser ortogonal a PC1, y así sucesivamente."
+        },
+        {
+          "id": "a53b7a42-fca7-4e22-9add-d5076e96343b",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "¿Qué comportamiento describe la varianza explicada por cada nueva componente principal a medida que se calculan más componentes sucesivas?",
+          "options": [
+            "La varianza individual crece en cada componente, mientras la varianza acumulada se mantiene constante.",
+            "La varianza individual se mantiene estable, mientras la varianza acumulada sube de manera oscilatoria.",
+            "La varianza individual decrece hasta la mitad del espacio, para luego crecer de manera exponencial.",
+            "La varianza individual decrece en cada componente, mientras la varianza acumulada tiende al 100%."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Por construcción matemática mediante autovalores ordenados, Var(PC1) >= Var(PC2) >= ... >= Var(PCp). Cada componente posterior explica menos varianza residual que la previa, mientras que la suma acumulada de varianza aumenta monótonamente hasta alcanzar el 100% con p componentes."
+        },
+        {
+          "id": "52235a9d-3ef2-4806-9f9e-53958f2f247a",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Al configurar el número de componentes k en PCA, ¿qué criterios técnicos se aplican para visualización gráfica y para alimentar modelos posteriores?",
+          "options": [
+            "Para graficar se selecciona el 100% de componentes, pero para otros modelos solo se usan 2 componentes.",
+            "Para graficar se usa el 50% de la varianza, pero para otros modelos se emplean exactamente 3 dimensiones.",
+            "Para graficar se usan 4 componentes fijas, pero para otros modelos se retiene exactamente el 60% inicial.",
+            "Para graficar se fijan 2 o 3 componentes, pero para otros modelos se retiene al menos el 80% o 90%."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Para representación gráfica en pantalla humana estamos limitados a 2D o 3D (2 o 3 componentes, e.g. PC1 y PC2 que explicaron 68.1% en el taller). Para alimentar modelos posteriores de Machine Learning (como clasificadores o clustering), se busca preservar al menos el 80% o 90% de la varianza original (en el taller, n_components=0.80 eligió 4 componentes con 84.8%)."
+        },
+        {
+          "id": "102ada6a-04b5-4dd8-a851-3422b6563f9e",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "¿Cuál es la secuencia ordenada de los cinco pasos analíticos que componen el flujo estándar de PCA y qué ocurre en cada uno de ellos?",
+          "options": [
+            "Estandarizar datos, correlaciones, calcular direcciones de varianza, proyectar puntos y elegir k.",
+            "Eliminar nulos, normalizar min-max, calcular distancias euclidianas, dividir en folds y elegir k.",
+            "Calcular centroides, proyectar muestras, estandarizar variables, extraer residuos y elegir k.",
+            "Estandarizar variables, calcular regresión lineal, estimar multicolinealidad, proyectar y elegir k."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. El flujo canónico de PCA consta de 5 pasos: 1. Estandarizar las variables (media 0, desviación 1); 2. Calcular la matriz de correlaciones/covarianza; 3. Encontrar las direcciones de máxima varianza (autovectores y autovalores); 4. Proyectar las observaciones sobre los nuevos ejes; 5. Elegir k componentes a conservar."
+        },
+        {
+          "id": "4eab10a2-954a-49cc-acaf-6306afe55ad6",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "En la clase PCA de Scikit-Learn, ¿cuál es la función precisa y el valor por defecto de los parámetros n_components, whiten y random_state?",
+          "options": [
+            "n_components=None (todas o % varianza), whiten=False (varianza unitaria) y random_state=None (semilla).",
+            "n_components=2 (fija 2 ejes), whiten=True (centrado en cero) y random_state=42 (fijación obligatoria).",
+            "n_components=0.80 (80% varianza), whiten=False (eliminar escala) y random_state=0 (inicialización base).",
+            "n_components=1 (primer eje), whiten=None (estandarización interna) y random_state=True (reproducibilidad)."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. En sklearn.decomposition.PCA: n_components tiene None por defecto (conserva todas las p componentes; puede recibir un entero como 2 o un float como 0.80 para retener el 80% de varianza); whiten es False por defecto (si es True divide cada componente por la raíz de su autovalor para forzar varianza unitaria); random_state es None (semilla para resolvedores SVD estocásticos)."
+        },
+        {
+          "id": "aeb6535c-98e3-4c37-970c-4f6d94836ad5",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "En el contexto de PCA y considerando el atributo components_, ¿qué representa e ilustra específicamente el gráfico de loadings?",
+          "options": [
+            "Muestra las distancias euclidianas de cada canción respecto a los centroides de sus respectivos géneros.",
+            "Muestra los pesos de cada variable original en cada componente; su signo y magnitud indican influencia.",
+            "Muestra la varianza residual descartada por el modelo al reducir la dimensionalidad de las variables.",
+            "Muestra la correlación de Spearman entre la variable objetivo categórica y cada componente proyectada."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. En el curso llamamos loadings a los pesos de cada variable en cada componente (pca.components_, rango [-1, 1]). Su magnitud refleja la importancia o peso de la variable en la componente y el signo indica la dirección (positiva o negativa) hacia la que desplaza a las observaciones."
+        },
+        {
+          "id": "5e47bbce-81bb-4c0e-b368-77a5d13b6143",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "¿Qué elementos visuales y analíticos se superponen simultáneamente dentro de un gráfico Biplot generado a partir de un modelo PCA?",
+          "options": [
+            "Histogramas de distribución univariada superpuestos con curvas gaussianas de densidad por cada género.",
+            "Dendrogramas de agrupamiento jerárquico superpuestos sobre matrices de dispersión bidimensionales.",
+            "Puntos de observaciones proyectadas y vectores con los loadings que indican dirección de variables.",
+            "Fronteras de decisión calculadas por clasificadores superpuestas con el error residual acumulado."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. El biplot dibuja en el mismo espacio bidimensional (PC1 vs PC2) las observaciones proyectadas (puntos) y flechas que parten del origen representando las variables originales con sus loadings multiplicados por un factor de escala. Permite ver simultáneamente cómo se posicionan los datos y qué variables los empujan hacia cada región."
+        },
+        {
+          "id": "493bb3c0-21df-45e9-9670-54ef30171d1f",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Dado un objeto pipe = Pipeline([('escalar', StandardScaler()), ('pca', PCA(n_components=2))]) ajustado con X, ¿cómo se accede a los pesos components_?",
+          "options": [
+            "Mediante la instrucción pipe.steps['pca'].get_components() para extraer la matriz de autovectores.",
+            "Mediante la instrucción pipe.named_steps['pca'].components_ para extraer la matriz de autovectores.",
+            "Mediante la instrucción pipe.get_params()['pca_components'] para extraer la matriz de autovectores.",
+            "Mediante la instrucción pipe.transformers['pca'].components_ para extraer la matriz de autovectores."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. En Scikit-Learn, para acceder a los atributos aprendidos de una etapa específica de un Pipeline ya entrenado se utiliza el diccionario named_steps indexado por el nombre asignado al paso: pipe.named_steps['pca'].components_."
+        },
+        {
+          "id": "7fb3471f-7c7d-4654-8c72-63aaef4fbc73",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "¿Bajo qué condiciones técnicas específicas resulta adecuado utilizar PCA y en qué escenarios concretos NO debe aplicarse este algoritmo?",
+          "options": [
+            "Se usa con datos categóricos codificados en One-Hot; no se debe usar con variables continuas numéricas.",
+            "Se usa cuando no existen correlaciones lineales; no se debe usar cuando las dimensiones son muy altas.",
+            "Se usa exclusivamente para predecir clases binarias; no se debe usar en aprendizaje no supervisado.",
+            "Se usa con variables numéricas continuas correlacionadas; no se debe usar con variables categóricas."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. PCA fue diseñado estrictamente para variables numéricas continuas que exhiben correlaciones lineales. NO debe aplicarse sobre variables categóricas (como variables binarias One-Hot), datos de texto discretos ni cuando las relaciones intrínsecas sean marcadamente no lineales."
+        },
+        {
+          "id": "e35ddbde-f470-459f-b4fb-9cdf1ed55d06",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Si al graficar la varianza explicada se observa una dispersión plana e idéntica entre todas las PC sin relaciones lineales, ¿qué técnicas deben usarse?",
+          "options": [
+            "Se deben aplicar modelos de regresión lineal múltiple con regularización Ridge para forzar linealidad.",
+            "Se deben emplear técnicas de reducción no lineal de la dimensionalidad tales como t-SNE y UMAP.",
+            "Se debe forzar el parámetro whiten=True en PCA para transformar las relaciones no lineales en curvas.",
+            "Se deben binarizar todas las variables continuas mediante umbrales medianos para ejecutar Naive Bayes."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Cuando la estructura de los datos descansa sobre variedades geométricas no lineales complejas, PCA no logra comprimir la varianza en pocas componentes (todas las PC tienen varianzas casi idénticas y bajas). En ese caso se recurre a técnicas no lineales como t-SNE (t-Distributed Stochastic Neighbor Embedding) o UMAP (Uniform Manifold Approximation and Projection)."
+        },
+        {
+          "id": "00ea61d9-cde4-462f-9143-8f17114c76ed",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "¿Cuál es la naturaleza operativa del modelo PCA entrenado y cómo se utiliza la matriz transformada resultante en flujos de Machine Learning?",
+          "options": [
+            "Predice directamente la variable objetivo minimizando la función de costo logarítmica de la muestra.",
+            "Calcula probabilidades a posteriori para asignar cada observación a su grupo óptimo sin supervisión.",
+            "No predice una etiqueta; genera una matriz proyectada Z que sirve de entrada para modelos posteriores.",
+            "Genera reglas de decisión lógicas basadas en umbrales de partición para predecir valores continuos."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. PCA es un transformador no supervisado de datos, no un modelo de predicción de etiquetas 'y'. Al llamar fit_transform(X) o transform(X) produce la matriz proyectada Z = X_pca, la cual se suministra como conjunto de características de entrada a modelos de clasificación, regresión o clustering."
+        },
+        {
+          "id": "b1a2d31e-77e7-47bf-bf29-d7f4a115b90b",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Al ejecutar PCA directamente sobre el dataset de Spotify sin estandarizar, ¿por qué duration_ms absorbe el 100% de la varianza del primer componente?",
+          "options": [
+            "Porque presenta una correlación de Pearson unitaria positiva respecto a todas las variables acústicas.",
+            "Porque el algoritmo de PCA prioriza automáticamente aquellas columnas registradas con formato entero.",
+            "Porque su escala de cientos de miles genera una varianza numérica gigante frente al resto de columnas.",
+            "Porque Scikit-Learn detecta duration_ms como variable índice y le asigna la máxima ponderación inicial."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. En el taller de Paúl Rosero, sin estandarizar con StandardScaler, duration_ms (valores de 120,000 a 240,000 ms) tiene una varianza de orden 10^9, mientras columnas como danceability o acousticness van de 0 a 1 (varianza < 1). Como PCA busca maximizar varianza numérica bruta, PC1 se alinea al 100% con duration_ms (varianza explicada [1.0, 0.0] y loading 1.0), ignorando totalmente las demás variables."
+        },
+        {
+          "id": "7b225b5c-c90d-45b8-b7c9-55fbe5d2f93b",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Tras entrenar un modelo pca = PCA().fit(X_escalado), ¿qué información matemática específica entrega el atributo pca.explained_variance_ratio_?",
+          "options": [
+            "Un escalar que representa el porcentaje de error cuadrático cometido durante la proyección ortogonal.",
+            "Una matriz cuadrada con las covarianzas calculadas entre las componentes principales seleccionadas.",
+            "Un vector con las correlaciones bivariadas entre cada componente y la variable objetivo supervisada.",
+            "Un arreglo con la fracción de varianza total capturada por cada componente principal individualmente."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. pca.explained_variance_ratio_ es un arreglo 1D donde cada elemento indica la proporción (entre 0 y 1) de la varianza total del conjunto de datos explicada por cada componente principal. La suma de todos los elementos del arreglo completo es exactamente 1.0 (100%)."
+        },
+        {
+          "id": "c71b857b-387c-42d0-b169-92a8ac70e786",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Si se instancia el modelo como PCA(n_components=0.80).fit(X_escalado), ¿qué acción efectúa Scikit-Learn y qué almacena en pca.n_components_?",
+          "options": [
+            "Calcula el número mínimo k de componentes que sumen al menos el 80% de varianza y guarda dicho entero.",
+            "Multiplica todas las varianzas calculadas por un factor de 0.80 para reducir el sobreajuste latente.",
+            "Selecciona exactamente el 80% del número total de columnas iniciales descartando el 20% con más ruido.",
+            "Asigna un peso de regularización de 0.80 a la matriz de proyecciones ortogonales de los datos de test."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. Cuando n_components es un número flotante entre 0 y 1, Scikit-Learn selecciona automáticamente la cantidad mínima de componentes principales cuya varianza explicada acumulada alcance o supere ese porcentaje. En el taller, n_components=0.80 determinó que k=4 componentes acumulan el 84.8% de varianza, almacenando 4 en pca.n_components_."
+        },
+        {
+          "id": "3f678a0e-ce4e-49da-a981-c55c13afbd69",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Si X contiene 1 200 filas y 10 variables numéricas y se aplica PCA(n_components=2), ¿cuáles son las dimensiones de Z y de pca.components_?",
+          "options": [
+            "La matriz de datos proyectados Z tiene forma (2, 1200) y la matriz components_ tiene dimensiones (10, 2).",
+            "La matriz de datos proyectados Z tiene forma (1200, 2) y la matriz components_ tiene dimensiones (2, 10).",
+            "La matriz de datos proyectados Z tiene forma (1200, 10) y la matriz components_ tiene dimensiones (2, 2).",
+            "La matriz de datos proyectados Z tiene forma (10, 1200) y la matriz components_ tiene dimensiones (10, 10)."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Z = pca.fit_transform(X) comprime las 10 características a 2 coordenadas para cada una de las 1 200 canciones, dando dimensiones (1200, 2). Por su parte, pca.components_ contiene una fila por cada componente y una columna por cada variable original, por lo que su dimensión es (2, 10) (o (10, 2) si se transpone con .T)."
+        },
+        {
+          "id": "f5252f7c-1855-4fe7-9ba9-d844c63a9b7d",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "En el taller de perfil sonoro, PC1 tuvo loadings positivos altos en acousticness y negativos altos en energy. ¿Qué significado musical tiene este eje?",
+          "options": [
+            "Representa un eje sonoro de oposición acústica e instrumental frente a intensidad enérgica y bailable.",
+            "Representa una separación temporal entre la duración de las canciones frente al año de su lanzamiento.",
+            "Representa el volumen promedio en decibeles frente al número de reproducciones globales en la red.",
+            "Representa la calidad acústica de grabación en vivo frente al nivel de distorsión armónica digital."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. En el taller, PC1 opone variables acústicas e instrumentales (acousticness +0.40, instrumentalness +0.33) a variables enérgicas y rítmicas (energy -0.40, loudness_db -0.40, danceability -0.37). Por eso la música Clásica y el Jazz quedan hacia la derecha (valores positivos altos de PC1) y Reggaetón y Salsa hacia la izquierda."
+        },
+        {
+          "id": "f86e36f5-d1fe-4cdc-befe-33c1fc57ef1e",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "En versiones anteriores a Scikit-Learn 1.5, PC2 mostraba signos invertidos (liveness negativo y Trap arriba). ¿Cómo se explica matemáticamente esto?",
+          "options": [
+            "Se debió a un error de cálculo numérico no convergente en la rutina de descomposición espectral SVD.",
+            "Fue ocasionado por omitir la estandarización previa de la media durante el ajuste del transformador.",
+            "La orientación de un autovector es matemáticamente arbitraria (+v o -v) y no altera la interpretación.",
+            "Representa un cambio conceptual fundamental en la definición de varianza explicada del componente dos."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Un autovector v define una línea recta en el espacio; tanto v como -v satisfacen la ecuación fundamental A v = lambda v. Que un solver elija una dirección o su reflejo es una convención arbitraria de implementación. El mapa resultante es un espejo del otro, pero las distancias relativas, agrupaciones e interpretaciones técnicas permanecen 100% invariantes."
+        },
+        {
+          "id": "c15fd4d6-bd9a-47af-bf7a-80ac27fe1b82",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Dentro del gráfico biplot del taller, las flechas de energy y loudness_db casi se superponen, mientras acousticness apunta en sentido opuesto. ¿Qué indica esto?",
+          "options": [
+            "Independencia estadística absoluta entre las tres variables acústicas al proyectarse en el plano PC1-PC2.",
+            "Que energy y loudness_db carecen de varianza y que acousticness explica la totalidad del componente dos.",
+            "Que existe multicolinealidad perfecta únicamente en el subconjunto de prueba pero no en entrenamiento.",
+            "Alta correlación positiva entre energy y loudness_db, y correlación negativa de ambas con acousticness."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. En un biplot, el coseno del ángulo entre flechas aproxima el coeficiente de correlación de Pearson: flechas que apuntan casi en la misma dirección indican correlación fuertemente positiva (r = 0.95 entre energy y loudness_db); flechas opuestas a 180° indican correlación marcadamente negativa; flechas perpendiculares indican incorrelación."
+        },
+        {
+          "id": "afca9ab4-1bb1-4ad0-a041-cec40e9bf429",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "En la práctica autónoma del taller (Ritmo vs Timbre), ¿qué grupo de variables separó con mayor nitidez a la música Clásica, Jazz y Trap del resto?",
+          "options": [
+            "El grupo de Timbre y Textura, debido a su sensibilidad a la naturaleza acústica, instrumental y vocal.",
+            "El grupo de Ritmo e Intensidad, debido a que el tempo y los decibeles diferencian todas las melodías.",
+            "Ambos grupos por separado fallaron totalmente y solo fue posible agruparlos al aplicar Naive Bayes.",
+            "El grupo de Ritmo e Intensidad, porque logró aislar a la música clásica en la zona de alta cadencia."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. El bloque de Timbre y Textura (acousticness, instrumentalness, speechiness, etc.) aisló claramente a Clásica y Jazz a la derecha (alto PC1 acústico/instrumental) y a Trap abajo a la izquierda (alto speechiness con centroide en -1.89 en PC1). En contraste, en el mapa de Ritmo, Trap y Clásica se mezclaban mucho más con otros géneros."
+        },
+        {
+          "id": "ff286733-ba04-4b8c-b4ce-fdf22cf98601",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "En la fase final del taller se agregó NearestCentroid() al Pipeline. ¿Cuál es el mecanismo de predicción que utiliza este estimador para clasificar?",
+          "options": [
+            "Entrena un árbol CART binario que optimiza el índice Gini sobre las proyecciones ortogonales de PCA.",
+            "Ajusta hiperplanos de margen máximo entre clases calculando vectores de soporte en el plano PC1-PC2.",
+            "Calcula densidades gaussianas a priori y a posteriori utilizando el teorema de probabilidad de Bayes.",
+            "Calcula el centroide medio de cada género en el espacio latente y asigna la clase más cercana euclídea."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. NearestCentroid() es un clasificador geométrico simple: durante fit() calcula el promedio (vector centroide) de cada clase en el espacio de características (las coordenadas PC1 y PC2 tras PCA), y durante predict() calcula la distancia euclidiana de la nueva observación a cada centroide y le asigna la clase más próxima."
+        },
+        {
+          "id": "193ce889-a104-46ca-8381-ba64c33a60a4",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Para proyectar 3 canciones nuevas en el plano latente con el pipeline modelo = joblib.load('modelo_pca.pkl'), ¿por qué se utiliza modelo[:-1].transform(nuevas)?",
+          "options": [
+            "Reentrena el escalador y el estimador PCA desde cero incorporando las 3 canciones en la muestra base.",
+            "Ejecuta el escalado y el PCA aprendidos sin llamar al clasificador final, obteniendo solo PC1 y PC2.",
+            "Elimina la primera columna del DataFrame para adaptar las dimensiones al espacio vectorial de test.",
+            "Invierte la matriz de autovectores calculada para revertir las coordenadas hacia los datos crudos."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El slicing modelo[:-1] toma todos los pasos del Pipeline excepto el último (excluye NearestCentroid, conservando StandardScaler y PCA). Al aplicar .transform(nuevas) sobre datos sin escalar, el pipeline estandariza con las medias aprendidas y proyecta sobre los autovectores del entrenamiento, devolviendo las coordenadas PC1 y PC2 sin reentrenar nada."
+        },
+        {
+          "id": "d4ffc770-27ea-464d-9d0d-7ecb45b8a4f8",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "¿Qué ventaja arquitectónica fundamental ofrece exportar con joblib.dump(modelo, 'modelo_pca.pkl') un objeto Pipeline con StandardScaler y PCA?",
+          "options": [
+            "Comprime la matriz de datos original reduciendo el tamaño en disco de las 1 200 canciones del dataset.",
+            "Empaqueta las medias, varianzas y autovectores aprendidos en un solo archivo binario reproducible.",
+            "Convierte automáticamente el código Python a instrucciones nativas C++ para acelerar la predicción.",
+            "Genera una interfaz gráfica web interactiva capaz de renderizar los gráficos de biplot sin dependencias."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. joblib serializa el objeto Pipeline en su totalidad: los parámetros aprendidos por StandardScaler (medias y desviaciones estándar) y por PCA (autovectores components_ y medias de centrado) se guardan juntos. Así, un servicio externo o API puede recibir datos crudos y transformarlos de forma idéntica sin desajustes de escala."
+        },
+        {
+          "id": "c18fa508-c779-463a-b858-db28754ce2e8",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "En comparación con los modelos de clasificación y regresión vistos en semanas anteriores, ¿por qué PCA se clasifica como aprendizaje no supervisado?",
+          "options": [
+            "Porque no requiere optimizar ninguna función de pérdida matemática ni estimar parámetros numéricos.",
+            "Porque sus resultados de reducción de dimensionalidad no pueden evaluarse mediante ninguna métrica.",
+            "Porque se entrena exclusivamente con datos no estructurados provenientes de imágenes y archivos de audio.",
+            "Porque se alimenta únicamente de la matriz X de variables numéricas y no recibe ninguna etiqueta y."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. El aprendizaje supervisado dispone de una variable objetivo 'y' (e.g. convocado, fraude, precio); en cambio, el aprendizaje no supervisado recibe únicamente X (sin 'y') y busca descubrir la estructura interna, redundancias o agrupamientos intrínsecos de los datos. En el taller, el género musical solo se usó para colorear el gráfico final."
+        },
+        {
+          "id": "58ef299e-6e75-4ba4-8023-b70fe81129db",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "En la clase PCA de Scikit-Learn, ¿cuál es la diferencia técnica fundamental entre invocar el método fit(X) e invocar transform(X)?",
+          "options": [
+            "fit calcula las medias y autovectores sin devolver datos; transform proyecta los datos en esos ejes.",
+            "fit proyecta los datos sobre los ejes ortogonales; transform calcula los autovalores y varianzas.",
+            "fit estandariza las variables continuas; transform entrena un clasificador sobre las proyecciones.",
+            "fit selecciona el número óptimo de componentes k; transform descarta las columnas con correlación."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. pca.fit(X) aprende los parámetros estadísticos (media de cada variable y autovectores/components_) a partir de los datos, devolviendo el estimador ajustado sin datos proyectados. Por su parte, pca.transform(X) utiliza esos autovectores ya aprendidos para proyectar matemáticamente cualquier matriz de observaciones sobre el nuevo espacio latente."
+        },
+        {
+          "id": "de1eda53-d40d-41f3-9b9e-05fd17d98a55",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "¿Qué propiedad geométrica y estadística garantiza que la primera componente principal (PC1) sea el eje de proyección óptimo en PCA?",
+          "options": [
+            "Maximiza la dispersión (varianza) proyectada y minimiza la suma de errores ortogonales al cuadrado.",
+            "Maximiza la correlación bivariada respecto a la variable objetivo minimizando la entropía cruzada.",
+            "Garantiza que todas las observaciones queden contenidas exactamente a la misma distancia del origen.",
+            "Minimiza la suma de valores absolutos de los residuos calculados en la dirección del eje vertical Y."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. Matemáticamente, maximizar la varianza de los puntos proyectados sobre una recta es exactamente equivalente a minimizar la suma de las distancias perpendiculares (ortogonales) al cuadrado desde los puntos originales hasta dicha recta (error de reconstrucción cuadrático medio)."
+        },
+        {
+          "id": "166dbe21-9757-4100-9f41-4cc5dce960ec",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Respecto al hiperparámetro whiten de PCA, ¿qué transformación matemática aplica cuando se establece en True y por qué se mantiene en False en el curso?",
+          "options": [
+            "Elimina las componentes con autovalores menores a 1; en el curso se usa False para no podar variables.",
+            "Centra los datos restando la mediana muestral; en el curso se usa False para aplicar la media clásica.",
+            "Divide cada PC por su desviación para varianza 1; en el curso se usa False para conservar las escalas.",
+            "Sustituye valores atípicos mediante z-scores; en el curso se usa False para respetar los datos reales."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. whiten=True (blanqueamiento) divide las coordenadas de cada componente principal por la raíz cuadrada de su autovalor (su desviación estándar), forzando que todas las componentes resultantes tengan varianza unitaria (descorrelacionadas y con varianza 1). En el curso se deja en False (su valor por defecto) para preservar las diferencias reales de varianza explicada entre componentes."
         }
       ]
     },
@@ -10220,6 +10616,422 @@ window.QUIZ_DATA = {
           ],
           "correct": 1,
           "feedback": "Correcto. Como el Pipeline encapsula tanto el ColumnTransformer (con OneHotEncoder) como el RandomForestClassifier, un servicio web solo necesita cargar el .pkl y suministrarle el DataFrame con las columnas originales en texto. El Pipeline se encarga de transformar las variables y devolver las predicciones de forma autónoma."
+        }
+      ]
+    },
+    {
+      "id": "semana_8",
+      "titulo": "Semana 8: Análisis de Componentes Principales (PCA)",
+      "categorias": [
+        {
+          "value": "all",
+          "label": "Todas (Semana 8 · 28 preguntas)"
+        },
+        {
+          "value": "semana8",
+          "label": "PCA · Teoría, Loadings y Código"
+        },
+        {
+          "value": "incorrect",
+          "label": "Solo Preguntas Erradas"
+        },
+        {
+          "value": "bookmarked",
+          "label": "Solo Preguntas Marcadas"
+        }
+      ],
+      "preguntas": [
+        {
+          "id": "7677e59c-58c7-4a25-a6ae-0358f9118bb8",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "¿De qué manera el Análisis de Componentes Principales (PCA) soluciona el problema de la multicolinealidad severa entre las variables predictoras de un conjunto de datos?",
+          "options": [
+            "Elimina sistemáticamente las columnas redundantes basándose en umbrales prefijados de varianza.",
+            "Aplica una regularización penalizada L1 o L2 que anula los coeficientes fuertemente duplicados.",
+            "Proyecta los datos originales sobre ejes ortogonales con covarianza y correlación lineal nulas.",
+            "Reemplaza los valores numéricos colineales por transformaciones polinomiales no correlacionadas."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. PCA descompone la matriz de covarianza en autovectores perpendiculares (ortogonales) entre sí. Al proyectar las variables sobre estos nuevos ejes, las componentes principales resultantes tienen una correlación de Pearson exactamente igual a cero (r = 0), erradicando la multicolinealidad."
+        },
+        {
+          "id": "d908dd8e-97df-45fa-a6b9-a5c59e8c8afb",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "¿Cuál es el objetivo principal del algoritmo de PCA al aplicarse sobre un espacio de características con p variables numéricas continuas?",
+          "options": [
+            "Predecir la clase de cada observación supervisada minimizando los errores de clasificación global.",
+            "Calcular grupos no supervisados compactos optimizando las distancias euclidianas a los centros.",
+            "Reducir la dimensionalidad a k componentes reteniendo la mayor cantidad posible de la varianza.",
+            "Separar linealmente los datos hacia un espacio dimensional infinito mediante funciones kernel."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. El objetivo esencial de PCA es la reducción de dimensionalidad no supervisada: transformar p variables correlacionadas en k nuevas variables (k < p) no correlacionadas que capturen la máxima variabilidad (información) original con la menor pérdida posible."
+        },
+        {
+          "id": "32fa5fcd-8492-4f6c-9374-679a6427c80c",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "En la formulación matemática de PCA, ¿qué son formalmente las componentes principales y cómo se definen sus denominaciones (PC1, PC2, etc.)?",
+          "options": [
+            "Son subconjuntos óptimos de las columnas originales seleccionadas según su coeficiente de correlación.",
+            "Son combinaciones lineales ponderadas de variables, ordenadas de mayor a menor varianza explicada.",
+            "Son agrupaciones jerárquicas de observaciones ordenadas según la distancia calculada entre centroides.",
+            "Son transformaciones polinomiales ordenadas de forma ascendente según el error de reconstrucción final."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Cada componente principal es una suma ponderada (combinación lineal) de todas las variables originales estandarizadas. Se ordenan de forma decreciente según la varianza capturada: PC1 captura la máxima varianza posible, PC2 la segunda mayor sujeta a ser ortogonal a PC1, y así sucesivamente."
+        },
+        {
+          "id": "a53b7a42-fca7-4e22-9add-d5076e96343b",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "¿Qué comportamiento describe la varianza explicada por cada nueva componente principal a medida que se calculan más componentes sucesivas?",
+          "options": [
+            "La varianza individual crece en cada componente, mientras la varianza acumulada se mantiene constante.",
+            "La varianza individual se mantiene estable, mientras la varianza acumulada sube de manera oscilatoria.",
+            "La varianza individual decrece hasta la mitad del espacio, para luego crecer de manera exponencial.",
+            "La varianza individual decrece en cada componente, mientras la varianza acumulada tiende al 100%."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Por construcción matemática mediante autovalores ordenados, Var(PC1) >= Var(PC2) >= ... >= Var(PCp). Cada componente posterior explica menos varianza residual que la previa, mientras que la suma acumulada de varianza aumenta monótonamente hasta alcanzar el 100% con p componentes."
+        },
+        {
+          "id": "52235a9d-3ef2-4806-9f9e-53958f2f247a",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Al configurar el número de componentes k en PCA, ¿qué criterios técnicos se aplican para visualización gráfica y para alimentar modelos posteriores?",
+          "options": [
+            "Para graficar se selecciona el 100% de componentes, pero para otros modelos solo se usan 2 componentes.",
+            "Para graficar se usa el 50% de la varianza, pero para otros modelos se emplean exactamente 3 dimensiones.",
+            "Para graficar se usan 4 componentes fijas, pero para otros modelos se retiene exactamente el 60% inicial.",
+            "Para graficar se fijan 2 o 3 componentes, pero para otros modelos se retiene al menos el 80% o 90%."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Para representación gráfica en pantalla humana estamos limitados a 2D o 3D (2 o 3 componentes, e.g. PC1 y PC2 que explicaron 68.1% en el taller). Para alimentar modelos posteriores de Machine Learning (como clasificadores o clustering), se busca preservar al menos el 80% o 90% de la varianza original (en el taller, n_components=0.80 eligió 4 componentes con 84.8%)."
+        },
+        {
+          "id": "102ada6a-04b5-4dd8-a851-3422b6563f9e",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "¿Cuál es la secuencia ordenada de los cinco pasos analíticos que componen el flujo estándar de PCA y qué ocurre en cada uno de ellos?",
+          "options": [
+            "Estandarizar datos, correlaciones, calcular direcciones de varianza, proyectar puntos y elegir k.",
+            "Eliminar nulos, normalizar min-max, calcular distancias euclidianas, dividir en folds y elegir k.",
+            "Calcular centroides, proyectar muestras, estandarizar variables, extraer residuos y elegir k.",
+            "Estandarizar variables, calcular regresión lineal, estimar multicolinealidad, proyectar y elegir k."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. El flujo canónico de PCA consta de 5 pasos: 1. Estandarizar las variables (media 0, desviación 1); 2. Calcular la matriz de correlaciones/covarianza; 3. Encontrar las direcciones de máxima varianza (autovectores y autovalores); 4. Proyectar las observaciones sobre los nuevos ejes; 5. Elegir k componentes a conservar."
+        },
+        {
+          "id": "4eab10a2-954a-49cc-acaf-6306afe55ad6",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "En la clase PCA de Scikit-Learn, ¿cuál es la función precisa y el valor por defecto de los parámetros n_components, whiten y random_state?",
+          "options": [
+            "n_components=None (todas o % varianza), whiten=False (varianza unitaria) y random_state=None (semilla).",
+            "n_components=2 (fija 2 ejes), whiten=True (centrado en cero) y random_state=42 (fijación obligatoria).",
+            "n_components=0.80 (80% varianza), whiten=False (eliminar escala) y random_state=0 (inicialización base).",
+            "n_components=1 (primer eje), whiten=None (estandarización interna) y random_state=True (reproducibilidad)."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. En sklearn.decomposition.PCA: n_components tiene None por defecto (conserva todas las p componentes; puede recibir un entero como 2 o un float como 0.80 para retener el 80% de varianza); whiten es False por defecto (si es True divide cada componente por la raíz de su autovalor para forzar varianza unitaria); random_state es None (semilla para resolvedores SVD estocásticos)."
+        },
+        {
+          "id": "aeb6535c-98e3-4c37-970c-4f6d94836ad5",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "En el contexto de PCA y considerando el atributo components_, ¿qué representa e ilustra específicamente el gráfico de loadings?",
+          "options": [
+            "Muestra las distancias euclidianas de cada canción respecto a los centroides de sus respectivos géneros.",
+            "Muestra los pesos de cada variable original en cada componente; su signo y magnitud indican influencia.",
+            "Muestra la varianza residual descartada por el modelo al reducir la dimensionalidad de las variables.",
+            "Muestra la correlación de Spearman entre la variable objetivo categórica y cada componente proyectada."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. En el curso llamamos loadings a los pesos de cada variable en cada componente (pca.components_, rango [-1, 1]). Su magnitud refleja la importancia o peso de la variable en la componente y el signo indica la dirección (positiva o negativa) hacia la que desplaza a las observaciones."
+        },
+        {
+          "id": "5e47bbce-81bb-4c0e-b368-77a5d13b6143",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "¿Qué elementos visuales y analíticos se superponen simultáneamente dentro de un gráfico Biplot generado a partir de un modelo PCA?",
+          "options": [
+            "Histogramas de distribución univariada superpuestos con curvas gaussianas de densidad por cada género.",
+            "Dendrogramas de agrupamiento jerárquico superpuestos sobre matrices de dispersión bidimensionales.",
+            "Puntos de observaciones proyectadas y vectores con los loadings que indican dirección de variables.",
+            "Fronteras de decisión calculadas por clasificadores superpuestas con el error residual acumulado."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. El biplot dibuja en el mismo espacio bidimensional (PC1 vs PC2) las observaciones proyectadas (puntos) y flechas que parten del origen representando las variables originales con sus loadings multiplicados por un factor de escala. Permite ver simultáneamente cómo se posicionan los datos y qué variables los empujan hacia cada región."
+        },
+        {
+          "id": "493bb3c0-21df-45e9-9670-54ef30171d1f",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Dado un objeto pipe = Pipeline([('escalar', StandardScaler()), ('pca', PCA(n_components=2))]) ajustado con X, ¿cómo se accede a los pesos components_?",
+          "options": [
+            "Mediante la instrucción pipe.steps['pca'].get_components() para extraer la matriz de autovectores.",
+            "Mediante la instrucción pipe.named_steps['pca'].components_ para extraer la matriz de autovectores.",
+            "Mediante la instrucción pipe.get_params()['pca_components'] para extraer la matriz de autovectores.",
+            "Mediante la instrucción pipe.transformers['pca'].components_ para extraer la matriz de autovectores."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. En Scikit-Learn, para acceder a los atributos aprendidos de una etapa específica de un Pipeline ya entrenado se utiliza el diccionario named_steps indexado por el nombre asignado al paso: pipe.named_steps['pca'].components_."
+        },
+        {
+          "id": "7fb3471f-7c7d-4654-8c72-63aaef4fbc73",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "¿Bajo qué condiciones técnicas específicas resulta adecuado utilizar PCA y en qué escenarios concretos NO debe aplicarse este algoritmo?",
+          "options": [
+            "Se usa con datos categóricos codificados en One-Hot; no se debe usar con variables continuas numéricas.",
+            "Se usa cuando no existen correlaciones lineales; no se debe usar cuando las dimensiones son muy altas.",
+            "Se usa exclusivamente para predecir clases binarias; no se debe usar en aprendizaje no supervisado.",
+            "Se usa con variables numéricas continuas correlacionadas; no se debe usar con variables categóricas."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. PCA fue diseñado estrictamente para variables numéricas continuas que exhiben correlaciones lineales. NO debe aplicarse sobre variables categóricas (como variables binarias One-Hot), datos de texto discretos ni cuando las relaciones intrínsecas sean marcadamente no lineales."
+        },
+        {
+          "id": "e35ddbde-f470-459f-b4fb-9cdf1ed55d06",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Si al graficar la varianza explicada se observa una dispersión plana e idéntica entre todas las PC sin relaciones lineales, ¿qué técnicas deben usarse?",
+          "options": [
+            "Se deben aplicar modelos de regresión lineal múltiple con regularización Ridge para forzar linealidad.",
+            "Se deben emplear técnicas de reducción no lineal de la dimensionalidad tales como t-SNE y UMAP.",
+            "Se debe forzar el parámetro whiten=True en PCA para transformar las relaciones no lineales en curvas.",
+            "Se deben binarizar todas las variables continuas mediante umbrales medianos para ejecutar Naive Bayes."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Cuando la estructura de los datos descansa sobre variedades geométricas no lineales complejas, PCA no logra comprimir la varianza en pocas componentes (todas las PC tienen varianzas casi idénticas y bajas). En ese caso se recurre a técnicas no lineales como t-SNE (t-Distributed Stochastic Neighbor Embedding) o UMAP (Uniform Manifold Approximation and Projection)."
+        },
+        {
+          "id": "00ea61d9-cde4-462f-9143-8f17114c76ed",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "¿Cuál es la naturaleza operativa del modelo PCA entrenado y cómo se utiliza la matriz transformada resultante en flujos de Machine Learning?",
+          "options": [
+            "Predice directamente la variable objetivo minimizando la función de costo logarítmica de la muestra.",
+            "Calcula probabilidades a posteriori para asignar cada observación a su grupo óptimo sin supervisión.",
+            "No predice una etiqueta; genera una matriz proyectada Z que sirve de entrada para modelos posteriores.",
+            "Genera reglas de decisión lógicas basadas en umbrales de partición para predecir valores continuos."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. PCA es un transformador no supervisado de datos, no un modelo de predicción de etiquetas 'y'. Al llamar fit_transform(X) o transform(X) produce la matriz proyectada Z = X_pca, la cual se suministra como conjunto de características de entrada a modelos de clasificación, regresión o clustering."
+        },
+        {
+          "id": "b1a2d31e-77e7-47bf-bf29-d7f4a115b90b",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Al ejecutar PCA directamente sobre el dataset de Spotify sin estandarizar, ¿por qué duration_ms absorbe el 100% de la varianza del primer componente?",
+          "options": [
+            "Porque presenta una correlación de Pearson unitaria positiva respecto a todas las variables acústicas.",
+            "Porque el algoritmo de PCA prioriza automáticamente aquellas columnas registradas con formato entero.",
+            "Porque su escala de cientos de miles genera una varianza numérica gigante frente al resto de columnas.",
+            "Porque Scikit-Learn detecta duration_ms como variable índice y le asigna la máxima ponderación inicial."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. En el taller de Paúl Rosero, sin estandarizar con StandardScaler, duration_ms (valores de 120,000 a 240,000 ms) tiene una varianza de orden 10^9, mientras columnas como danceability o acousticness van de 0 a 1 (varianza < 1). Como PCA busca maximizar varianza numérica bruta, PC1 se alinea al 100% con duration_ms (varianza explicada [1.0, 0.0] y loading 1.0), ignorando totalmente las demás variables."
+        },
+        {
+          "id": "7b225b5c-c90d-45b8-b7c9-55fbe5d2f93b",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Tras entrenar un modelo pca = PCA().fit(X_escalado), ¿qué información matemática específica entrega el atributo pca.explained_variance_ratio_?",
+          "options": [
+            "Un escalar que representa el porcentaje de error cuadrático cometido durante la proyección ortogonal.",
+            "Una matriz cuadrada con las covarianzas calculadas entre las componentes principales seleccionadas.",
+            "Un vector con las correlaciones bivariadas entre cada componente y la variable objetivo supervisada.",
+            "Un arreglo con la fracción de varianza total capturada por cada componente principal individualmente."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. pca.explained_variance_ratio_ es un arreglo 1D donde cada elemento indica la proporción (entre 0 y 1) de la varianza total del conjunto de datos explicada por cada componente principal. La suma de todos los elementos del arreglo completo es exactamente 1.0 (100%)."
+        },
+        {
+          "id": "c71b857b-387c-42d0-b169-92a8ac70e786",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Si se instancia el modelo como PCA(n_components=0.80).fit(X_escalado), ¿qué acción efectúa Scikit-Learn y qué almacena en pca.n_components_?",
+          "options": [
+            "Calcula el número mínimo k de componentes que sumen al menos el 80% de varianza y guarda dicho entero.",
+            "Multiplica todas las varianzas calculadas por un factor de 0.80 para reducir el sobreajuste latente.",
+            "Selecciona exactamente el 80% del número total de columnas iniciales descartando el 20% con más ruido.",
+            "Asigna un peso de regularización de 0.80 a la matriz de proyecciones ortogonales de los datos de test."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. Cuando n_components es un número flotante entre 0 y 1, Scikit-Learn selecciona automáticamente la cantidad mínima de componentes principales cuya varianza explicada acumulada alcance o supere ese porcentaje. En el taller, n_components=0.80 determinó que k=4 componentes acumulan el 84.8% de varianza, almacenando 4 en pca.n_components_."
+        },
+        {
+          "id": "3f678a0e-ce4e-49da-a981-c55c13afbd69",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Si X contiene 1 200 filas y 10 variables numéricas y se aplica PCA(n_components=2), ¿cuáles son las dimensiones de Z y de pca.components_?",
+          "options": [
+            "La matriz de datos proyectados Z tiene forma (2, 1200) y la matriz components_ tiene dimensiones (10, 2).",
+            "La matriz de datos proyectados Z tiene forma (1200, 2) y la matriz components_ tiene dimensiones (2, 10).",
+            "La matriz de datos proyectados Z tiene forma (1200, 10) y la matriz components_ tiene dimensiones (2, 2).",
+            "La matriz de datos proyectados Z tiene forma (10, 1200) y la matriz components_ tiene dimensiones (10, 10)."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Z = pca.fit_transform(X) comprime las 10 características a 2 coordenadas para cada una de las 1 200 canciones, dando dimensiones (1200, 2). Por su parte, pca.components_ contiene una fila por cada componente y una columna por cada variable original, por lo que su dimensión es (2, 10) (o (10, 2) si se transpone con .T)."
+        },
+        {
+          "id": "f5252f7c-1855-4fe7-9ba9-d844c63a9b7d",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "En el taller de perfil sonoro, PC1 tuvo loadings positivos altos en acousticness y negativos altos en energy. ¿Qué significado musical tiene este eje?",
+          "options": [
+            "Representa un eje sonoro de oposición acústica e instrumental frente a intensidad enérgica y bailable.",
+            "Representa una separación temporal entre la duración de las canciones frente al año de su lanzamiento.",
+            "Representa el volumen promedio en decibeles frente al número de reproducciones globales en la red.",
+            "Representa la calidad acústica de grabación en vivo frente al nivel de distorsión armónica digital."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. En el taller, PC1 opone variables acústicas e instrumentales (acousticness +0.40, instrumentalness +0.33) a variables enérgicas y rítmicas (energy -0.40, loudness_db -0.40, danceability -0.37). Por eso la música Clásica y el Jazz quedan hacia la derecha (valores positivos altos de PC1) y Reggaetón y Salsa hacia la izquierda."
+        },
+        {
+          "id": "f86e36f5-d1fe-4cdc-befe-33c1fc57ef1e",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "En versiones anteriores a Scikit-Learn 1.5, PC2 mostraba signos invertidos (liveness negativo y Trap arriba). ¿Cómo se explica matemáticamente esto?",
+          "options": [
+            "Se debió a un error de cálculo numérico no convergente en la rutina de descomposición espectral SVD.",
+            "Fue ocasionado por omitir la estandarización previa de la media durante el ajuste del transformador.",
+            "La orientación de un autovector es matemáticamente arbitraria (+v o -v) y no altera la interpretación.",
+            "Representa un cambio conceptual fundamental en la definición de varianza explicada del componente dos."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Un autovector v define una línea recta en el espacio; tanto v como -v satisfacen la ecuación fundamental A v = lambda v. Que un solver elija una dirección o su reflejo es una convención arbitraria de implementación. El mapa resultante es un espejo del otro, pero las distancias relativas, agrupaciones e interpretaciones técnicas permanecen 100% invariantes."
+        },
+        {
+          "id": "c15fd4d6-bd9a-47af-bf7a-80ac27fe1b82",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Dentro del gráfico biplot del taller, las flechas de energy y loudness_db casi se superponen, mientras acousticness apunta en sentido opuesto. ¿Qué indica esto?",
+          "options": [
+            "Independencia estadística absoluta entre las tres variables acústicas al proyectarse en el plano PC1-PC2.",
+            "Que energy y loudness_db carecen de varianza y que acousticness explica la totalidad del componente dos.",
+            "Que existe multicolinealidad perfecta únicamente en el subconjunto de prueba pero no en entrenamiento.",
+            "Alta correlación positiva entre energy y loudness_db, y correlación negativa de ambas con acousticness."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. En un biplot, el coseno del ángulo entre flechas aproxima el coeficiente de correlación de Pearson: flechas que apuntan casi en la misma dirección indican correlación fuertemente positiva (r = 0.95 entre energy y loudness_db); flechas opuestas a 180° indican correlación marcadamente negativa; flechas perpendiculares indican incorrelación."
+        },
+        {
+          "id": "afca9ab4-1bb1-4ad0-a041-cec40e9bf429",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "En la práctica autónoma del taller (Ritmo vs Timbre), ¿qué grupo de variables separó con mayor nitidez a la música Clásica, Jazz y Trap del resto?",
+          "options": [
+            "El grupo de Timbre y Textura, debido a su sensibilidad a la naturaleza acústica, instrumental y vocal.",
+            "El grupo de Ritmo e Intensidad, debido a que el tempo y los decibeles diferencian todas las melodías.",
+            "Ambos grupos por separado fallaron totalmente y solo fue posible agruparlos al aplicar Naive Bayes.",
+            "El grupo de Ritmo e Intensidad, porque logró aislar a la música clásica en la zona de alta cadencia."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. El bloque de Timbre y Textura (acousticness, instrumentalness, speechiness, etc.) aisló claramente a Clásica y Jazz a la derecha (alto PC1 acústico/instrumental) y a Trap abajo a la izquierda (alto speechiness con centroide en -1.89 en PC1). En contraste, en el mapa de Ritmo, Trap y Clásica se mezclaban mucho más con otros géneros."
+        },
+        {
+          "id": "ff286733-ba04-4b8c-b4ce-fdf22cf98601",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "En la fase final del taller se agregó NearestCentroid() al Pipeline. ¿Cuál es el mecanismo de predicción que utiliza este estimador para clasificar?",
+          "options": [
+            "Entrena un árbol CART binario que optimiza el índice Gini sobre las proyecciones ortogonales de PCA.",
+            "Ajusta hiperplanos de margen máximo entre clases calculando vectores de soporte en el plano PC1-PC2.",
+            "Calcula densidades gaussianas a priori y a posteriori utilizando el teorema de probabilidad de Bayes.",
+            "Calcula el centroide medio de cada género en el espacio latente y asigna la clase más cercana euclídea."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. NearestCentroid() es un clasificador geométrico simple: durante fit() calcula el promedio (vector centroide) de cada clase en el espacio de características (las coordenadas PC1 y PC2 tras PCA), y durante predict() calcula la distancia euclidiana de la nueva observación a cada centroide y le asigna la clase más próxima."
+        },
+        {
+          "id": "193ce889-a104-46ca-8381-ba64c33a60a4",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Para proyectar 3 canciones nuevas en el plano latente con el pipeline modelo = joblib.load('modelo_pca.pkl'), ¿por qué se utiliza modelo[:-1].transform(nuevas)?",
+          "options": [
+            "Reentrena el escalador y el estimador PCA desde cero incorporando las 3 canciones en la muestra base.",
+            "Ejecuta el escalado y el PCA aprendidos sin llamar al clasificador final, obteniendo solo PC1 y PC2.",
+            "Elimina la primera columna del DataFrame para adaptar las dimensiones al espacio vectorial de test.",
+            "Invierte la matriz de autovectores calculada para revertir las coordenadas hacia los datos crudos."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El slicing modelo[:-1] toma todos los pasos del Pipeline excepto el último (excluye NearestCentroid, conservando StandardScaler y PCA). Al aplicar .transform(nuevas) sobre datos sin escalar, el pipeline estandariza con las medias aprendidas y proyecta sobre los autovectores del entrenamiento, devolviendo las coordenadas PC1 y PC2 sin reentrenar nada."
+        },
+        {
+          "id": "d4ffc770-27ea-464d-9d0d-7ecb45b8a4f8",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "¿Qué ventaja arquitectónica fundamental ofrece exportar con joblib.dump(modelo, 'modelo_pca.pkl') un objeto Pipeline con StandardScaler y PCA?",
+          "options": [
+            "Comprime la matriz de datos original reduciendo el tamaño en disco de las 1 200 canciones del dataset.",
+            "Empaqueta las medias, varianzas y autovectores aprendidos en un solo archivo binario reproducible.",
+            "Convierte automáticamente el código Python a instrucciones nativas C++ para acelerar la predicción.",
+            "Genera una interfaz gráfica web interactiva capaz de renderizar los gráficos de biplot sin dependencias."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. joblib serializa el objeto Pipeline en su totalidad: los parámetros aprendidos por StandardScaler (medias y desviaciones estándar) y por PCA (autovectores components_ y medias de centrado) se guardan juntos. Así, un servicio externo o API puede recibir datos crudos y transformarlos de forma idéntica sin desajustes de escala."
+        },
+        {
+          "id": "c18fa508-c779-463a-b858-db28754ce2e8",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "En comparación con los modelos de clasificación y regresión vistos en semanas anteriores, ¿por qué PCA se clasifica como aprendizaje no supervisado?",
+          "options": [
+            "Porque no requiere optimizar ninguna función de pérdida matemática ni estimar parámetros numéricos.",
+            "Porque sus resultados de reducción de dimensionalidad no pueden evaluarse mediante ninguna métrica.",
+            "Porque se entrena exclusivamente con datos no estructurados provenientes de imágenes y archivos de audio.",
+            "Porque se alimenta únicamente de la matriz X de variables numéricas y no recibe ninguna etiqueta y."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. El aprendizaje supervisado dispone de una variable objetivo 'y' (e.g. convocado, fraude, precio); en cambio, el aprendizaje no supervisado recibe únicamente X (sin 'y') y busca descubrir la estructura interna, redundancias o agrupamientos intrínsecos de los datos. En el taller, el género musical solo se usó para colorear el gráfico final."
+        },
+        {
+          "id": "58ef299e-6e75-4ba4-8023-b70fe81129db",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "En la clase PCA de Scikit-Learn, ¿cuál es la diferencia técnica fundamental entre invocar el método fit(X) e invocar transform(X)?",
+          "options": [
+            "fit calcula las medias y autovectores sin devolver datos; transform proyecta los datos en esos ejes.",
+            "fit proyecta los datos sobre los ejes ortogonales; transform calcula los autovalores y varianzas.",
+            "fit estandariza las variables continuas; transform entrena un clasificador sobre las proyecciones.",
+            "fit selecciona el número óptimo de componentes k; transform descarta las columnas con correlación."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. pca.fit(X) aprende los parámetros estadísticos (media de cada variable y autovectores/components_) a partir de los datos, devolviendo el estimador ajustado sin datos proyectados. Por su parte, pca.transform(X) utiliza esos autovectores ya aprendidos para proyectar matemáticamente cualquier matriz de observaciones sobre el nuevo espacio latente."
+        },
+        {
+          "id": "de1eda53-d40d-41f3-9b9e-05fd17d98a55",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "¿Qué propiedad geométrica y estadística garantiza que la primera componente principal (PC1) sea el eje de proyección óptimo en PCA?",
+          "options": [
+            "Maximiza la dispersión (varianza) proyectada y minimiza la suma de errores ortogonales al cuadrado.",
+            "Maximiza la correlación bivariada respecto a la variable objetivo minimizando la entropía cruzada.",
+            "Garantiza que todas las observaciones queden contenidas exactamente a la misma distancia del origen.",
+            "Minimiza la suma de valores absolutos de los residuos calculados en la dirección del eje vertical Y."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. Matemáticamente, maximizar la varianza de los puntos proyectados sobre una recta es exactamente equivalente a minimizar la suma de las distancias perpendiculares (ortogonales) al cuadrado desde los puntos originales hasta dicha recta (error de reconstrucción cuadrático medio)."
+        },
+        {
+          "id": "166dbe21-9757-4100-9f41-4cc5dce960ec",
+          "category": "semana8",
+          "categoryName": "Semana 8 · Análisis de Componentes Principales (PCA)",
+          "text": "Respecto al hiperparámetro whiten de PCA, ¿qué transformación matemática aplica cuando se establece en True y por qué se mantiene en False en el curso?",
+          "options": [
+            "Elimina las componentes con autovalores menores a 1; en el curso se usa False para no podar variables.",
+            "Centra los datos restando la mediana muestral; en el curso se usa False para aplicar la media clásica.",
+            "Divide cada PC por su desviación para varianza 1; en el curso se usa False para conservar las escalas.",
+            "Sustituye valores atípicos mediante z-scores; en el curso se usa False para respetar los datos reales."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. whiten=True (blanqueamiento) divide las coordenadas de cada componente principal por la raíz cuadrada de su autovalor (su desviación estándar), forzando que todas las componentes resultantes tengan varianza unitaria (descorrelacionadas y con varianza 1). En el curso se deja en False (su valor por defecto) para preservar las diferencias reales de varianza explicada entre componentes."
         }
       ]
     }
