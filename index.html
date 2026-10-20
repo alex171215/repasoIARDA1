@@ -513,7 +513,7 @@
                             Sincronizar Progreso
                             <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800/80">Gratis · Multi-dispositivo</span>
                         </h3>
-                        <p class="text-xs text-slate-400">Pasa tus respuestas y preguntas marcadas a tu celular u otra PC</p>
+                        <p class="text-xs text-slate-400">Pasa tu progreso entre equipos. <span class="text-amber-300/90 font-medium">Prioridad pedagógica:</span> preguntas erróneas y marcadas se conservan siempre.</p>
                     </div>
                 </div>
                 <button id="closeSyncModalBtn" class="text-slate-400 hover:text-white text-2xl font-bold leading-none p-1 transition">&times;</button>
@@ -1619,12 +1619,84 @@
             }
         }
 
+        function getQuestionCorrectAnswerMap() {
+            const map = {};
+            if (window.QUIZ_DATA) {
+                for (const mat in window.QUIZ_DATA) {
+                    const banks = window.QUIZ_DATA[mat];
+                    if (Array.isArray(banks)) {
+                        banks.forEach(b => {
+                            if (Array.isArray(b.preguntas)) {
+                                b.preguntas.forEach(q => {
+                                    if (q.id && q.correct !== undefined) {
+                                        map[q.id] = q.correct;
+                                    }
+                                });
+                            }
+                        });
+                    }
+                }
+            }
+            try {
+                const custom = JSON.parse(localStorage.getItem('ai_quiz_custom_q') || '[]');
+                if (Array.isArray(custom)) {
+                    custom.forEach(q => {
+                        if (q.id && q.correct !== undefined) {
+                            map[q.id] = q.correct;
+                        }
+                    });
+                }
+            } catch(e) {}
+            return map;
+        }
+
+        function mergeAnswersWithPriority(existing, incoming, correctMap) {
+            const allQIds = new Set([...Object.keys(existing), ...Object.keys(incoming)]);
+            const result = {};
+
+            for (const qId of allQIds) {
+                const has1 = existing[qId] !== undefined;
+                const has2 = incoming[qId] !== undefined;
+
+                if (has1 && !has2) {
+                    result[qId] = existing[qId];
+                } else if (!has1 && has2) {
+                    result[qId] = incoming[qId];
+                } else {
+                    // Ambos dispositivos respondieron la pregunta
+                    const ans1 = existing[qId];
+                    const ans2 = incoming[qId];
+                    const correctOpt = correctMap[qId];
+
+                    if (correctOpt !== undefined) {
+                        const isWrong1 = (ans1 !== correctOpt);
+                        const isWrong2 = (ans2 !== correctOpt);
+
+                        // REGLA PEDAGÓGICA: La respuesta errónea tiene máxima prioridad
+                        // Si en un dispositivo se equivocó y en el otro acertó, se preserva el error para repaso
+                        if (isWrong1 && !isWrong2) {
+                            result[qId] = ans1;
+                        } else if (!isWrong1 && isWrong2) {
+                            result[qId] = ans2;
+                        } else {
+                            // Ambos erraron o ambos acertaron -> se queda con el entrante
+                            result[qId] = ans2;
+                        }
+                    } else {
+                        result[qId] = ans2;
+                    }
+                }
+            }
+            return result;
+        }
+
         function importQuizData(payload, mode = 'merge') {
             if (!payload || !payload.store || typeof payload.store !== 'object') {
                 throw new Error("El archivo o código no contiene datos de progreso válidos.");
             }
             const store = payload.store;
             let updatedKeys = 0;
+            const correctMap = getQuestionCorrectAnswerMap();
 
             for (const k in store) {
                 if (!k.startsWith('ai_quiz_')) continue;
@@ -1634,7 +1706,7 @@
                     try {
                         const existing = JSON.parse(localStorage.getItem(k) || '{}');
                         const incoming = JSON.parse(incomingVal || '{}');
-                        const merged = Object.assign({}, existing, incoming);
+                        const merged = mergeAnswersWithPriority(existing, incoming, correctMap);
                         localStorage.setItem(k, JSON.stringify(merged));
                     } catch(e) {
                         localStorage.setItem(k, incomingVal);
@@ -1643,6 +1715,7 @@
                     try {
                         const existing = new Set(JSON.parse(localStorage.getItem(k) || '[]'));
                         const incoming = JSON.parse(incomingVal || '[]');
+                        // REGLA: Preguntas marcadas con duda tienen prioridad (unión total)
                         incoming.forEach(id => existing.add(id));
                         localStorage.setItem(k, JSON.stringify(Array.from(existing)));
                     } catch(e) {
