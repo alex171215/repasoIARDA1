@@ -120,6 +120,15 @@
                     </svg>
                 </button>
 
+                <!-- Botón Sincronizar / Compartir Progreso -->
+                <button id="openSyncModalBtn" title="Sincronizar progreso entre dispositivos (Celular, PC, etc.)"
+                    class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-emerald-600/20 hover:bg-emerald-600/30 text-emerald-300 text-xs sm:text-sm font-medium border border-emerald-500/40 transition">
+                    <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                            d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                    </svg>
+                    <span>Sincronizar</span>
+                </button>
                 <!-- Botón Añadir Preguntas -->
                 <button id="openAddModalBtn"
                     class="flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-slate-800 hover:bg-slate-700 text-slate-200 text-xs sm:text-sm font-medium border border-slate-700 transition">
@@ -487,6 +496,134 @@
             </form>
         </div>
     </div>
+
+    <!-- Modal de Sincronización y Respaldo de Progreso Multi-dispositivo -->
+    <div id="syncModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80 glass hidden">
+        <div class="bg-slate-900 border border-slate-800 rounded-3xl max-w-xl w-full p-6 shadow-2xl max-h-[92vh] overflow-y-auto space-y-5">
+            <!-- Encabezado Modal -->
+            <div class="flex items-center justify-between pb-3 border-b border-slate-800">
+                <div class="flex items-center gap-2.5">
+                    <div class="w-9 h-9 rounded-xl bg-emerald-500/20 text-emerald-400 flex items-center justify-center border border-emerald-500/30">
+                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7h12m0 0l-4-4m4 4l-4 4m0 6H4m0 0l4 4m-4-4l4-4" />
+                        </svg>
+                    </div>
+                    <div>
+                        <h3 class="text-base sm:text-lg font-bold text-white flex items-center gap-2">
+                            Sincronizar Progreso
+                            <span class="text-xs px-2 py-0.5 rounded-full bg-emerald-950 text-emerald-300 border border-emerald-800/80">Gratis · Multi-dispositivo</span>
+                        </h3>
+                        <p class="text-xs text-slate-400">Pasa tus respuestas y preguntas marcadas a tu celular u otra PC</p>
+                    </div>
+                </div>
+                <button id="closeSyncModalBtn" class="text-slate-400 hover:text-white text-2xl font-bold leading-none p-1 transition">&times;</button>
+            </div>
+
+            <!-- Resumen de estado actual -->
+            <div class="bg-slate-950/70 rounded-xl p-3 border border-slate-800 flex items-center justify-between text-xs">
+                <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="text-slate-400">Tu avance actual:</span>
+                    <span id="syncStatsSummary" class="font-semibold text-emerald-300">Calculando...</span>
+                </div>
+                <span class="text-[11px] text-slate-500 font-mono">100% Privado</span>
+            </div>
+
+            <!-- Opción 1: Enlace Mágico -->
+            <div class="bg-slate-800/40 rounded-2xl p-4 border border-slate-700/60 space-y-3">
+                <div class="flex items-start gap-2.5">
+                    <span class="text-xl">🔗</span>
+                    <div>
+                        <h4 class="text-sm font-semibold text-slate-200">1. Enlace Mágico (Recomendado para Celular)</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Copia este enlace y ábrelo en el navegador de tu teléfono (o envíatelo por WhatsApp). Tu progreso se cargará automáticamente al abrirlo.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <input id="syncMagicUrlInput" type="text" readonly
+                        class="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-slate-300 truncate select-all focus:outline-none focus:border-emerald-500">
+                    <button id="copyMagicUrlBtn"
+                        class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shrink-0 shadow-md shadow-emerald-600/20">
+                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                        </svg>
+                        <span>Copiar Enlace</span>
+                    </button>
+                </div>
+                <div id="copySuccessMsg" class="text-xs text-emerald-400 font-medium hidden flex items-center gap-1">
+                    <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
+                    <span>¡Enlace copiado! Envíatelo a tu celular y ábrelo en el navegador.</span>
+                </div>
+            </div>
+
+            <!-- Opción 2: Código de Progreso -->
+            <div class="bg-slate-800/40 rounded-2xl p-4 border border-slate-700/60 space-y-3">
+                <div class="flex items-start gap-2.5">
+                    <span class="text-xl">📋</span>
+                    <div>
+                        <h4 class="text-sm font-semibold text-slate-200">2. Código de Respaldo (Texto)</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Copia un código compacto para transferir tu avance o pega uno para restaurar datos en este equipo.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button id="copySyncCodeBtn"
+                        class="flex-1 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" /></svg>
+                        <span>Copiar Código</span>
+                    </button>
+                    <button id="togglePasteCodeBtn"
+                        class="flex-1 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded-lg text-xs font-medium transition flex items-center justify-center gap-1.5">
+                        <svg class="w-3.5 h-3.5 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2M9 5a2 2 0 002 2h2a2 2 0 002-2M9 5a2 2 0 012-2h2a2 2 0 012 2" /></svg>
+                        <span>Restaurar desde Código</span>
+                    </button>
+                </div>
+                <div id="pasteCodeContainer" class="space-y-2 hidden pt-1">
+                    <textarea id="syncCodeInput" rows="3" placeholder="Pega aquí el código de progreso copiado de otro dispositivo..."
+                        class="w-full bg-slate-950 border border-slate-700 rounded-lg p-2.5 text-xs font-mono text-slate-200 placeholder-slate-500 focus:outline-none focus:border-indigo-500"></textarea>
+                    <button id="applySyncCodeBtn"
+                        class="w-full py-2 bg-indigo-600 hover:bg-indigo-500 text-white rounded-lg text-xs font-semibold shadow-md shadow-indigo-600/20 transition">
+                        Restaurar y Combinar Progreso
+                    </button>
+                </div>
+            </div>
+
+            <!-- Opción 3: Descargar / Cargar Archivo JSON -->
+            <div class="bg-slate-800/40 rounded-2xl p-4 border border-slate-700/60 space-y-3">
+                <div class="flex items-start gap-2.5">
+                    <span class="text-xl">💾</span>
+                    <div>
+                        <h4 class="text-sm font-semibold text-slate-200">3. Archivo de Respaldo (.json)</h4>
+                        <p class="text-xs text-slate-400 leading-relaxed">
+                            Descarga un archivo local de seguridad o carga uno previo para no perder jamás tu estudio.
+                        </p>
+                    </div>
+                </div>
+                <div class="flex gap-2">
+                    <button id="downloadBackupBtn"
+                        class="flex-1 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 transition">
+                        <svg class="w-4 h-4 text-indigo-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
+                        </svg>
+                        <span>Descargar .json</span>
+                    </button>
+                    <label class="flex-1 py-2 bg-slate-800 hover:bg-slate-700 border border-slate-700 text-slate-200 rounded-lg text-xs font-medium flex items-center justify-center gap-1.5 cursor-pointer transition">
+                        <svg class="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-8l-4-4m0 0L8 8m4-4v12" />
+                        </svg>
+                        <span>Cargar .json</span>
+                        <input id="uploadBackupInput" type="file" accept=".json" class="hidden">
+                    </label>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Librería de compresión LZString para sincronización ligera y sin dependencias externas -->
+    <script src="js/lz-string.min.js"></script>
+
 
         <!-- Cargar banco de preguntas (con versión para forzar recarga) -->
     <script src="data/banco_preguntas_v7.js?v=9"></script>
@@ -1405,8 +1542,335 @@
             }, 3000);
         }
 
+        // ==========================================================
+        // SISTEMA DE SINCRONIZACIÓN Y COMPARTIR PROGRESO MULTI-DISPOSITIVO
+        // ==========================================================
+
+        function exportAllQuizData() {
+            const store = {};
+            for (let i = 0; i < localStorage.length; i++) {
+                const k = localStorage.key(i);
+                if (k && k.startsWith('ai_quiz_')) {
+                    store[k] = localStorage.getItem(k);
+                }
+            }
+            return {
+                app: 'ai_quiz_simulator',
+                version: '1.0',
+                exportedAt: new Date().toISOString(),
+                store: store
+            };
+        }
+
+        function countStoredProgress() {
+            let totalAns = 0;
+            let totalBm = 0;
+            for (let i = 0; i < localStorage.length; i++) {
+                const k = localStorage.key(i);
+                if (!k) continue;
+                if (k.startsWith('ai_quiz_ans_')) {
+                    try {
+                        const obj = JSON.parse(localStorage.getItem(k) || '{}');
+                        totalAns += Object.keys(obj).length;
+                    } catch(e) {}
+                } else if (k.startsWith('ai_quiz_bm_')) {
+                    try {
+                        const arr = JSON.parse(localStorage.getItem(k) || '[]');
+                        totalBm += arr.length;
+                    } catch(e) {}
+                }
+            }
+            return { totalAns, totalBm };
+        }
+
+        function compressPayload(str) {
+            if (window.LZString && typeof LZString.compressToEncodedURIComponent === 'function') {
+                return 'lz:' + LZString.compressToEncodedURIComponent(str);
+            }
+            try {
+                return 'b64:' + encodeURIComponent(btoa(unescape(encodeURIComponent(str))));
+            } catch(e) {
+                return 'raw:' + encodeURIComponent(str);
+            }
+        }
+
+        function decompressPayload(str) {
+            if (!str) return null;
+            if (str.startsWith('lz:') && window.LZString) {
+                const raw = str.substring(3);
+                const decomp = LZString.decompressFromEncodedURIComponent(raw);
+                if (decomp) return decomp;
+            }
+            if (str.startsWith('b64:')) {
+                const raw = str.substring(4);
+                return decodeURIComponent(escape(atob(decodeURIComponent(raw))));
+            }
+            if (str.startsWith('raw:')) {
+                return decodeURIComponent(str.substring(4));
+            }
+            if (window.LZString) {
+                const decomp = LZString.decompressFromEncodedURIComponent(str);
+                if (decomp) return decomp;
+            }
+            try {
+                return decodeURIComponent(escape(atob(decodeURIComponent(str))));
+            } catch(e) {
+                return str;
+            }
+        }
+
+        function importQuizData(payload, mode = 'merge') {
+            if (!payload || !payload.store || typeof payload.store !== 'object') {
+                throw new Error("El archivo o código no contiene datos de progreso válidos.");
+            }
+            const store = payload.store;
+            let updatedKeys = 0;
+
+            for (const k in store) {
+                if (!k.startsWith('ai_quiz_')) continue;
+                const incomingVal = store[k];
+
+                if (mode === 'merge' && k.includes('_ans_')) {
+                    try {
+                        const existing = JSON.parse(localStorage.getItem(k) || '{}');
+                        const incoming = JSON.parse(incomingVal || '{}');
+                        const merged = Object.assign({}, existing, incoming);
+                        localStorage.setItem(k, JSON.stringify(merged));
+                    } catch(e) {
+                        localStorage.setItem(k, incomingVal);
+                    }
+                } else if (mode === 'merge' && k.includes('_bm_')) {
+                    try {
+                        const existing = new Set(JSON.parse(localStorage.getItem(k) || '[]'));
+                        const incoming = JSON.parse(incomingVal || '[]');
+                        incoming.forEach(id => existing.add(id));
+                        localStorage.setItem(k, JSON.stringify(Array.from(existing)));
+                    } catch(e) {
+                        localStorage.setItem(k, incomingVal);
+                    }
+                } else {
+                    localStorage.setItem(k, incomingVal);
+                }
+                updatedKeys++;
+            }
+
+            return updatedKeys;
+        }
+
+        function refreshStateAfterImport() {
+            activeMateria = localStorage.getItem('ai_quiz_active_materia') || activeMateria;
+            activeBank = localStorage.getItem('ai_quiz_active_bank') || activeBank;
+            
+            if (quizData && quizData[activeMateria]) {
+                dataBancos = quizData[activeMateria];
+            }
+            var materiaSel = document.getElementById('materiaSelect');
+            if (materiaSel) materiaSel.value = activeMateria;
+
+            buildBankButtons();
+            selectBank(activeBank);
+        }
+
+        function checkIncomingSync() {
+            if (window.location.hash && window.location.hash.startsWith('#sync=')) {
+                try {
+                    const rawHash = window.location.hash.substring(6);
+                    const jsonStr = decompressPayload(rawHash);
+                    if (jsonStr) {
+                        const payload = JSON.parse(jsonStr);
+                        const count = importQuizData(payload, 'merge');
+                        history.replaceState(null, '', window.location.pathname + window.location.search);
+                        refreshStateAfterImport();
+                        setTimeout(() => {
+                            showToast("🎉 ¡Sincronización exitosa! Tus respuestas y preguntas marcadas han sido restauradas.");
+                            if (sound && sound.playCorrect) sound.playCorrect();
+                        }, 500);
+                    }
+                } catch (err) {
+                    console.error("Error al procesar sincronización entrante:", err);
+                    setTimeout(() => {
+                        showToast("⚠️ El enlace de sincronización parece incompleto o corrupto.");
+                    }, 500);
+                }
+            }
+        }
+
+        // DOM Elements del Modal de Sincronización
+        const syncModal = document.getElementById('syncModal');
+        const openSyncModalBtn = document.getElementById('openSyncModalBtn');
+        const closeSyncModalBtn = document.getElementById('closeSyncModalBtn');
+        const syncStatsSummary = document.getElementById('syncStatsSummary');
+        const syncMagicUrlInput = document.getElementById('syncMagicUrlInput');
+        const copyMagicUrlBtn = document.getElementById('copyMagicUrlBtn');
+        const copySuccessMsg = document.getElementById('copySuccessMsg');
+        const copySyncCodeBtn = document.getElementById('copySyncCodeBtn');
+        const togglePasteCodeBtn = document.getElementById('togglePasteCodeBtn');
+        const pasteCodeContainer = document.getElementById('pasteCodeContainer');
+        const syncCodeInput = document.getElementById('syncCodeInput');
+        const applySyncCodeBtn = document.getElementById('applySyncCodeBtn');
+        const downloadBackupBtn = document.getElementById('downloadBackupBtn');
+        const uploadBackupInput = document.getElementById('uploadBackupInput');
+
+        let currentCompressedCode = '';
+
+        if (openSyncModalBtn) {
+            openSyncModalBtn.addEventListener('click', () => {
+                saveState();
+                const payload = exportAllQuizData();
+                const jsonStr = JSON.stringify(payload);
+                currentCompressedCode = compressPayload(jsonStr);
+
+                // Estadísticas
+                const stats = countStoredProgress();
+                syncStatsSummary.textContent = `${stats.totalAns} respuestas · ${stats.totalBm} marcadas con duda`;
+
+                // Construir URL Mágica
+                const baseUrl = window.location.href.split('#')[0];
+                const magicUrl = baseUrl + '#sync=' + currentCompressedCode;
+                syncMagicUrlInput.value = magicUrl;
+
+                copySuccessMsg.classList.add('hidden');
+                pasteCodeContainer.classList.add('hidden');
+                syncCodeInput.value = '';
+
+                syncModal.classList.remove('hidden');
+                if (sound && sound.playClick) sound.playClick();
+            });
+        }
+
+        if (closeSyncModalBtn) {
+            closeSyncModalBtn.addEventListener('click', () => {
+                syncModal.classList.add('hidden');
+            });
+        }
+
+        if (syncModal) {
+            syncModal.addEventListener('click', (e) => {
+                if (e.target === syncModal) {
+                    syncModal.classList.add('hidden');
+                }
+            });
+        }
+
+        function copyToClipboard(text, onSuccess) {
+            if (navigator.clipboard && navigator.clipboard.writeText) {
+                navigator.clipboard.writeText(text).then(onSuccess).catch(() => fallbackCopy(text, onSuccess));
+            } else {
+                fallbackCopy(text, onSuccess);
+            }
+        }
+
+        function fallbackCopy(text, onSuccess) {
+            const ta = document.createElement('textarea');
+            ta.value = text;
+            ta.style.position = 'fixed';
+            ta.style.opacity = '0';
+            document.body.appendChild(ta);
+            ta.select();
+            try {
+                document.execCommand('copy');
+                if (onSuccess) onSuccess();
+            } catch(e) {
+                alert("No se pudo copiar automáticamente. Por favor copia manualmente el texto.");
+            }
+            document.body.removeChild(ta);
+        }
+
+        if (copyMagicUrlBtn) {
+            copyMagicUrlBtn.addEventListener('click', () => {
+                copyToClipboard(syncMagicUrlInput.value, () => {
+                    copySuccessMsg.classList.remove('hidden');
+                    showToast("🔗 ¡Enlace mágico copiado! Envíatelo por WhatsApp o ábrelo en tu celular.");
+                    if (sound && sound.playClick) sound.playClick();
+                });
+            });
+        }
+
+        if (copySyncCodeBtn) {
+            copySyncCodeBtn.addEventListener('click', () => {
+                copyToClipboard(currentCompressedCode, () => {
+                    showToast("📋 ¡Código de progreso copiado al portapapeles!");
+                    if (sound && sound.playClick) sound.playClick();
+                });
+            });
+        }
+
+        if (togglePasteCodeBtn) {
+            togglePasteCodeBtn.addEventListener('click', () => {
+                pasteCodeContainer.classList.toggle('hidden');
+                if (!pasteCodeContainer.classList.contains('hidden')) {
+                    syncCodeInput.focus();
+                }
+            });
+        }
+
+        if (applySyncCodeBtn) {
+            applySyncCodeBtn.addEventListener('click', () => {
+                const code = syncCodeInput.value.trim();
+                if (!code) {
+                    alert("Por favor pega un código de sincronización válido.");
+                    return;
+                }
+                try {
+                    const jsonStr = decompressPayload(code);
+                    if (!jsonStr) throw new Error("Código no reconocido.");
+                    const payload = JSON.parse(jsonStr);
+                    importQuizData(payload, 'merge');
+                    refreshStateAfterImport();
+                    syncModal.classList.add('hidden');
+                    showToast("🎉 ¡Progreso restaurado y combinado exitosamente!");
+                    if (sound && sound.playCorrect) sound.playCorrect();
+                } catch(err) {
+                    alert("Error: El código ingresado no es válido o está incompleto: " + err.message);
+                }
+            });
+        }
+
+        if (downloadBackupBtn) {
+            downloadBackupBtn.addEventListener('click', () => {
+                saveState();
+                const payload = exportAllQuizData();
+                const str = JSON.stringify(payload, null, 2);
+                const blob = new Blob([str], { type: 'application/json' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                const dateStr = new Date().toISOString().slice(0, 10);
+                a.href = url;
+                a.download = `progreso_simulador_ia_${dateStr}.json`;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showToast("💾 ¡Archivo de respaldo .json descargado!");
+                if (sound && sound.playClick) sound.playClick();
+            });
+        }
+
+        if (uploadBackupInput) {
+            uploadBackupInput.addEventListener('change', (e) => {
+                const file = e.target.files && e.target.files[0];
+                if (!file) return;
+                const reader = new FileReader();
+                reader.onload = function(evt) {
+                    try {
+                        const parsed = JSON.parse(evt.target.result);
+                        importQuizData(parsed, 'merge');
+                        refreshStateAfterImport();
+                        syncModal.classList.add('hidden');
+                        showToast("🎉 ¡Respaldo .json cargado y combinado exitosamente!");
+                        if (sound && sound.playCorrect) sound.playCorrect();
+                    } catch(err) {
+                        alert("Error al leer el archivo de respaldo: " + err.message);
+                    }
+                    uploadBackupInput.value = '';
+                };
+                reader.readAsText(file);
+            });
+        }
+
         // Inicializar al cargar
         window.addEventListener('DOMContentLoaded', () => {
+            checkIncomingSync();
             loadData();
         });
     </script>
