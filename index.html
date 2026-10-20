@@ -805,8 +805,10 @@
                 categoryFilter.appendChild(bmOpt);
             }
         }
-        function selectBank(bankName) {
-            saveState();
+        function selectBank(bankName, skipSave = false) {
+            if (!skipSave) {
+                saveState();
+            }
             activeBank = bankName;
             localStorage.setItem('ai_quiz_active_bank', bankName);
             userAnswers = {};
@@ -1596,6 +1598,15 @@
 
         function decompressPayload(str) {
             if (!str) return null;
+            // Si el texto pegado o URL contiene sync=, extraer solo el payload
+            if (str.includes('sync=')) {
+                str = str.split('sync=')[1];
+            }
+            if (str.includes('&')) {
+                str = str.split('&')[0];
+            }
+            str = decodeURIComponent(str.trim());
+
             if (str.startsWith('lz:') && window.LZString) {
                 const raw = str.substring(3);
                 const decomp = LZString.decompressFromEncodedURIComponent(raw);
@@ -1619,83 +1630,14 @@
             }
         }
 
-        function getQuestionCorrectAnswerMap() {
-            const map = {};
-            if (window.QUIZ_DATA) {
-                for (const mat in window.QUIZ_DATA) {
-                    const banks = window.QUIZ_DATA[mat];
-                    if (Array.isArray(banks)) {
-                        banks.forEach(b => {
-                            if (Array.isArray(b.preguntas)) {
-                                b.preguntas.forEach(q => {
-                                    if (q.id && q.correct !== undefined) {
-                                        map[q.id] = q.correct;
-                                    }
-                                });
-                            }
-                        });
-                    }
-                }
-            }
-            try {
-                const custom = JSON.parse(localStorage.getItem('ai_quiz_custom_q') || '[]');
-                if (Array.isArray(custom)) {
-                    custom.forEach(q => {
-                        if (q.id && q.correct !== undefined) {
-                            map[q.id] = q.correct;
-                        }
-                    });
-                }
-            } catch(e) {}
-            return map;
-        }
-
-        function mergeAnswersWithPriority(existing, incoming, correctMap) {
-            const allQIds = new Set([...Object.keys(existing), ...Object.keys(incoming)]);
-            const result = {};
-
-            for (const qId of allQIds) {
-                const has1 = existing[qId] !== undefined;
-                const has2 = incoming[qId] !== undefined;
-
-                if (has1 && !has2) {
-                    result[qId] = existing[qId];
-                } else if (!has1 && has2) {
-                    result[qId] = incoming[qId];
-                } else {
-                    // Ambos dispositivos respondieron la pregunta
-                    const ans1 = existing[qId];
-                    const ans2 = incoming[qId];
-                    const correctOpt = correctMap[qId];
-
-                    if (correctOpt !== undefined) {
-                        const isWrong1 = (ans1 !== correctOpt);
-                        const isWrong2 = (ans2 !== correctOpt);
-
-                        // REGLA PEDAGÓGICA: La respuesta errónea tiene máxima prioridad
-                        // Si en un dispositivo se equivocó y en el otro acertó, se preserva el error para repaso
-                        if (isWrong1 && !isWrong2) {
-                            result[qId] = ans1;
-                        } else if (!isWrong1 && isWrong2) {
-                            result[qId] = ans2;
-                        } else {
-                            // Ambos erraron o ambos acertaron -> se queda con el entrante
-                            result[qId] = ans2;
-                        }
-                    } else {
-                        result[qId] = ans2;
-                    }
-                }
-            }
-            return result;
-        }
-
         function importQuizData(payload, mode = 'merge') {
             if (!payload || !payload.store || typeof payload.store !== 'object') {
                 throw new Error("El archivo o código no contiene datos de progreso válidos.");
             }
             const store = payload.store;
             let updatedKeys = 0;
+            let answersCount = 0;
+            let bookmarksCount = 0;
             const correctMap = getQuestionCorrectAnswerMap();
 
             for (const k in store) {
@@ -1708,6 +1650,7 @@
                         const incoming = JSON.parse(incomingVal || '{}');
                         const merged = mergeAnswersWithPriority(existing, incoming, correctMap);
                         localStorage.setItem(k, JSON.stringify(merged));
+                        answersCount += Object.keys(merged).length;
                     } catch(e) {
                         localStorage.setItem(k, incomingVal);
                     }
@@ -1717,7 +1660,9 @@
                         const incoming = JSON.parse(incomingVal || '[]');
                         // REGLA: Preguntas marcadas con duda tienen prioridad (unión total)
                         incoming.forEach(id => existing.add(id));
-                        localStorage.setItem(k, JSON.stringify(Array.from(existing)));
+                        const arr = Array.from(existing);
+                        localStorage.setItem(k, JSON.stringify(arr));
+                        bookmarksCount += arr.length;
                     } catch(e) {
                         localStorage.setItem(k, incomingVal);
                     }
@@ -1727,7 +1672,7 @@
                 updatedKeys++;
             }
 
-            return updatedKeys;
+            return { updatedKeys, answersCount, bookmarksCount };
         }
 
         function refreshStateAfterImport() {
@@ -1741,30 +1686,41 @@
             if (materiaSel) materiaSel.value = activeMateria;
 
             buildBankButtons();
-            selectBank(activeBank);
+            // Pasar skipSave = true para NO sobreescribir el progreso recién importado
+            selectBank(activeBank, true);
         }
 
         function checkIncomingSync() {
-            if (window.location.hash && window.location.hash.startsWith('#sync=')) {
-                try {
-                    const rawHash = window.location.hash.substring(6);
-                    const jsonStr = decompressPayload(rawHash);
-                    if (jsonStr) {
-                        const payload = JSON.parse(jsonStr);
-                        const count = importQuizData(payload, 'merge');
-                        history.replaceState(null, '', window.location.pathname + window.location.search);
-                        refreshStateAfterImport();
-                        setTimeout(() => {
-                            showToast("🎉 ¡Sincronización exitosa! Tus respuestas y preguntas marcadas han sido restauradas.");
-                            if (sound && sound.playCorrect) sound.playCorrect();
-                        }, 500);
+            let rawCode = null;
+            if (window.location.hash && window.location.hash.includes('sync=')) {
+                rawCode = window.location.hash.split('sync=')[1];
+            } else if (window.location.search && window.location.search.includes('sync=')) {
+                const params = new URLSearchParams(window.location.search);
+                rawCode = params.get('sync');
+            }
+
+            if (!rawCode) return;
+
+            try {
+                if (rawCode.includes('&')) rawCode = rawCode.split('&')[0];
+                const jsonStr = decompressPayload(rawCode);
+                if (jsonStr) {
+                    const payload = JSON.parse(jsonStr);
+                    const stats = importQuizData(payload, 'merge');
+                    if (window.history && window.history.replaceState) {
+                        window.history.replaceState(null, '', window.location.pathname);
                     }
-                } catch (err) {
-                    console.error("Error al procesar sincronización entrante:", err);
+                    refreshStateAfterImport();
                     setTimeout(() => {
-                        showToast("⚠️ El enlace de sincronización parece incompleto o corrupto.");
+                        showToast(`🎉 ¡Sincronización exitosa! Se cargaron ${stats.answersCount} respuestas y ${stats.bookmarksCount} preguntas marcadas.`);
+                        if (sound && sound.playCorrect) sound.playCorrect();
                     }, 500);
                 }
+            } catch (err) {
+                console.error("Error al procesar sincronización entrante:", err);
+                setTimeout(() => {
+                    showToast("⚠️ El enlace de sincronización parece incompleto o corrupto.");
+                }, 500);
             }
         }
 
@@ -1798,7 +1754,11 @@
                 syncStatsSummary.textContent = `${stats.totalAns} respuestas · ${stats.totalBm} marcadas con duda`;
 
                 // Construir URL Mágica
-                const baseUrl = window.location.href.split('#')[0];
+                let baseUrl = window.location.href.split('#')[0].split('?')[0];
+                // Si se está ejecutando desde archivo local (file://) o localhost, apuntar a GitHub Pages para que el celular lo abra
+                if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+                    baseUrl = 'https://alex171215.github.io/repasoIARDA1/repaso%20prueba/index.html';
+                }
                 const magicUrl = baseUrl + '#sync=' + currentCompressedCode;
                 syncMagicUrlInput.value = magicUrl;
 
@@ -1879,22 +1839,26 @@
 
         if (applySyncCodeBtn) {
             applySyncCodeBtn.addEventListener('click', () => {
-                const code = syncCodeInput.value.trim();
+                let code = syncCodeInput.value.trim();
                 if (!code) {
-                    alert("Por favor pega un código de sincronización válido.");
+                    alert("Por favor pega un enlace o código de sincronización válido.");
                     return;
+                }
+                if (code.includes('sync=')) {
+                    code = code.split('sync=')[1];
+                    if (code.includes('&')) code = code.split('&')[0];
                 }
                 try {
                     const jsonStr = decompressPayload(code);
-                    if (!jsonStr) throw new Error("Código no reconocido.");
+                    if (!jsonStr) throw new Error("Código no reconocido o formato incompatible.");
                     const payload = JSON.parse(jsonStr);
-                    importQuizData(payload, 'merge');
+                    const stats = importQuizData(payload, 'merge');
                     refreshStateAfterImport();
                     syncModal.classList.add('hidden');
-                    showToast("🎉 ¡Progreso restaurado y combinado exitosamente!");
+                    showToast(`🎉 ¡Progreso restaurado! Se cargaron ${stats.answersCount} respuestas y ${stats.bookmarksCount} preguntas marcadas.`);
                     if (sound && sound.playCorrect) sound.playCorrect();
                 } catch(err) {
-                    alert("Error: El código ingresado no es válido o está incompleto: " + err.message);
+                    alert("Error: El código o enlace ingresado no es válido: " + err.message);
                 }
             });
         }
@@ -1943,8 +1907,11 @@
 
         // Inicializar al cargar
         window.addEventListener('DOMContentLoaded', () => {
-            checkIncomingSync();
             loadData();
+            checkIncomingSync();
+        });
+        window.addEventListener('hashchange', () => {
+            checkIncomingSync();
         });
     </script>
 </body>
