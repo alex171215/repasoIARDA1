@@ -1,0 +1,352 @@
+[
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000001",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "¿Cuál es la diferencia conceptual fundamental entre las técnicas de agrupamiento (Clustering como K-Means) y los métodos de reducción de dimensionalidad (como PCA)?",
+    "options": [
+      "Clustering agrupa observaciones similares en filas, mientras PCA sintetiza variables correlacionadas en columnas.",
+      "Clustering requiere etiquetas continuas de salida, mientras PCA opera únicamente sobre matrices dispersas binarias.",
+      "Clustering maximiza la varianza total de los datos, mientras PCA particiona los puntos minimizando el error residual.",
+      "Clustering genera funciones predictivas supervisadas, mientras PCA descubre relaciones causales ocultas sin sesgo."
+    ],
+    "correct": 0,
+    "feedback": "Correcto. Como se establece formalmente en la teoría de aprendizaje no supervisado, el Clustering busca patrones de similitud agrupando observaciones (filas), respondiendo qué grupos naturales existen; en contraste, PCA reduce el espacio de características resumiendo muchas variables (columnas) correlacionadas en pocas componentes principales ortogonales."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000002",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "En el análisis de agrupamiento con K-Means, ¿cómo se definen y evalúan respectivamente las propiedades geométricas de cohesión y separación de los conglomerados?",
+    "options": [
+      "Cohesión mide la distancia máxima entre centroides contiguos; separación calcula el error estándar de cada variable.",
+      "Cohesión evalúa la cercanía de los puntos dentro del cluster con la inercia; separación mide la lejanía inter-cluster.",
+      "Cohesión mide la cantidad uniforme de elementos por grupo; separación calcula la varianza explicada acumulada global.",
+      "Cohesión determina la ausencia de outliers en las fronteras; separación estima la colinealidad lineal entre atributos."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. La cohesión cuantifica qué tan próximos están los puntos pertenecientes a un mismo cluster entre sí (evaluada internamente mediante la inercia o suma de cuadrados WCSS); mientras que la separación cuantifica qué tan distantes y aislados están los distintos clusters entre sí (evaluada mediante el coeficiente de Silhouette)."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000003",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "¿En cuál de los siguientes escenarios empresariales y analíticos resulta metodológicamente adecuado implementar un modelo de clustering con K-Means?",
+    "options": [
+      "Estimar el precio de venta futuro de bienes raíces mediante variables estructurales y ubicación geográfica.",
+      "Clasificar correos electrónicos entrantes en spam o legítimo a partir de un conjunto previo de datos rotulados.",
+      "Segmentar oyentes o clientes sin etiquetas predefinidas según hábitos de consumo para diseñar ofertas a medida.",
+      "Detectar transacciones fraudulentas basándose exclusivamente en un umbral probabilístico de regresión logística."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. El clustering se aplica en contextos donde no existe una etiqueta previa ni variable objetivo y, tales como segmentación de clientes/oyentes (Spotify), delimitación de perfiles clínicos en salud o agrupamiento socioeconómico territorial (propuesto originalmente por Stuart Lloyd en 1957 y denominado K-Means por James MacQueen en 1967)."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000004",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "¿Cuál es el orden secuencial y lógico de las fases que ejecuta el algoritmo K-Means para agrupar un conjunto de observaciones en el espacio de características?",
+    "options": [
+      "Calcular matriz de correlación → extraer autovectores ortogonales → definir hiperplano de separación → clasificar.",
+      "Estimar densidad con radio epsilon → identificar puntos Core → expandir vecindarios conectados → aislar el ruido.",
+      "Ajustar fronteras con margen suave → maximizar distancia geométrica entre clases → regularizar hiperparámetro C.",
+      "Fijar K grupos → inicializar centroides → asignar cada punto al más cercano → actualizar centroides al promedio → iterar."
+    ],
+    "correct": 3,
+    "feedback": "Correcto. K-Means es un algoritmo iterativo que sigue 5 pasos: 1) Definir K grupos; 2) Inicializar los K centroides en el espacio; 3) Asignar cada observación al centroide euclidiano más cercano; 4) Actualizar cada centroide al promedio (media) de los puntos asignados a su grupo; 5) Repetir asignación y actualización hasta convergencia."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000005",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "Durante la ejecución del ciclo iterativo de K-Means, ¿cuáles son los dos mecanismos mediante los cuales el algoritmo detiene su procesamiento?",
+    "options": [
+      "Convergencia natural por estabilidad de centroides (o variación inferior a tol) y límite manual mediante max_iter.",
+      "Reducción de la inercia global a cero absoluto y eliminación completa de todas las observaciones atípicas extremas.",
+      "Superación de un umbral prefijado de Silhouette mayor a 0.90 y estabilización del gradiente descendente estocástico.",
+      "Alcanzar una varianza explicada del 95% y validación cruzada con cinco particiones estratificadas sin solapamiento."
+    ],
+    "correct": 0,
+    "feedback": "Correcto. K-Means se detiene por dos vías: 1) Convergencia natural: cuando ningún punto cambia de cluster entre iteraciones consecutivas o el desplazamiento de los centroides es menor a la tolerancia numérica (tol); o 2) Límite forzado: cuando se alcanza el número máximo de iteraciones permitido, configurado mediante el parámetro max_iter (por defecto 300 en scikit-learn)."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000006",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "Al calcular la distancia euclidiana entre dos observaciones en K-Means, ¿qué efecto matemático se produce si las variables no han sido previamente estandarizadas?",
+    "options": [
+      "El algoritmo converge a una solución lineal idéntica porque la distancia euclidiana es invariante ante traslaciones.",
+      "La variable con el rango numérico y varianza más amplia domina casi por completo el cálculo geométrico de distancias.",
+      "Los centroides colapsan automáticamente en el origen de coordenadas impidiendo que el algoritmo ejecute iteraciones.",
+      "La inercia global aumenta de forma exponencial provocando un error de desbordamiento de memoria en scikit-learn."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. La distancia euclidiana suma diferencias al cuadrado de magnitudes directas. Si una variable tiene un rango grande (ej. gasto de 0 a 85 USD, aportando diferencias cuadráticas de hasta 2500) y otra un rango pequeño (ej. tasa de 0.2 a 0.8, aportando máximo 0.36), la variable con números más grandes domina la distancia y anula por completo la influencia de las demás."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000007",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "En el contexto de K-Means, ¿qué es la inercia (WCSS) y qué propiedad matemática particular describe a su cálculo?",
+    "options": [
+      "Es la suma de covarianzas cruzadas entre clusters normalizada para acotar el puntaje final entre cero y uno.",
+      "Es la proporción de varianza no explicada calculada a partir de los autovalores de la matriz de dispersión.",
+      "Es la suma de las distancias al cuadrado de cada observación a su centroide asignado, penalizando puntos lejanos.",
+      "Es la media aritmética de las distancias euclidianas entre todos los pares posibles de centroides calculados."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. La inercia (Within-Cluster Sum of Squares o WCSS) suma las distancias euclidianas al cuadrado entre cada punto y el centroide de su cluster asignado. Elevar al cuadrado penaliza con mayor severidad a las observaciones muy dispersas o alejadas, y K-Means busca los centroides que minimizan esta función objetivo."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000008",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "Si se evalúa la inercia de K-Means para distintos valores de K (desde K=1 hasta K=N), ¿por qué este valor NO se puede usar de forma aislada para elegir K?",
+    "options": [
+      "Porque la inercia oscila caóticamente entre valores positivos y negativos impidiendo identificar un mínimo global.",
+      "Porque la inercia únicamente mide la separación entre clusters contiguos sin considerar la compacidad interna del grupo.",
+      "Porque scikit-learn calcula la inercia en escala logarítmica requiriendo una corrección obligatoria por grados de libertad.",
+      "Porque la inercia siempre disminuye monotónicamente al subir K, alcanzando trivialmente cero cuando K es igual a N."
+    ],
+    "correct": 3,
+    "feedback": "Correcto. La inercia siempre decrece o se mantiene igual conforme aumenta K. En el caso extremo donde K sea igual al número total de muestras N (un cluster por punto), la inercia vale exactamente cero. Por ello, buscar el mínimo absoluto de inercia conduciría siempre a elegir K=N, lo que carece de utilidad práctica."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000009",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "¿Cómo funciona el Método del Codo (Elbow Method) y cuál es el criterio técnico para determinar el número adecuado de clusters K?",
+    "options": [
+      "Se grafica K versus inercia y se elige el punto de inflexión donde la reducción marginal se aplana drásticamente.",
+      "Se calcula la derivada de la varianza explicada y se selecciona el punto exacto donde la curva cruza el eje horizontal.",
+      "Se busca el valor de K donde la inercia se reduce exactamente al 50% de su valor inicial obtenido con un solo cluster.",
+      "Se entrena el modelo con validación cruzada y se elige el K que maximiza el coeficiente de determinación R cuadrado."
+    ],
+    "correct": 0,
+    "feedback": "Correcto. El método del codo entrena K-Means para varios valores de K (ej. 2 a 9) y grafica K vs. inercia. Inicialmente, agregar clusters disminuye fuertemente la inercia; el 'codo' es el punto donde la mejora marginal se vuelve pequeña y el descenso se aplana (como de K=2 a 3 baja 1025, pero de K=3 a 4 solo baja 61)."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000010",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "En el Coeficiente de Silhouette para una observación i, ¿qué representan formalmente los términos a(i) y b(i) en su fórmula matemática?",
+    "options": [
+      "a(i) es el radio de densidad de la muestra; b(i) representa el número total de vecinos dentro del radio de influencia.",
+      "a(i) es la distancia media intracluster; b(i) es la distancia media al cluster vecino más cercano a dicha observación.",
+      "a(i) es la probabilidad de pertenencia al grupo; b(i) es la entropía condicional de las variables estandarizadas.",
+      "a(i) es el error cuadrático respecto al origen; b(i) es la correlación biserial puntual con el centroide más próximo."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. Para cada observación i, a(i) es la distancia media euclidiana a todos los demás puntos de su propio cluster (cohesión interna), y b(i) es la distancia media a los puntos del cluster vecino más cercano (separación externa). La fórmula s(i) = (b(i) - a(i)) / max(a(i), b(i)) combina ambas propiedades en una sola métrica."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000011",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "De acuerdo con los rangos canónicos de Kaufman y Rousseeuw (1990), ¿cómo se interpreta un coeficiente de Silhouette global que se sitúa en 0.604?",
+    "options": [
+      "Estructura excelente: separación nítida sin ningún solapamiento entre las fronteras de los grupos identificados.",
+      "Separación débil: presencia notable de elementos mal agrupados que exige reclasificar las muestras atípicas.",
+      "Estructura razonable y buena: conglomerados compactos y bien diferenciados con solapamiento menor en los bordes.",
+      "Estructura artificial nula: los grupos carecen de significancia estadística debiendo descartarse el modelo K-Means."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. Según la tabla estándar de Kaufman y Rousseeuw: 0.71 a 1.00 es Excelente (estructura fuerte); 0.51 a 0.70 es Bueno (estructura razonable con poco solapamiento); 0.26 a 0.50 es Débil; y <= 0.25 indica Sin estructura significativa. Un valor de 0.604 se ubica en el rango Bueno."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000012",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "Al evaluar un conjunto de datos escalado con K-Means para K de 2 a 9, ¿cuál es el escenario ideal que confirma una elección sólida del valor de K?",
+    "options": [
+      "Que la inercia total alcance un valor inferior a cien independientemente del comportamiento del coeficiente Silhouette.",
+      "Que el algoritmo converja en menos de cinco iteraciones y los centroides finales posean coordenadas idénticas.",
+      "Que la cantidad de observaciones en cada grupo sea estrictamente uniforme sin registrar ninguna variabilidad.",
+      "Que la ubicación del codo en la curva de inercia coincida con el punto donde el coeficiente Silhouette alcanza su máximo."
+    ],
+    "correct": 3,
+    "feedback": "Correcto. El criterio metodológico más riguroso consiste en cruzar ambas métricas: cuando el codo de la curva de inercia coincide con el valor de K que alcanza el coeficiente de Silhouette más alto (con Silhouette >= 0.51), se obtiene una confirmación matemática sólida y robusta para fijar el número definitivo de grupos."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000013",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "Al instanciar la clase `KMeans(n_clusters=3)` de scikit-learn, ¿qué controla técnicamente el hiperparámetro `n_clusters`?",
+    "options": [
+      "Define la cantidad K de grupos y centroides que el algoritmo debe posicionar y optimizar durante el ajuste.",
+      "Establece la cantidad mínima de observaciones que deben quedar asignadas dentro de cada cluster resultante.",
+      "Indica el número de variables predictoras numéricas que el estimador seleccionará para calcular distancias.",
+      "Fija la cantidad de divisiones en validación cruzada para evaluar la estabilidad de las etiquetas asignadas."
+    ],
+    "correct": 0,
+    "feedback": "Correcto. El hiperparámetro n_clusters (cuyo valor por defecto en scikit-learn es 8) define la cantidad K de conglomerados y centroides que el algoritmo debe ubicar en el espacio multidimensional. Es el parámetro rector obligatorio que el usuario debe especificar antes del entrenamiento."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000014",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "¿Cuál es la ventaja algorítmica fundamental de utilizar la inicialización `init='k-means++'` en comparación con una inicialización puramente aleatoria (`'random'`)?",
+    "options": [
+      "Garantiza que la inercia final valga cero al seleccionar los centroides únicamente sobre los puntos de mayor densidad.",
+      "Selecciona los centroides iniciales separados probabilísticamente entre sí, reduciendo el riesgo de mínimos locales.",
+      "Elimina la necesidad de computar distancias euclidianas acelerando el entrenamiento mediante proyecciones ortogonales.",
+      "Normaliza automáticamente las columnas del conjunto de datos haciendo prescindible el uso previo de StandardScaler."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. La inicialización 'k-means++' elige el primer centroide al azar y luego coloca los siguientes centroides con probabilidades proporcionales al cuadrado de la distancia a los centroides existentes. Esto asegura que empiecen separados entre sí en lugar de aglomerados, acelerando la convergencia y evitando óptimos locales deficientes."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000015",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "En scikit-learn, la clase `KMeans` incluye el parámetro `n_init=10`. ¿Cuál es el propósito operativo de este parámetro durante el método `fit(X)`?",
+    "options": [
+      "Obligar al modelo a utilizar los 10 primeros registros del archivo CSV como las semillas iniciales de cada grupo.",
+      "Establecer que el algoritmo ejecutará exactamente 10 iteraciones de actualización antes de forzar su terminación.",
+      "Repetir el algoritmo 10 veces completas con semillas distintas y conservar la solución que logre la menor inercia.",
+      "Calcular 10 combinaciones de variables para seleccionar el subconjunto de columnas con mayor separación espacial."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. Debido a que K-Means depende fuertemente de la posición inicial de los centroides y puede quedar atrapado en mínimos locales subóptimos, n_init=10 repite todo el procedimiento 10 veces independientes con distintos puntos de partida y selecciona como modelo definitivo aquel que obtiene la menor inercia global (WCSS)."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000016",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "Dentro de la configuración de `KMeans(max_iter=300, tol=1e-4)`, ¿qué papel desempeñan conjuntamente estos dos parámetros de control?",
+    "options": [
+      "max_iter fija el límite superior de clusters K, mientras tol define la fracción de observaciones excluidas como ruido.",
+      "max_iter controla el tamaño de la muestra bootstrap, mientras tol define el número de divisiones del árbol de decisión.",
+      "max_iter acota el tiempo de cómputo en segundos, mientras tol establece el radio epsilon de densidad de los vecindarios.",
+      "max_iter limita el número de ciclos asignar-actualizar, mientras tol define el umbral mínimo de cambio para converger."
+    ],
+    "correct": 3,
+    "feedback": "Correcto. max_iter (por defecto 300) limita el número máximo de ciclos de asignación y actualización de centroides para evitar bucles infinitos en datos oscilantes. Por su parte, tol (por defecto 1e-4) es la tolerancia numérica sobre la variación relativa de inercia o movimiento de centroides requerida para declarar la convergencia anticipada."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000017",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "Tras entrenar un modelo `kmeans.fit(X)`, se consulta el atributo `kmeans.labels_`. ¿Qué representan estos valores y qué precaución analítica se debe tener?",
+    "options": [
+      "Son índices nominales (0, 1, 2) que no implican orden ni jerarquía de calidad, y sus números pueden variar según la semilla.",
+      "Son rangos percentiles ordinales donde el valor cero representa siempre al conglomerado con menor rendimiento o gasto.",
+      "Son valores de probabilidad continua entre cero y uno que indican la certeza matemática de pertenencia de cada muestra.",
+      "Son coordenadas espaciales reducidas que corresponden exactamente a las dos primeras componentes principales de PCA."
+    ],
+    "correct": 0,
+    "feedback": "Correcto. El atributo labels_ entrega un array de números enteros (0, 1, ..., K-1) que asignan cada fila a un cluster. Estos números son puramente nominales (etiquetas sin significado intrínseco ni orden cuantitativo); con otra semilla aleatoria o reordenamiento, el cluster '0' podría intercambiar su identificador con el '1'. El nombre de negocio lo pone el analista tras interpretar los centroides."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000018",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "Al inspeccionar el atributo `kmeans.cluster_centers_` obtenido de un modelo ajustado con `X_scaled`, ¿en qué escala se presentan estos valores?",
+    "options": [
+      "Se presentan automáticamente en la escala original del negocio gracias a una desestandarización interna del estimador.",
+      "Se presentan en la escala normalizada con media 0 y desviación 1 en la que fue ajustado el estimador durante el fit.",
+      "Se expresan como distancias euclidianas relativas calculadas respecto al origen de coordenadas de todo el dataset.",
+      "Se devuelven transformados en probabilidades logarítmicas calibradas equivalentes a los coeficientes de una regresión."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. cluster_centers_ almacena las coordenadas de los K centroides exactamente en el mismo espacio y escala de los datos que recibió en fit(). Si se entrenó con X_scaled (vía StandardScaler), los centroides estarán expresados en unidades estandarizadas (desviaciones estándar alrededor de 0), por lo que para interpretarlos en negocio se calculan las medias sobre el dataset original sin escalar."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000019",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "¿Cuál es la diferencia entre los atributos post-entrenamiento `kmeans.inertia_` y `kmeans.n_iter_` de la clase `KMeans` de scikit-learn?",
+    "options": [
+      "inertia_ mide el tiempo total de cómputo en segundos, mientras n_iter_ registra la cantidad de clusters generados.",
+      "inertia_ mide la separación entre centroides contiguos, mientras n_iter_ cuenta las muestras clasificadas como atípicas.",
+      "inertia_ indica el coeficiente de Silhouette global del modelo, mientras n_iter_ contiene el valor óptimo de n_init.",
+      "inertia_ almacena el valor final del WCSS alcanzado por el mejor inicio, mientras n_iter_ reporta las iteraciones corridas."
+    ],
+    "correct": 3,
+    "feedback": "Correcto. Tras ejecutar fit(X), inertia_ almacena el valor final de la función objetivo WCSS (suma de distancias al cuadrado al centroide más cercano) obtenido en la mejor ejecución de n_init; mientras que n_iter_ indica la cantidad de iteraciones (ciclos asignar-actualizar) que fueron necesarias para alcanzar la convergencia en esa ejecución."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000020",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "¿De qué manera se suele utilizar el clustering no supervisado como una etapa previa o de apoyo en problemas de aprendizaje supervisado de clasificación?",
+    "options": [
+      "Reemplaza la necesidad de contar con etiquetas de clase al asumir que cada cluster representa una categoría perfecta.",
+      "Calcula automáticamente el hiperparámetro C óptimo para modelos SVM eliminando la necesidad de usar GridSearchCV.",
+      "Descubre agrupamientos naturales cuyas etiquetas o distancias a centroides se añaden como nuevas variables predictoras.",
+      "Elimina el desbalance de clases sobremuestreando sintéticamente las muestras de entrenamiento mediante bootstrap."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. En machine learning avanzado, el clustering se emplea frecuentemente como técnica de ingeniería de características previa a la clasificación o regresión: se identifican perfiles o grupos naturales y la pertenencia al cluster (o la distancia a los centroides) se incluye como una nueva variable (feature) que enriquece el modelo supervisado para separar mejor las clases."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000021",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "En el taller de clustering (jugadores de videojuegos), al entrenar K-Means directamente sobre X SIN aplicar `StandardScaler`, ¿qué consecuencia se evidenció?",
+    "options": [
+      "El algoritmo no pudo converger y arrojó una excepción por presencia de ceros en la matriz de distancias relativas.",
+      "El coeficiente de Silhouette aumentó a 0.95 porque la dispersión de datos facilitó la separación lineal de fronteras.",
+      "La variable gasto mensual dominó la distancia, perdiéndose perfiles clave como 'Competitivo' o 'Explorador'.",
+      "Los cuatro clusters resultantes conservaron exactamente los mismos miembros pero con sus centroides invertidos."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. En el taller práctico (Bloque B5), al omitir StandardScaler, la variable 'gasto_mensual_usd' (con valores de hasta 85 USD) dominó casi exclusivamente la distancia euclidiana. El modelo solo dividió a los jugadores por nivel de gasto, destruyendo y mezclando completamente perfiles diferenciados por variables de rango pequeño como 'tasa_victorias' (Competitivo) o 'num_juegos' (Explorador)."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000022",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "Para evitar discrepancias en la escala y garantizar un código reproducible, ¿cuál es la forma canónica de estructurar el modelo final en scikit-learn?",
+    "options": [
+      "Entrenar StandardScaler sobre X, guardar los coeficientes en un archivo CSV y llamar a KMeans desde un bucle while.",
+      "Aplicar MinMaxScaler manualmente sobre cada columna del DataFrame antes de importar la clase KMeans de scikit-learn.",
+      "Instanciar un Pipeline con un paso de escalado mediante StandardScaler y un paso de agrupamiento con KMeans.",
+      "Ejecutar GridSearchCV sobre KMeans utilizando como métrica de optimización interna la función accuracy_score."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. La estructura recomendada por scikit-learn es construir un Pipeline([('escalar', StandardScaler()), ('kmeans', KMeans(n_clusters=3, n_init=10, random_state=42))]). De este modo, el Pipeline recibe directamente los datos en escala original, se encarga de estandarizarlos internamente y aplica el modelo sin riesgo de fuga ni transformaciones manuales."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000023",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "Una vez obtenido el vector de clusters asignados en `df['cluster']`, ¿por qué se ejecuta `df.groupby('cluster')[columnas].mean()` sobre los datos sin escalar?",
+    "options": [
+      "Permite computar la inercia interna de cada grupo para verificar la ausencia de heterocedasticidad residual.",
+      "La función silhouette_score exige como parámetro obligatorio las medias muestrales desescaladas de las columnas.",
+      "Convierte las etiquetas discretas en probabilidades continuas requeridas para exportar el modelo hacia producción.",
+      "Presenta los centroides en unidades originales del negocio facilitando bautizar los perfiles con sentido analítico."
+    ],
+    "correct": 3,
+    "feedback": "Correcto. Al ejecutar groupby('cluster').mean() sobre el DataFrame original sin escalar, se obtienen las coordenadas de los centroides en unidades reales y comprensibles (ej. horas diarias de música, canciones saltadas, dólares gastados). Esto permite al analista interpretar el comportamiento y bautizar los perfiles con criterio de negocio (ej. 'Intensivo', 'Casual', 'Habitual')."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000024",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "¿Por qué en el flujo estándar de K-Means (y clustering no supervisado en general) NO se realiza una partición de datos en entrenamiento y prueba (`train_test_split`)?",
+    "options": [
+      "Porque no existe una variable objetivo 'y' que predecir ni riesgo de sobreajustar etiquetas supervisadas en datos no vistos.",
+      "Porque scikit-learn bloquea la ejecución de train_test_split si el estimador instanciado no hereda de ClassifierMixin.",
+      "Porque dividir el dataset alteraría de forma irreversible el orden alfabético requerido por la distancia euclidiana.",
+      "Porque K-Means requiere un tamaño muestral de al menos un millón de observaciones para justificar una partición de prueba."
+    ],
+    "correct": 0,
+    "feedback": "Correcto. En aprendizaje no supervisado no existe una variable dependiente objetivo 'y' contra la cual medir precisión, error de generalización predictiva o fuga de etiquetas. El objetivo es descubrir la estructura geométrica interna de las observaciones presentes en X, por lo que el análisis y el modelo final aprovechan el 100% de los datos disponibles."
+  },
+  {
+    "id": "c1a01e01-8b01-4c01-9a01-000000000025",
+    "category": "semana8",
+    "categoryName": "Semana 8 · Clustering K-Means y Segmentación",
+    "text": "Se exporta un Pipeline de K-Means con `joblib.dump({'modelo': modelo_final, 'perfiles': perfiles}, 'modelo.pkl')`. Al cargarlo para clasificar observaciones nuevas con `predict()`, ¿qué ocurre internamente?",
+    "options": [
+      "Reajusta los centroides recalculando las medias con los nuevos datos y actualiza las asignaciones del dataset previo.",
+      "Estandariza con las estadísticas aprendidas en el fit original y asigna al centroide más próximo sin reentrenar.",
+      "Genera automáticamente un nuevo cluster complementario para cada observación que supere la inercia máxima tolerada.",
+      "Calcula una nueva proyección ortogonal adaptando automáticamente las etiquetas del diccionario de perfiles de negocio."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. El Pipeline serializado conserva los parámetros aprendidos por el StandardScaler (media y desviación estándar del entrenamiento original). Al recibir nuevas observaciones con predict(nuevos), las estandariza con esos mismos parámetros fijos y calcula la distancia euclidiana a los centroides ya existentes para asignarles el grupo correspondiente, sin alterar los centroides ni reentrenar."
+  }
+]

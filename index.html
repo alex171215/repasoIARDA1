@@ -612,7 +612,7 @@
 
 
         <!-- Cargar banco de preguntas (con versión para forzar recarga) -->
-    <script src="data/banco_preguntas_v7.js?v=11"></script>
+    <script src="data/banco_preguntas_v7.js?v=13"></script>
     <script>
         // Sistema de Audio Sintetizado Web Audio API (Sin dependencias externas)
         class SoundFX {
@@ -2106,7 +2106,7 @@
                 if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                     baseUrl = 'https://alex171215.github.io/repasoIARDA1/index.html';
                 }
-                const magicUrl = baseUrl + '?v=12#sync=' + currentCompressedCode;
+                const magicUrl = baseUrl + '?v=13#sync=' + currentCompressedCode;
                 syncMagicUrlInput.value = magicUrl;
 
                 if (copySuccessMsg) copySuccessMsg.classList.add('hidden');
