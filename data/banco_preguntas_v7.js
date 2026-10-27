@@ -5198,6 +5198,10 @@ window.QUIZ_DATA = {
           "label": "Semana 8 · PCA y Clustering K-Means (53)"
         },
         {
+          "value": "semana9",
+          "label": "Semana 9 · Clustering Basado en Densidad (DBSCAN) (30)"
+        },
+        {
           "value": "incorrect",
           "label": "Solo Preguntas Erradas"
         },
@@ -8930,6 +8934,426 @@ window.QUIZ_DATA = {
           ],
           "correct": 1,
           "feedback": "Correcto. El Pipeline serializado conserva los parámetros aprendidos por el StandardScaler (media y desviación estándar del entrenamiento original). Al recibir nuevas observaciones con predict(nuevos), las estandariza con esos mismos parámetros fijos y calcula la distancia euclidiana a los centroides ya existentes para asignarles el grupo correspondiente, sin alterar los centroides ni reentrenar."
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "En el modelo de agrupamiento espacial DBSCAN, ¿cómo se definen formalmente los conceptos fundamentales de vecindad, densidad y ruido?",
+          "options": [
+            "La vecindad es la varianza muestral, la densidad es la suma total de elementos y el ruido representa errores residuales de ajuste.",
+            "La vecindad es la matriz de covarianza, la densidad es la masa de cada centroide y el ruido delimita las muestras de validación.",
+            "La vecindad es el radio ε, la densidad es tener al menos MinPts vecinos y el ruido son puntos sin pertenencia a zonas densas.",
+            "La vecindad es el número de ramas, la densidad es la profundidad de partición y el ruido define los cortes anómalos de datos."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. En DBSCAN, la vecindad delimita un círculo o hiper-esfera de radio ε alrededor de cada muestra; la densidad exige la presencia de un mínimo de MinPts puntos dentro de dicha vecindad; y el ruido (−1) está conformado por aquellas observaciones que no alcanzan el umbral de densidad ni son adyacentes a un núcleo denso.",
+          "id": "84e79745-501c-4dc5-bf2d-5398d559dc12"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Qué criterios matemáticos diferencian a un punto Núcleo (Core), un punto Borde (Frontera) y un punto de Ruido en el algoritmo DBSCAN?",
+          "options": [
+            "Núcleo tiene distancia nula al centroide, Borde comparte la frontera hiperbólica y Ruido posee probabilidad bayesiana nula.",
+            "Núcleo tiene ≥ MinPts en radio ε, Borde tiene < MinPts pero toca a un Núcleo, y Ruido no alcanza ningún radio de densidad.",
+            "Núcleo acumula la varianza explicada, Borde es ortogonal a las componentes y Ruido corresponde a las proyecciones lejanas.",
+            "Núcleo posee ganancia de información positiva, Borde divide hiperplanos contiguos y Ruido satura la función de pérdida."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Un Core Point cuenta con al menos MinPts observaciones dentro de su radio ε (incluyéndose a sí mismo); un Border Point no llega a MinPts vecinos propios pero cae dentro del radio ε de un Core Point; y un Noise Point no es Core ni está al alcance de ningún Core, recibiendo la etiqueta −1.",
+          "id": "7aa92f3c-29df-48ca-821a-1d72e4218b60"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Cuál es el procedimiento técnico para estimar el hiperparámetro ε (épsilon) mediante el gráfico de k-distancias (k-dist graph)?",
+          "options": [
+            "Fijar k = MinPts, calcular la distancia al k-ésimo vecino más próximo, ordenarlas de mayor a menor y localizar el codo.",
+            "Fijar k = 2, obtener la distancia media a todos los centroides globales, ordenarlas de forma ascendente y hallar el codo.",
+            "Fijar k = n_samples, computar la inercia acumulada para cada muestra, ordenar según la varianza y seleccionar el mínimo.",
+            "Fijar k = dimensiones, estimar la correlación de Pearson entre atributos, ordenar los coeficientes y ubicar el máximo."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. Se establece k igual al valor adoptado para MinPts, se computa la distancia de cada observación a su k-ésimo vecino más cercano con NearestNeighbors, se ordenan dichas distancias en orden descendente y se selecciona como ε el punto de inflexión (\"codo\"), donde la distancia deja de decrecer bruscamente y se estabiliza.",
+          "id": "cf1df43d-28f7-493a-b228-dd5afe7b6548"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Qué consecuencias estructurales se producen en el clustering DBSCAN si se configura un valor de ε excesivamente pequeño o excesivamente grande?",
+          "options": [
+            "Un ε pequeño combina todos los datos en dos centroides, mientras que un ε grande divide los grupos en infinitos planos.",
+            "Un ε pequeño optimiza el gradiente estocástico, mientras que un ε grande bloquea la convergencia numérica del ajuste.",
+            "Un ε pequeño descarta todas las variables continuas, mientras que un ε grande colapsa la matriz de distancias a cero.",
+            "Un ε pequeño produce hiperfragmentación y alto porcentaje de ruido; un ε grande fusiona clústeres disímiles en uno solo."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Si ε es demasiado reducido, las vecindades son muy restrictivas y casi ningún punto logra consolidar MinPts vecinos, dispersando los clusters en fragmentos minúsculos y clasificando casi todo como ruido. Si ε es excesivamente amplio, las vecindades engloban todo el espacio y fusionan agrupaciones independientes en un único mega-cluster homogéneo, absorbiendo los outliers reales.",
+          "id": "0d68f738-cd07-4d6b-a040-013425248687"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "En el contexto de DBSCAN, ¿qué representa el Coeficiente de Silueta (Silhouette Score) y por qué se evalúa exclusivamente sobre los puntos válidos?",
+          "options": [
+            "Mide la inercia cuadrática intra-clúster y se evalúa sin ruido porque scikit-learn arroja un error fatal de memoria.",
+            "Mide la devianza de entropía cruzada y se evalúa sin ruido para forzar a las etiquetas a pertenecer al rango [0, 1].",
+            "Mide la cohesión y separación inter-clúster; se excluye el ruido (−1) porque carece de pertenencia a un grupo real.",
+            "Mide la proporción de varianza acumulada; se excluye el ruido para normalizar los autovectores en base ortogonal."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. El coeficiente de Silueta evalúa qué tan cerca está cada muestra de su propio grupo (cohesión) frente al grupo vecino más cercano (separación), en una escala de −1 a 1. En DBSCAN es mandatario filtrar las observaciones con etiqueta −1 (`labels != -1`), pues el ruido no conforma una agrupación real y su inclusión adulteraría por completo la métrica de separación.",
+          "id": "58be31ac-b3a0-4b5a-a6c8-1ede53c56659"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Por qué la inercia (suma de cuadrados intra-clúster o WCSS), utilizada en K-Means, no es una métrica conceptualmente válida para evaluar DBSCAN?",
+          "options": [
+            "Porque DBSCAN no genera centroides y agrupa geometrías no convexas arbitrarias, además de admitir muestras sin asignar.",
+            "Porque DBSCAN requiere obligatoriamente variables discretas y la inercia solo admite espacios vectoriales continuos.",
+            "Porque la inercia únicamente puede calcularse cuando el algoritmo converge mediante iteraciones de descenso por gradiente.",
+            "Porque DBSCAN normaliza las distancias mediante la norma de Manhattan anulando el producto escalar de las muestras."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La inercia mide la suma de distancias al cuadrado desde cada punto hacia el centroide de su clúster, asumiendo clústeres globulares o esféricos y partición total del dataset. DBSCAN no calcula centroides, descubre densidades de morfología arbitraria (anillos, meandros, curvas) y descarta valores atípicos clasificándolos como ruido.",
+          "id": "4636d804-2092-4726-a5a6-ee7fd55171b0"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Qué representa la métrica de porcentaje de ruido calculada como `(labels == -1).mean() * 100` y cómo guía el ajuste de hiperparámetros en DBSCAN?",
+          "options": [
+            "Señala la tasa de falsos positivos en clasificación supervisada y sirve para regularizar los hiperplanos de soporte.",
+            "Señala la proporción de datos atípicos no agrupados y sirve para evitar tanto la sobre-exclusión como la sub-fusión.",
+            "Señala el error cuadrático medio de aproximación espacial y sirve para sintonizar el número K de particiones fijas.",
+            "Señala la probabilidad a priori de encontrar datos nulos y sirve para imputar variables faltantes en el preprocesado."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El porcentaje de ruido indica qué fracción del total de observaciones quedó excluida de los grupos densos. Un porcentaje anormalmente alto (por ejemplo, > 30%) sugiere que ε es demasiado restrictivo o MinPts muy alto; mientras que un 0% de ruido en entornos con datos atípicos sugiere un ε excesivamente laxo que absorbió ruido ilegítimamente como frontera.",
+          "id": "b5bf815e-4c9e-49d0-b004-b305c8700d83"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Al instanciar `DBSCAN(eps=0.25, min_samples=5, metric='euclidean')` en scikit-learn, ¿qué función cumple rigurosamente cada uno de estos parámetros?",
+          "options": [
+            "eps define la cantidad de clústeres, min_samples las rondas de arranque y metric la función objetivo que se minimiza.",
+            "eps establece la tolerancia de parada, min_samples la profundidad del árbol y metric la regularización de la matriz.",
+            "eps configura la tasa de aprendizaje, min_samples el tamaño del lote batch y metric el núcleo de proyección no lineal.",
+            "eps define el radio de vecindad, min_samples el umbral de densidad de vecinos y metric la fórmula geométrica de distancia."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. `eps` determina la distancia máxima para considerar a dos muestras como vecinas; `min_samples` fija la cantidad mínima de observaciones en dicha vecindad (incluyendo el punto evaluado) para constituir un Core Point; y `metric` establece cómo se cuantifica la separación espacial (por defecto euclidiana, o manhattan, haversine, etc.).",
+          "id": "d4347366-f308-4d4b-8a3e-03b8c109707f"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Tras ejecutar `db.fit(X)` sobre un estimador `DBSCAN`, ¿qué información concreta albergan los atributos `labels_`, `core_sample_indices_` y `components_`?",
+          "options": [
+            "Coordenadas de los centroides, varianzas explicadas de cada eje y residuales cuadráticos de las observaciones dadas.",
+            "Probabilidades de pertenencia a cada grupo, pesos asignados a las variables y vectores de soporte del margen suave.",
+            "Etiquetas de clúster (−1 si es ruido), índices de fila de los puntos núcleo y coordenadas espaciales de dichos núcleos.",
+            "Distancias euclidianas a la frontera, lista de muestras anómalas eliminadas e hiperplanos de corte multidimensional."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. En scikit-learn, `labels_` es el arreglo de etiquetas asignadas a cada muestra de `X` (−1 para ruido); `core_sample_indices_` almacena los índices enteros de las filas que cumplieron la condición de punto Núcleo; y `components_` es una copia directa de las coordenadas de esos puntos Núcleo (`X[core_sample_indices_]`).",
+          "id": "324995ea-7773-47b6-bb57-d8414919de4d"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Al calcular el k-dist graph con `NearestNeighbors(n_neighbors=5)` para calibrar `min_samples=5`, ¿por qué la distancia al 5.º vecino se extrae de la columna `[4]`?",
+          "options": [
+            "Porque el primer vecino devuelto en el índice 0 es el propio punto con distancia cero; el 5.º vecino reside en la columna 4.",
+            "Porque scikit-learn descarta automáticamente el punto más lejano y recorre todos los índices una unidad hacia la derecha.",
+            "Porque la matriz resultante ordena las variables en sentido inverso y sitúa la distancia mínima siempre al final del array.",
+            "Porque el índice 4 corresponde al promedio ponderado de los cuatro vecinos circundantes excluyendo el punto de referencia."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. En `NearestNeighbors.kneighbors(X)`, la lista ordenada de vecinos de cada punto comienza con la propia muestra (distancia 0.0 en el índice 0). Por ende, si se buscan 5 vecinos para reflejar `min_samples = 5`, el quinto vecino más cercano ocupa el índice 4 (`distancias[:, 4]`), el cual coincide con el umbral exterior de la burbuja ε.",
+          "id": "3cd56713-8e8f-44fb-8b64-965337a785f3"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Cuáles son los dos momentos técnicos esenciales en los que se utiliza la clase `NearestNeighbors` en un proyecto integral con DBSCAN?",
+          "options": [
+            "Para inicializar los centroides aleatorios iniciales y para calcular las proyecciones ortogonales sobre las componentes.",
+            "Para construir el k-dist graph antes del ajuste y para inferir el clúster de datos nuevos midiendo cercanía a los núcleos.",
+            "Para imputar los valores faltantes del dataset y para estimar las probabilidades de convergencia del gradiente numérico.",
+            "Para generar árboles de decisión locales y para balancear las etiquetas minoritarias mediante sobremuestreo sintético."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. `NearestNeighbors` se emplea en la fase previa con `n_neighbors = MinPts` para graficar la curva k-dist y detectar el codo de ε; y se emplea tras el despliegue con `n_neighbors = 1` ajustado sobre `components_` para asignar datos nuevos al núcleo más cercano a distancia ≤ ε, solventando la ausencia de un método `.predict()`.",
+          "id": "5aeed27f-3655-4b07-952a-272dc2dd4150"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "De acuerdo con la literatura canónica de minería de datos (Sander et al., 1998), ¿cuál es la regla heurística recomendada para seleccionar el parámetro MinPts?",
+          "options": [
+            "MinPts debe ser igual al número total de muestras dividido entre la cantidad estimada de clusters hiper-elipsoidales.",
+            "MinPts debe ser siempre igual a 1 para asegurar que ningún punto atípico quede etiquetado bajo la condición de ruido.",
+            "MinPts debe elegirse como la raíz cúbica de los registros de entrenamiento independientemente de las dimensiones.",
+            "MinPts debe cumplir MinPts ≥ D + 1 (usualmente 2·D, fijando 4 o 5 en 2D), aumentándolo en datasets ruidosos o masivos."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. La heurística fundamental establece MinPts ≥ D + 1 (donde D es la dimensión o cantidad de variables predictoras). Para espacios bidimensionales (D=2) la recomendación práctica estándar es fijar 2 × D = 4 o 5. En conjuntos con elevado nivel de ruido o grandes volúmenes de datos se aconsejan valores mayores para evitar agrupar ruido residual.",
+          "id": "1231768f-e032-4826-a96e-e6aad34f4590"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Por qué es estrictamente indispensable aplicar estandarización (`StandardScaler`) sobre las variables antes de entrenar un modelo DBSCAN?",
+          "options": [
+            "Porque al basarse en distancias euclidianas, las variables con escalas numéricas amplias dominarían el cálculo del radio ε.",
+            "Porque scikit-learn restringe la ejecución de DBSCAN únicamente a matrices continuas que tengan varianza unitaria fija.",
+            "Porque el algoritmo requiere que todas las coordenadas espaciales se ubiquen obligatoriamente en el intervalo de [0, 1].",
+            "Porque sin estandarización el método de k-distancias se vuelve estocástico y cambia sus agrupaciones en cada ejecución."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. DBSCAN calcula distancias geométricas euclidianas para verificar el radio ε. Si una variable tiene un rango amplio (por ejemplo, densidad de 0 a 100) y otra un rango muy pequeño (como coordenadas geográficas de 0.07), la variable de mayor magnitud anula por completo a la menor; al estandarizar con media 0 y desviación 1, cada atributo aporta equitativamente y ε se expresa en desviaciones estándar.",
+          "id": "0ec5b1f5-c340-4608-bd1b-ad97ad4f0369"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Dado que la clase `DBSCAN` en scikit-learn no implementa el método `predict()`, ¿cómo se realiza la asignación de clúster a nuevas observaciones en producción?",
+          "options": [
+            "Se reentrena todo el Pipeline desde cero acumulando los registros nuevos junto con el dataset histórico completo original.",
+            "Se utiliza un árbol de decisión entrenado para predecir las etiquetas finales sin considerar las coordenadas de vecindad.",
+            "Se mide la distancia al punto Núcleo más cercano (`components_`): si es ≤ ε se le asigna su clúster, caso contrario es ruido.",
+            "Se calcula el centroide promedio de cada agrupación descubierta y se asigna el dato a la distancia baricéntrica menor."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. DBSCAN no dispone de `predict()` porque los clústeres no se rigen por centroides fijos sino por conectividad topológica densa. Para predecir sobre muestras nuevas en producción sin reentrenar, se busca el Core Point más próximo mediante un clasificador `NearestNeighbors(n_neighbors=1)`: si dista ≤ ε hereda la etiqueta de ese Core; si dista > ε, se cataloga como ruido (−1).",
+          "id": "5ef12eef-4521-41b0-801c-1f12a3d63e91"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "En la formulación matemática de DBSCAN, ¿cuál es la diferencia entre que un punto sea \"densamente alcanzable\" y que sea \"densamente conectado\"?",
+          "options": [
+            "Alcanzable implica convergencia numérica asintótica, mientras que conectado exige pertenencia al conjunto de validación.",
+            "Alcanzable es asimétrico si involucra puntos borde; conectado es simétrico y une puntos que comparten un núcleo común.",
+            "Alcanzable requiere que ambos puntos sean ruido, mientras que conectado exige que ambos pertenezcan al mismo centroide.",
+            "Alcanzable vincula exclusivamente núcleos densos, mientras que conectado vincula muestras anómalas de baja varianza."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. La relación \"densamente alcanzable\" no es simétrica: un punto Borde puede ser alcanzable desde un Core a través de una cadena de vecindades, pero el Core no es alcanzable desde el Borde (pues el Borde carece de MinPts vecinos para propagar densidad). En cambio, dos puntos p y q están \"densamente conectados\" de manera simétrica si existe un Core intermedio o desde el cual ambos son densamente alcanzables.",
+          "id": "dddb84ec-f478-450f-b3be-88d4cf5388b1"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Al analizar las etiquetas predichas con `labels = modelo.fit_predict(X)`, se utiliza la expresión `n_clusters = len(set(labels)) - (1 if -1 in labels else 0)`. ¿Por qué se resta 1 si −1 está presente?",
+          "options": [
+            "Porque Python utiliza indexación base cero y el último clúster debe compensar el desplazamiento del valor nulo inicial.",
+            "Porque scikit-learn crea por defecto un clúster fantasma vacío que se localiza en la primera posición del conjunto set.",
+            "Porque el primer clúster generado siempre se etiqueta como cero y debe excluirse de las métricas globales del modelo.",
+            "Porque la etiqueta −1 identifica datos aislados de ruido, los cuales no constituyen una agrupación semántica real del mapa."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. La función `set(labels)` extrae todos los valores únicos presentes en el arreglo de predicción (por ejemplo: {0, 1, 2, −1}). Al restar 1 en caso de existir la etiqueta −1, se descuenta la categoría correspondiente al ruido para reportar con exactitud el número de clústeres genuinamente densos descubiertos por el algoritmo.",
+          "id": "19cf47d4-1fb7-4d0a-bcae-7aa0ce428e8c"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Si un conjunto de datos contiene un clúster sumamente compacto (500 muestras en área reducida) y otro clúster amplio pero disperso (200 muestras en área extensa), ¿qué debilidad de DBSCAN se hace evidente?",
+          "options": [
+            "Un valor único global de ε no puede ajustarse a ambas densidades: capturar el disperso fusionará el denso, o viceversa.",
+            "DBSCAN no admite grupos de tamaños asimétricos debido a que su formulación impone cardinalidades estrictamente homogéneas.",
+            "El algoritmo satura la función de verosimilitud espacial arrojando valores singulares en la descomposición de covarianza.",
+            "La presencia de densidades dispares anula la ortogonalidad entre variables continuas imposibilitando converger a fit()."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La principal limitación intrínseca de DBSCAN clásico es que opera con un único radio ε para todo el espacio. Si se fija un ε grande para integrar el clúster disperso, el clúster denso se fusionará con ruido y grupos contiguos. Si se reduce ε para aislar el clúster compacto, el grupo disperso será descartado por completo como ruido. (Para resolver esto se diseñaron algoritmos como OPTICS o HDBSCAN).",
+          "id": "0f3553a6-c5c8-46ac-a554-b29f5fc30716"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Por qué la clase `DBSCAN` de scikit-learn no incluye el parámetro `random_state`, a diferencia de estimadores como `KMeans` o `RandomForest`?",
+          "options": [
+            "Porque aplica un generador pseudoaleatorio preconfigurado en C++ que garantiza convergencia estocástica invariable.",
+            "Porque no calcula particiones iterativas y simplemente resuelve una ecuación matricial cerrada basada en autovalores.",
+            "Porque es un método determinista que no inicializa centroides al azar, produciendo los mismos núcleos ante datos fijos.",
+            "Porque el estado aleatorio se delega exclusivamente a la función de escalado que opera como paso previo del Pipeline."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. DBSCAN no depende de semillas de inicialización aleatoria de centroides (como K-Means) ni de submuestreo de instancias/atributos (como Random Forest). Para un conjunto de datos determinado en un orden específico, el etiquetado de los puntos Núcleo y Ruido es plenamente determinista, por lo que no existe el parámetro `random_state`. (Únicamente puntos borde situados en la intersección de dos núcleos podrían variar según el orden de procesamiento).",
+          "id": "7446aed4-bcbf-48ac-a671-7ad5902f7391"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Por qué frente a conjuntos de datos con patrones en forma de medialunas concéntricas o anillos entrelazados DBSCAN triunfa donde K-Means fracasa?",
+          "options": [
+            "Porque DBSCAN descarta la dimensionalidad del espacio proyectando las observaciones sobre su primer componente lineal.",
+            "Porque DBSCAN modela vecindades contiguas de densidad arbitraria, mientras K-Means impone particiones convexas esféricas.",
+            "Porque DBSCAN optimiza la distancia de Mahalanobis adaptando la matriz de covarianza de cada grupo en cada iteración.",
+            "Porque DBSCAN requiere supervisión externa mediante validación cruzada para trazar los bordes curvos de cada partición."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. K-Means intenta minimizar la distancia de cada punto a un centroide medio, lo que matemáticamente induce fronteras de decisión lineales (diagramas de Voronoi) e impone que todos los clústeres sean convexos e isotrópicos (esferas de tamaño similar). DBSCAN, en cambio, define el clúster como una componente conexa formada por núcleos densos encadenados, adaptándose a cualquier topología no lineal compleja.",
+          "id": "81681db0-7130-49bc-9a87-a553c94972d0"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Al serializar la solución de DBSCAN para Quito con `joblib.dump({\"modelo\": modelo_final, \"zonas\": zonas}, \"modelo.pkl\")`, ¿qué elementos se preservan para producción?",
+          "options": [
+            "La matriz entera de datos históricos de entrenamiento, las predicciones de validación cruzada y los gráficos de dispersión.",
+            "El optimizador Adam, las tasas de aprendizaje adaptativas por atributo y el historial de pérdida cuadrática de las épocas.",
+            "La tabla de correlaciones de Pearson, los autovectores normalizados y la lista de variables descartadas en el escalado.",
+            "El Pipeline ajustado (escalador con medias/desviaciones y DBSCAN con puntos núcleo `components_`) junto al mapeo de zonas."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Al guardar el diccionario en el archivo `.pkl`, se serializa el objeto `Pipeline` con sus transformaciones ajustadas: `StandardScaler` (que retiene las medias y desviaciones de las coordenadas para estandarizar datos futuros idénticamente) y `DBSCAN` (que preserva el radio ε y las coordenadas de los núcleos `components_`), complementado por el diccionario de nombres interpretativos de zonas.",
+          "id": "2c89ce8a-4a35-4450-9d15-2b4c525def88"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "En el taller de tráfico de Quito, ¿por qué variables como `velocidad_kmh` y `densidad_vehicular` se excluyeron de la matriz `X` y se analizaron tras el agrupamiento?",
+          "options": [
+            "Para delimitar zonas estrictamente espaciales según coordenadas y luego interpretar el comportamiento vehicular en cada una.",
+            "Porque DBSCAN arroja inconsistencias matemáticas irreversibles si se mezclan variables cinemáticas con datos geográficos.",
+            "Porque la inclusión de variables de tráfico generaría colinealidad perfecta que impediría la inversión de las distancias.",
+            "Para reservar esas columnas como etiquetas supervisadas para calcular la curva ROC y la matriz de confusión multiclase."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. El objetivo operacional era identificar conglomerados geográficos en el mapa metropolitano utilizando únicamente `longitud` y `latitud`. Si se hubiesen incluido velocidad y densidad en `X`, los clústeres mezclarían sensores distantes geográficamente pero con similar congestión. Al agrupar solo por ubicación espacial, el `groupby(\"cluster\").mean()` posterior permite perfilar objetivamente qué zonas sufren colapso vial.",
+          "id": "256fba9b-14cf-44bd-ac9b-376b45b29912"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Si en un modelo DBSCAN se mantiene fijo el valor de ε pero se incrementa drásticamente el parámetro `min_samples` (por ejemplo, de 5 a 25), ¿qué efecto directo se observa?",
+          "options": [
+            "Se incrementa la cantidad de clústeres pequeños debido a la mayor tolerancia de dispersión en cada vecindad analizada.",
+            "Todos los puntos de frontera se convierten automáticamente en núcleos densos sin alterar el porcentaje global de ruido.",
+            "La exigencia de densidad aumenta, convirtiendo clústeres periféricos o poco densos en ruido y reduciendo los núcleos.",
+            "El algoritmo se acelera de forma exponencial al descartar el cálculo de la matriz de distancias en los puntos borde."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Al incrementar `min_samples`, se vuelve mucho más estricta la condición para que una observación califique como Core Point (≥ MinPts). Aquellas zonas con densidad intermedia o dispersa ya no logran reunir suficientes vecinos en el radio ε, provocando la desintegración de clústeres débiles, la pérdida de semillas de expansión y un marcado incremento en la proporción de puntos etiquetados como ruido (−1).",
+          "id": "173b2da4-72ef-4760-a833-7d64b305f15e"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Según la escala clásica de interpretación de Kaufman y Rousseeuw (1990) utilizada en el taller, ¿cómo se califica un Silhouette Score de 0.833 obtenido en Quito?",
+          "options": [
+            "Nivel débil, evidenciando sobreajuste severo por la fragmentación artificial de los conglomerados espaciales del mapa.",
+            "Nivel excelente (rango de 0.71 a 1.00), indicando que las agrupaciones son altamente compactas y están muy separadas entre sí.",
+            "Nivel aceptable pero dudoso, sugiriendo la presencia encubierta de subgrupos con colapso de densidad en sus fronteras.",
+            "Nivel sin estructura estructurada (rango ≤ 0.25), obligando a descartar el radio ε y reconfigurar la métrica de distancia."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Kaufman y Rousseeuw establecen los siguientes umbrales estándar para el Coeficiente de Silueta: 0.71 a 1.00 = Estructura excelente (clústeres sólidos, compactos y nítidamente diferenciados); 0.51 a 0.70 = Estructura buena; 0.26 a 0.50 = Estructura débil; y ≤ 0.25 = Ausencia de estructura sustancial. Un puntaje de 0.833 ratifica una separación geográfica óptima.",
+          "id": "f5f130a1-3ffe-4728-8da9-e66c9ec93218"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "En la práctica de Guayaquil, DBSCAN descubrió 2 clústeres en lugar de las 4 terminales previstas por el operador. ¿A qué fenómeno técnico obedece esta discrepancia?",
+          "options": [
+            "A un error de divergencia numérica en el cálculo de distancias provocado por la falta de convergencia del Pipeline.",
+            "A una limitación de precisión en punto flotante que forzó a truncar las coordenadas geográficas de los sensores GPS.",
+            "A que las cuatro terminales no poseían el mismo número de paradas, invalidando el cálculo de las componentes conexas.",
+            "A que paradas intermedias a distancia < ε enlazan Norte, Centro y Sur en un solo corredor continuo densamente conectado."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. DBSCAN define una agrupación como una región densa conectada. En Guayaquil, las paradas a lo largo de las avenidas troncales actúan como puentes de densidad contiguos (a distancias menores a ε), unificando Norte, Centro y Sur en un solo macro-corredor continuo. En cambio, Durán quedó como clúster independiente porque el río Guayas constituye una barrera física de separación espacial sin paradas intermedias.",
+          "id": "6e177de5-5beb-48c3-8fa2-37b281971ac6"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "En el taller se ejecutó un bucle de auditoría para valores de ε entre 0.20 y 0.29 evaluando clusters, % de ruido y Silhouette. ¿Qué compromiso fundamental guía la elección del valor óptimo?",
+          "options": [
+            "Hallar un equilibrio donde los clústeres se mantengan estables, el Silhouette sea alto y el ruido no elimine paradas útiles.",
+            "Maximizar a cualquier costo el valor de Silhouette Score aunque el ruido alcance valores superiores al 70% del dataset.",
+            "Forzar la convergencia numérica a exactamente cuatro agrupaciones independientemente de la continuidad de las densidades.",
+            "Anular por completo el porcentaje de ruido reduciendo el radio a cero para certificar que ningún punto quede sin grupo."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La auditoría de sensibilidad analiza la compensación entre pureza y cobertura. Si se reduce ε en exceso para forzar separación artificial, el Silhouette puede parecer alto pero se dispara el porcentaje de ruido descartando puntos legítimos; si ε es muy laxo, disminuye el ruido pero se fusionan grupos reales. La selección óptima (ε = 0.25 en el taller) preserva clusters estables y coherentes con bajo porcentaje de ruido.",
+          "id": "cfee83f4-cebd-4c56-9260-2e1c9f22b92d"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Por qué DBSCAN es considerado uno de los algoritmos de referencia en minería de datos para la detección de anomalías y fraudes espaciales?",
+          "options": [
+            "Porque asigna a cada observación anómala una probabilidad bayesiana continua basada en la densidad normal multivariada.",
+            "Porque proyecta las observaciones sobre un hiperplano marginal maximizando la distancia a los vectores de soporte clave.",
+            "Porque identifica intrínsecamente los datos atípicos etiquetándolos con −1 sin forzarlos a integrar agrupaciones forzadas.",
+            "Porque ajusta de forma recursiva árboles de aislamiento calculando la longitud del camino de partición de cada punto."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. A diferencia de K-Means (que obliga a todas las observaciones a pertenecer a algún centroide aunque disten kilómetros de él), DBSCAN detecta de manera natural el ruido etiquetando como −1 a cualquier muestra que no alcance el umbral de densidad de MinPts ni esté en la vecindad de un núcleo. Esto lo convierte en una técnica no supervisada idónea para descubrir transacciones atípicas o sensores aislados de flujo libre.",
+          "id": "da66e289-58d1-4fa2-84a9-a78a570ed2a6"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Al construir `Pipeline([(\"escalar\", StandardScaler()), (\"dbscan\", DBSCAN(eps=0.25, min_samples=5))])`, ¿por qué se pasa `X` sin escalar a `fit_predict(X)`?",
+          "options": [
+            "Porque el Pipeline no admite transformadores previos en tareas de agrupamiento no supervisado requiriendo arreglos crudos.",
+            "Porque el Pipeline aplica automáticamente fit_transform sobre X mediante el escalador antes de alimentar al estimador DBSCAN.",
+            "Porque DBSCAN anula internamente las desviaciones estándar de las columnas haciendo redundante la operación de escalado.",
+            "Porque pasar datos escalados al Pipeline provocaría una división por cero en la matriz inversa de correlaciones espaciales."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. La arquitectura de `Pipeline` de scikit-learn encadena los pasos de procesamiento. Al invocar `pipeline.fit_predict(X)`, el primer paso (`StandardScaler`) calcula internamente la media y desviación de `X` y produce los datos estandarizados, los cuales se transfieren de manera transparente y segura a la fase de `DBSCAN`, previniendo fugas de escala y errores manuales de código.",
+          "id": "ae30f405-3f06-4dd8-a818-6baa9ac2d981"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "En aplicaciones geoespaciales con coordenadas esféricas de latitud y longitud en grandes extensiones territoriales, ¿qué configuración de `metric` es rigurosamente apropiada en DBSCAN?",
+          "options": [
+            "Utilizar `metric='cosine'` tras convertir las coordenadas a vectores unitarios para evaluar la similitud angular directa.",
+            "Utilizar `metric='manhattan'` para simular el desplazamiento en cuadrícula urbana despreciando la curvatura de la Tierra.",
+            "Utilizar `metric='minkowski'` con p=0.5 para priorizar distancias fraccionarias entre sensores de velocidad de tránsito.",
+            "Utilizar `metric='haversine'` con coordenadas convertidas a radianes para medir distancias sobre la superficie terrestre."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Para áreas geográficas extensas donde la curvatura terrestre altera las distancias euclidianas planas, se debe emplear la distancia del gran círculo o Haversine configurando `metric='haversine'`. En esta modalidad, las latitudes y longitudes deben transformarse obligatoriamente a radianes (`np.radians(X)`), y el radio ε debe expresarse también en radianes (distancia en km dividida por el radio de la Tierra ≈ 6371 km).",
+          "id": "0391cc05-46a6-4212-a8d6-78bb1dff8fe9"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "En la regla de asignación de sensores nuevos en producción (`buscador = NearestNeighbors(n_neighbors=1).fit(cores)`), ¿por qué se ajusta solo sobre `cores` y no sobre todo `X`?",
+          "options": [
+            "Porque un punto nuevo solo puede pertenecer a un clúster si está en el radio ε de un Núcleo; estar cerca de un Borde no basta.",
+            "Porque los puntos de frontera son eliminados físicamente de la memoria RAM al concluir la ejecución de fit_predict en C++.",
+            "Porque la matriz de distancias de scikit-learn requiere obligatoriamente que el estimador NearestNeighbors reciba clases puras.",
+            "Para reducir el tiempo de búsqueda evitando calcular las distancias ortogonales sobre las observaciones clasificadas como ruido."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. Por definición de DBSCAN, la densidad solo se expande a partir de puntos Núcleo (Core Points). Un punto Borde pertenece a un clúster de forma pasiva, pero al tener < MinPts vecinos no tiene capacidad de incorporar nuevas observaciones a la agrupación. Por ello, una nueva muestra solo puede unirse a un clúster si dista ≤ ε de al menos un Core Point; de lo contrario, se clasifica rigurosamente como ruido (−1).",
+          "id": "ec768eea-5f79-4462-8096-8db099acd778"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Un desarrollador escribe el siguiente código en producción: `modelo = DBSCAN(eps=0.3, min_samples=5); modelo.fit(X); y_pred = modelo.predict(X_nuevos)`. ¿Qué ocurrirá durante la ejecución?",
+          "options": [
+            "Se ejecutará con éxito asignando cada punto de `X_nuevos` al centroide geométrico más cercano calculado durante el ajuste.",
+            "Se emitirá una advertencia de convergencia y las nuevas muestras se asignarán aleatoriamente al clúster con mayor densidad.",
+            "Se generará un error de tipo `AttributeError` porque los estimadores `DBSCAN` de scikit-learn no implementan el método `predict`.",
+            "Se ejecutará un agrupamiento jerárquico acumulativo recalculando las etiquetas de todo el conjunto de muestras combinado."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. En la API de scikit-learn, la clase `DBSCAN` solo implementa `fit(X)` y `fit_predict(X)`. No implementa `predict()` porque clasificar una muestra nueva depende de su relación espacial con los núcleos y requeriría recalcular la conectividad o aplicar un clasificador de vecinos más cercanos sobre `components_`. La llamada a `.predict()` lanza de inmediato un `AttributeError: 'DBSCAN' object has no attribute 'predict'`.",
+          "id": "982a0667-e560-4922-82fc-f78d95300154"
         }
       ]
     },
@@ -11732,6 +12156,450 @@ window.QUIZ_DATA = {
           ],
           "correct": 1,
           "feedback": "Correcto. El Pipeline serializado conserva los parámetros aprendidos por el StandardScaler (media y desviación estándar del entrenamiento original). Al recibir nuevas observaciones con predict(nuevos), las estandariza con esos mismos parámetros fijos y calcula la distancia euclidiana a los centroides ya existentes para asignarles el grupo correspondiente, sin alterar los centroides ni reentrenar."
+        }
+      ]
+    },
+    {
+      "id": "semana_9",
+      "titulo": "Semana 9: Clustering Basado en Densidad (DBSCAN)",
+      "categorias": [
+        {
+          "value": "all",
+          "label": "Todas (Semana 9 · 30 preguntas)"
+        },
+        {
+          "value": "semana9",
+          "label": "DBSCAN · Densidad, Ruido y Parámetros (30)"
+        },
+        {
+          "value": "incorrect",
+          "label": "Solo Preguntas Erradas"
+        },
+        {
+          "value": "bookmarked",
+          "label": "Solo Preguntas Marcadas"
+        }
+      ],
+      "preguntas": [
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "En el modelo de agrupamiento espacial DBSCAN, ¿cómo se definen formalmente los conceptos fundamentales de vecindad, densidad y ruido?",
+          "options": [
+            "La vecindad es la varianza muestral, la densidad es la suma total de elementos y el ruido representa errores residuales de ajuste.",
+            "La vecindad es la matriz de covarianza, la densidad es la masa de cada centroide y el ruido delimita las muestras de validación.",
+            "La vecindad es el radio ε, la densidad es tener al menos MinPts vecinos y el ruido son puntos sin pertenencia a zonas densas.",
+            "La vecindad es el número de ramas, la densidad es la profundidad de partición y el ruido define los cortes anómalos de datos."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. En DBSCAN, la vecindad delimita un círculo o hiper-esfera de radio ε alrededor de cada muestra; la densidad exige la presencia de un mínimo de MinPts puntos dentro de dicha vecindad; y el ruido (−1) está conformado por aquellas observaciones que no alcanzan el umbral de densidad ni son adyacentes a un núcleo denso.",
+          "id": "84e79745-501c-4dc5-bf2d-5398d559dc12"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Qué criterios matemáticos diferencian a un punto Núcleo (Core), un punto Borde (Frontera) y un punto de Ruido en el algoritmo DBSCAN?",
+          "options": [
+            "Núcleo tiene distancia nula al centroide, Borde comparte la frontera hiperbólica y Ruido posee probabilidad bayesiana nula.",
+            "Núcleo tiene ≥ MinPts en radio ε, Borde tiene < MinPts pero toca a un Núcleo, y Ruido no alcanza ningún radio de densidad.",
+            "Núcleo acumula la varianza explicada, Borde es ortogonal a las componentes y Ruido corresponde a las proyecciones lejanas.",
+            "Núcleo posee ganancia de información positiva, Borde divide hiperplanos contiguos y Ruido satura la función de pérdida."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Un Core Point cuenta con al menos MinPts observaciones dentro de su radio ε (incluyéndose a sí mismo); un Border Point no llega a MinPts vecinos propios pero cae dentro del radio ε de un Core Point; y un Noise Point no es Core ni está al alcance de ningún Core, recibiendo la etiqueta −1.",
+          "id": "7aa92f3c-29df-48ca-821a-1d72e4218b60"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Cuál es el procedimiento técnico para estimar el hiperparámetro ε (épsilon) mediante el gráfico de k-distancias (k-dist graph)?",
+          "options": [
+            "Fijar k = MinPts, calcular la distancia al k-ésimo vecino más próximo, ordenarlas de mayor a menor y localizar el codo.",
+            "Fijar k = 2, obtener la distancia media a todos los centroides globales, ordenarlas de forma ascendente y hallar el codo.",
+            "Fijar k = n_samples, computar la inercia acumulada para cada muestra, ordenar según la varianza y seleccionar el mínimo.",
+            "Fijar k = dimensiones, estimar la correlación de Pearson entre atributos, ordenar los coeficientes y ubicar el máximo."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. Se establece k igual al valor adoptado para MinPts, se computa la distancia de cada observación a su k-ésimo vecino más cercano con NearestNeighbors, se ordenan dichas distancias en orden descendente y se selecciona como ε el punto de inflexión (\"codo\"), donde la distancia deja de decrecer bruscamente y se estabiliza.",
+          "id": "cf1df43d-28f7-493a-b228-dd5afe7b6548"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Qué consecuencias estructurales se producen en el clustering DBSCAN si se configura un valor de ε excesivamente pequeño o excesivamente grande?",
+          "options": [
+            "Un ε pequeño combina todos los datos en dos centroides, mientras que un ε grande divide los grupos en infinitos planos.",
+            "Un ε pequeño optimiza el gradiente estocástico, mientras que un ε grande bloquea la convergencia numérica del ajuste.",
+            "Un ε pequeño descarta todas las variables continuas, mientras que un ε grande colapsa la matriz de distancias a cero.",
+            "Un ε pequeño produce hiperfragmentación y alto porcentaje de ruido; un ε grande fusiona clústeres disímiles en uno solo."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Si ε es demasiado reducido, las vecindades son muy restrictivas y casi ningún punto logra consolidar MinPts vecinos, dispersando los clusters en fragmentos minúsculos y clasificando casi todo como ruido. Si ε es excesivamente amplio, las vecindades engloban todo el espacio y fusionan agrupaciones independientes en un único mega-cluster homogéneo, absorbiendo los outliers reales.",
+          "id": "0d68f738-cd07-4d6b-a040-013425248687"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "En el contexto de DBSCAN, ¿qué representa el Coeficiente de Silueta (Silhouette Score) y por qué se evalúa exclusivamente sobre los puntos válidos?",
+          "options": [
+            "Mide la inercia cuadrática intra-clúster y se evalúa sin ruido porque scikit-learn arroja un error fatal de memoria.",
+            "Mide la devianza de entropía cruzada y se evalúa sin ruido para forzar a las etiquetas a pertenecer al rango [0, 1].",
+            "Mide la cohesión y separación inter-clúster; se excluye el ruido (−1) porque carece de pertenencia a un grupo real.",
+            "Mide la proporción de varianza acumulada; se excluye el ruido para normalizar los autovectores en base ortogonal."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. El coeficiente de Silueta evalúa qué tan cerca está cada muestra de su propio grupo (cohesión) frente al grupo vecino más cercano (separación), en una escala de −1 a 1. En DBSCAN es mandatario filtrar las observaciones con etiqueta −1 (`labels != -1`), pues el ruido no conforma una agrupación real y su inclusión adulteraría por completo la métrica de separación.",
+          "id": "58be31ac-b3a0-4b5a-a6c8-1ede53c56659"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Por qué la inercia (suma de cuadrados intra-clúster o WCSS), utilizada en K-Means, no es una métrica conceptualmente válida para evaluar DBSCAN?",
+          "options": [
+            "Porque DBSCAN no genera centroides y agrupa geometrías no convexas arbitrarias, además de admitir muestras sin asignar.",
+            "Porque DBSCAN requiere obligatoriamente variables discretas y la inercia solo admite espacios vectoriales continuos.",
+            "Porque la inercia únicamente puede calcularse cuando el algoritmo converge mediante iteraciones de descenso por gradiente.",
+            "Porque DBSCAN normaliza las distancias mediante la norma de Manhattan anulando el producto escalar de las muestras."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La inercia mide la suma de distancias al cuadrado desde cada punto hacia el centroide de su clúster, asumiendo clústeres globulares o esféricos y partición total del dataset. DBSCAN no calcula centroides, descubre densidades de morfología arbitraria (anillos, meandros, curvas) y descarta valores atípicos clasificándolos como ruido.",
+          "id": "4636d804-2092-4726-a5a6-ee7fd55171b0"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Qué representa la métrica de porcentaje de ruido calculada como `(labels == -1).mean() * 100` y cómo guía el ajuste de hiperparámetros en DBSCAN?",
+          "options": [
+            "Señala la tasa de falsos positivos en clasificación supervisada y sirve para regularizar los hiperplanos de soporte.",
+            "Señala la proporción de datos atípicos no agrupados y sirve para evitar tanto la sobre-exclusión como la sub-fusión.",
+            "Señala el error cuadrático medio de aproximación espacial y sirve para sintonizar el número K de particiones fijas.",
+            "Señala la probabilidad a priori de encontrar datos nulos y sirve para imputar variables faltantes en el preprocesado."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El porcentaje de ruido indica qué fracción del total de observaciones quedó excluida de los grupos densos. Un porcentaje anormalmente alto (por ejemplo, > 30%) sugiere que ε es demasiado restrictivo o MinPts muy alto; mientras que un 0% de ruido en entornos con datos atípicos sugiere un ε excesivamente laxo que absorbió ruido ilegítimamente como frontera.",
+          "id": "b5bf815e-4c9e-49d0-b004-b305c8700d83"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Al instanciar `DBSCAN(eps=0.25, min_samples=5, metric='euclidean')` en scikit-learn, ¿qué función cumple rigurosamente cada uno de estos parámetros?",
+          "options": [
+            "eps define la cantidad de clústeres, min_samples las rondas de arranque y metric la función objetivo que se minimiza.",
+            "eps establece la tolerancia de parada, min_samples la profundidad del árbol y metric la regularización de la matriz.",
+            "eps configura la tasa de aprendizaje, min_samples el tamaño del lote batch y metric el núcleo de proyección no lineal.",
+            "eps define el radio de vecindad, min_samples el umbral de densidad de vecinos y metric la fórmula geométrica de distancia."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. `eps` determina la distancia máxima para considerar a dos muestras como vecinas; `min_samples` fija la cantidad mínima de observaciones en dicha vecindad (incluyendo el punto evaluado) para constituir un Core Point; y `metric` establece cómo se cuantifica la separación espacial (por defecto euclidiana, o manhattan, haversine, etc.).",
+          "id": "d4347366-f308-4d4b-8a3e-03b8c109707f"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Tras ejecutar `db.fit(X)` sobre un estimador `DBSCAN`, ¿qué información concreta albergan los atributos `labels_`, `core_sample_indices_` y `components_`?",
+          "options": [
+            "Coordenadas de los centroides, varianzas explicadas de cada eje y residuales cuadráticos de las observaciones dadas.",
+            "Probabilidades de pertenencia a cada grupo, pesos asignados a las variables y vectores de soporte del margen suave.",
+            "Etiquetas de clúster (−1 si es ruido), índices de fila de los puntos núcleo y coordenadas espaciales de dichos núcleos.",
+            "Distancias euclidianas a la frontera, lista de muestras anómalas eliminadas e hiperplanos de corte multidimensional."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. En scikit-learn, `labels_` es el arreglo de etiquetas asignadas a cada muestra de `X` (−1 para ruido); `core_sample_indices_` almacena los índices enteros de las filas que cumplieron la condición de punto Núcleo; y `components_` es una copia directa de las coordenadas de esos puntos Núcleo (`X[core_sample_indices_]`).",
+          "id": "324995ea-7773-47b6-bb57-d8414919de4d"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Al calcular el k-dist graph con `NearestNeighbors(n_neighbors=5)` para calibrar `min_samples=5`, ¿por qué la distancia al 5.º vecino se extrae de la columna `[4]`?",
+          "options": [
+            "Porque el primer vecino devuelto en el índice 0 es el propio punto con distancia cero; el 5.º vecino reside en la columna 4.",
+            "Porque scikit-learn descarta automáticamente el punto más lejano y recorre todos los índices una unidad hacia la derecha.",
+            "Porque la matriz resultante ordena las variables en sentido inverso y sitúa la distancia mínima siempre al final del array.",
+            "Porque el índice 4 corresponde al promedio ponderado de los cuatro vecinos circundantes excluyendo el punto de referencia."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. En `NearestNeighbors.kneighbors(X)`, la lista ordenada de vecinos de cada punto comienza con la propia muestra (distancia 0.0 en el índice 0). Por ende, si se buscan 5 vecinos para reflejar `min_samples = 5`, el quinto vecino más cercano ocupa el índice 4 (`distancias[:, 4]`), el cual coincide con el umbral exterior de la burbuja ε.",
+          "id": "3cd56713-8e8f-44fb-8b64-965337a785f3"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Cuáles son los dos momentos técnicos esenciales en los que se utiliza la clase `NearestNeighbors` en un proyecto integral con DBSCAN?",
+          "options": [
+            "Para inicializar los centroides aleatorios iniciales y para calcular las proyecciones ortogonales sobre las componentes.",
+            "Para construir el k-dist graph antes del ajuste y para inferir el clúster de datos nuevos midiendo cercanía a los núcleos.",
+            "Para imputar los valores faltantes del dataset y para estimar las probabilidades de convergencia del gradiente numérico.",
+            "Para generar árboles de decisión locales y para balancear las etiquetas minoritarias mediante sobremuestreo sintético."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. `NearestNeighbors` se emplea en la fase previa con `n_neighbors = MinPts` para graficar la curva k-dist y detectar el codo de ε; y se emplea tras el despliegue con `n_neighbors = 1` ajustado sobre `components_` para asignar datos nuevos al núcleo más cercano a distancia ≤ ε, solventando la ausencia de un método `.predict()`.",
+          "id": "5aeed27f-3655-4b07-952a-272dc2dd4150"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "De acuerdo con la literatura canónica de minería de datos (Sander et al., 1998), ¿cuál es la regla heurística recomendada para seleccionar el parámetro MinPts?",
+          "options": [
+            "MinPts debe ser igual al número total de muestras dividido entre la cantidad estimada de clusters hiper-elipsoidales.",
+            "MinPts debe ser siempre igual a 1 para asegurar que ningún punto atípico quede etiquetado bajo la condición de ruido.",
+            "MinPts debe elegirse como la raíz cúbica de los registros de entrenamiento independientemente de las dimensiones.",
+            "MinPts debe cumplir MinPts ≥ D + 1 (usualmente 2·D, fijando 4 o 5 en 2D), aumentándolo en datasets ruidosos o masivos."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. La heurística fundamental establece MinPts ≥ D + 1 (donde D es la dimensión o cantidad de variables predictoras). Para espacios bidimensionales (D=2) la recomendación práctica estándar es fijar 2 × D = 4 o 5. En conjuntos con elevado nivel de ruido o grandes volúmenes de datos se aconsejan valores mayores para evitar agrupar ruido residual.",
+          "id": "1231768f-e032-4826-a96e-e6aad34f4590"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Por qué es estrictamente indispensable aplicar estandarización (`StandardScaler`) sobre las variables antes de entrenar un modelo DBSCAN?",
+          "options": [
+            "Porque al basarse en distancias euclidianas, las variables con escalas numéricas amplias dominarían el cálculo del radio ε.",
+            "Porque scikit-learn restringe la ejecución de DBSCAN únicamente a matrices continuas que tengan varianza unitaria fija.",
+            "Porque el algoritmo requiere que todas las coordenadas espaciales se ubiquen obligatoriamente en el intervalo de [0, 1].",
+            "Porque sin estandarización el método de k-distancias se vuelve estocástico y cambia sus agrupaciones en cada ejecución."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. DBSCAN calcula distancias geométricas euclidianas para verificar el radio ε. Si una variable tiene un rango amplio (por ejemplo, densidad de 0 a 100) y otra un rango muy pequeño (como coordenadas geográficas de 0.07), la variable de mayor magnitud anula por completo a la menor; al estandarizar con media 0 y desviación 1, cada atributo aporta equitativamente y ε se expresa en desviaciones estándar.",
+          "id": "0ec5b1f5-c340-4608-bd1b-ad97ad4f0369"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Dado que la clase `DBSCAN` en scikit-learn no implementa el método `predict()`, ¿cómo se realiza la asignación de clúster a nuevas observaciones en producción?",
+          "options": [
+            "Se reentrena todo el Pipeline desde cero acumulando los registros nuevos junto con el dataset histórico completo original.",
+            "Se utiliza un árbol de decisión entrenado para predecir las etiquetas finales sin considerar las coordenadas de vecindad.",
+            "Se mide la distancia al punto Núcleo más cercano (`components_`): si es ≤ ε se le asigna su clúster, caso contrario es ruido.",
+            "Se calcula el centroide promedio de cada agrupación descubierta y se asigna el dato a la distancia baricéntrica menor."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. DBSCAN no dispone de `predict()` porque los clústeres no se rigen por centroides fijos sino por conectividad topológica densa. Para predecir sobre muestras nuevas en producción sin reentrenar, se busca el Core Point más próximo mediante un clasificador `NearestNeighbors(n_neighbors=1)`: si dista ≤ ε hereda la etiqueta de ese Core; si dista > ε, se cataloga como ruido (−1).",
+          "id": "5ef12eef-4521-41b0-801c-1f12a3d63e91"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "En la formulación matemática de DBSCAN, ¿cuál es la diferencia entre que un punto sea \"densamente alcanzable\" y que sea \"densamente conectado\"?",
+          "options": [
+            "Alcanzable implica convergencia numérica asintótica, mientras que conectado exige pertenencia al conjunto de validación.",
+            "Alcanzable es asimétrico si involucra puntos borde; conectado es simétrico y une puntos que comparten un núcleo común.",
+            "Alcanzable requiere que ambos puntos sean ruido, mientras que conectado exige que ambos pertenezcan al mismo centroide.",
+            "Alcanzable vincula exclusivamente núcleos densos, mientras que conectado vincula muestras anómalas de baja varianza."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. La relación \"densamente alcanzable\" no es simétrica: un punto Borde puede ser alcanzable desde un Core a través de una cadena de vecindades, pero el Core no es alcanzable desde el Borde (pues el Borde carece de MinPts vecinos para propagar densidad). En cambio, dos puntos p y q están \"densamente conectados\" de manera simétrica si existe un Core intermedio o desde el cual ambos son densamente alcanzables.",
+          "id": "dddb84ec-f478-450f-b3be-88d4cf5388b1"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Al analizar las etiquetas predichas con `labels = modelo.fit_predict(X)`, se utiliza la expresión `n_clusters = len(set(labels)) - (1 if -1 in labels else 0)`. ¿Por qué se resta 1 si −1 está presente?",
+          "options": [
+            "Porque Python utiliza indexación base cero y el último clúster debe compensar el desplazamiento del valor nulo inicial.",
+            "Porque scikit-learn crea por defecto un clúster fantasma vacío que se localiza en la primera posición del conjunto set.",
+            "Porque el primer clúster generado siempre se etiqueta como cero y debe excluirse de las métricas globales del modelo.",
+            "Porque la etiqueta −1 identifica datos aislados de ruido, los cuales no constituyen una agrupación semántica real del mapa."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. La función `set(labels)` extrae todos los valores únicos presentes en el arreglo de predicción (por ejemplo: {0, 1, 2, −1}). Al restar 1 en caso de existir la etiqueta −1, se descuenta la categoría correspondiente al ruido para reportar con exactitud el número de clústeres genuinamente densos descubiertos por el algoritmo.",
+          "id": "19cf47d4-1fb7-4d0a-bcae-7aa0ce428e8c"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Si un conjunto de datos contiene un clúster sumamente compacto (500 muestras en área reducida) y otro clúster amplio pero disperso (200 muestras en área extensa), ¿qué debilidad de DBSCAN se hace evidente?",
+          "options": [
+            "Un valor único global de ε no puede ajustarse a ambas densidades: capturar el disperso fusionará el denso, o viceversa.",
+            "DBSCAN no admite grupos de tamaños asimétricos debido a que su formulación impone cardinalidades estrictamente homogéneas.",
+            "El algoritmo satura la función de verosimilitud espacial arrojando valores singulares en la descomposición de covarianza.",
+            "La presencia de densidades dispares anula la ortogonalidad entre variables continuas imposibilitando converger a fit()."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La principal limitación intrínseca de DBSCAN clásico es que opera con un único radio ε para todo el espacio. Si se fija un ε grande para integrar el clúster disperso, el clúster denso se fusionará con ruido y grupos contiguos. Si se reduce ε para aislar el clúster compacto, el grupo disperso será descartado por completo como ruido. (Para resolver esto se diseñaron algoritmos como OPTICS o HDBSCAN).",
+          "id": "0f3553a6-c5c8-46ac-a554-b29f5fc30716"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Por qué la clase `DBSCAN` de scikit-learn no incluye el parámetro `random_state`, a diferencia de estimadores como `KMeans` o `RandomForest`?",
+          "options": [
+            "Porque aplica un generador pseudoaleatorio preconfigurado en C++ que garantiza convergencia estocástica invariable.",
+            "Porque no calcula particiones iterativas y simplemente resuelve una ecuación matricial cerrada basada en autovalores.",
+            "Porque es un método determinista que no inicializa centroides al azar, produciendo los mismos núcleos ante datos fijos.",
+            "Porque el estado aleatorio se delega exclusivamente a la función de escalado que opera como paso previo del Pipeline."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. DBSCAN no depende de semillas de inicialización aleatoria de centroides (como K-Means) ni de submuestreo de instancias/atributos (como Random Forest). Para un conjunto de datos determinado en un orden específico, el etiquetado de los puntos Núcleo y Ruido es plenamente determinista, por lo que no existe el parámetro `random_state`. (Únicamente puntos borde situados en la intersección de dos núcleos podrían variar según el orden de procesamiento).",
+          "id": "7446aed4-bcbf-48ac-a671-7ad5902f7391"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Por qué frente a conjuntos de datos con patrones en forma de medialunas concéntricas o anillos entrelazados DBSCAN triunfa donde K-Means fracasa?",
+          "options": [
+            "Porque DBSCAN descarta la dimensionalidad del espacio proyectando las observaciones sobre su primer componente lineal.",
+            "Porque DBSCAN modela vecindades contiguas de densidad arbitraria, mientras K-Means impone particiones convexas esféricas.",
+            "Porque DBSCAN optimiza la distancia de Mahalanobis adaptando la matriz de covarianza de cada grupo en cada iteración.",
+            "Porque DBSCAN requiere supervisión externa mediante validación cruzada para trazar los bordes curvos de cada partición."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. K-Means intenta minimizar la distancia de cada punto a un centroide medio, lo que matemáticamente induce fronteras de decisión lineales (diagramas de Voronoi) e impone que todos los clústeres sean convexos e isotrópicos (esferas de tamaño similar). DBSCAN, en cambio, define el clúster como una componente conexa formada por núcleos densos encadenados, adaptándose a cualquier topología no lineal compleja.",
+          "id": "81681db0-7130-49bc-9a87-a553c94972d0"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Al serializar la solución de DBSCAN para Quito con `joblib.dump({\"modelo\": modelo_final, \"zonas\": zonas}, \"modelo.pkl\")`, ¿qué elementos se preservan para producción?",
+          "options": [
+            "La matriz entera de datos históricos de entrenamiento, las predicciones de validación cruzada y los gráficos de dispersión.",
+            "El optimizador Adam, las tasas de aprendizaje adaptativas por atributo y el historial de pérdida cuadrática de las épocas.",
+            "La tabla de correlaciones de Pearson, los autovectores normalizados y la lista de variables descartadas en el escalado.",
+            "El Pipeline ajustado (escalador con medias/desviaciones y DBSCAN con puntos núcleo `components_`) junto al mapeo de zonas."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Al guardar el diccionario en el archivo `.pkl`, se serializa el objeto `Pipeline` con sus transformaciones ajustadas: `StandardScaler` (que retiene las medias y desviaciones de las coordenadas para estandarizar datos futuros idénticamente) y `DBSCAN` (que preserva el radio ε y las coordenadas de los núcleos `components_`), complementado por el diccionario de nombres interpretativos de zonas.",
+          "id": "2c89ce8a-4a35-4450-9d15-2b4c525def88"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "En el taller de tráfico de Quito, ¿por qué variables como `velocidad_kmh` y `densidad_vehicular` se excluyeron de la matriz `X` y se analizaron tras el agrupamiento?",
+          "options": [
+            "Para delimitar zonas estrictamente espaciales según coordenadas y luego interpretar el comportamiento vehicular en cada una.",
+            "Porque DBSCAN arroja inconsistencias matemáticas irreversibles si se mezclan variables cinemáticas con datos geográficos.",
+            "Porque la inclusión de variables de tráfico generaría colinealidad perfecta que impediría la inversión de las distancias.",
+            "Para reservar esas columnas como etiquetas supervisadas para calcular la curva ROC y la matriz de confusión multiclase."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. El objetivo operacional era identificar conglomerados geográficos en el mapa metropolitano utilizando únicamente `longitud` y `latitud`. Si se hubiesen incluido velocidad y densidad en `X`, los clústeres mezclarían sensores distantes geográficamente pero con similar congestión. Al agrupar solo por ubicación espacial, el `groupby(\"cluster\").mean()` posterior permite perfilar objetivamente qué zonas sufren colapso vial.",
+          "id": "256fba9b-14cf-44bd-ac9b-376b45b29912"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Si en un modelo DBSCAN se mantiene fijo el valor de ε pero se incrementa drásticamente el parámetro `min_samples` (por ejemplo, de 5 a 25), ¿qué efecto directo se observa?",
+          "options": [
+            "Se incrementa la cantidad de clústeres pequeños debido a la mayor tolerancia de dispersión en cada vecindad analizada.",
+            "Todos los puntos de frontera se convierten automáticamente en núcleos densos sin alterar el porcentaje global de ruido.",
+            "La exigencia de densidad aumenta, convirtiendo clústeres periféricos o poco densos en ruido y reduciendo los núcleos.",
+            "El algoritmo se acelera de forma exponencial al descartar el cálculo de la matriz de distancias en los puntos borde."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Al incrementar `min_samples`, se vuelve mucho más estricta la condición para que una observación califique como Core Point (≥ MinPts). Aquellas zonas con densidad intermedia o dispersa ya no logran reunir suficientes vecinos en el radio ε, provocando la desintegración de clústeres débiles, la pérdida de semillas de expansión y un marcado incremento en la proporción de puntos etiquetados como ruido (−1).",
+          "id": "173b2da4-72ef-4760-a833-7d64b305f15e"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Según la escala clásica de interpretación de Kaufman y Rousseeuw (1990) utilizada en el taller, ¿cómo se califica un Silhouette Score de 0.833 obtenido en Quito?",
+          "options": [
+            "Nivel débil, evidenciando sobreajuste severo por la fragmentación artificial de los conglomerados espaciales del mapa.",
+            "Nivel excelente (rango de 0.71 a 1.00), indicando que las agrupaciones son altamente compactas y están muy separadas entre sí.",
+            "Nivel aceptable pero dudoso, sugiriendo la presencia encubierta de subgrupos con colapso de densidad en sus fronteras.",
+            "Nivel sin estructura estructurada (rango ≤ 0.25), obligando a descartar el radio ε y reconfigurar la métrica de distancia."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Kaufman y Rousseeuw establecen los siguientes umbrales estándar para el Coeficiente de Silueta: 0.71 a 1.00 = Estructura excelente (clústeres sólidos, compactos y nítidamente diferenciados); 0.51 a 0.70 = Estructura buena; 0.26 a 0.50 = Estructura débil; y ≤ 0.25 = Ausencia de estructura sustancial. Un puntaje de 0.833 ratifica una separación geográfica óptima.",
+          "id": "f5f130a1-3ffe-4728-8da9-e66c9ec93218"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "En la práctica de Guayaquil, DBSCAN descubrió 2 clústeres en lugar de las 4 terminales previstas por el operador. ¿A qué fenómeno técnico obedece esta discrepancia?",
+          "options": [
+            "A un error de divergencia numérica en el cálculo de distancias provocado por la falta de convergencia del Pipeline.",
+            "A una limitación de precisión en punto flotante que forzó a truncar las coordenadas geográficas de los sensores GPS.",
+            "A que las cuatro terminales no poseían el mismo número de paradas, invalidando el cálculo de las componentes conexas.",
+            "A que paradas intermedias a distancia < ε enlazan Norte, Centro y Sur en un solo corredor continuo densamente conectado."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. DBSCAN define una agrupación como una región densa conectada. En Guayaquil, las paradas a lo largo de las avenidas troncales actúan como puentes de densidad contiguos (a distancias menores a ε), unificando Norte, Centro y Sur en un solo macro-corredor continuo. En cambio, Durán quedó como clúster independiente porque el río Guayas constituye una barrera física de separación espacial sin paradas intermedias.",
+          "id": "6e177de5-5beb-48c3-8fa2-37b281971ac6"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "En el taller se ejecutó un bucle de auditoría para valores de ε entre 0.20 y 0.29 evaluando clusters, % de ruido y Silhouette. ¿Qué compromiso fundamental guía la elección del valor óptimo?",
+          "options": [
+            "Hallar un equilibrio donde los clústeres se mantengan estables, el Silhouette sea alto y el ruido no elimine paradas útiles.",
+            "Maximizar a cualquier costo el valor de Silhouette Score aunque el ruido alcance valores superiores al 70% del dataset.",
+            "Forzar la convergencia numérica a exactamente cuatro agrupaciones independientemente de la continuidad de las densidades.",
+            "Anular por completo el porcentaje de ruido reduciendo el radio a cero para certificar que ningún punto quede sin grupo."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La auditoría de sensibilidad analiza la compensación entre pureza y cobertura. Si se reduce ε en exceso para forzar separación artificial, el Silhouette puede parecer alto pero se dispara el porcentaje de ruido descartando puntos legítimos; si ε es muy laxo, disminuye el ruido pero se fusionan grupos reales. La selección óptima (ε = 0.25 en el taller) preserva clusters estables y coherentes con bajo porcentaje de ruido.",
+          "id": "cfee83f4-cebd-4c56-9260-2e1c9f22b92d"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "¿Por qué DBSCAN es considerado uno de los algoritmos de referencia en minería de datos para la detección de anomalías y fraudes espaciales?",
+          "options": [
+            "Porque asigna a cada observación anómala una probabilidad bayesiana continua basada en la densidad normal multivariada.",
+            "Porque proyecta las observaciones sobre un hiperplano marginal maximizando la distancia a los vectores de soporte clave.",
+            "Porque identifica intrínsecamente los datos atípicos etiquetándolos con −1 sin forzarlos a integrar agrupaciones forzadas.",
+            "Porque ajusta de forma recursiva árboles de aislamiento calculando la longitud del camino de partición de cada punto."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. A diferencia de K-Means (que obliga a todas las observaciones a pertenecer a algún centroide aunque disten kilómetros de él), DBSCAN detecta de manera natural el ruido etiquetando como −1 a cualquier muestra que no alcance el umbral de densidad de MinPts ni esté en la vecindad de un núcleo. Esto lo convierte en una técnica no supervisada idónea para descubrir transacciones atípicas o sensores aislados de flujo libre.",
+          "id": "da66e289-58d1-4fa2-84a9-a78a570ed2a6"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Al construir `Pipeline([(\"escalar\", StandardScaler()), (\"dbscan\", DBSCAN(eps=0.25, min_samples=5))])`, ¿por qué se pasa `X` sin escalar a `fit_predict(X)`?",
+          "options": [
+            "Porque el Pipeline no admite transformadores previos en tareas de agrupamiento no supervisado requiriendo arreglos crudos.",
+            "Porque el Pipeline aplica automáticamente fit_transform sobre X mediante el escalador antes de alimentar al estimador DBSCAN.",
+            "Porque DBSCAN anula internamente las desviaciones estándar de las columnas haciendo redundante la operación de escalado.",
+            "Porque pasar datos escalados al Pipeline provocaría una división por cero en la matriz inversa de correlaciones espaciales."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. La arquitectura de `Pipeline` de scikit-learn encadena los pasos de procesamiento. Al invocar `pipeline.fit_predict(X)`, el primer paso (`StandardScaler`) calcula internamente la media y desviación de `X` y produce los datos estandarizados, los cuales se transfieren de manera transparente y segura a la fase de `DBSCAN`, previniendo fugas de escala y errores manuales de código.",
+          "id": "ae30f405-3f06-4dd8-a818-6baa9ac2d981"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "En aplicaciones geoespaciales con coordenadas esféricas de latitud y longitud en grandes extensiones territoriales, ¿qué configuración de `metric` es rigurosamente apropiada en DBSCAN?",
+          "options": [
+            "Utilizar `metric='cosine'` tras convertir las coordenadas a vectores unitarios para evaluar la similitud angular directa.",
+            "Utilizar `metric='manhattan'` para simular el desplazamiento en cuadrícula urbana despreciando la curvatura de la Tierra.",
+            "Utilizar `metric='minkowski'` con p=0.5 para priorizar distancias fraccionarias entre sensores de velocidad de tránsito.",
+            "Utilizar `metric='haversine'` con coordenadas convertidas a radianes para medir distancias sobre la superficie terrestre."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Para áreas geográficas extensas donde la curvatura terrestre altera las distancias euclidianas planas, se debe emplear la distancia del gran círculo o Haversine configurando `metric='haversine'`. En esta modalidad, las latitudes y longitudes deben transformarse obligatoriamente a radianes (`np.radians(X)`), y el radio ε debe expresarse también en radianes (distancia en km dividida por el radio de la Tierra ≈ 6371 km).",
+          "id": "0391cc05-46a6-4212-a8d6-78bb1dff8fe9"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "En la regla de asignación de sensores nuevos en producción (`buscador = NearestNeighbors(n_neighbors=1).fit(cores)`), ¿por qué se ajusta solo sobre `cores` y no sobre todo `X`?",
+          "options": [
+            "Porque un punto nuevo solo puede pertenecer a un clúster si está en el radio ε de un Núcleo; estar cerca de un Borde no basta.",
+            "Porque los puntos de frontera son eliminados físicamente de la memoria RAM al concluir la ejecución de fit_predict en C++.",
+            "Porque la matriz de distancias de scikit-learn requiere obligatoriamente que el estimador NearestNeighbors reciba clases puras.",
+            "Para reducir el tiempo de búsqueda evitando calcular las distancias ortogonales sobre las observaciones clasificadas como ruido."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. Por definición de DBSCAN, la densidad solo se expande a partir de puntos Núcleo (Core Points). Un punto Borde pertenece a un clúster de forma pasiva, pero al tener < MinPts vecinos no tiene capacidad de incorporar nuevas observaciones a la agrupación. Por ello, una nueva muestra solo puede unirse a un clúster si dista ≤ ε de al menos un Core Point; de lo contrario, se clasifica rigurosamente como ruido (−1).",
+          "id": "ec768eea-5f79-4462-8096-8db099acd778"
+        },
+        {
+          "category": "semana9",
+          "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+          "text": "Un desarrollador escribe el siguiente código en producción: `modelo = DBSCAN(eps=0.3, min_samples=5); modelo.fit(X); y_pred = modelo.predict(X_nuevos)`. ¿Qué ocurrirá durante la ejecución?",
+          "options": [
+            "Se ejecutará con éxito asignando cada punto de `X_nuevos` al centroide geométrico más cercano calculado durante el ajuste.",
+            "Se emitirá una advertencia de convergencia y las nuevas muestras se asignarán aleatoriamente al clúster con mayor densidad.",
+            "Se generará un error de tipo `AttributeError` porque los estimadores `DBSCAN` de scikit-learn no implementan el método `predict`.",
+            "Se ejecutará un agrupamiento jerárquico acumulativo recalculando las etiquetas de todo el conjunto de muestras combinado."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. En la API de scikit-learn, la clase `DBSCAN` solo implementa `fit(X)` y `fit_predict(X)`. No implementa `predict()` porque clasificar una muestra nueva depende de su relación espacial con los núcleos y requeriría recalcular la conectividad o aplicar un clasificador de vecinos más cercanos sobre `components_`. La llamada a `.predict()` lanza de inmediato un `AttributeError: 'DBSCAN' object has no attribute 'predict'`.",
+          "id": "982a0667-e560-4922-82fc-f78d95300154"
         }
       ]
     }
