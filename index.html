@@ -539,7 +539,7 @@
                     </div>
                 </div>
                 <div class="space-y-2">
-                    <textarea id="syncDirectInput" rows="3" placeholder="Pega aquí el enlace completo de WhatsApp (ej: https://alex171215.github.io/repasoIARDA1/index.html?v=14#sync=...) o el código de sincronización..."
+                    <textarea id="syncDirectInput" rows="3" placeholder="Pega aquí el enlace completo de WhatsApp (ej: https://alex171215.github.io/repasoIARDA1/index.html?v=15#sync=...) o el código de sincronización..."
                         class="w-full bg-slate-950 border border-indigo-500/60 rounded-xl p-3 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 select-all"></textarea>
                     <button id="btnApplyDirectSync"
                         class="w-full py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition active:scale-[0.98]">
@@ -612,7 +612,7 @@
 
 
         <!-- Cargar banco de preguntas (con versión para forzar recarga) -->
-    <script src="data/banco_preguntas_v7.js?v=14"></script>
+    <script src="data/banco_preguntas_v7.js?v=15"></script>
     <script>
         // Sistema de Audio Sintetizado Web Audio API (Sin dependencias externas)
         class SoundFX {
@@ -2106,7 +2106,7 @@
                 if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                     baseUrl = 'https://alex171215.github.io/repasoIARDA1/index.html';
                 }
-                const magicUrl = baseUrl + '?v=14#sync=' + currentCompressedCode;
+                const magicUrl = baseUrl + '?v=15#sync=' + currentCompressedCode;
                 syncMagicUrlInput.value = magicUrl;
 
                 if (copySuccessMsg) copySuccessMsg.classList.add('hidden');

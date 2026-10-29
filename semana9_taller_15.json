@@ -1,0 +1,212 @@
+[
+  {
+    "category": "semana9",
+    "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+    "text": "En el Bloque A1 del taller, se ejecuta la instrucción `X = df.drop(columns=\"destino_id\")`. ¿Cuál es la justificación técnica de esta línea de código antes de entrenar los modelos?",
+    "options": [
+      "Porque `destino_id` es un identificador nominal arbitrario que no aporta información geométrica y distorsionaría las distancias.",
+      "Porque scikit-learn bloquea la ejecución de algoritmos no supervisados si las columnas de entrada contienen cadenas de texto.",
+      "Porque el escalador `StandardScaler` requiere que todas las variables tengan varianzas no nulas para poder calcular su media.",
+      "Porque las columnas identificadoras introducen colinealidad perfecta anulando la matriz de covarianza en el cálculo de PCA."
+    ],
+    "correct": 0,
+    "feedback": "Correcto. `destino_id` es un identificador administrativo único que sirve únicamente para etiquetar o nombrar la fila, no para describirla numéricamente. Si se incluyera en la matriz de variables predictoras `X`, el modelo calcularía distancias espaciales sobre números de código o strings, distorsionando por completo la estructura geométrica de PCA, K-Means y DBSCAN.",
+    "id": "5695a2d2-d977-450f-a1b0-6b85cfe7c945"
+  },
+  {
+    "category": "semana9",
+    "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+    "text": "Tras ajustar el flujo PCA con `pca_pipe.fit_transform(X)`, se ejecuta `pca = pca_pipe.named_steps[\"pca\"]`. ¿Qué realiza esta instrucción y por qué es indispensable?",
+    "options": [
+      "Convierte las dos componentes principales a un DataFrame de pandas para calcular la matriz de covarianza de forma manual.",
+      "Extrae el objeto estimador `PCA` ya entrenado dentro del `Pipeline` para acceder a sus atributos propios de varianza y pesos.",
+      "Reinicializa los hiperparámetros del modelo PCA para garantizar que las rotaciones ortogonales sean plenamente reproducibles.",
+      "Evalúa la bondad de ajuste del escalador previo mediante validación cruzada interna antes de proyectar las muestras en 2D."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. Un `Pipeline` encapsula secuencialmente múltiples pasos (aquí `StandardScaler` y `PCA`). Para acceder a atributos que pertenecen exclusivamente a la etapa de PCA (tales como `explained_variance_ratio_` o `components_`), se debe indexar el paso por su nombre clave mediante `.named_steps[\"pca\"]`.",
+    "id": "55c9e1b4-1418-44e4-b7de-d8cd9e30c0b7"
+  },
+  {
+    "category": "semana9",
+    "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+    "text": "Al construir la tabla de cargas factoriales mediante `loadings = pd.DataFrame(pca.components_.T, index=X.columns, columns=[\"PC1\", \"PC2\"])`, ¿por qué se aplica la transpuesta `.T`?",
+    "options": [
+      "Para invertir el signo de las componentes ortogonales y asegurar que los coeficientes dominantes tengan siempre valor positivo.",
+      "Para normalizar los autovectores en el rango euclidiano de [−1, +1] garantizando que la suma de sus cuadrados sea igual a 1.",
+      "Porque `components_` tiene forma (n_components, n_features); al transponer, las variables originales quedan como filas legibles.",
+      "Para transformar la matriz de rotación en una base simétrica que permita proyectar los puntos sin alterar las dimensiones."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. En scikit-learn, el atributo `pca.components_` tiene dimensiones `(n_components, n_features)` —es decir, 2 filas por 6 columnas—. Al aplicar la transpuesta `.T`, la matriz adopta forma `(6, 2)`, permitiendo indexar las 6 variables predictoras como filas (`index=X.columns`) y las dos componentes como columnas (`columns=[\"PC1\", \"PC2\"]`) para interpretar nítidamente el peso de cada variable.",
+    "id": "499b6635-e3f9-46fc-a767-26f97485503c"
+  },
+  {
+    "category": "semana9",
+    "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+    "text": "En el diseño metodológico del taller, tanto K-Means como DBSCAN agrupan utilizando las 6 variables escaladas (`X_esc`), y no las 2 componentes de PCA. ¿Cuál es el motivo técnico?",
+    "options": [
+      "Porque K-Means y DBSCAN requieren que el número de variables sea siempre estrictamente par para calcular las vecindades.",
+      "Porque scikit-learn no admite objetos transformados por PCA como matrices de entrada válidas en modelos de agrupamiento.",
+      "Porque proyectar a dos dimensiones incrementa de forma artificial la inercia total impidiendo la convergencia del método.",
+      "Porque agrupar con las 6 variables conserva el 100% de la información real; PCA se emplea exclusivamente para visualizar en 2D."
+    ],
+    "correct": 3,
+    "feedback": "Correcto. Agrupar sobre las 6 variables completas garantiza que los modelos utilicen la totalidad de la varianza e información del dataset real. Aunque PCA retiene el 86% de la varianza en PC1 y PC2, existe un 14% de información residual que se perdería si se agrupara en 2D. PCA se utiliza como una herramienta de proyección bidimensional para graficar y ver los datos, mientras los algoritmos descubren patrones en el espacio original de 6 dimensiones.",
+    "id": "00fe1572-3015-48dc-bcef-0d9f1d77b652"
+  },
+  {
+    "category": "semana9",
+    "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+    "text": "En el bucle de exploración de K-Means, se calcula `tam_min = pd.Series(etiquetas).value_counts().min()`. ¿Qué diagnóstico crítico aporta esta línea al analista?",
+    "options": [
+      "Alerta si un valor de K genera agrupaciones diminutas o casi vacías destinadas a capturar únicamente datos atípicos aislados.",
+      "Mide la distancia euclidiana mínima entre centroides vecinos para evaluar la tasa de convergencia del algoritmo K-Means.",
+      "Verifica que todos los clústeres mantengan cardinalidades exactamente simétricas cumpliendo los supuestos de varianza fija.",
+      "Calcula el número mínimo de iteraciones estocásticas requeridas para que el estimador alcance tolerancia de parada local."
+    ],
+    "correct": 0,
+    "feedback": "Correcto. Monitorear el tamaño del grupo más pequeño (`value_counts().min()`) permite detectar si al aumentar K (por ejemplo K = 5 en el taller) el algoritmo genera un clúster artificial con apenas 1 o 2 observaciones atípicas. Esto advierte al analista de que el modelo está desperdiciando un grupo entero en aislar outliers en lugar de segmentar el mercado de forma operativa.",
+    "id": "b044a600-a41e-4066-aea0-93ab6b2df357"
+  },
+  {
+    "category": "semana9",
+    "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+    "text": "Antes de generar el mapa de dispersión con `sns.scatterplot`, se ejecuta `mapa[\"kmeans\"] = df[\"kmeans\"].astype(str)`. ¿Qué problema visual evita esta conversión de tipo?",
+    "options": [
+      "Evita que matplotlib lance una excepción de desbordamiento de memoria al mapear etiquetas numéricas sobre ejes continuos.",
+      "Evita que Seaborn interprete los grupos como una escala numérica continua aplicando un degradado con colores indistinguibles.",
+      "Asegura que los centroides se grafiquen automáticamente en las coordenadas promedio sin necesidad de invocar a `plt.scatter`.",
+      "Permite que el gráfico aplique la normalización MinMax sobre las etiquetas convirtiendo los clústeres en cuartiles exactos."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. Si la columna `kmeans` se mantiene como enteros (0, 1, 2, 3), bibliotecas como Seaborn asumen por defecto una variable cuantitativa continua y aplican una barra de color o degradado cromático similar. Al convertir a string (`astype(str)`), Seaborn reconoce que se trata de categorías cualitativas discretas y asigna tonos contrastantes y diferenciados de la paleta categórica (por ejemplo `palette=\"Set2\"`).",
+    "id": "d75cbc0c-249b-497d-9e43-8e90d45c9c1a"
+  },
+  {
+    "category": "semana9",
+    "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+    "text": "Al caracterizar los grupos con `perfil_km = df.groupby(\"kmeans\")[columnas].mean().round(1)`, ¿por qué se utiliza el DataFrame original `df` en lugar de la matriz estandarizada `X_esc`?",
+    "options": [
+      "Porque la matriz `X_esc` descarta los nombres de las columnas impidiendo aplicar agregaciones con pandas en memoria.",
+      "Porque calcular medias sobre variables estandarizadas arroja valores cercanos a cero carentes de significado real.",
+      "Porque los promedios en magnitudes originales (USD, km, visitas) son interpretables y permiten perfilar el negocio.",
+      "Porque la función `groupby` bloquea matrices bidimensionales de NumPy requiriendo estructuras DataFrames tabulares."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. En la matriz estandarizada `X_esc`, los valores están transformados a puntuaciones z (con media 0 y desviación 1), lo que hace imposible comprender directamente cuántos dólares gasta un visitante o cuántos días permanece. Al aplicar `groupby` sobre `df` con las columnas originales, se obtienen promedios en unidades reales y comprensibles para el negocio (8 806 visitantes, 95.1 USD, etc.), facilitando bautizar cada clúster.",
+    "id": "a51de2e5-e28f-4411-97f2-63c5ad50e77f"
+  },
+  {
+    "category": "semana9",
+    "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+    "text": "En la instrucción `k_dist = np.sort(distancias[:, 4])[::-1]`, ¿qué operaciones matemáticas y de ordenamiento se ejecutan de manera consecutiva?",
+    "options": [
+      "Se extraen las distancias del cuarto centroide más cercano y se ordenan de menor a mayor para trazar la curva acumulada.",
+      "Se filtran las observaciones con varianza superior a cuatro y se invierten los ejes cartesianos para normalizar la escala.",
+      "Se computa el promedio de los cuatro vecinos circundantes y se descartan las observaciones con valores de distancia nulos.",
+      "Se selecciona la distancia al 5.º vecino (columna con índice 4) y se ordenan los valores de forma estrictamente descendente."
+    ],
+    "correct": 3,
+    "feedback": "Correcto. En `kneighbors()`, la columna con índice 0 es la propia muestra (distancia 0.0); por ende, la columna con índice 4 corresponde al 5.º vecino más próximo. Al aplicar `np.sort(...)[::-1]`, primero se ordenan de menor a mayor y luego el slice invertido `[::-1]` las invierte en orden descendente (de mayor a menor), produciendo la curva típica del k-dist graph donde los puntos aislados aparecen al inicio con distancias altas.",
+    "id": "d8696bed-4422-4c77-85bf-0e217cc04be8"
+  },
+  {
+    "category": "semana9",
+    "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+    "text": "Al analizar el k-dist graph, el analista inserta la línea `plt.axhline(1.0, color=\"red\", linestyle=\"--\")`. ¿Cuál es el significado operativo de esta línea de referencia?",
+    "options": [
+      "Marca el umbral ε elegido en el punto de aplanamiento (\"codo\") para separar los destinos densos de las muestras aisladas.",
+      "Indica el radio máximo de búsqueda que scikit-learn puede computar antes de saturar la memoria RAM asignada al proceso.",
+      "Delimita el valor crítico de Silhouette que certifica que las agrupaciones espaciales tienen una separación excelente.",
+      "Representa el nivel de significancia estadística alfa para descartar la hipótesis nula de homogeneidad en las densidades."
+    ],
+    "correct": 0,
+    "feedback": "Correcto. `plt.axhline(1.0)` traza una línea horizontal guía en el valor 1.0 sobre el eje Y. Visualmente comprueba que el valor elegido para ε se ubica justo en el \"codo\" o inflexión de la curva: queda por encima del cuerpo principal aplanado de destinos densos (distancias < 1.0) y por debajo de las distancias elevadas de los 5 destinos aislados (distancias de 2.91 a 7.08), garantizando su clasificación como ruido.",
+    "id": "aeab17c0-41bd-430f-b098-4831850f22f4"
+  },
+  {
+    "category": "semana9",
+    "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+    "text": "Al evaluar DBSCAN en el Bloque A7 se ejecutan las líneas `validos = df[\"dbscan\"] != -1` y `silhouette_score(X_esc[validos], df.loc[validos, \"dbscan\"])`. ¿Qué ocurriría si se omite la máscara `validos`?",
+    "options": [
+      "La función lanzaría un error crítico de compilación en C++ debido a que scikit-learn no admite números enteros negativos.",
+      "La muestra de ruido (−1) sería tratada como un clúster genuino distorsionando por completo la métrica de cohesión y separación.",
+      "El puntaje de Silhouette se elevaría artificialmente a 1.0 al asumir que los datos aislados forman particiones ortogonales.",
+      "El algoritmo reasignaría automáticamente los puntos atípicos al centroide de K-Means más próximo para calcular distancias."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. Para `silhouette_score`, cada número entero único se interpreta como el identificador de una agrupación real. Si no se filtra con `validos`, la función consideraría que todas las observaciones con etiqueta −1 conforman un clúster estructurado, calculando cohesión interna y separación sobre puntos que están dispersos y no tienen ninguna relación entre sí, desvirtuando por completo la evaluación.",
+    "id": "acf22087-e5d5-4822-afe0-e636f4216330"
+  },
+  {
+    "category": "semana9",
+    "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+    "text": "En la visualización de DBSCAN se utiliza el mapeo `colores = {\"-1\": \"black\", \"0\": \"tab:green\", \"1\": \"tab:orange\", \"2\": \"tab:blue\", \"3\": \"tab:purple\"}`. ¿Cuál es el propósito de asignar `\"-1\": \"black\"`?",
+    "options": [
+      "Satisfacer una directiva interna de la API de Seaborn que exige que las muestras descartadas utilicen color monocromático.",
+      "Forzar al motor gráfico a imprimir las muestras atípicas sobre el centroide geométrico de mayor dispersión multidimensional.",
+      "Hacer que los destinos clasificados como ruido destaquen visualmente como casos anómalos frente a las agrupaciones densas.",
+      "Asignar un gradiente de luminosidad inverso para indicar que los puntos atípicos tienen menor probabilidad de membresía."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. Asignar explícitamente el color negro (o gris) a la etiqueta `\"-1\"` permite que en el mapa de dispersión bidimensional los puntos atípicos y anómalos resalten de inmediato ante el ojo del analista, distinguiéndose de los colores cromáticos vivos asignados a las agrupaciones densas principales (0, 1, 2, 3).",
+    "id": "5f1c3397-9e07-43f5-8a50-21eae1504916"
+  },
+  {
+    "category": "semana9",
+    "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+    "text": "En el Bloque A7 se ejecuta la sentencia de filtrado `df[df[\"dbscan\"] == -1]`. ¿Cuál es el objetivo de esta instrucción desde la perspectiva del negocio turístico?",
+    "options": [
+      "Eliminar físicamente estas filas del disco duro para evitar sesgos al momento de serializar el Pipeline con la librería joblib.",
+      "Imputar sus atributos numéricos calculando la mediana de los destinos adyacentes para reintegrarlos a la campaña principal.",
+      "Generar un gráfico de dispersión exclusivo para certificar que sus varianzas sean homogéneas respecto a las otras regiones.",
+      "Aislar e inspeccionar los destinos atípicos con sus valores reales para discernir casos singulares frente a posibles errores."
+    ],
+    "correct": 3,
+    "feedback": "Correcto. Filtrar con `df[df[\"dbscan\"] == -1]` permite al equipo examinar minuciosamente los registros descartados. En el taller, esto reveló que D297 tenía 25 000 visitantes con solo 8 USD de gasto (posible mirador diurno de paso), mientras que D298 cobraba 380 USD con 12 días de estadía (resort exclusivo). Inspeccionar los outliers permite separar errores de tipeo de oportunidades comerciales de nicho.",
+    "id": "99397feb-0e81-40d4-b7f5-4dc6fc79154d"
+  },
+  {
+    "category": "semana9",
+    "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+    "text": "En el Bloque A8 se construye `pd.crosstab(df[\"kmeans\"], df[\"dbscan\"], rownames=[\"K-Means\"], colnames=[\"DBSCAN\"])`. ¿Qué información proporciona la columna con etiqueta `DBSCAN = -1`?",
+    "options": [
+      "Revela en qué clústeres de K-Means fueron forzados los datos que DBSCAN detectó como ruido por no tener centroides.",
+      "Indica cuántas muestras fueron etiquetadas erróneamente por ambos estimadores durante la fase de validación cruzada.",
+      "Muestra el número de falsos positivos obtenidos al proyectar las componentes ortogonales de PCA sobre el mapa final.",
+      "Computa la matriz de confusión multiclase calculando la precisión y exhaustividad entre las particiones del modelo."
+    ],
+    "correct": 0,
+    "feedback": "Correcto. La columna `-1` de la tabla de contingencia muestra la distribución de las observaciones que DBSCAN reconoció como ruido. Permite verificar en cuál de los grupos de K-Means fueron absorbidos esos puntos atípicos (por ejemplo, 2 outliers cayeron en el grupo 3 de Amazonía), evidenciando cómo K-Means contamina los grupos al obligar a todo punto a unirse a un centroide.",
+    "id": "a73e245c-81ef-4a7f-b780-2faa3d013a4f"
+  },
+  {
+    "category": "semana9",
+    "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+    "text": "Al contrastar `perfil_km` frente a `perfil_db` para el grupo Amazonía, la altitud promedio pasa de 289 m en DBSCAN a 340 m en K-Means. ¿A qué se debe esta discrepancia numérica?",
+    "options": [
+      "A que DBSCAN calculó las medias geométricas ponderadas mientras K-Means utilizó la norma de Manhattan sobre las variables.",
+      "A que K-Means absorbió el outlier D296 (situado a 4 650 msnm) dentro de Amazonía alterando y contaminando su promedio real.",
+      "A una distorsión producida por la inversión de los autovectores en el paso intermedio de proyección con el estimador PCA.",
+      "A que DBSCAN omitió aleatoriamente las observaciones limítrofes para forzar la convergencia de su radio de conectividad."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. El destino atípico D296 posee una altitud extrema de 4 650 msnm. DBSCAN lo clasificó correctamente como ruido (−1), preservando la altitud promedio pura de Amazonía en 289 msnm. K-Means, en cambio, forzó a D296 a ingresar al clúster de Amazonía por proximidad espacial en las otras variables, elevando artificialmente el promedio a 340 msnm.",
+    "id": "02878a24-c5fe-4fbe-a43f-8a817e0ad76b"
+  },
+  {
+    "category": "semana9",
+    "categoryName": "Semana 9 · Clustering Basado en Densidad (DBSCAN)",
+    "text": "En la tabla `perfil_db = df.groupby(\"dbscan\")[columnas].mean().round(1)`, ¿por qué los valores de la fila con índice `-1` no deben interpretarse como un perfil de segmento?",
+    "options": [
+      "Porque scikit-learn genera los valores de la fila −1 aplicando una distribución sintética sin ninguna base empírica.",
+      "Porque los registros de la fila −1 corresponden a variables faltantes imputadas automáticamente mediante la media.",
+      "Porque promedia observaciones atípicas heterogéneas que no forman un grupo real sino puntos dispersos de ruido.",
+      "Porque la fila −1 únicamente almacena los residuos de varianza descartados durante la reducción dimensional con PCA."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. La etiqueta −1 agrupa a todos los puntos que no cumplieron las condiciones de densidad de DBSCAN. Estas muestras están aisladas y no tienen relación geográfica ni similitud de comportamiento entre sí (por ejemplo, un destino a 4 650 m de altitud y otro con 25 000 visitantes a nivel del mar). Promediarlas carece de sentido conceptual y no representa ningún perfil coherente de mercado.",
+    "id": "790cb46b-1d0a-48cd-9100-df88091cb821"
+  }
+]
