@@ -1,0 +1,562 @@
+[
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "En Machine Learning, ¿qué son los parámetros internos de un modelo (como los coeficientes w de una regresión lineal)?",
+    "options": [
+      "Valores internos que el estimador aprende de forma autónoma durante el ajuste con fit(), sin intervención manual.",
+      "Valores que el científico de datos configura manualmente antes de iniciar el entrenamiento, como los folds de CV.",
+      "Etiquetas visuales asociadas a los ejes cartesianos para representar la dispersión de las predicciones en prueba.",
+      "Factores de escala que determinan la cantidad de muestras aleatorias que se reservan para la validación cruzada."
+    ],
+    "correct": 0,
+    "feedback": "Correcto. Los parámetros son los valores numéricos internos que el modelo optimiza y aprende de los datos durante la llamada a fit() (por ejemplo, los coeficientes w y el sesgo b). No se configuran a mano, a diferencia de los hiperparámetros.",
+    "id": "f948a089-ed4a-4e98-8a75-76a55ed99517"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "¿Cuál es la diferencia conceptual fundamental entre un parámetro y un hiperparámetro en el flujo de scikit-learn?",
+    "options": [
+      "Los parámetros definen la velocidad de convergencia estocástica; los hiperparámetros miden la inercia del modelo.",
+      "Los hiperparámetros se configuran antes de entrenar guiando el ajuste; los parámetros se aprenden durante el fit().",
+      "Los hiperparámetros son aprendidos de forma autónoma por el optimizador; los parámetros se eligen manualmente.",
+      "Ambos términos son sinónimos formales dentro de la API, diferenciándose solo en la función matemática de costo."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. Los hiperparámetros (como C, gamma o max_depth) son decisiones de diseño estructural que se establecen antes del entrenamiento para controlar la complejidad. Los parámetros (como pesos y sesgos) son calculados por el algoritmo sobre los datos de entrenamiento.",
+    "id": "d6f77df1-752d-4f50-ab11-d6a367032c30"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "¿Qué procedimiento ejecuta rigurosamente la clase GridSearchCV al invocar grid.fit(X_train, y_train)?",
+    "options": [
+      "Selecciona al azar una configuración del diccionario y entrena una única vez el estimador sobre todo el conjunto de datos.",
+      "Divide los datos en train y test de manera automática, evaluando el estimador una sola vez sobre la partición retenida final.",
+      "Evalúa exhaustivamente todas las combinaciones del param_grid con validación cruzada, registrando la mejor en best_params_.",
+      "Entrena el estimador con los valores por defecto de la librería y descarta aquellas combinaciones con varianza no nula en CV."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. GridSearchCV realiza una búsqueda exhaustiva probando el producto cartesiano de todas las combinaciones definidas en param_grid. Cada combinación se entrena y evalúa mediante validación cruzada en K folds sobre X_train, identificando la mejor configuración promedio.",
+    "id": "35cb0ce0-f248-4727-bb1e-7caa4716e327"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "¿En qué se diferencia técnicamente RandomizedSearchCV de GridSearchCV y en qué escenario resulta conveniente emplearlo?",
+    "options": [
+      "RandomizedSearchCV evalúa todas las combinaciones en orden aleatorio, requiriendo el mismo tiempo de procesamiento cómputo.",
+      "RandomizedSearchCV prescinde de la validación cruzada, midiendo el rendimiento directamente sobre los datos de producción.",
+      "RandomizedSearchCV es una función auxiliar que duplica las iteraciones de GridSearchCV para evitar mínimos locales falsos.",
+      "RandomizedSearchCV evalúa un número fijo n_iter de combinaciones al azar; conviene cuando el espacio de búsqueda es inmenso."
+    ],
+    "correct": 3,
+    "feedback": "Correcto. A diferencia de GridSearchCV (que evalúa todas las combinaciones posibles), RandomizedSearchCV muestrea aleatoriamente n_iter candidatos de una distribución o lista. Esto ahorra mucho tiempo computacional cuando el espacio de hiperparámetros es masivo.",
+    "id": "6ae52a80-ed6d-4029-838f-132b55f7da8f"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "¿Qué objeto se debe suministrar al parámetro 'estimator' de GridSearchCV y cuál es su función dentro del flujo?",
+    "options": [
+      "Recibe el modelo o Pipeline que se optimizará, siendo clonado y ajustado para cada combinación del param_grid dado en train.",
+      "Recibe la métrica de evaluación como cadena de texto para determinar qué combinación de hiperparámetros resultará ganadora.",
+      "Recibe el nombre del archivo CSV con los datos de entrenamiento que serán procesados durante la validación cruzada K-fold.",
+      "Recibe el número entero de particiones que se crearán para distribuir el cómputo en paralelo a través de todos los cores."
+    ],
+    "correct": 0,
+    "feedback": "Correcto. El parámetro `estimator` recibe la instancia del modelo base o Pipeline a optimizar (por ejemplo `estimator=pipe`). GridSearchCV clona este estimador en cada iteración y le inyecta las distintas combinaciones de hiperparámetros definidas.",
+    "id": "1985419f-42e8-4141-9e72-72fa5f9fa8ab"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "Al optimizar un Pipeline con un paso llamado 'modelo', ¿por qué las claves del param_grid llevan el prefijo 'modelo__'?",
+    "options": [
+      "Es una convención estética opcional; scikit-learn infiere a qué paso corresponde cada hiperparámetro sin prefijo alguno.",
+      "Porque la sintaxis 'paso__parametro' indica a qué elemento del Pipeline corresponde cada hiperparámetro; sin ella falla.",
+      "Porque los hiperparámetros de soporte vectorial son palabras reservadas del lenguaje Python que requieren doble guion bajo.",
+      "Porque solo los estimadores no lineales requieren calificar sus hiperparámetros con el identificador del paso asignado."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. En scikit-learn, la notación `nombre_paso__hiperparametro` con doble guion bajo es obligatoria para que el Pipeline sepa exactamente a qué componente interno pertenece cada clave del diccionario (ejemplo: `'modelo__C'`). Omitir este prefijo provoca un error `ValueError`.",
+    "id": "e167594c-1ff1-4e31-92a9-9b58df241e05"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "¿Qué función cumple el argumento cv=5 en GridSearchCV y por qué es indispensable para una estimación confiable?",
+    "options": [
+      "Fija el número de núcleos del procesador que ejecutarán los cálculos en paralelo reduciendo el tiempo total de búsqueda.",
+      "Determina cuántas veces se reentrenará el modelo sobre el conjunto de testeo final antes de guardar los pesos definitivos.",
+      "Aplica validación cruzada en 5 folds, entrenando con 4 y evaluando con 1 en rotación para promediar métricas robustas.",
+      "Especifica que solo se explorarán cinco combinaciones de hiperparámetros seleccionadas aleatoriamente del diccionario."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. `cv=5` implementa una validación cruzada de 5 particiones (5-fold CV). Cada configuración se entrena 5 veces sobre el 80% de los datos y se valida sobre el 20% restante rotativo. El promedio de los 5 puntajes produce una estimación más confiable y libre de varianza.",
+    "id": "b4e968f2-68e8-4241-8049-a867e8dbf7dd"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "¿Por qué se utiliza scoring='f1' en el problema de crédito y scoring='recall' en el diagnóstico de diabetes?",
+    "options": [
+      "Porque 'f1' opera únicamente en datos sintéticos; 'recall' solo se puede calcular cuando los datos provienen de salud.",
+      "Porque scikit-learn bloquea la métrica 'recall' en problemas binarios balanceados requiriendo 'f1' de forma mandatoria.",
+      "Porque ambas métricas arrojan el mismo resultado matemático, seleccionándose aleatoriamente por convención académica.",
+      "Porque el scoring guía la selección: crédito busca balancear aciertos; diabetes exige minimizar falsos negativos críticos."
+    ],
+    "correct": 3,
+    "feedback": "Correcto. El parámetro `scoring` define qué significa 'mejor'. Para crédito (clases relativamente balanceadas) se prioriza equilibrar precisión y cobertura (`scoring='f1'`). En diabetes, un falso negativo puede comprometer la vida de un paciente, por lo que se prioriza la sensibilidad (`scoring='recall'`).",
+    "id": "61a8acea-91d2-4692-ba60-0fae673c7447"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "Al instanciar `GridSearchCV(..., n_jobs=-1)`, ¿qué comportamiento específico se activa en el sistema de cómputo?",
+    "options": [
+      "Ejecuta los ajustes en paralelo utilizando todos los núcleos del procesador disponibles para reducir el tiempo total.",
+      "Descarta la peor combinación evaluada en cada fold de validación cruzada para acelerar la convergencia numérica global.",
+      "Evalúa únicamente el último fold de validación cruzada omitiendo los cálculos de las cuatro particiones intermedias.",
+      "Silencia la emisión de mensajes por consola asegurando que no se generen registros de advertencia en el entorno local."
+    ],
+    "correct": 0,
+    "feedback": "Correcto. `n_jobs=-1` indica a joblib que emplee todos los procesadores o hilos lógicos del CPU de la máquina para entrenar múltiples combinaciones y folds simultáneamente en paralelo, disminuyendo sustancialmente el tiempo de cómputo.",
+    "id": "a788f505-2e84-445a-a5f1-2aac5e270633"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "¿Cuál es la función del parámetro refit=True (valor por defecto) tras concluir la exploración de GridSearchCV?",
+    "options": [
+      "Exporta automáticamente el mejor modelo serializado en un archivo de formato binario con extensión estándar joblib local.",
+      "Reentrena el estimador con toda la partición X_train usando la mejor combinación de hiperparámetros ganadora del proceso.",
+      "Obliga a recalcular la validación cruzada invirtiendo el orden de las particiones para comprobar la estabilidad numérica.",
+      "Calcula la matriz de confusión directamente sobre los datos de entrenamiento para reportar el porcentaje de aciertos final."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. Tras concluir todos los folds de validación cruzada, `refit=True` toma la combinación ganadora de hiperparámetros y entrena un estimador final con la totalidad de los datos de `X_train`. Este modelo optimizado queda accesible en `best_estimator_`.",
+    "id": "a16e9731-e5d6-484c-8992-9f6deb7ee77e"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "En el taller se utiliza `GridSearchCV(..., verbose=1)`. ¿Qué utilidad práctica aporta configurar este parámetro?",
+    "options": [
+      "Modifica la precisión en punto flotante con la que se calculan las puntuaciones de validación cruzada en cada iteración.",
+      "Activa la paralelización en múltiples hilos de ejecución de la tarjeta gráfica acelerando los entrenamientos pesados.",
+      "Controla el nivel de detalle de los mensajes de progreso que se imprimen por pantalla durante las rondas de búsqueda.",
+      "Filtra las combinaciones con bajo rendimiento impidiendo que completen todos los folds de evaluación en el dataset."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. `verbose` controla la verbosidad de la salida. Con `verbose=1`, GridSearchCV informa el número total de folds y candidatos a evaluar (ej. 'Fitting 5 folds for each of 32 candidates, totalling 160 fits'); valores más altos detallan el progreso fold por fold.",
+    "id": "4852517d-a021-42ae-b7d1-3c913f173ce7"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "Tras ejecutar fit() sobre GridSearchCV, se consulta grid.best_params_. ¿Qué contiene exactamente este atributo?",
+    "options": [
+      "El arreglo numérico de los pesos y coeficientes aprendidos por el modelo lineal durante la última ronda de ajuste.",
+      "La lista de los cinco mejores puntajes de prueba obtenidos en el conjunto de testeo independiente reservado al inicio.",
+      "La cantidad de iteraciones estocásticas requeridas por el estimador para converger en el mejor fold de entrenamiento.",
+      "Un diccionario con los valores de hiperparámetros que alcanzaron la mayor puntuación promedio en validación cruzada."
+    ],
+    "correct": 3,
+    "feedback": "Correcto. `best_params_` es un atributo que se crea tras llamar a `fit()`. Contiene un diccionario cuyas claves y valores corresponden exactamente a la combinación de hiperparámetros que maximizó la métrica de scoring especificada durante la validación cruzada.",
+    "id": "f1aad530-b9ce-4c65-9eb7-6719e3c75e5f"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "El taller muestra: 'Mejor F1 promedio en CV: 0.895'. ¿Qué representa este valor de best_score_ y por qué no es el score final?",
+    "options": [
+      "Es el límite teórico superior que cualquier modelo puede alcanzar; si el test lo supera indica sobreajuste inevitable.",
+      "Es la precisión calculada sobre todo el dataset de entrenamiento; no es final porque no incluye los datos de validación.",
+      "Es el promedio del F1 en los folds de validación sobre X_train; el rendimiento final debe medirse en el conjunto X_test.",
+      "Es el puntaje obtenido por el modelo base por defecto antes de iniciar la exploración de los hiperparámetros candidatos."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. `best_score_` es el promedio de la métrica de evaluación en los folds de validación durante la búsqueda (sobre subconjuntos de `X_train`). No representa el rendimiento generalizado final, el cual debe corroborarse evaluando `best_estimator_` sobre el conjunto independiente `X_test`.",
+    "id": "b8087b03-ba64-4e5a-8ce1-143beb5e0615"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "¿Qué relación técnica existe entre invocar `grid.predict(X_test)` y llamar directamente a `grid.best_estimator_.predict(X_test)`?",
+    "options": [
+      "grid.predict() utiliza una votación por ensamble de todos los modelos; best_estimator_ predice solo con el ganador en test.",
+      "Son exactamente equivalentes; grid.predict() delega la inferencia de forma automática en el objeto best_estimator_ ajustado.",
+      "best_estimator_ predice sobre datos sin escalar; grid.predict() requiere que las muestras estén previamente normalizadas.",
+      "grid.predict() ejecuta una nueva búsqueda de validación cruzada antes de emitir las etiquetas sobre el conjunto de test."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. Cuando `refit=True`, el objeto `GridSearchCV` implementa los métodos `predict()`, `predict_proba()` y `decision_function()` delegando directamente la llamada en `best_estimator_`, por lo que ambas expresiones son completamente intercambiables.",
+    "id": "4d9c9839-73d2-4f9e-9323-5af44ce9a9ee"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "Al convertir grid.cv_results_ en un DataFrame de pandas, ¿qué información detallada queda disponible para el análisis?",
+    "options": [
+      "Únicamente los hiperparámetros y la puntuación de la combinación ganadora, sin registrar las configuraciones evaluadas.",
+      "El listado de los errores de predicción individuales y los identificadores de los registros clasificados incorrectamente.",
+      "Un registro exhaustivo de todas las combinaciones con sus métricas por fold, puntajes medios, desviaciones y rankings.",
+      "Las coordenadas de los centroides geométricos calculados para cada una de las clases del modelo durante la validación."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. `cv_results_` es un diccionario exhaustivo que almacena todos los datos de la exploración: hiperparámetros evaluados (`params`), métricas individuales por fold (`split0_test_score`, etc.), medias (`mean_test_score`), desviaciones estándar y posiciones de ranking (`rank_test_score`).",
+    "id": "6559e260-041c-4cec-99e1-d1368262641d"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "Con param_grid = {'C': [0.1, 1, 10, 100], 'gamma': [0.001, 0.01, 0.1, 1], 'kernel': ['rbf', 'linear']}, ¿cómo se obtienen 32 candidatos?",
+    "options": [
+      "Sumando la cantidad de valores de cada lista: 4 + 4 + 2 = 10 combinaciones multiplicadas por el factor de escala inicial.",
+      "Dividiendo el número de iteraciones máximas del optimizador estocástico entre los grados de libertad de las variables dadas.",
+      "Elevando la cantidad de hiperparámetros al cuadrado y multiplicando por el número de clases presentes en el problema actual.",
+      "Calculando el producto cartesiano de los valores definidos: 4 de C por 4 de gamma por 2 kernels resulta en 32 combinaciones."
+    ],
+    "correct": 3,
+    "feedback": "Correcto. GridSearchCV genera el producto cartesiano de todas las listas del diccionario: 4 valores de C × 4 valores de gamma × 2 kernels = 32 combinaciones posibles. Con `cv=5`, esto implica ejecutar $32 \times 5 = 160$ entrenamientos.",
+    "id": "b675490b-333f-4b4b-b789-8d4a7be3b025"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "Si se pasa un Pipeline con el paso 'modelo' a GridSearchCV usando param_grid = {'C': [1, 10]}, ¿qué error ocurrirá al llamar a fit()?",
+    "options": [
+      "ValueError por parámetro inválido; las claves deben indicar el paso del Pipeline usando doble guion bajo ('modelo__C').",
+      "TypeError indicando que los valores de C deben definirse obligatoriamente en escala logarítmica para admitir la búsqueda.",
+      "El ajuste se ejecutará con éxito pero GridSearchCV ignorará los valores de C utilizando el valor por defecto de fábrica.",
+      "NotFittedError indicando que el objeto Pipeline debe ser ajustado manualmente antes de poder pasarse como estimador base."
+    ],
+    "correct": 0,
+    "feedback": "Correcto. Al optimizar un Pipeline, scikit-learn no reconoce hiperparámetros directos como `'C'` porque pertenecen al paso interno y no al contenedor Pipeline. La llamada lanzará un `ValueError: Invalid parameter 'C' for estimator Pipeline`, exigiendo la sintaxis `'modelo__C'`.",
+    "id": "f6173506-8662-484e-a5ec-92cdc12bb0b6"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "¿Por qué en GridSearchCV se eligen hiperparámetros como C y gamma en escala logarítmica en lugar de secuencias lineales como [1, 2, 3]?",
+    "options": [
+      "Porque la escala lineal introduce colinealidad en las matrices de proyección provocando divergencia en los estimadores dados.",
+      "Porque C y gamma actúan por órdenes de magnitud multiplicativos; pasar de 1 a 10 es mucho más significativo que de 1 a 2.",
+      "Porque la API de scikit-learn restringe los diccionarios param_grid para que solo admitan potencias enteras de diez en Python.",
+      "Porque la escala logarítmica asegura que todas las combinaciones evalúen el mismo número de vectores de soporte del modelo."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. El impacto de C y gamma sobre la función de costo y la curvatura del margen es exponencial y multiplicativo. Explorar saltos multiplicativos (0.001, 0.01, 0.1, 1, 10, 100) permite recorrer amplias regiones del espacio de regularización con pocas evaluaciones.",
+    "id": "529e9914-a2ca-4983-b761-90f55ed0950f"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "En el mapa de calor de cv_results_, la combinación C=0.1 y gamma=0.001 obtiene F1 = 0.000 prediciendo siempre rechazado. ¿Qué problema ocurre?",
+    "options": [
+      "Fuga de información (Data Leakage) generada por ajustar el escalador antes de realizar la partición de entrenamiento.",
+      "Sobreajuste severo (Overfitting), donde el estimador memorizó los datos de train y falló en los folds de validación.",
+      "Subajuste severo (Underfitting): margen tan ancho e influencia tan difusa que el modelo colapsa a la clase mayoritaria.",
+      "Convergencia prematura del optimizador cuadrático debida a un valor insuficiente de iteraciones máximas permitidas."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. Un C muy bajo promueve un margen excesivamente tolerante y permisivo, mientras que un gamma diminuto hace que los puntos tengan un radio de influencia plano y global. Juntos producen un subajuste (underfitting) extremo: el modelo es incapaz de trazar una frontera útil y predice siempre la clase mayoritaria, arrojando F1 = 0.0.",
+    "id": "98db59b4-31a0-40c5-ad32-600fe2f9e511"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "Si tras ejecutar GridSearchCV la mejor combinación se ubica en el límite superior del grid (ej. C = 100), ¿qué decisión se debe tomar?",
+    "options": [
+      "Dar por finalizado el proceso de búsqueda asumiendo que el valor máximo probado representa el óptimo global del problema.",
+      "Reemplazar el estimador por un algoritmo de árboles de decisión para evitar que el hiperparámetro desborde la memoria RAM.",
+      "Reducir los valores del param_grid hacia el límite inferior para forzar a que el mejor candidato quede en el centro exacto.",
+      "Ampliar el rango de búsqueda hacia valores superiores (ej. C = 1000) porque el óptimo real podría estar más allá del borde."
+    ],
+    "correct": 3,
+    "feedback": "Correcto. Cuando el mejor valor seleccionado queda en el borde exterior del rango analizado, indica que el rendimiento crecía hacia ese extremo. Es una buena práctica ampliar el límite de búsqueda para comprobar si valores aún mayores (como C=1000) mejoran el desempeño o si se alcanza una meseta.",
+    "id": "b4810785-8df4-4e7d-a7f4-b673f9a8a732"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "¿Por qué es un error metodológico grave estandarizar todo X_train con StandardScaler antes de ingresarlo a GridSearchCV?",
+    "options": [
+      "Provoca que scikit-learn escale de manera errónea la variable objetivo y en lugar de transformar las columnas de X.",
+      "Invalida la convergencia numérica de los kernels no lineales al forzar a que los atributos tengan varianza unitaria.",
+      "Genera una excepción de tipo TypeError porque GridSearchCV requiere obligatoriamente matrices de datos sin procesar.",
+      "Provoca fuga de datos (data leakage) porque el scaler aprendería medias y desviaciones de los folds de validación."
+    ],
+    "correct": 3,
+    "feedback": "Correcto. Si se estandariza todo `X_train` antes de la validación cruzada, las estadísticas de media y dispersión calculadas incluirán los datos de los folds que actuarán como prueba temporal en cada iteración. Integrar `StandardScaler` dentro de un `Pipeline` garantiza que el escalador se ajuste únicamente con los folds de entrenamiento de cada partición.",
+    "id": "2c777dea-2c12-4373-9fa7-6b1e8aeccef3"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "Para evitar evaluar gamma en el kernel lineal (donde no tiene efecto), se define param_grid como una lista de diccionarios. ¿Qué se logra?",
+    "options": [
+      "Obligar a que el estimador utilice paralelismo en tarjeta gráfica reduciendo el consumo de memoria en la CPU del equipo.",
+      "Eliminar combinaciones redundantes evaluando gamma solo con RBF, ahorrando entrenamientos innecesarios en la búsqueda.",
+      "Garantizar que el kernel lineal y el kernel RBF utilicen exactamente los mismos vectores de soporte en el ajuste final.",
+      "Permitir que GridSearchCV asigne pesos diferenciados a cada partición de validación cruzada según su representatividad."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. Dado que el hiperparámetro `gamma` no interviene en la formulación del kernel lineal ($K(x, z) = x^T z$), evaluarlo para distintos valores de gamma en dicho kernel es un desperdicio de cómputo. Al estructurar `param_grid` como una lista de diccionarios independientes, se descartan esas combinaciones superfluas.",
+    "id": "1897f7bf-fa14-47f2-856c-40bdfc2598c5"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "¿Cuál de las siguientes estructuras representa la forma metodológicamente correcta de configurar y ejecutar GridSearchCV?",
+    "options": [
+      "grid = GridSearchCV(pipe, param_grid, cv=5, scoring='f1', n_jobs=-1, verbose=1); grid.fit(X_train, y_train)",
+      "grid = GridSearchCV(SVC(), param_grid, cv=5, scoring='f1'); grid.fit(X, y)  # Evaluando en todo el dataset",
+      "grid = GridSearchCV(param_grid, pipe, cv=5); grid.fit(X_test, y_test)  # Optimizando sobre datos de prueba",
+      "grid = GridSearchCV(pipe, cv=5, scoring='f1'); grid.param_grid = param_grid; grid.fit(X_train_scaled, y_test)"
+    ],
+    "correct": 0,
+    "feedback": "Correcto. La estructura adecuada consiste en suministrar el Pipeline completo como estimator, asociar el diccionario param_grid con notación de doble guion bajo, definir la métrica de scoring y la validación cruzada, y ejecutar `fit()` estrictamente sobre `X_train` e `y_train`.",
+    "id": "1968539e-170e-4313-a88c-84b416e0f428"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "Al ordenar los resultados con `sort_values('rank_test_score')`, ¿qué información técnica proporciona la columna 'rank_test_score'?",
+    "options": [
+      "El número del fold específico (1 a 5) en el cual la combinación respectiva alcanzó su mayor puntaje de evaluación.",
+      "El ranking ordinal según el desempeño medio en validación cruzada, donde 1 corresponde a la configuración óptima.",
+      "La cantidad de vectores de soporte seleccionados por el algoritmo durante el entrenamiento de esa combinación puntual.",
+      "El porcentaje de reducción en tiempo de ejecución obtenido respecto al promedio de todos los candidatos analizados."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. `rank_test_score` clasifica ordinalmente todas las combinaciones evaluadas de mejor a peor según su puntuación media (`mean_test_score`). La combinación con ranking 1 es la ganadora (o las ganadoras en caso de empate).",
+    "id": "c78cab64-f4f7-4e02-841c-27dcc5f530d9"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "En el taller se genera un mapa de calor con `pivot_table(values='mean_test_score', index='param_C', columns='param_gamma')`. ¿Para qué sirve?",
+    "options": [
+      "Para proyectar los datos sobre las dos primeras componentes principales evaluando la separabilidad de los datos en 2D.",
+      "Para visualizar la matriz de confusión multiclase identificando qué etiquetas concentran los mayores falsos negativos.",
+      "Para examinar la interacción continua entre C y gamma, identificando visualmente qué región del espacio maximiza el F1.",
+      "Para comparar la distribución temporal de los entrenamientos y detectar qué combinaciones saturaron la memoria del CPU."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. La tabla pivote cruza los hiperparámetros C (filas) y gamma (columnas) con la métrica promedio en sus celdas. Desplegarla como mapa de calor permite al analista inspeccionar de un vistazo la topología de la superficie de rendimiento y confirmar si el óptimo es estable.",
+    "id": "7fc3fc83-4cef-4b61-bfc5-c6f5ba1d694f"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "Al incluir penalty='l1' en el param_grid de Regresión Logística, ¿por qué es obligatorio especificar solver=['liblinear'] o ['saga']?",
+    "options": [
+      "Porque los solvers como liblinear son los únicos que admiten paralelización en múltiples núcleos mediante n_jobs=-1 en CPU.",
+      "Porque la penalización L1 requiere datos escalados y los demás solvers omiten automáticamente el paso de preprocesado previo.",
+      "Porque liblinear transforma variables continuas en discretas para que la función Lasso no presente singularidades en train.",
+      "Porque el solver predeterminado 'lbfgs' no soporta la penalización L1; emplearlo con L1 generaría una excepción de error."
+    ],
+    "correct": 3,
+    "feedback": "Correcto. En scikit-learn, el solver por defecto de LogisticRegression (`'lbfgs'`) solo admite regularización L2 o ninguna. Si se incluye la regularización L1 (Lasso) en la búsqueda, es obligatorio emparejarla con un solver compatible como `'liblinear'` o `'saga'` para evitar excepciones.",
+    "id": "3efb4262-e13c-4685-8ff0-0986274e98ad"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "¿Qué utilidad práctica tiene acceder directamente al atributo grid.best_estimator_ tras concluir la optimización de hiperparámetros?",
+    "options": [
+      "Permite inspeccionar atributos del modelo (como coef_), exportarlo por separado con joblib o integrarlo en otros pipelines.",
+      "Permite reiniciar los hiperparámetros a sus valores iniciales en caso de que la validación cruzada haya divergido en test.",
+      "Permite eliminar automáticamente variables redundantes de la matriz X reduciendo la dimensionalidad del dataset de entrada.",
+      "Permite calcular la inercia intra-clúster para determinar si los datos forman agrupaciones esféricas bien delimitadas en test."
+    ],
+    "correct": 0,
+    "feedback": "Correcto. `best_estimator_` contiene el estimador o Pipeline entrenado definitivo. Acceder a él permite examinar sus parámetros internos aprendidos (como los pesos `coef_`, el intercepto `intercept_` o los vectores de soporte), serializarlo de forma liviana con `joblib.dump()`, o reutilizarlo en arquitecturas más complejas.",
+    "id": "64dd2b22-8e18-4d56-ac21-31b4a56d8e46"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "Al optimizar SVM con scoring='f1' el ganador fue C=0.1, y con scoring='recall' el ganador fue C=1. ¿Qué demuestra este resultado?",
+    "options": [
+      "Demuestra que el algoritmo es inestable y que los hiperparámetros óptimos cambian de forma puramente aleatoria en cada corrida.",
+      "Demuestra que la métrica de scoring altera la selección: optimizar para Recall tolera más falsos positivos que optimizar F1.",
+      "Demuestra que los modelos lineales siempre superan a los núcleos gaussianos cuando la regularización C es inferior a la unidad.",
+      "Demuestra que el conjunto de validación cruzada no fue estratificado adecuadamente en train, falseando las métricas de prueba."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. La función objetivo de optimización responde estrictamente a la métrica declarada en `scoring`. Una búsqueda orientada a Recall preferirá hiperparámetros que aumenten la sensibilidad (capturando más casos positivos aunque aumenten los falsos positivos), mientras que orientada a F1 buscará el equilibrio óptimo con la precisión.",
+    "id": "dd5decf6-24b3-4898-ac9c-6bd91f2260e4"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "El modelo base obtuvo F1 = 0.84 y el optimizado obtuvo F1 = 0.87 evaluados ambos sobre X_test. ¿Por qué es una conclusión sólida?",
+    "options": [
+      "Porque la evaluación se realizó sobre datos independientes (X_test) que jamás participaron en la búsqueda de hiperparámetros.",
+      "Porque un incremento del 3% en la métrica F1 garantiza matemáticamente que el clasificador no cometerá errores en producción.",
+      "Porque el conjunto de prueba se utilizó para reentrenar los estimadores candidatos asegurando la paridad en la comparación.",
+      "Porque scikit-learn ajusta internamente los intervalos de confianza del testeo para validar la hipótesis de superioridad."
+    ],
+    "correct": 0,
+    "feedback": "Correcto. La validez de la comparación radica en que `X_test` permaneció completamente aislado durante toda la etapa de búsqueda y ajuste con GridSearchCV. Evaluar ambos modelos sobre este conjunto garantiza que la mejora observada refleja generalización real y no memorización.",
+    "id": "634c30f8-7db3-48ca-944c-9173b5152ad1"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "Tras elegir la mejor configuración con GridSearchCV, el taller entrena pipeline_final.fit(X, y) con el 100% de los datos. ¿Por qué?",
+    "options": [
+      "Porque el split sirvió para seleccionar y evaluar; para producción ya no se reserva test y más datos enriquecen la frontera.",
+      "Porque los clasificadores Support Vector Machine descartan las predicciones en producción si el modelo no vio todo el dataset.",
+      "Porque la función joblib.dump exige que las dimensiones del objeto serializado coincidan con el tamaño total del archivo CSV.",
+      "Porque de lo contrario el estimador continuaría ejecutando internamente validación cruzada cada vez que se invoque predict()."
+    ],
+    "correct": 0,
+    "feedback": "Correcto. La partición train/test se realiza exclusivamente con fines de validación y medición honesta del rendimiento. Una vez seleccionada la combinación óptima y comprobada su capacidad de generalización, el modelo final de producción debe aprovechar el 100% de las muestras disponibles para maximizar su precisión.",
+    "id": "97a2d23b-c284-4942-9377-b78374198528"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "¿Por qué en el Bloque C se serializa con joblib únicamente el objeto pipeline_final en lugar de guardar todo el objeto grid?",
+    "options": [
+      "Porque el objeto grid no es serializable con joblib y arroja un error fatal de sistema al intentar guardarlo en disco.",
+      "Porque grid exporta también las predicciones intermedias de test, lo que generaría un conflicto de seguridad informática.",
+      "Porque el archivo de grid sería excesivamente pesado con 160 modelos y resultados de CV; pipeline_final es ligero y óptimo.",
+      "Porque al cargar el objeto grid en producción este reanudaría la búsqueda de hiperparámetros sobre los nuevos registros."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. El objeto `grid` almacena el histórico completo de todas las combinaciones evaluadas, los puntajes de los 160 fits y los estimadores clonados, resultando en un archivo muy voluminoso. En producción solo se necesita hacer inferencias, por lo que `pipeline_final` (que solo guarda el preprocesador y el modelo ganador) es infinitamente más ligero y eficiente.",
+    "id": "d050234a-1a8e-4cb8-b440-c5c9c11959a1"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "Se ejecuta: `gs = GridSearchCV(LogisticRegression(), param_grid, cv=5, scoring='f1').fit(X_tr, y_tr)`. ¿Qué realiza este bloque?",
+    "options": [
+      "Entrena una regresión logística simple evaluando únicamente los coeficientes sobre el conjunto de validación cruzada K-fold.",
+      "Calcula la correlación lineal de Pearson entre cada variable y la clase objetivo utilizando cinco particiones estratificadas.",
+      "Aplica una búsqueda aleatoria de hiperparámetros seleccionando cinco combinaciones continuas para predecir probabilidades.",
+      "Explora de forma exhaustiva las combinaciones de hiperparámetros sobre regresión logística optimizando el F1 promedio en CV."
+    ],
+    "correct": 3,
+    "feedback": "Correcto. El bloque de código instancia y ejecuta un proceso exhaustivo de Grid Search para optimizar la regresión logística sobre los datos de entrenamiento, evaluando cada combinación mediante 5 folds de validación cruzada y seleccionando la configuración que maximice el puntaje F1.",
+    "id": "095c8d41-52c6-4250-bec1-c3684245f7ed"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "En el taller se ejecuta: `df_cv[['params', 'mean_test_score', 'rank_test_score']].sort_values('rank_test_score').head(5)`. ¿Qué hace?",
+    "options": [
+      "Presenta las cinco mejores configuraciones de hiperparámetros ordenadas de mejor a peor según su puntaje promedio en CV dado.",
+      "Filtra las cinco combinaciones con mayor varianza en sus resultados descartándolas antes del reentrenamiento final en train.",
+      "Muestra únicamente los resultados obtenidos en el quinto fold de validación cruzada para verificar la convergencia del modelo.",
+      "Ordena las variables predictoras del dataset según su coeficiente de importancia en el clasificador de soporte vectorial."
+    ],
+    "correct": 0,
+    "feedback": "Correcto. `sort_values('rank_test_score')` ordena la tabla de resultados de validación cruzada de menor a mayor ranking (donde 1 es el mejor resultado), y `.head(5)` extrae los 5 primeros registros, permitiendo al analista examinar el 'top 5' de configuraciones más prometedoras.",
+    "id": "b8f57b62-400c-4fc8-8dfc-0ccf54fc5f66"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "En lugar de usar best_estimator_ directamente, el taller reconstruye explícitamente `Pipeline([('escalar', ...), ('modelo', ...)])`. ¿Por qué?",
+    "options": [
+      "Porque best_estimator_ no conserva el escalador StandardScaler una vez que concluye toda la búsqueda de hiperparámetros.",
+      "Por claridad y trazabilidad del código: documenta explícitamente en el script qué hiperparámetros se despliegan en producción.",
+      "Porque scikit-learn bloquea la invocación de fit() sobre el objeto best_estimator_ si este fue generado por GridSearchCV en C.",
+      "Para obligar a que el modelo reentrenado descarte los vectores de soporte previos y aprenda una frontera estrictamente plana."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. Aunque invocar `grid.best_estimator_.fit(X, y)` es funcionalmente idéntico, reconstruir explícitamente el Pipeline con los valores óptimos (ej. `SVC(C=10, gamma=0.01, kernel='rbf')`) aporta claridad, legibilidad y documentación limpia para auditoría técnica de software en producción.",
+    "id": "7ff570d2-e380-4581-ae9a-61ff307f1cc9"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "Al cargar el pipeline exportado `modelo = joblib.load('modelo.pkl')`, ¿por qué modelo.predict() recibe solicitudes sin escalar manualmente?",
+    "options": [
+      "Porque los datos en producción se escalan automáticamente por el sistema operativo antes de ingresar al intérprete de Python.",
+      "Porque tras la optimización con GridSearchCV, el estimador SVC aprende a operar con independencia de la escala de las variables.",
+      "Porque el Pipeline contiene el StandardScaler ajustado, aplicando la escala a los datos nuevos antes de pasarlos al modelo.",
+      "Porque la función joblib.load modifica el código de inferencia reemplazando el cálculo de distancias por árboles de decisión."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. El objeto Pipeline guarda internamente tanto el transformador `StandardScaler` (con las medias y desviaciones estándar aprendidas en el entrenamiento) como el estimador SVC. Al llamar a `predict()`, el Pipeline ejecuta de forma transparente la estandarización sobre los datos crudos antes de alimentarlos al clasificador.",
+    "id": "d57131f4-5489-407a-bce1-8d9ce54aaee6"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "En el taller de fraude, Grid Search mejoró el F1 solo un 2-3% frente a los modelos base. ¿Qué conclusión metodológica se extrae?",
+    "options": [
+      "Que la optimización de hiperparámetros fue defectuosa y debe repetirse ampliando el número de folds de validación cruzada en CV.",
+      "Que los modelos de Machine Learning no supervisado no responden ante variaciones de regularización y margen en el testeo real.",
+      "Que los valores por defecto ya eran muy competitivos; la elección final debe considerar interpretabilidad y costo computacional.",
+      "Que cuando la ganancia es modesta se debe descartar el algoritmo y sustituirlo obligatoriamente por una red neuronal profunda."
+    ],
+    "correct": 2,
+    "feedback": "Correcto. No siempre la optimización de hiperparámetros arroja saltos espectaculares de rendimiento. En muchos conjuntos de datos tabulares, los valores predeterminados de la librería ya son sólidos. La experimentación rigurosa permite comprobar empíricamente cuál es el techo del modelo y ponderar si el costo computacional justifica el despliegue.",
+    "id": "adbce8fb-5101-453a-b828-bd8e439b4d16"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "En el taller de fraude, GridSearchCV seleccionó penalty='l1' frente a penalty='l2'. ¿Cuál es la diferencia práctica entre ambas?",
+    "options": [
+      "L1 reduce los pesos de forma proporcional; L2 los anula completamente convirtiendo el clasificador en un árbol binario.",
+      "L1 es una penalización cuadrática; L2 utiliza el valor absoluto permitiendo calcular derivadas continuas en todo el espacio.",
+      "L1 y L2 son funcionalmente idénticas, existiendo únicamente diferencias en el algoritmo numérico de inversión matricial.",
+      "L1 (Lasso) puede anular coeficientes realizando selección de variables; L2 (Ridge) los reduce pero rara vez a cero exacto."
+    ],
+    "correct": 3,
+    "feedback": "Correcto. La regularización L1 (Lasso) aplica una penalización basada en el valor absoluto de los coeficientes, lo que empuja a los pesos de variables no informativas a ser exactamente cero (esparcidad o selección implícita de variables). En cambio, la regularización L2 (Ridge) contrae los pesos hacia cero pero sin anularlos totalmente.",
+    "id": "3b3d2bca-e4fd-47af-a7f9-b739dcc9eeea"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "En diabetes, optimizar con scoring='recall' elevó el Recall de 0.769 a 0.885 en un test de 52 enfermos. ¿Qué impacto clínico se obtuvo?",
+    "options": [
+      "El modelo diagnosticó con éxito a los 52 pacientes diabéticos alcanzando una sensibilidad perfecta del cien por ciento en prueba.",
+      "Se eliminaron todos los falsos positivos del conjunto de prueba asegurando que ningún paciente sano reciba diagnósticos erróneos.",
+      "Se duplicó la cantidad de aciertos en la clase negativa reduciendo a la mitad los costos de exámenes clínicos complementarios.",
+      "Se detectaron 6 pacientes con diabetes adicionales (de 40 a 46 casos detectados) que de otro modo habrían sido ignorados en test."
+    ],
+    "correct": 3,
+    "feedback": "Correcto. El impacto práctico es tangible: con el modelo base se detectaban $52 \times 0.769 \u0007pprox 40$ pacientes enfermos, mientras que con el modelo optimizado para Recall se detectaron $52 \times 0.885 \u0007pprox 46$ pacientes. Esos 6 pacientes adicionales representan diagnósticos y tratamientos tempranos que salvan vidas.",
+    "id": "d3774e81-2009-4865-a460-dd25324c45ba"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "En el taller se observa que en kernel='linear', variar gamma no altera en absoluto las métricas de rendimiento. ¿Cuál es el motivo?",
+    "options": [
+      "Porque el kernel lineal no incluye gamma en su formulación; gamma solo opera en núcleos que evalúan distancias como RBF.",
+      "Porque scikit-learn fija internamente gamma en un valor constante unitario cuando detecta que la matriz está estandarizada.",
+      "Porque el algoritmo de optimización cuadrática ignora las opciones secundarias si el hiperparámetro C es menor que diez.",
+      "Porque las variables numéricas al ser estandarizadas pierden la dispersión radial sobre la que actúa el hiperparámetro gamma."
+    ],
+    "correct": 0,
+    "feedback": "Correcto. La función matemática del kernel lineal es simplemente el producto escalar plano $K(x, z) = x^T z$. El hiperparámetro gamma define el radio o ancho de banda de la campana gaussiana en el kernel RBF ($\\exp(-\\gamma \\|x - z\\|^2)$) o el factor de escala en polinomios; en la ecuación lineal, gamma no existe y no tiene ningún efecto.",
+    "id": "4e271604-01f8-482e-bb52-cd17e5877e0c"
+  },
+  {
+    "category": "semana6",
+    "categoryName": "Semana 6 · GridSearch",
+    "text": "¿Cuál es la secuencia metodológica completa y ordenada para un proyecto de optimización con GridSearchCV según el taller?",
+    "options": [
+      "1) GridSearchCV en todo el dataset -> 2) train_test_split -> 3) Evaluar en X_test -> 4) Exportar estimador base con joblib final.",
+      "1) Split train/test -> 2) Pipeline preproc+modelo -> 3) GridSearchCV en train -> 4) Evaluar en test -> 5) Reentrenar 100% y exportar.",
+      "1) Ajustar Pipeline en todo el dataset -> 2) Definir param_grid -> 3) GridSearchCV en test -> 4) Evaluar en train -> 5) Exportar.",
+      "1) Definir param_grid -> 2) Reentrenar con el 100% de muestras -> 3) GridSearchCV con cv=5 -> 4) Serializar sin preprocesamiento."
+    ],
+    "correct": 1,
+    "feedback": "Correcto. El flujo metodológico riguroso comprende: 1) separar train y test con train_test_split; 2) estructurar el Pipeline con transformadores y modelo; 3) ejecutar GridSearchCV sobre X_train; 4) contrastar el modelo base y el optimizado en X_test; 5) reajustar el pipeline final con el 100% de datos; y 6) serializarlo con joblib.",
+    "id": "9b97859a-0bc6-41d3-b2c6-4ebc5aa6c6c2"
+  }
+]

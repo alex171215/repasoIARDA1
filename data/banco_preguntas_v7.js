@@ -5271,29 +5271,29 @@ window.QUIZ_DATA = {
           "id": "f44dc609-86a6-445a-9fae-0b30523eb1ed",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
-          "text": "# Observa el siguiente código svc = SVC(random_state=42) grid_search = GridSearchCV( ``` estimator=svc, param_grid=param_grid, cv=5, scoring='f1', n_jobs=-1 ```",
+          "text": "Al ejecutar GridSearchCV con refit=True sobre un clasificador SVC, ¿sobre qué datos específicos se entrena el estimador best_estimator_?",
           "options": [
-            ")",
-            "grid_search.fit(X_train_s, y_train) mejor_modelo = grid_search.best_estimator_ y_pred = mejor_modelo.predict(X_test_s) ## ¿Sobre qué datos se entrena el modelo final que queda en mejor_modelo?",
-            "Sobre todo X_train_s, después de identificar los mejores hiperparámetros mediante validación cruzada. Tras seleccionar los mejores hiperparámetros por validación cruzada, GridSearchCV re-entrena automáticamente el modelo sobre todo X_train_s. Esto maximiza los datos de entrenamiento para el modelo final.",
-            "Sobre X_test_s, para garantizar que el modelo visto por el evaluador sea el mismo que predice."
+            "Se entrena exclusivamente sobre las instancias que formaron parte del último fold de validación en la búsqueda de hiperparámetros.",
+            "Se entrena sobre el testeo final para garantizar que las predicciones tengan el menor margen de error cuadrático medio posible.",
+            "Se entrena sobre una partición sintética generada mediante remuestreo bootstrap para evitar el sobreajuste a los datos de prueba.",
+            "Se entrena sobre todo el conjunto de entrenamiento (X_train) utilizando la mejor combinación de hiperparámetros identificada aquí."
           ],
-          "correct": 2,
-          "feedback": "Tras seleccionar los mejores hiperparámetros por validación cruzada, GridSearchCV re-entrena automáticamente el modelo sobre todo X_train_s. Esto maximiza los datos de entrenamiento para el modelo final."
+          "correct": 3,
+          "feedback": "Correcto. Cuando el parámetro refit=True (valor predeterminado en scikit-learn) está activo, una vez que GridSearchCV evalúa todas las combinaciones y selecciona la óptima mediante validación cruzada, ajusta automáticamente un modelo final con dicha configuración sobre la totalidad de X_train."
         },
         {
           "id": "cc4889e7-bbdf-47cb-9906-fd88afdcd327",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
-          "text": "En una SVM, el hiperplano de separación se define matemáticamente como w·x + b = 0. ¿Qué representa el vector w en esta ecuación?",
+          "text": "En la formulación matemática de una máquina de soporte vectorial w·x + b = 0, ¿qué representa geométricamente el vector de pesos w?",
           "options": [
-            "El vector de distancias de cada punto al centroide de su clase.",
-            "El vector de probabilidades de clase calculado por el modelo.",
-            "El vector perpendicular al hiperplano que define su dirección en el espacio. w es el vector normal al hiperplano. Su dirección determina la orientación de la frontera de decisión en el espacio de características.",
-            "El vector de medias de cada variable del dataset de entrenamiento."
+            "El vector perpendicular (normal) al hiperplano que determina su orientación direccional en el espacio de características.",
+            "El vector de distancias euclidianas calculado desde el origen de coordenadas hacia los centroides geométricos de cada clase.",
+            "El arreglo de multiplicadores de Lagrange asociados exclusivamente a los puntos de entrenamiento que violaron el margen.",
+            "El vector que contiene las probabilidades a priori estimadas para cada una de las clases del problema de clasificación dado."
           ],
-          "correct": 2,
-          "feedback": "w es el vector normal al hiperplano. Su dirección determina la orientación de la frontera de decisión en el espacio de características."
+          "correct": 0,
+          "feedback": "Correcto. En la ecuación lineal del hiperplano de decisión $w^T x + b = 0$, el vector $w$ es el vector normal (perpendicular) a la superficie de separación. Su dirección determina la orientación espacial del hiperplano y su norma $\\|w\\|$ se relaciona inversamente con el ancho del margen ($2/\\|w\\|$).) "
         },
         {
           "id": "86384f61-8f44-4fcd-9048-ec89b6cec9fe",
@@ -5355,43 +5355,43 @@ window.QUIZ_DATA = {
           "id": "fad1f49d-029d-47b2-a89b-7e32a35cc154",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
-          "text": "¿Cuál es la ventaja principal del **truco del kernel** frente a transformar explícitamente los datos a un espacio de mayor dimensión?",
+          "text": "¿Cuál es la ventaja matemática fundamental del truco del kernel (Kernel Trick) en Máquinas de Vectores de Soporte?",
           "options": [
-            "Permite visualizar los datos en el espacio transformado mediante gráficos de dispersión en 3D.",
-            "Reduce automáticamente el número de variables del dataset original para acelerar el entrenamiento.",
-            "Calcula el producto interno en el espacio transformado sin necesidad de calcular las coordenadas de los puntos en ese espacio. Esta es la propiedad esencial del truco del kernel: operar en el espacio transformado usando solo productos internos, sin materializar las nuevas coordenadas. Es especialmente útil cuando el espacio tiene dimensión infinita, como en el kernel RBF.",
-            "Elimina la necesidad de escalar los datos antes del entrenamiento."
+            "Reduce automáticamente la dimensionalidad del conjunto de datos proyectando todas las variables sobre su primer componente lineal.",
+            "Calcula el producto interno en un espacio transformado sin computar explícitamente las coordenadas en dicha dimensión superior.",
+            "Elimina la necesidad de aplicar estandarización sobre las variables predictoras antes de ajustar los hiperplanos de separación.",
+            "Garantiza que la función de costo sea estrictamente cuadrática para permitir que el descenso de gradiente converja en una época."
           ],
-          "correct": 2,
-          "feedback": "Esta es la propiedad esencial del truco del kernel: operar en el espacio transformado usando solo productos internos, sin materializar las nuevas coordenadas. Es especialmente útil cuando el espacio tiene dimensión infinita, como en el kernel RBF."
+          "correct": 1,
+          "feedback": "Correcto. El truco del kernel permite operar en espacios de dimensión muy alta (o infinita, como en el kernel RBF) calculando únicamente la función de kernel $K(x, z) = \\langle \\phi(x), \\phi(z) \\rangle$ sobre pares de puntos originales, evitando el costo computacional inviable de transformar y almacenar explícitamente las coordenadas $\\phi(x)$."
         },
         {
           "id": "1c9a89a6-b582-48ae-a808-52b8d1283a1c",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
-          "text": "¿Por qué se recomienda usar escala logarítmica al definir los valores de C y gamma en param_grid?",
+          "text": "¿Por qué es una práctica estándar utilizar una escala logarítmica (ej. [0.01, 0.1, 1, 10]) al definir los rangos de C y gamma?",
           "options": [
-            "Porque con escala logarítmica el heatmap de cv_results_ siempre muestra un gradiente de color más uniforme.",
-            "Porque estos parámetros actúan en órdenes de magnitud; la diferencia entre C=1 y C=10 es mucho más significativa que entre C=1 y C=2. C y gamma tienen efecto multiplicativo sobre el comportamiento del modelo. La escala logarítmica permite explorar órdenes de magnitud con pocos valores, cubriendo eficientemente un rango amplio como [0.001, 0.01, 0.1, 1, 10, 100].",
-            "Porque scikit-learn requiere que los valores de C y gamma estén en escala logarítmica para funcionar correctamente.",
-            "Porque la escala logarítmica reduce el número de combinaciones totales, acelerando GridSearchCV."
+            "Porque scikit-learn bloquea la ejecución de GridSearchCV si los valores de los hiperparámetros no son potencias enteras de diez.",
+            "Porque la escala logarítmica garantiza que el clasificador SVC converja siempre a un margen rígido sin violaciones admisibles.",
+            "Porque estos hiperparámetros actúan por órdenes de magnitud multiplicativos, variando su efecto drásticamente entre escalas.",
+            "Porque permite que la matriz de correlación de las variables de entrada se vuelva diagonal acelerando el cómputo de gradientes."
           ],
-          "correct": 1,
-          "feedback": "C y gamma tienen efecto multiplicativo sobre el comportamiento del modelo. La escala logarítmica permite explorar órdenes de magnitud con pocos valores, cubriendo eficientemente un rango amplio como [0.001, 0.01, 0.1, 1, 10, 100]."
+          "correct": 2,
+          "feedback": "Correcto. Hiperparámetros como C y gamma tienen un impacto multiplicativo en el comportamiento del modelo. La diferencia de comportamiento entre C=1 y C=10 es radicalmente más informativa que entre C=1 y C=2; explorar potencias de diez cubre eficientemente un espectro amplio del espacio de hipótesis."
         },
         {
           "id": "9e3e958a-a9a2-4539-80af-c8e4451935a8",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
-          "text": "¿Por qué los árboles de decisión no requieren normalizar ni escalar las variables numéricas, a diferencia de SVM?",
+          "text": "¿Por qué los árboles de decisión no requieren estandarizar variables numéricas, mientras que las SVM sí lo requieren de forma obligatoria?",
           "options": [
-            "Porque los árboles no requieren escalar datos; esta es una de sus ventajas sobre modelos basados en distancias como SVM. El material documenta explícitamente que no requerir escalado es una ventaja del árbol de decisión. Es una característica que lo diferencia de modelos como SVM, que sí dependen del cálculo de distancias entre puntos.",
-            "Porque los árboles transforman internamente todas las variables a una escala logarítmica antes de calcular las divisiones.",
-            "Porque los árboles solo pueden procesar variables binarias, que por definición ya están en la misma escala.",
-            "Porque el índice Gini normaliza automáticamente las proporciones de clase, compensando cualquier diferencia de escala entre variables."
+            "Porque las SVM utilizan funciones de pérdida estocásticas que divergen si las variables predictoras superan el valor unitario.",
+            "Porque los árboles normalizan las variables mediante transformaciones logarítmicas previas al cálculo del índice Gini de impureza.",
+            "Porque los árboles evalúan divisiones monotónicas sobre cada variable de forma aislada, sin medir distancias euclidianas en X.",
+            "Porque los árboles solo procesan variables discretas descartando automáticamente la escala de todas las columnas numéricas dadas."
           ],
-          "correct": 0,
-          "feedback": "El material documenta explícitamente que no requerir escalado es una ventaja del árbol de decisión. Es una característica que lo diferencia de modelos como SVM, que sí dependen del cálculo de distancias entre puntos."
+          "correct": 2,
+          "feedback": "Correcto. Los árboles de decisión encuentran umbrales de división del tipo $x_j \\le c$ variable por variable de manera independiente, siendo invariantes a transformaciones monotónicas de escala. En contraste, las SVM optimizan márgenes geométricos basados en distancias euclidianas, donde atributos con escalas grandes distorsionarían por completo la frontera."
         },
         {
           "id": "2f1d9f5c-bb46-4931-865c-122082b3325e",
@@ -5453,15 +5453,15 @@ window.QUIZ_DATA = {
           "id": "09f79c29-7917-4fb9-99d1-01e052d16a76",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
-          "text": "¿Qué efecto tiene usar un valor de C muy alto (por ejemplo, C = 1000) en una SVM de margen suave?",
+          "text": "¿Qué efecto directo produce configurar un valor de regularización C excesivamente alto (ej. C = 1000) en una SVM de margen suave?",
           "options": [
-            "El modelo produce un margen muy amplio y tolera muchas violaciones, lo que puede llevar a underfitting.",
-            "El modelo penaliza duramente cada error de clasificación, ajustando el hiperplano muy cerca de los datos, con riesgo de overfitting. C alto hace que el modelo sea muy intolerante con los errores de entrenamiento. El hiperplano se acerca a los datos para clasificarlos todos correctamente, memorizando el ruido.",
-            "El modelo reduce automáticamente el número de vectores de soporte a cero, simplificando la frontera de decisión.",
-            "El modelo ignora el parámetro kernel y se comporta siempre como un clasificador lineal."
+            "Amplía el margen de separación tolerando gran cantidad de violaciones, lo que puede inducir problemas de subajuste (underfitting).",
+            "Penaliza duramente cualquier error de clasificación, estrechando el margen y aumentando el riesgo de sobreajuste (overfitting).",
+            "Reduce el número total de vectores de soporte a cero, forzando a que la frontera de decisión se vuelva lineal por definición.",
+            "Desactiva automáticamente el kernel no lineal haciendo que el estimador se comporte exactamente como una regresión logística."
           ],
           "correct": 1,
-          "feedback": "C alto hace que el modelo sea muy intolerante con los errores de entrenamiento. El hiperplano se acerca a los datos para clasificarlos todos correctamente, memorizando el ruido."
+          "feedback": "Correcto. El parámetro C controla el compromiso entre la amplitud del margen y la penalización de errores. Un valor de C muy alto impone una penalización severa a las violaciones del margen, obligando al algoritmo a estrechar el margen para clasificar correctamente cada punto de entrenamiento, lo que memoriza el ruido y propicia el overfitting."
         },
         {
           "id": "3e0dd66d-bf8c-4673-a7dc-3f7b4ccd37f3",
@@ -5635,29 +5635,29 @@ window.QUIZ_DATA = {
           "id": "be94fd67-19c4-41ef-864e-6398807f2156",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
-          "text": "¿Cuál de las siguientes diferencias entre SVM y Regresión Logística es correcta?",
+          "text": "¿Cuál de las siguientes comparaciones conceptuales entre Support Vector Machines y Regresión Logística es rigurosamente correcta?",
           "options": [
-            "SVM es más rápida que la Regresión Logística en datasets con más de 100 000 registros.",
-            "SVM produce probabilidades de clase directamente, mientras que la Regresión Logística no.",
-            "La Regresión Logística maximiza el margen entre clases; SVM maximiza la verosimilitud.",
-            "SVM es más eficiente en espacios de alta dimensionalidad; la Regresión Logística produce probabilidades directamente. Esta afirmación recoge correctamente dos diferencias documentadas: la ventaja de SVM en alta dimensionalidad y la ventaja de Regresión Logística en producir probabilidades nativas sin configuración adicional."
+            "SVM es más veloz en conjuntos con millones de instancias; la Regresión Logística requiere proyecciones en espacios infinitos.",
+            "La Regresión Logística maximiza el margen geométrico; SVM optimiza exclusivamente la verosimilitud logística condicionada.",
+            "Ambos métodos resuelven exactamente la misma función objetivo matemática, diferenciándose únicamente en la librería de soporte.",
+            "SVM es muy eficaz en espacios de alta dimensionalidad; la Regresión Logística produce probabilidades directas y calibradas."
           ],
           "correct": 3,
-          "feedback": "Esta afirmación recoge correctamente dos diferencias documentadas: la ventaja de SVM en alta dimensionalidad y la ventaja de Regresión Logística en producir probabilidades nativas sin configuración adicional."
+          "feedback": "Correcto. SVM destaca por su solidez matemática en espacios de alta dimensionalidad (incluso cuando hay más variables que muestras) al basarse en vectores de soporte marginales. Por su parte, la Regresión Logística modela directamente la probabilidad de clase a través de la función sigmoide o Softmax sin requerir calibraciones adicionales."
         },
         {
           "id": "1956aeff-ab95-483e-8259-55e05a9e2c97",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
-          "text": "Una SVM se entrena con 10 000 registros y al revisar el modelo se encuentra que solo 45 puntos son vectores de soporte. ¿Qué ocurriría si se eliminaran los otros 9 955 registros del dataset y se reentrenara el modelo?",
+          "text": "Una SVM entrenada con 10 000 filas utiliza solo 45 vectores de soporte. ¿Qué pasaría si se reentrena el modelo solo con esos 45 puntos?",
           "options": [
-            "El modelo cambiaría completamente porque necesita todos los datos para calcular el hiperplano óptimo.",
-            "El modelo fallaría porque scikit-learn requiere un mínimo de registros para entrenar una SVM.",
-            "El modelo sería exactamente el mismo, porque el hiperplano queda determinado únicamente por los vectores de soporte. Los vectores de soporte son los únicos puntos que determinan la posición del hiperplano. Todos los demás registros son irrelevantes para la frontera de decisión final.",
-            "El modelo mejoraría su accuracy porque eliminar datos reduce el ruido en el entrenamiento."
+            "El modelo resultante sería exactamente el mismo, pues la posición del hiperplano depende únicamente de los vectores de soporte.",
+            "El modelo fallaría críticamente porque los algoritmos de optimización cuadrática exigen un mínimo de cien registros muestrales.",
+            "El hiperplano cambiaría drásticamente su orientación espacial al perder la información probabilística del resto del dataset.",
+            "El modelo incrementaría su margen geométrico al infinito al carecer de puntos interiores que restrinjan la función objetivo."
           ],
-          "correct": 2,
-          "feedback": "Los vectores de soporte son los únicos puntos que determinan la posición del hiperplano. Todos los demás registros son irrelevantes para la frontera de decisión final."
+          "correct": 0,
+          "feedback": "Correcto. En SVM, los vectores de soporte son los únicos puntos de entrenamiento que determinan la ubicación y orientación del hiperplano separador (tienen multiplicadores de Lagrange $\u0007lpha_i > 0$). Todos los demás puntos que caen fuera del margen son matemáticamente irrelevantes para la solución final."
         },
         {
           "id": "1b4312a5-56f3-4dbd-b9a1-9c151110935f",
@@ -5691,15 +5691,15 @@ window.QUIZ_DATA = {
           "id": "da782e0e-a4e8-4a90-8800-a3a43b8c2392",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
-          "text": "¿Por qué SVM elige el hiperplano con el mayor margen posible en lugar de cualquier hiperplano que separe correctamente las clases?",
+          "text": "¿Por qué el algoritmo SVM selecciona el hiperplano que maximiza el margen en lugar de cualquier plano que separe las clases?",
           "options": [
-            "Porque un margen mayor garantiza que el modelo producirá probabilidades más calibradas para cada clase.",
-            "Porque un margen mayor actúa como zona de seguridad, reduciendo el riesgo de clasificar mal puntos nuevos y mejorando la generalización. El margen actúa como un colchón de seguridad geométrico. Un margen amplio significa que un punto nuevo necesita alejarse bastante de la frontera para ser mal clasificado, dando robustez al modelo.",
-            "Porque un margen mayor reduce el tiempo de entrenamiento al necesitar menos iteraciones del optimizador.",
-            "Porque un margen mayor implica que el modelo encontró menos vectores de soporte, lo que siempre indica menor complejidad del modelo."
+            "Porque un margen máximo reduce el tiempo de entrenamiento computacional al requerir menos pasos de descenso por gradiente.",
+            "Porque maximizar el margen asegura que el número de vectores de soporte seleccionados por el algoritmo sea estrictamente nulo.",
+            "Porque un margen mayor garantiza que el estimador produzca probabilidades calibradas que sumen 1.0 sin aplicar Platt Scaling.",
+            "Porque un margen máximo proporciona una zona de seguridad geométrica que reduce el riesgo de error ante observaciones nuevas."
           ],
-          "correct": 1,
-          "feedback": "El margen actúa como un colchón de seguridad geométrico. Un margen amplio significa que un punto nuevo necesita alejarse bastante de la frontera para ser mal clasificado, dando robustez al modelo."
+          "correct": 3,
+          "feedback": "Correcto. El margen actúa como una banda o colchón de seguridad geométrico entre las clases. Al maximizar la distancia a los puntos más cercanos de cada categoría, se reduce sustancialmente la probabilidad de que una nueva observación ligeramente ruidosa o desplazada caiga en el lado incorrecto, favoreciendo la generalización."
         },
         {
           "id": "bb0621a3-8ed3-4679-97cb-6328b337ca8f",
@@ -5733,15 +5733,15 @@ window.QUIZ_DATA = {
           "id": "a3e4adca-2cff-40f7-a9fa-3373e765cd9a",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
-          "text": "Un equipo entrena una SVM para detectar diabetes. El dataset tiene 85% de pacientes sin diabetes y 15% con diabetes. ¿Qué métrica de scoring es más adecuada para GridSearchCV en este caso?",
+          "text": "Al optimizar una SVM para detectar diabetes en un dataset desbalanceado (15% positivos), ¿qué métrica de scoring es la más apropiada?",
           "options": [
-            "**accuracy**, porque mide el porcentaje global de predicciones correctas y siempre es la métrica más informativa.",
-            "**recall**, porque en detección de enfermedad los falsos negativos (no detectar diabetes real) son más costosos que los falsos positivos. En detección de enfermedades, perder un caso real (falso negativo) es más grave que alertar a un paciente sano (falso positivo). Recall maximiza la detección de casos positivos reales.",
-            "**accuracy**, porque con datasets desbalanceados esta métrica es más confiable que recall o f1.",
-            "**precision**, porque en detección de enfermedad lo más importante es no alarmar innecesariamente a pacientes sanos."
+            "Accuracy, porque evalúa la proporción total de predicciones correctas y es la métrica más robusta en conjuntos desbalanceados.",
+            "Inercia cuadrática, porque cuantifica la compacidad de los vectores de soporte respecto a los centroides de cada fold evaluado.",
+            "Recall, porque en diagnóstico médico no detectar a un paciente enfermo (falso negativo) resulta mucho más costoso y peligroso.",
+            "Precision, porque en el ámbito clínico lo prioritario es evitar a toda costa alertar innecesariamente a los pacientes sanos aquí."
           ],
-          "correct": 1,
-          "feedback": "En detección de enfermedades, perder un caso real (falso negativo) es más grave que alertar a un paciente sano (falso positivo). Recall maximiza la detección de casos positivos reales."
+          "correct": 2,
+          "feedback": "Correcto. En aplicaciones médicas de detección de patologías, cometer un falso negativo (no detectar a un paciente diabético, privándolo de tratamiento oportuno) es mucho más grave que un falso positivo (que se descarta con exámenes complementarios). Por ello, el scoring de búsqueda debe configurarse como `scoring='recall'`."
         },
         {
           "id": "4394e415-2c8d-420e-998a-9efbb3b5403f",
@@ -5817,15 +5817,15 @@ window.QUIZ_DATA = {
           "id": "1922351c-d45c-4a7d-91aa-0b77e16887bd",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
-          "text": "# Después de entrenar el siguiente modelo modelo_rbf = SVC(kernel=**rbf**, C=1.0, gamma=**scale**, random_state=42) modelo_rbf.fit(X_train_s, y_train) print(modelo_rbf.n_support_) ## La salida es [452 410]. ¿Qué indica este resultado?",
+          "text": "Tras entrenar un modelo SVC binario, se imprime modelo.n_support_ obteniendo [452, 410]. ¿Qué indica con precisión este resultado?",
           "options": [
-            "El modelo clasificó correctamente 452 registros de la clase 0 y 410 de la clase 1 en el conjunto de prueba.",
-            "El modelo descartó 452 y 410 registros por ser outliers antes de encontrar el hiperplano.",
-            "El modelo necesitó 452 iteraciones para converger en la clase 0 y 410 para la clase 1.",
-            "El modelo encontró 452 vectores de soporte de la clase 0 (Legítima) y 410 de la clase 1 (Fraude) en el conjunto de entrenamiento. n_support_ es un atributo de SVC entrenado que indica cuántos vectores de soporte pertenecen a cada clase. Estos son los puntos del conjunto de entrenamiento que determinan el hiperplano."
+            "Indica la cantidad de iteraciones que necesitó el algoritmo de optimización para converger en la clase 0 y en la clase 1.",
+            "Indica el número de muestras que fueron descartadas por ser consideradas valores atípicos antes de ajustar el hiperplano.",
+            "Indica el total de aciertos obtenidos por el clasificador sobre el conjunto de testeo para la clase 0 y para la clase 1.",
+            "Indica que el modelo seleccionó 452 vectores de soporte de la clase 0 y 410 de la clase 1 para sostener el hiperplano final."
           ],
           "correct": 3,
-          "feedback": "n_support_ es un atributo de SVC entrenado que indica cuántos vectores de soporte pertenecen a cada clase. Estos son los puntos del conjunto de entrenamiento que determinan el hiperplano."
+          "feedback": "Correcto. El atributo `n_support_` de un estimador SVC ajustado contiene un arreglo con el número de vectores de soporte identificados para cada una de las clases del problema. En este caso, 452 puntos de la clase 0 y 410 puntos de la clase 1 definen la geometría de la frontera de decisión."
         },
         {
           "id": "4415eb52-bcb6-452e-9a20-c741f6644abb",
@@ -5901,29 +5901,29 @@ window.QUIZ_DATA = {
           "id": "20026114-38ef-4f5c-a2d9-aa286abc11c2",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
-          "text": "Dos modelos SVM producen los siguientes resultados sobre el mismo conjunto de prueba: Modelo              Accuracy   Recall fraude   F1 fraude LinearSVC            0.7475        0.2818        0.3804 SVC (Kernel RBF)     0.7325        0.2182        0.3097 ¿Cuál modelo es preferible para un sistema de detección de fraude bancario y por qué?",
+          "text": "En el taller de fraude, LinearSVC obtuvo F1 = 0.380 y SVC(RBF) obtuvo F1 = 0.310 en test. ¿Qué modelo debe seleccionarse y por qué?",
           "options": [
-            "SVC (Kernel RBF), porque el kernel RBF siempre supera al lineal cuando los datos tienen variables categóricas.",
-            "Ninguno de los dos; ambos deben descartarse porque el recall de fraude es inferior al 50%.",
-            "SVC (Kernel RBF), porque tiene menor accuracy, lo que indica que el modelo no está sobreajustado.",
-            "LinearSVC, porque tiene mayor accuracy, recall de fraude y F1 de fraude en todas las métricas. LinearSVC supera al RBF en las tres métricas: accuracy (0.7475 vs 0.7325), recall de fraude (0.2818 vs 0.2182) y F1 de fraude (0.3804 vs 0.3097). El kernel más complejo no siempre gana; la elección debe basarse en evidencia empírica."
+            "LinearSVC, porque superó al kernel RBF en todas las métricas; la evidencia empírica prevalece sobre la complejidad teórica real.",
+            "SVC con kernel RBF, porque los núcleos no lineales garantizan teóricamente una mejor separación en cualquier problema tabular.",
+            "Ninguno de los dos, pues al tratarse de fraude un F1 menor a 0.50 invalida automáticamente cualquier clasificador de soporte.",
+            "SVC con kernel RBF, porque al poseer menor Accuracy en prueba demuestra que no sufrió de sobreajuste durante el entrenamiento."
           ],
-          "correct": 3,
-          "feedback": "LinearSVC supera al RBF en las tres métricas: accuracy (0.7475 vs 0.7325), recall de fraude (0.2818 vs 0.2182) y F1 de fraude (0.3804 vs 0.3097). El kernel más complejo no siempre gana; la elección debe basarse en evidencia empírica."
+          "correct": 0,
+          "feedback": "Correcto. En la práctica de Machine Learning, la complejidad no garantiza superioridad. Si un modelo lineal simple y ligero supera empíricamente a un kernel RBF complejo en el conjunto de prueba no visto, debe elegirse el modelo lineal. Esto refuerza el principio de parsimonia (Navaja de Ockham)."
         },
         {
           "id": "7c5fd583-7fd2-4f6d-acd4-e977a6d1332f",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
-          "text": "¿Cuál es el orden correcto del pipeline de preprocesamiento para entrenar una SVM?",
+          "text": "¿Cuál es la secuencia metodológica rigurosa para construir y entrenar un pipeline de preprocesamiento para una SVM?",
           "options": [
-            "OHE → Train/Test Split → StandardScaler (fit solo en train) → entrenar SVM El OHE se aplica primero (no aprende estadísticas de los datos), luego se divide, y finalmente se escala ajustando el scaler solo sobre los datos de entrenamiento para evitar fuga de información.",
-            "StandardScaler → OHE → Train/Test Split → entrenar SVM",
-            "Train/Test Split → StandardScaler → OHE → entrenar SVM",
-            "OHE → StandardScaler (fit en todo X) → Train/Test Split → entrenar SVM"
+            "Estandarizar con StandardScaler sobre todo el dataset, dividir en train/test, aplicar codificación OHE y entrenar la SVM.",
+            "Dividir con train_test_split, construir Pipeline con preprocesamiento y modelo, ajustar fit() solo en train y evaluar en test.",
+            "Entrenar la SVM directamente con datos sin escalar, evaluar en test y aplicar StandardScaler en caso de detectar sobreajuste.",
+            "Aplicar validación cruzada sobre el conjunto de testeo, extraer los mejores hiperparámetros y escalar la variable objetivo y."
           ],
-          "correct": 0,
-          "feedback": "El OHE se aplica primero (no aprende estadísticas de los datos), luego se divide, y finalmente se escala ajustando el scaler solo sobre los datos de entrenamiento para evitar fuga de información."
+          "correct": 1,
+          "feedback": "Correcto. La secuencia rigurosa exige: 1) separar train y test con train_test_split; 2) encapsular transformadores y estimador en un Pipeline; 3) ejecutar fit() exclusivamente sobre el conjunto de entrenamiento (garantizando que el escalador aprenda solo de train para evitar fuga de datos); y 4) evaluar el rendimiento sobre test."
         },
         {
           "id": "ca87de74-8910-4f75-874d-a56f362bb182",
@@ -6055,29 +6055,29 @@ window.QUIZ_DATA = {
           "id": "089a5d90-9874-4cf8-a477-c8efccd7590d",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
-          "text": "¿Cuál es la principal razón por la que el margen suave (soft margin) es el estándar en la práctica, mientras que el margen duro (hard margin) casi no se usa?",
+          "text": "¿Cuál es la razón fundamental por la que el margen suave (soft margin) es el estándar práctico frente al margen duro (hard margin)?",
           "options": [
-            "El margen suave es más rápido de calcular porque no requiere resolver el problema de optimización completo.",
-            "El margen duro solo funciona si los datos son perfectamente separables; un único outlier puede hacer que no exista solución.",
-            "El margen suave siempre produce un margen más amplio que el duro, lo que garantiza mejor generalización en todos los casos.",
-            "El margen duro produce probabilidades incorrectas porque no incorpora variables de holgura."
+            "Porque el margen suave computa probabilidades directas sin requerir transformaciones sigmoidales mediante el escalado de Platt.",
+            "Porque los datos reales rara vez son linealmente separables; el margen duro colapsa y no encuentra solución ante mínimos outliers.",
+            "Porque el margen suave siempre produce tiempos de entrenamiento menores al omitir la optimización de multiplicadores de Lagrange.",
+            "Porque el margen duro solo puede implementarse cuando el espacio de características posee más de cien dimensiones ortogonales."
           ],
           "correct": 1,
-          "feedback": "En datos reales siempre hay ruido y outliers. El margen duro exige clasificación perfecta de todos los puntos, condición imposible de cumplir en casi cualquier problema práctico."
+          "feedback": "Correcto. El margen duro exige que absolutamente todas las observaciones queden clasificadas de forma perfecta fuera del margen sin error alguno. En datos del mundo real, la presencia de ruido, solapamiento o un solo outlier hace que el problema de optimización no tenga solución factible. El margen suave introduce variables de holgura $\\xi_i$ para tolerar violaciones controladas."
         },
         {
           "id": "01e80d10-e679-4aa1-b9f4-6c8c3b80716d",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
-          "text": "Un modelo SVM tiene buen desempeño en entrenamiento pero generaliza mal en datos nuevos. ¿Qué ajuste al parámetro C es recomendable?",
+          "text": "Un modelo SVM presenta un desempeño perfecto en entrenamiento pero generaliza mal en datos nuevos de test. ¿Qué ajuste a C se recomienda?",
           "options": [
-            "Fijar C = 0 para eliminar toda penalización y obtener el margen máximo posible.",
-            "Aumentar C para que el modelo penalice más los errores y mejore en datos nuevos.",
-            "Mantener C fijo y cambiar únicamente el tipo de kernel a uno más simple.",
-            "Reducir C para ampliar el margen y reducir el overfitting."
+            "Aumentar el valor de C para penalizar más estrictamente los errores residuales y forzar al modelo a ajustar la frontera dada.",
+            "Fijar C en cero absoluto para desactivar la función de penalización permitiendo que el hiperplano elimine todos los márgenes.",
+            "Reducir el valor de C para ampliar el margen de separación y hacer al modelo más tolerante frente a irregularidades del train.",
+            "Mantener C inalterado y reemplazar el kernel lineal por un kernel polinómico de grado superior para mejorar la flexibilidad."
           ],
-          "correct": 3,
-          "feedback": "Buen entrenamiento y mala generalización es la señal clásica de overfitting. Reducir C amplía el margen y hace al modelo más tolerante con errores de entrenamiento, mejorando la generalización."
+          "correct": 2,
+          "feedback": "Correcto. Rendimiento sobresaliente en train acoplado a un desempeño deficiente en test es el síntoma inequívoco de sobreajuste (overfitting). Reducir el hiperparámetro C flexibiliza la regularización, ampliando el margen geométrico y permitiendo que el modelo tolere pequeñas desviaciones en entrenamiento para ganar generalización."
         },
         {
           "id": "07965293-c87b-476d-955f-d5a170f4b854",
@@ -6153,15 +6153,15 @@ window.QUIZ_DATA = {
           "id": "83cbe5a7-949e-4547-921a-7cf1db4ed27a",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
-          "text": "¿Qué hace el siguiente fragmento de código? from sklearn.svm import LinearSVC from sklearn.preprocessing import StandardScaler sc = StandardScaler() X_train_s = sc.fit_transform(X_train) X_test_s  = sc.transform(X_test) modelo = LinearSVC(C=1.0, max_iter=2000, random_state=42) modelo.fit(X_train_s, y_train)",
+          "text": "Se ejecuta: sc.fit_transform(X_train), sc.transform(X_test) y modelo = LinearSVC(C=1.0).fit(X_train_s, y_train). ¿Qué se logra con este código?",
           "options": [
-            "Escala los datos ajustando el scaler solo sobre el entrenamiento, y entrena una SVM lineal con C=1.0.",
-            "Entrena el scaler sobre el conjunto de prueba y luego entrena la SVM sobre el conjunto de entrenamiento.",
-            "Entrena una SVM con kernel RBF después de escalar los datos de entrenamiento y prueba con el mismo scaler.",
-            "Escala todo el dataset completo y entrena una SVM polinómica de grado 2."
+            "Ajustar el escalador en todo el dataset de forma global antes de entrenar un estimador Support Vector con kernel no lineal RBF.",
+            "Escalar el entrenamiento y prueba con el escalador ajustado sobre prueba, entrenando una SVM polinomial con regularización L1.",
+            "Estandarizar aprendiendo estadísticas solo de train, aplicando esa escala a test y ajustando una SVM lineal con margen suave.",
+            "Entrenar un clasificador no supervisado para agrupar las muestras continuas según la distancia euclidiana al hiperplano central."
           ],
-          "correct": 0,
-          "feedback": "fit_transform en X_train ajusta y transforma; transform en X_test aplica la misma escala sin reaprender. LinearSVC implementa un kernel lineal, no RBF ni polinómico."
+          "correct": 2,
+          "feedback": "Correcto. El código implementa las buenas prácticas de preprocesamiento: `fit_transform` sobre `X_train` aprende la media y desviación estándar de entrenamiento y las transforma; `transform` sobre `X_test` proyecta la prueba usando idénticos parámetros sin fuga de información; y `LinearSVC` entrena un hiperplano lineal con $C=1.0$."
         },
         {
           "id": "6a546374-1c2e-4c04-b9b5-b42bcb5fb310",
@@ -6293,15 +6293,15 @@ window.QUIZ_DATA = {
           "id": "1bf87b86-c790-42ef-8095-ba355e7bfbb6",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
-          "text": "¿Qué visualiza el siguiente código? resultados = pd.DataFrame(grid_search.cv_results_) rbf_df = resultados[resultados[**param_kernel**] == **rbf**] pivot_rbf = rbf_df.pivot_table( ``` values='mean_test_score', index='param_C', columns='param_gamma' ```",
+          "text": "¿Qué visualiza la siguiente rutina?: `rbf = res[res['param_kernel']=='rbf']; piv = rbf.pivot_table(values='mean_test_score', index='param_C', columns='param_gamma'); sns.heatmap(piv, annot=True)`",
           "options": [
-            ") sns.heatmap(pivot_rbf, annot=True, fmt=**.3f**, cmap=**Blues**)",
-            "El número de vectores de soporte encontrados por cada combinación de C y gamma con kernel RBF.",
-            "La distribución de probabilidades de clase para cada combinación de hiperparámetros probada.",
-            "La matriz de confusión del mejor modelo evaluado sobre X_test."
+            "La distribución de probabilidades de cada clase en el espacio bidimensional de componentes principales ortogonales del modelo.",
+            "Un mapa de calor bidimensional que muestra el F1 promedio de validación cruzada para cada combinación de C y gamma en kernel RBF.",
+            "La matriz de confusión del mejor estimador obtenida sobre todo el conjunto de testeo, coloreando aciertos y falsos positivos reales.",
+            "El tiempo de entrenamiento requerido por cada fold de validación cruzada para descartar combinaciones computacionalmente lentas."
           ],
-          "correct": 4,
-          "feedback": "El código filtra cv_results_ para kernel RBF, construye una tabla pivote con mean_test_score (el F1 CV promedio) en función de C y gamma, y lo visualiza como heatmap. Permite identificar visualmente las mejores combinaciones."
+          "correct": 1,
+          "feedback": "Correcto. El código filtra los resultados del Grid Search para el kernel RBF, organiza una tabla dinámica cruzando los valores del hiperparámetro C en las filas y gamma en las columnas con la métrica `mean_test_score` en las celdas, y la despliega visualmente como un mapa de calor (heatmap) para identificar rápidamente la región óptima."
         },
         {
           "id": "f1da6550-a41c-40d1-88f8-38ea8c1a6b81",
@@ -6405,15 +6405,15 @@ window.QUIZ_DATA = {
           "id": "526796bc-acce-437f-b0e9-c7820671efd0",
           "category": "teoria_rda2",
           "categoryName": "Teoría RDA2",
-          "text": "¿Por qué es obligatorio aplicar StandardScaler antes de entrenar una SVM?",
+          "text": "¿Por qué es obligatorio aplicar StandardScaler antes de entrenar un modelo Support Vector Machine en datos tabulares numéricos?",
           "options": [
-            "Porque sin escalado, la función de kernel RBF produce siempre similitud = 1 entre todos los puntos.",
-            "Porque SVM calcula distancias entre puntos para encontrar el margen, y variables con mayor rango dominarían ese cálculo injustamente.",
-            "Porque el escalado convierte las variables categóricas a numéricas, paso previo necesario para SVM.",
-            "Porque scikit-learn lanza un error si las variables no están escaladas antes de llamar a fit()."
+            "Porque el algoritmo optimiza márgenes basados en distancias euclidianas; variables de escala amplia dominarían la optimización.",
+            "Porque scikit-learn bloquea la ejecución del método fit() si las características predictoras poseen varianza diferente a uno.",
+            "Porque el escalamiento convierte de forma automática las variables predictoras continuas a representaciones gaussianas estándar.",
+            "Porque sin escalado previo, las funciones de kernel no lineal arrojan divisiones por cero al invertir la matriz de covarianza."
           ],
-          "correct": 1,
-          "feedback": "El margen se define en términos de distancias euclidianas. Si una variable tiene un rango mucho mayor que las demás, domina el cálculo del margen independientemente de su relevancia predictiva."
+          "correct": 0,
+          "feedback": "Correcto. El cálculo de la distancia geométrica de los puntos al hiperplano separador se basa en la norma euclidiana. Si una variable tiene un rango numérico de miles y otra de decimales, la primera monopolizará la función de costo y el cálculo del margen, ignorando por completo la información de la segunda."
         },
         {
           "id": "8707877f-cbc5-43ca-9c17-ebec1ef46d42",
@@ -6489,1009 +6489,1009 @@ window.QUIZ_DATA = {
           "id": "a70d3a4b-b91d-4dae-97d0-fa7ea716e2e0",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Cuál es la diferencia fundamental entre la estrategia OvR (OneVsRestClassifier) y Softmax (LogisticRegression por defecto) al clasificar con 3 o más clases?",
+          "text": "¿Cuál es la diferencia fundamental entre la estrategia OvR (OneVsRestClassifier) y Softmax al clasificar con 3 o más clases?",
           "options": [
-            "OvR entrena un único modelo que produce probabilidades para todas las clases simultáneamente; Softmax entrena K modelos separados.",
-            "OvR entrena K modelos binarios, uno por clase (esa clase vs. todas las demás); Softmax entrena un único modelo que asigna probabilidades a todas las clases a la vez, garantizando que sumen 1.",
-            "OvR y Softmax son idénticos en su funcionamiento; la única diferencia es el nombre del parámetro en scikit-learn.",
-            "Softmax solo funciona cuando las clases están perfectamente balanceadas; OvR no tiene esta restricción."
+            "OvR entrena un único modelo que produce probabilidades simultáneas; Softmax entrena clasificadores binarios independientes.",
+            "OvR entrena K clasificadores binarios independientes; Softmax entrena un único modelo cuyas probabilidades suman siempre 1.0.",
+            "OvR requiere que las clases estén balanceadas; Softmax aplica regularizaciones que permiten procesar clases desbalanceadas.",
+            "OvR y Softmax son idénticos matemáticamente; la diferencia radica en el nombre del optimizador empleado en el entrenamiento."
           ],
           "correct": 1,
-          "feedback": "OvR (One-vs-Rest) entrena K clasificadores binarios independientes, uno por clase. Softmax extiende la regresión logística para producir directamente probabilidades para K clases en un solo modelo, con la restricción de que siempre sumen 1.0."
+          "feedback": "Correcto. OvR (One-vs-Rest) entrena K clasificadores binarios independientes, uno para cada clase frente al resto. Softmax extiende la regresión logística a nivel multiclase en un único modelo probabilístico conjunto, garantizando por definición matemática que las probabilidades asignadas a las clases sumen exactamente 1.0."
         },
         {
           "id": "2a0ca74f-1e2b-4400-81c0-1dc6e0e588cd",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Por qué NO se puede calcular directamente la probabilidad calibrada con OvR (OneVsRestClassifier), mientras que Softmax sí lo garantiza?",
+          "text": "¿Por qué NO se puede garantizar que las probabilidades calculadas con OvR sumen 1.0, mientras que Softmax sí lo garantiza?",
           "options": [
-            "Porque OneVsRestClassifier no implementa el método predict_proba() en scikit-learn.",
-            "Porque OvR entrena K modelos binarios independientes cuyos scores no necesariamente suman 1.0; Softmax sí garantiza que las probabilidades de todas las clases sumen exactamente 1.0 por construcción matemática.",
-            "Porque OvR solo funciona con variables numéricas y no puede procesar variables categóricas.",
-            "Porque Softmax usa la función sigmoide mientras que OvR usa una función de umbral, lo que hace imposible el cálculo de probabilidades en OvR."
+            "Porque OneVsRestClassifier no implementa internamente el método predict_proba() para estimar la probabilidad de cada clase.",
+            "Porque Softmax utiliza la función sigmoide independiente en cada neurona, mientras que OvR implementa una función de umbral.",
+            "Porque OvR entrena K modelos binarios desconectados cuyos puntajes no están bien coordinados; Softmax normaliza exponenciales.",
+            "Porque OvR solo opera con variables numéricas y no procesa atributos categóricos sin aplicar binarización previa en el dataset."
           ],
-          "correct": 1,
-          "feedback": "Los K modelos de OvR son independientes entre sí y sus probabilidades no están coordinadas, por lo que pueden sumar más o menos de 1.0. Softmax, al usar la función exponencial normalizada, garantiza matemáticamente que P(Alto) + P(Bajo) + P(Medio) = 1.0 exactamente."
+          "correct": 2,
+          "feedback": "Correcto. En la estrategia OvR, cada uno de los K clasificadores se entrena de forma aislada sin comunicarse con los demás, por lo que la suma de sus puntuaciones puede ser arbitrariamente mayor o menor a 1.0. Softmax, en cambio, aplica la exponencial normalizada sobre todas las clases simultáneamente, forzando matemáticamente que sumen 1.0."
         },
         {
           "id": "2214b8c0-f8b5-4565-9a02-94e5a141ef27",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "En scikit-learn 1.7+, ¿qué ocurre si se instancia LogisticRegression() sin ningún parámetro adicional y se entrena con una variable objetivo y que tiene 3 clases distintas?",
+          "text": "En scikit-learn 1.7+, ¿qué ocurre si se instancia LogisticRegression() sin parámetros adicionales y se entrena con 3 o más clases?",
           "options": [
-            "El modelo lanza un error porque LogisticRegression solo soporta clasificación binaria de forma nativa.",
-            "El modelo entrena en modo OvR automáticamente, porque ese es el comportamiento por defecto.",
-            "El modelo entrena en modo Softmax (multinomial) automáticamente, porque es el comportamiento nativo cuando y tiene 3 o más clases.",
-            "El modelo requiere que se especifique explícitamente multi_class='multinomial' para activar Softmax."
+            "El estimador entrena en modo Softmax automáticamente, pues es el comportamiento nativo al detectar tres o más clases en y.",
+            "El estimador lanza un error de excepción exigiendo configurar explícitamente en código el parámetro deprecado multi_class.",
+            "El estimador entrena obligatoriamente en modo OvR porque dicha estrategia continúa siendo la predeterminada en scikit-learn.",
+            "El estimador restringe el entrenamiento a las dos clases más frecuentes del conjunto descartando las muestras minoritarias."
           ],
-          "correct": 2,
-          "feedback": "Desde scikit-learn 1.5+, el parámetro multi_class fue eliminado (deprecado). LogisticRegression() detecta automáticamente que y tiene 3 clases y entrena en modo Softmax (multinomial). El parámetro multi_class='ovr'/'multinomial' ya no existe."
+          "correct": 0,
+          "feedback": "Correcto. En las versiones recientes de scikit-learn (1.5+ y 1.7+), el parámetro multi_class fue deprecado y removido. LogisticRegression detecta automáticamente si la variable objetivo posee 3 o más clases y activa de forma nativa la formulación multinomial (Softmax)."
         },
         {
           "id": "e8776ce0-70f8-4ff6-9a84-2f00609aabf3",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Qué es pipeline.classes_ y para qué es crítico conocerlo al interpretar predict_proba() en clasificación multiclase?",
+          "text": "¿Qué representa el atributo pipeline.classes_ y por qué es crítico conocerlo al interpretar la salida de predict_proba()?",
           "options": [
-            "Es el número total de clases del dataset, necesario para configurar el número de neuronas de salida del modelo.",
-            "Es un atributo que se configura antes del entrenamiento para definir el orden de las clases.",
-            "Es un atributo post-entrenamiento que guarda el orden alfabético en que el modelo indexó las clases. La columna i de predict_proba() corresponde siempre a classes_[i], por lo que confundirlo genera interpretaciones incorrectas.",
-            "Es una lista de las clases mal predichas por el modelo, útil para identificar errores sistemáticos."
+            "Indica el número total de clases presentes en el conjunto de entrenamiento para dimensionar bien los hiperplanos separadores.",
+            "Almacena las predicciones erróneas detectadas en la validación para construir la matriz de confusión sin evaluar el test real.",
+            "Especifica la lista de hiperparámetros validados en el modelo para verificar que las penalizaciones aplicadas sean válidas.",
+            "Contiene las clases ordenadas alfabéticamente tras fit(), determinando la correspondencia de cada columna de probabilidad."
           ],
-          "correct": 2,
-          "feedback": "classes_ solo existe después de .fit(). En el taller el output fue ['Alto' 'Bajo' 'Medio'] — orden alfabético. Esto significa que predict_proba() devuelve [P(Alto), P(Bajo), P(Medio)] en ese orden. Si asumes el orden incorrecto, interpretas las probabilidades de forma equivocada."
+          "correct": 3,
+          "feedback": "Correcto. El atributo classes_ se genera tras ejecutar fit() y contiene las etiquetas únicas ordenadas alfabéticamente (por ejemplo ['Alto', 'Bajo', 'Medio']). La columna i del arreglo retornado por predict_proba() corresponde estrictamente a la clase classes_[i]; asumir un orden distinto genera interpretaciones clínicas o de negocio erróneas."
         },
         {
           "id": "41462464-bf06-47f7-90a8-b5673639041f",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Qué mide macro avg en classification_report y cuándo deberías priorizarlo sobre weighted avg?",
+          "text": "¿Qué mide la métrica macro avg en classification_report y cuándo se debe priorizar sobre la métrica weighted avg?",
           "options": [
-            "macro avg es el promedio ponderado por el número de muestras por clase; se usa cuando las clases mayoritarias son más importantes.",
-            "macro avg es el promedio simple entre clases (todas pesan igual, independientemente de su tamaño); se usa cuando todas las clases tienen la misma importancia clínica o de negocio, aunque estén desbalanceadas.",
-            "macro avg mide la varianza de las métricas entre clases; valores altos indican que el modelo tiene rendimiento irregular.",
-            "macro avg solo se puede calcular cuando el número de clases es par."
+            "Promedia ponderando por el soporte de cada clase; se prioriza cuando las clases mayoritarias definen el beneficio global.",
+            "Cuantifica la variabilidad entre las métricas de cada clase; se prioriza cuando se busca minimizar la dispersión del modelo.",
+            "Mide el desempeño global ignorando las clases minoritarias; se prioriza cuando el desbalance no compromete la seguridad.",
+            "Promedia aritméticamente las métricas de las clases con igual peso; se prioriza cuando la clase minoritaria es crítica."
           ],
-          "correct": 1,
-          "feedback": "macro avg promedia Precision, Recall y F1 de cada clase con igual peso. En el taller de triaje, detectar un Riesgo Alto (solo 12 pacientes en test) es tan crítico como detectar un Riesgo Bajo (239 pacientes). macro avg penaliza por igual fallar en cualquier clase."
+          "correct": 3,
+          "feedback": "Correcto. La métrica macro avg calcula la media aritmética simple de Precision, Recall o F1 entre todas las clases, asignando a cada una el mismo peso sin importar cuántas observaciones tenga. Es indispensable priorizarla cuando detectar una clase minoritaria (como Riesgo Alto en triaje o Fraude) tiene una importancia crítica equiparable o superior a las clases comunes."
         },
         {
           "id": "f7f2fe7f-ccb0-48a4-889d-e12cdc2a83e7",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "En el reporte del modelo Softmax sobre el dataset de triaje, se observa Accuracy = 0.742, macro avg F1 = 0.569 y weighted avg F1 = 0.724. ¿Por qué el Accuracy y el weighted avg son tan superiores al macro avg?",
+          "text": "En el reporte de triaje hospitalario, Accuracy fue 0.742 pero macro avg F1 fue 0.569. ¿A qué se debe esta notable discrepancia?",
           "options": [
-            "Porque el modelo tiene sobreajuste: memorizó bien el entrenamiento pero no generaliza en prueba.",
-            "Porque hay un error en el cálculo de las métricas; matemáticamente no pueden diferir tanto.",
-            "Porque el dataset está desbalanceado: Riesgo Bajo representa ~66% de los datos. El Accuracy y weighted avg están dominados por esa clase mayoritaria; el macro avg revela que el modelo falla severamente con Riesgo Alto (Recall=0.250).",
-            "Porque macro avg excluye automáticamente la clase con más muestras para evitar sesgos."
+            "A que el dataset está muy desbalanceado: la clase mayoritaria infla el Accuracy, pero el modelo falla en la clase crítica.",
+            "A un error matemático en el cálculo de las métricas, ya que teóricamente el Accuracy no puede superar al macro F1 del test.",
+            "A un sobreajuste severo del algoritmo que memorizó las muestras de validación cruzada impidiendo generalizar en el testeo.",
+            "A que la función classification_report excluye por defecto los verdaderos positivos de la clase minoritaria del cálculo."
           ],
-          "correct": 2,
-          "feedback": "Con un dataset donde Bajo=66%, Medio=30%, Alto=3.4%, un modelo que predice bien 'Bajo' obtiene Accuracy alto. Pero el macro avg revela la verdad: F1(Alto)=0.353, F1(Medio)=0.519, F1(Bajo)=0.837 → promedio simple = 0.569, muy inferior al 0.724 ponderado por volumen."
+          "correct": 0,
+          "feedback": "Correcto. En el dataset de triaje, la clase Riesgo Bajo representaba cerca del 66% de las observaciones. Un modelo que prediga bien esa clase obtendrá un Accuracy elevado. Sin embargo, el macro avg F1 promedia por igual todas las categorías y delata que el modelo tuvo un desempeño deficiente en Riesgo Alto (Recall de apenas 0.250)."
         },
         {
           "id": "fe845457-6525-4394-b303-d790ab3feb30",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Qué calcula el Precision de una clase específica (por ejemplo, Precision de 'Alto' = 0.600 en el reporte)?",
+          "text": "¿Cómo se interpreta conceptualmente la métrica Precision para la clase 'Alto' en un modelo de clasificación multiclase?",
           "options": [
-            "De todos los pacientes que REALMENTE son Riesgo Alto, ¿qué proporción el modelo detectó correctamente?",
-            "De todos los pacientes que el modelo PREDIJO como Riesgo Alto, ¿qué proporción realmente lo era? (TP / (TP + FP))",
-            "La proporción de pacientes de Riesgo Alto en el total del dataset.",
-            "El número total de aciertos del modelo dividido entre el total de predicciones realizadas."
+            "De todos los pacientes que realmente eran de Riesgo Alto, cuantifica qué proporción fue clasificada correctamente por el modelo.",
+            "De todos los pacientes diagnosticados como Riesgo Alto por el modelo, cuantifica qué fracción correspondía realmente a esa clase.",
+            "Mide la proporción total de pacientes con diagnóstico de Riesgo Alto respecto al tamaño global de todo el conjunto de prueba dado.",
+            "Calcula la media geométrica entre la sensibilidad clínica y el porcentaje de falsos positivos en la matriz de confusión evaluada."
           ],
           "correct": 1,
-          "feedback": "Precision = TP / (TP + FP): de todos los que el modelo clasificó como 'Alto', el 60% realmente lo eran. Es el costo de las falsas alarmas. Si Precision=0.600 para Alto, el 40% de las veces que el modelo dijo 'Alto' estaba equivocado."
+          "feedback": "Correcto. Precision = TP / (TP + FP). Responde a la pregunta: de todos los casos que el clasificador etiquetó como 'Alto', ¿cuántos eran verdaderamente de Riesgo Alto? Es un indicador directo del control sobre las falsas alarmas del sistema predictivo."
         },
         {
           "id": "6aa5a60c-5f63-4386-ae92-9c1058f07c6d",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "En el taller de triaje hospitalario, el modelo OvR obtuvo Recall(Alto) = 0.000 mientras que Softmax obtuvo Recall(Alto) = 0.250. ¿Por qué el Recall es la métrica más crítica para la clase 'Alto' en este contexto?",
+          "text": "¿Por qué el Recall de la clase 'Alto' es la métrica más crítica en el problema de triaje hospitalario evaluado en el taller?",
           "options": [
-            "Porque el Recall es siempre la métrica más importante en cualquier problema de clasificación médica.",
-            "Porque Recall = TP / (TP + FN): mide cuántos pacientes de Riesgo Alto REAL fueron detectados. Un Recall bajo significa que el modelo deja pasar pacientes en peligro sin clasificarlos correctamente — los falsos negativos son clínicamente inaceptables.",
-            "Porque el Recall incluye automáticamente la corrección por desbalance de clases que el Precision no considera.",
-            "Porque Recall = 0.000 indica que el modelo tiene sobreajuste severo y debe descartarse completamente."
+            "Porque clasificar a un paciente sano como grave satura la infraestructura del hospital elevando los costos de operación clínica.",
+            "Porque permite calcular el soporte estadístico requerido para balancear las clases mediante técnicas de sobremuestreo sintético.",
+            "Porque un Recall bajo significa dejar escapar pacientes graves sin atención urgente, con consecuencias potencialmente mortales.",
+            "Porque garantiza que el hiperplano de soporte vectorial maximice el margen euclidiano respecto a los centroides de cada cluster."
           ],
-          "correct": 1,
-          "feedback": "Recall(Alto) = 0.000 en OvR significa que de los 12 pacientes de Riesgo Alto en el conjunto de prueba, el modelo no detectó ninguno — todos fueron clasificados como Medio o Bajo. Un Recall de 0 en la clase más crítica hace al modelo inutilizable en triaje hospitalario."
+          "correct": 2,
+          "feedback": "Correcto. Recall = TP / (TP + FN). En un entorno hospitalario, no identificar a un paciente en condición crítica (falso negativo) puede ocasionar su fallecimiento por falta de atención inmediata. Por ende, maximizar el Recall en la clase de mayor riesgo es el objetivo prioritario del triaje."
         },
         {
           "id": "6a7ff7a3-3845-407f-9ab3-a320caade9f5",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Qué mide el F1-Score y por qué es más informativo que usar Precision o Recall de forma aislada?",
+          "text": "¿Por qué el F1-Score es más informativo que analizar el Precision y el Recall de manera aislada en problemas desbalanceados?",
           "options": [
-            "F1-Score es la suma de Precision y Recall; valores mayores a 1.5 indican un modelo excelente.",
-            "F1-Score es la media armónica de Precision y Recall: F1 = 2·P·R / (P+R). Equilibra ambas métricas; un modelo que sacrifica una para maximizar la otra obtiene un F1 bajo, reflejando el trade-off real.",
-            "F1-Score es el porcentaje de predicciones correctas totales, equivalente al Accuracy pero calculado clase por clase.",
-            "F1-Score penaliza únicamente los falsos positivos, haciéndolo ideal para problemas donde la Precision es más importante que el Recall."
+            "Porque suma directamente el Precision y el Recall normalizando el valor resultante para que fluctúe en una escala entre 0 y 100.",
+            "Porque es el promedio ponderado por el número de observaciones de cada clase, evitando el sesgo introducido por las mayoritarias.",
+            "Porque penaliza únicamente los falsos positivos garantizando que la especificidad del modelo alcance el óptimo global deseado.",
+            "Porque es la media armónica entre Precision y Recall, penalizando fuertemente los desequilibrios extremos entre ambas métricas."
           ],
-          "correct": 1,
-          "feedback": "La media armónica penaliza los desequilibrios: si Precision=1.0 y Recall=0.0, F1=0 (no 0.5). Esto evita que un modelo que nunca predice una clase obtenga puntuaciones engañosamente altas al reportar solo una de las dos métricas."
+          "correct": 3,
+          "feedback": "Correcto. El F1-Score se define como 2·(Precision·Recall) / (Precision + Recall). Al ser una media armónica, castiga drásticamente a aquellos modelos que sacrifican una métrica en favor de la otra (por ejemplo, Precision = 1.0 con Recall = 0.0 produce F1 = 0), reflejando fielmente el balance real."
         },
         {
           "id": "c7c7f1f8-0f5d-4a98-9a34-4f6cf280b9cf",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Para qué sirve StandardScaler en el pipeline de preprocesamiento y a qué variables se aplica en el taller de triaje?",
+          "text": "¿Cuál es el propósito del transformador StandardScaler sobre las variables numéricas en el pipeline de clasificación?",
           "options": [
-            "StandardScaler convierte variables categóricas (como sexo y provincia) en números enteros para que el modelo pueda procesarlas.",
-            "StandardScaler transforma las variables numéricas para que tengan media 0 y varianza 1, eliminando diferencias de escala que afectarían al modelo. En el taller se aplica a: edad, frecuencia_cardiaca, presion_sistolica, temperatura y saturacion_o2.",
-            "StandardScaler elimina los valores atípicos (outliers) del dataset normalizando todos los valores al rango [0, 1].",
-            "StandardScaler se aplica a la variable objetivo y (riesgo) para codificarla numéricamente antes del entrenamiento."
+            "Transformar las columnas numéricas a media cero y desviación estándar uno, evitando que variables con rangos grandes dominen bien.",
+            "Convertir las variables categóricas en representaciones numéricas continuas para que los algoritmos puedan calcular gradientes.",
+            "Eliminar los valores atípicos del dataset acotando todas las observaciones numéricas estrictamente dentro del rango de cero a uno.",
+            "Codificar la variable objetivo multiclase a valores continuos para permitir el ajuste de regresiones con regularización penalizada."
           ],
-          "correct": 1,
-          "feedback": "Sin estandarización, una variable como presion_sistolica (rango 60-200 mmHg) dominaría sobre temperatura (rango 35-40°C) solo por su escala. StandardScaler centra y escala las variables numéricas: X_std = (X - media) / desviación_estándar."
+          "correct": 0,
+          "feedback": "Correcto. StandardScaler estandariza cada variable restando su media y dividiendo por su desviación estándar (puntuaciones z). Esto impide que variables con magnitudes elevadas (como la presión arterial de 60 a 200) eclipsen a atributos con valores reducidos (como la temperatura de 36 a 40)."
         },
         {
           "id": "cbf89b9b-5623-4263-8fe0-96dac41e56db",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "En el taller de triaje, la variable objetivo y contiene los textos 'Bajo', 'Medio', 'Alto'. ¿Necesita aplicarse One-Hot Encoding (OHE) a y antes de entrenar LogisticRegression?",
+          "text": "En el taller de triaje, la variable objetivo y contiene textos ('Bajo', 'Medio', 'Alto'). ¿Es necesario aplicar One-Hot Encoding a y?",
           "options": [
-            "Sí, obligatoriamente. scikit-learn requiere que y sea numérica (0, 1, 2) antes de poder entrenar cualquier modelo supervisado.",
-            "No. scikit-learn acepta directamente etiquetas de texto en y para clasificación multiclase. El OHE solo se aplica a las variables predictoras categóricas de X (como sexo, provincia, motivo_consulta).",
-            "Sí, pero solo cuando se usa OvR. Para Softmax, y puede dejarse en texto.",
-            "No aplica, porque y siempre debe ser de tipo float para que funcione classification_report."
+            "Sí, es obligatorio porque scikit-learn solo admite variables objetivo expresadas en formato binario mediante matrices dispersas.",
+            "No, porque scikit-learn acepta directamente etiquetas de texto en y; el One-Hot Encoding se aplica solo a predictoras de X base.",
+            "Sí, pero únicamente si se utiliza la formulación Softmax, ya que la estrategia OvR procesa texto de forma nativa sin codificar.",
+            "No, porque las variables de texto deben transformarse obligatoriamente mediante un escalamiento estándar con StandardScaler base."
           ],
           "correct": 1,
-          "feedback": "El notebook lo confirma explícitamente: 'La variable objetivo y contiene texto (Bajo, Medio, Alto). scikit-learn la acepta directamente — no necesita One-Hot Encoding.' Solo se aplica OHE a variables categóricas de X que son predictoras."
+          "feedback": "Correcto. Los clasificadores de scikit-learn aceptan de forma nativa arreglos o series de texto como variable objetivo y, gestionando internamente la asignación de etiquetas numéricas mediante el atributo `classes_`. El One-Hot Encoding se reserva para las variables predictoras categóricas de la matriz X."
         },
         {
           "id": "9fe0fa22-c058-47a4-8b07-6588bcfe3aaa",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Cuál es la ventaja crítica de usar ColumnTransformer dentro de un Pipeline sobre pd.get_dummies() al predecir datos nuevos en producción?",
+          "text": "¿Cuál es la principal ventaja técnica de utilizar ColumnTransformer dentro de un Pipeline en lugar de la función pd.get_dummies()?",
           "options": [
-            "ColumnTransformer es más rápido computacionalmente que pd.get_dummies() al procesar datasets grandes.",
-            "pd.get_dummies() puede generar columnas distintas si los datos nuevos no tienen todas las categorías del entrenamiento, causando predicciones silenciosamente incorrectas. ColumnTransformer aprende las categorías con .fit() y aplica exactamente esa misma transformación a cualquier dato nuevo con .transform().",
-            "ColumnTransformer puede codificar variables numéricas en categóricas, funcionalidad que pd.get_dummies() no tiene.",
-            "pd.get_dummies() solo funciona con Python 2; ColumnTransformer fue introducido para compatibilidad con Python 3."
+            "Acelera exponencialmente el tiempo de cómputo al utilizar algoritmos paralelos en memoria compartida al procesar strings de texto.",
+            "Permite codificar variables continuas en rangos discretos sin necesidad de estimar la función de densidad de probabilidad previa.",
+            "Aprende las categorías con fit() y aplica exactamente esa misma estructura a datos nuevos, evitando discrepancias de columnas.",
+            "Garantiza que todas las variables numéricas se transformen a distribuciones gaussianas perfectas con simetría estadística total."
           ],
-          "correct": 1,
-          "feedback": "Si un paciente nuevo llega de una provincia no vista en entrenamiento, pd.get_dummies() generaría columnas faltantes o extras sin ningún error ni aviso. ColumnTransformer con handle_unknown='ignore' maneja este caso graciosamente, devolviendo 0 para categorías desconocidas."
+          "correct": 2,
+          "feedback": "Correcto. Si se emplea pd.get_dummies() sobre un registro nuevo que carezca de alguna categoría vista en el entrenamiento (o contenga una categoría desconocida), se generará un número o disposición distinta de columnas, rompiendo la predicción. ColumnTransformer integrado en el Pipeline aprende el esquema en el entrenamiento y lo replica fielmente en producción."
         },
         {
           "id": "7e076f98-72a4-43a8-ba09-f6b279cbb168",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "En clasificación multiclase con 3 clases, pipeline_soft.predict_proba(paciente) devuelve [0.073, 0.059, 0.868]. ¿Qué propiedad matemática garantiza Softmax sobre estos valores?",
+          "text": "En un problema con 3 clases, pipeline_soft.predict_proba() devuelve [0.073, 0.059, 0.868]. ¿Qué propiedad matemática garantiza Softmax?",
           "options": [
-            "Los valores están normalizados entre -1 y 1, y su promedio es siempre 0.",
-            "Los tres valores siempre suman exactamente 1.0, ya que cada uno representa la probabilidad de pertenecer a una clase y son mutuamente excluyentes.",
-            "El valor más alto siempre es mayor a 0.5, garantizando que el modelo siempre tenga certeza sobre su predicción.",
-            "Los valores están ordenados de menor a mayor automáticamente, independientemente del orden de classes_."
+            "Garantiza que todos los valores devueltos sean mutuamente independientes y tengan un promedio exactamente igual a cero en test.",
+            "Garantiza que el valor máximo del arreglo supere obligatoriamente el umbral de 0.50 para confirmar la convergencia del ajuste.",
+            "Garantiza que las probabilidades se ordenen de menor a mayor de forma automática facilitando la selección de la clase ganadora.",
+            "Garantiza que los valores sean no negativos y sumen exactamente 1.0, representando una distribución de probabilidad coherente."
           ],
-          "correct": 1,
-          "feedback": "0.073 + 0.059 + 0.868 = 1.000. Softmax garantiza esto por diseño matemático: divide cada exponencial por la suma de todas las exponenciales. En OvR esto no se garantiza — los K scores independientes no necesariamente suman 1."
+          "correct": 3,
+          "feedback": "Correcto. La función Softmax calcula la exponencial de cada puntuación lineal dividida entre la suma de las exponenciales de todas las clases. Esta formulación asegura de manera intrínseca que cada salida pertenezca al intervalo (0, 1) y que la sumatoria de las probabilidades de todas las clases sea rigurosamente 1.0."
         },
         {
           "id": "5bf4e1aa-3d51-4cc6-9daa-e055863d1e6d",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "El modelo Softmax predice un paciente con probabilidades: P(Alto)=0.073, P(Bajo)=0.059, P(Medio)=0.868. La clase predicha es 'Medio'. ¿Qué debería hacerse si un modelo predice P(Bajo)=0.52 y P(Medio)=0.41 para un paciente hospitalario?",
+          "text": "Un modelo hospitalario predice para un paciente P(Bajo) = 0.52 y P(Medio) = 0.41. ¿Cuál es el protocolo de actuación recomendado?",
           "options": [
-            "Dar al paciente de alta inmediatamente con la clase Bajo, porque es la más probable.",
-            "Ignorar la predicción del modelo porque la incertidumbre invalida cualquier resultado.",
-            "Solicitar revisión clínica presencial: cuando las probabilidades son muy cercanas entre sí, el modelo no tiene certeza suficiente y un profesional de salud debe tomar la decisión final.",
-            "Reentrenar el modelo con más datos porque cualquier probabilidad por debajo de 0.8 indica que el modelo está mal calibrado."
+            "Solicitar una revisión clínica humana, pues probabilidades tan cercanas indican incertidumbre que desaconseja automatización total.",
+            "Otorgar el alta médica inmediata al paciente, debido a que la clase Riesgo Bajo obtuvo la mayor probabilidad matemática puntual.",
+            "Descartar la predicción y reentrenar el modelo con más épocas, ya que probabilidades menores al 80% invalidan el estimador base.",
+            "Invertir la decisión clínica asignando la clase minoritaria para compensar el desbalance estadístico del conjunto de prueba real."
           ],
-          "correct": 2,
-          "feedback": "El notebook lo documenta explícitamente: 'Si las probabilidades están muy cerca entre sí, el caso debe revisarse manualmente.' Una diferencia de solo 11 puntos porcentuales (52% vs 41%) en un paciente hospitalario no justifica una decisión clínica automatizada."
+          "correct": 0,
+          "feedback": "Correcto. Cuando la diferencia entre las probabilidades predichas para las dos clases más probables es muy reducida (apenas 11 puntos porcentuales en un entorno crítico), el modelo exhibe alta ambigüedad. En aplicaciones médicas sensibles, estos casos limítrofes deben derivarse a inspección manual por parte de un profesional de la salud."
         },
         {
           "id": "ca08def5-2eaa-46dd-8b63-17cda95bfb3a",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "En la matriz de confusión multiclase del taller (clases: Bajo, Medio, Alto), el valor cm[2, 0] = 2 representa pacientes de 'Riesgo Alto clasificados como Bajo'. ¿Por qué este error es el más grave del modelo?",
+          "text": "En la matriz de confusión (Bajo, Medio, Alto), el valor cm[2, 0] = 2 corresponde a Alto clasificado como Bajo. ¿Por qué es el más grave?",
           "options": [
-            "Porque el valor 2 es el más alto de toda la matriz, indicando que es el error más frecuente.",
-            "Porque clasificar un paciente que realmente necesita atención urgente (Riesgo Alto) como Riesgo Bajo podría resultar en que se le dé de alta o no se le atienda prioritariamente, con consecuencias potencialmente fatales.",
-            "Porque el modelo debería siempre predecir la clase de la diagonal, y cm[2,0] indica que el modelo no aprendió la clase Alto.",
-            "Porque los errores fuera de la diagonal siempre son más graves que los de la diagonal en cualquier problema de clasificación."
+            "Porque representa el valor numérico más elevado fuera de la diagonal principal, distorsionando la precisión del modelo final.",
+            "Porque scikit-learn asigna una penalización cuadrática doble a los errores situados en la última fila de la matriz evaluada.",
+            "Porque altera el balance de soporte del conjunto de testeo, obligando a recalcular los intervalos de confianza en validación.",
+            "Porque un paciente con riesgo vital inminente sería clasificado como leve, privándolo de atención médica oportuna y crítica."
           ],
-          "correct": 1,
-          "feedback": "El taller lo documenta como 'el más grave': cm[2, 0] = Riesgo Alto → predicho como Bajo. El costo asimétrico de los errores es clave: clasificar Alto como Bajo en triaje hospitalario puede costar vidas. No todos los errores fuera de la diagonal son igualmente críticos."
+          "correct": 3,
+          "feedback": "Correcto. Los errores de clasificación en medicina conllevan costos asimétricos. Asignar un paciente de Riesgo Alto a Riesgo Bajo implica que no recibirá atención prioritaria y podría ser enviado a sala de espera o dado de alta, comprometiendo severamente su supervivencia."
         },
         {
           "id": "3d53ef77-c92c-4cf3-81b4-b6956d6ee2c9",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Qué representan los valores que están EN la diagonal de la matriz de confusión y los que están FUERA de ella?",
+          "text": "¿Qué representan los valores ubicados en la diagonal principal de una matriz de confusión multiclase frente a los ubicados fuera de ella?",
           "options": [
-            "Los valores en la diagonal son falsos positivos; los valores fuera de la diagonal son verdaderos positivos.",
-            "Los valores en la diagonal son predicciones correctas (el modelo predijo la misma clase que era real); los valores fuera de la diagonal son errores (el modelo predijo una clase diferente a la real).",
-            "Los valores en la diagonal miden el Precision por clase; los fuera de la diagonal miden el Recall.",
-            "Los valores en la diagonal son el soporte de cada clase (número total de muestras reales); los fuera son las muestras mal clasificadas por ambos modelos."
+            "Los valores en la diagonal son falsos positivos de cada clase; los valores fuera de la diagonal representan verdaderos negativos.",
+            "Los valores en la diagonal miden el soporte muestral; los valores fuera representan las probabilidades condicionadas de Bayes.",
+            "La diagonal contiene las clasificaciones correctas (TP); los elementos fuera de la diagonal representan los errores del modelo.",
+            "La diagonal indica los coeficientes de correlación lineal; los valores externos cuantifican la devianza residual del clasificador."
           ],
-          "correct": 1,
-          "feedback": "Diagonal = TP por clase (real=X, predicho=X). Fuera de diagonal = errores. En el taller: cm[0,0]=215 (Bajo correctos), cm[1,1]=49 (Medio correctos), cm[2,2]=3 (Alto correctos). El resto son errores de clasificación."
+          "correct": 2,
+          "feedback": "Correcto. En una matriz de confusión, cada celda (i, i) de la diagonal principal registra la cantidad de observaciones cuya clase real i coincidió con la predicción i del modelo (aciertos o verdaderos positivos). Cualquier elemento situado fuera de la diagonal representa una discrepancia o error de clasificación."
         },
         {
           "id": "73edc91a-51f4-4ef0-94a7-ad4179b69693",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "Observa este código del taller:\n\npreproc = ColumnTransformer([\n    ('cat', OneHotEncoder(drop='first', handle_unknown='ignore'), cat_cols),\n    ('num', StandardScaler(), num_cols),\n])\n\n¿Qué hace el parámetro drop='first' en OneHotEncoder?",
+          "text": "Al preprocesar con OneHotEncoder(drop='first', handle_unknown='ignore'), ¿cuál es la función técnica del argumento drop='first'?",
           "options": [
-            "Elimina la primera columna del DataFrame original antes de aplicar el encoding.",
-            "Elimina la primera categoría de cada variable categórica al crear las columnas dummy, evitando la multicolinealidad perfecta (trampa de las variables dummy).",
-            "Hace que el OneHotEncoder procese primero las columnas numéricas antes que las categóricas.",
-            "Descarta las observaciones donde la primera categoría sea la más frecuente para balancear las clases."
+            "Eliminar la primera observación del conjunto de datos antes de calcular las frecuencias de las variables categóricas dadas.",
+            "Forzar al codificador a transformar únicamente variables binarias, descartando atributos con tres o más categorías distintas.",
+            "Ordenar las categorías alfabéticamente antes de transformarlas para que coincidan con la indexación del estimador final.",
+            "Omitir la primera categoría dummy de cada variable para prevenir la multicolinealidad perfecta en modelos lineales ajustados."
           ],
-          "correct": 1,
-          "feedback": "drop='first' elimina la primera categoría de cada variable. Por ejemplo, para 'sexo' (M/F), crea solo una columna: sexo_M=1 significa M, sexo_M=0 significa F. Sin drop='first', el modelo tendría multicolinealidad perfecta entre las columnas dummy."
+          "correct": 3,
+          "feedback": "Correcto. Si una variable categórica posee K categorías y se crean K columnas dummy, la suma de esas K columnas es idénticamente 1, generando dependencia lineal exacta con el intercepto (la trampa de las variables dummy). Al fijar drop='first', se descarta una categoría de referencia y se evita la multicolinealidad perfecta."
         },
         {
           "id": "c36a4184-b2d9-4aeb-b4ef-e5e8bac3b72d",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "Dado este fragmento de código del taller:\n\npipeline_ovr.fit(X_train, y_train)\npipeline_soft.fit(X_train, y_train)\nprint('Orden de clases:', pipeline_soft.classes_)\n# Output: ['Alto' 'Bajo' 'Medio']\n\n¿Por qué el orden de clases es alfabético y no el orden en que aparecen en el dataset?",
+          "text": "Al entrenar un pipeline multiclase con etiquetas ['Medio', 'Bajo', 'Alto'], classes_ devuelve ['Alto', 'Bajo', 'Medio']. ¿Por qué?",
           "options": [
-            "Porque el programador configuró sort=True como parámetro del Pipeline.",
-            "Porque scikit-learn ordena internamente las clases en orden alfabético al hacer .fit(), independientemente del orden en que aparezcan en y_train.",
-            "Porque Python ordena automáticamente cualquier array de strings al asignarlo a una variable.",
-            "Porque el taller usa random_state=42 que fuerza el orden alfabético para reproducibilidad."
+            "Porque scikit-learn indexa y clasifica internamente las etiquetas en orden léxico alfabético al invocar el método fit().",
+            "Porque el programador especificó un parámetro de ordenamiento jerárquico dentro de la configuración del estimador lineal.",
+            "Porque la función de pérdida optimiza los gradientes según la clase que posee el menor soporte muestral de entrenamiento.",
+            "Porque Python reordena automáticamente cualquier lista de cadenas según su longitud al pasarla como argumento posicional."
           ],
-          "correct": 1,
-          "feedback": "scikit-learn siempre ordena las etiquetas de clase alfabéticamente durante el entrenamiento. Por eso classes_ = ['Alto', 'Bajo', 'Medio'] aunque en los datos aparezcan en orden ['Medio', 'Bajo', 'Alto']. La columna 0 de predict_proba() es siempre P(Alto)."
+          "correct": 0,
+          "feedback": "Correcto. Durante la ejecución de fit(), los estimadores de scikit-learn identifican los valores únicos de la variable objetivo y los ordenan internamente por orden léxico (alfabético). Así, la columna 0 de predict_proba() siempre se asociará a 'Alto', la columna 1 a 'Bajo' y la columna 2 a 'Medio'."
         },
         {
           "id": "61e33580-8b99-4d25-b2e8-f1897fd3d56d",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "En el taller se usa train_test_split(X, y, test_size=0.2, random_state=42, stratify=y). ¿Por qué es especialmente importante el parámetro stratify=y cuando hay una clase minoritaria como 'Riesgo Alto' (solo el 3.4% del dataset)?",
+          "text": "¿Por qué es crucial configurar stratify=y en train_test_split cuando se trabaja con datasets desbalanceados como el de triaje?",
           "options": [
-            "Para que X_train y X_test tengan exactamente la misma cantidad de filas.",
-            "Para garantizar que la proporción de las 3 clases en train y test sea representativa de la distribución original. Sin stratify, podría ocurrir que 'Riesgo Alto' quede completamente excluida del test, haciendo imposible evaluar el modelo en esa clase crítica.",
-            "Para ordenar las filas del dataset por nivel de riesgo antes de dividirlo.",
-            "Para aplicar el mismo escalado de StandardScaler tanto a X_train como a X_test durante la división."
+            "Para asegurar que las particiones de entrenamiento y prueba tengan exactamente la misma cantidad total de observaciones numéricas.",
+            "Para preservar la proporción porcentual original de cada clase en train y test, evitando excluir a la clase minoritaria en prueba.",
+            "Para ordenar los registros de forma determinista según la gravedad clínica del paciente antes de realizar la división aleatoria.",
+            "Para estandarizar los datos con StandardScaler dentro de la misma función sin necesidad de recurrir a un objeto Pipeline previo."
           ],
           "correct": 1,
-          "feedback": "Sin stratify, con solo 61 pacientes de Riesgo Alto (3.4%), una división aleatoria simple podría poner todos en train y ninguno en test. El output del taller confirma: train tiene 49 Altos y test tiene 12 Altos, manteniendo la proporción ~80/20 en cada clase."
+          "feedback": "Correcto. En datasets donde una clase crítica representa un porcentaje ínfimo (como Riesgo Alto con solo el 3.4%), una partición aleatoria simple podría dejar la clase minoritaria subrepresentada o completamente ausente en el conjunto de prueba. El parámetro stratify=y garantiza que tanto train como test mantengan la proporción original de cada clase."
         },
         {
           "id": "04a762b9-edc7-44f1-b700-f6084b5085cc",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "En el bloque C del taller se crea pipeline_final.fit(X, y) usando el dataset COMPLETO, mientras que en A3 se usó pipeline_soft.fit(X_train, y_train). ¿Por qué se reentrena con el 100% de los datos para producción?",
+          "text": "En el taller se ajusta pipeline_final.fit(X, y) con el 100% de los datos antes de exportar. ¿Cuál es el fundamento de esta práctica?",
           "options": [
-            "Porque el modelo no funcionará correctamente en producción si fue entrenado con menos del 100% de los datos disponibles.",
-            "Porque el train/test split (80/20) sirve para MEDIR la capacidad de generalización del modelo. Una vez validado ese resultado, el modelo de producción se reentrena con el 100% de los datos: ya no se necesita reservar una porción para medir, y más datos producen un modelo más robusto.",
-            "Porque joblib solo puede serializar modelos entrenados con el dataset completo.",
-            "Porque scikit-learn requiere que el pipeline_final use los mismos datos que el pipeline de evaluación para mantener consistencia."
+            "La división train/test sirve para evaluar generalización; una vez validado, se usa todo el dataset para un modelo más robusto.",
+            "Porque la librería joblib emite una excepción si intenta serializar un modelo ajustado sobre subconjuntos parciales de datos.",
+            "Porque scikit-learn requiere que el tamaño de entrenamiento coincida con las dimensiones de producción para admitir predict().",
+            "Para recalcular los hiperparámetros óptimos mediante un descenso de gradiente completo sobre los datos de validación cruzada."
           ],
-          "correct": 1,
-          "feedback": "El principio es claro: evalúas con el 80% para estimar cómo generaliza, luego usas el 100% para producción porque ya no necesitas medir. pipeline_final.fit(X, y) vio todos los 1800 pacientes del taller, mientras pipeline_soft solo vio los 1440 del train."
+          "correct": 0,
+          "feedback": "Correcto. El split 80/20 tiene como único fin estimar objetivamente la capacidad de generalización del algoritmo sobre datos no vistos. Una vez seleccionada la mejor arquitectura, ya no se requiere reservar datos para evaluación, por lo que reentrenar con el 100% de las muestras maximiza la información disponible y fortalece el modelo de producción."
         },
         {
           "id": "986fc3d9-b819-4715-b81e-f844e3f9f0b2",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Cuál es la ventaja de exportar pipeline_final completo con joblib.dump() en lugar de guardar el modelo y el preprocesador por separado?",
+          "text": "¿Cuál es la principal ventaja operativa de serializar con joblib el Pipeline completo en lugar de exportar preprocesador y modelo por separado?",
           "options": [
-            "joblib.dump() comprime el archivo a un tamaño menor que si se guardaran los objetos por separado.",
-            "Al guardar el Pipeline completo (preproc + modelo), ambos objetos están sincronizados y no pueden cargarse en el orden equivocado. El sistema de producción solo llama predict() sobre el pipeline y obtiene el resultado — sin repetir OHE ni escalado manualmente.",
-            "joblib solo puede serializar objetos Pipeline; no puede guardar modelos ni scalers de forma independiente.",
-            "Guardar el pipeline completo evita que otros programadores puedan acceder a los parámetros del modelo entrenado."
+            "Reduce el tamaño del archivo serializado en disco al comprimir los pesos del modelo mediante algoritmos de cuantización binaria.",
+            "Permite modificar los hiperparámetros del estimador en caliente durante la ejecución en el servidor sin necesidad de recargar.",
+            "Mantiene sincronizados el preprocesamiento y el clasificador en un solo objeto, impidiendo errores de secuencia en producción.",
+            "Habilita el cálculo automático de matrices de confusión sobre todos los datos nuevos que ingresen a la base de datos operativa."
           ],
-          "correct": 1,
-          "feedback": "El taller lo documenta: 'Al exportar pipeline_final se guardan preproc y modelo juntos, como un solo objeto: nunca pueden desincronizarse ni cargarse en el orden equivocado.' Esto es la clave de un flujo de producción robusto."
+          "correct": 2,
+          "feedback": "Correcto. Al exportar el objeto Pipeline unificado (`modelo_triaje.pkl`), las transformaciones de escalado, codificación categórica y el clasificador quedan integrados de forma indisoluble. Esto elimina el riesgo de que en el entorno de producción se apliquen transformaciones en orden inverso o con escaladores no ajustados."
         },
         {
           "id": "f7e9aa43-9c93-484f-9373-97dc2b287e30",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "Observa este código de producción del bloque C:\n\npipeline_prod = joblib.load('modelo_triaje.pkl')\npred = pipeline_prod.predict(paciente_nuevo)\nproba = pipeline_prod.predict_proba(paciente_nuevo)\n\n¿Por qué no es necesario aplicar OHE ni StandardScaler manualmente a paciente_nuevo antes de llamar predict()?",
+          "text": "¿Por qué no se debe aplicar escalado ni One-Hot Encoding manualmente a un paciente nuevo antes de pasarlo a pipeline_prod.predict()?",
           "options": [
-            "Porque predict() ignora automáticamente las variables categóricas y solo usa las numéricas.",
-            "Porque el Pipeline ya incluye el preprocesamiento internamente. Al llamar predict(), aplica preproc (OHE + StandardScaler) con las mismas categorías y escala aprendidas durante el entrenamiento, antes de pasarlos al modelo.",
-            "Porque en producción los datos siempre llegan ya preprocesados desde la base de datos.",
-            "Porque joblib.load() aplica automáticamente el preprocesamiento al cargar el modelo."
+            "Porque la función predict() descarta automáticamente las columnas categóricas procesando únicamente las variables continuas.",
+            "Porque en entornos productivos los registros hospitalarios provienen de sistemas que ya incorporan estandarización de fábrica.",
+            "Porque la inferencia emplea una representación interna comprimida que no depende de la escala de las características de entrada.",
+            "Porque el Pipeline encapsula el preprocesamiento y aplica internamente la misma transformación aprendida en el entrenamiento."
           ],
-          "correct": 1,
-          "feedback": "Este es el beneficio central del Pipeline: encapsula todo el flujo. paciente_nuevo es un DataFrame con columnas originales (edad=24, sexo='M', etc.) y el pipeline internamente hace OHE a categóricas y StandardScaler a numéricas antes de predecir."
+          "correct": 3,
+          "feedback": "Correcto. La ventaja fundamental del Pipeline es la encapsulación: al llamar a predict(paciente_nuevo), el pipeline toma el DataFrame crudo con sus columnas y tipos originales, ejecuta de manera transparente el ColumnTransformer (OHE y StandardScaler) con las estadísticas guardadas, y alimenta directamente al clasificador."
         },
         {
           "id": "a43b5c6a-ba20-40c0-a6f9-57c096f6e78f",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "Comparando los resultados del taller de triaje: OvR obtuvo Recall(Alto)=0.000 y Softmax obtuvo Recall(Alto)=0.250. ¿Qué conclusión práctica extrae el taller de esta comparación?",
+          "text": "OvR obtuvo Recall(Alto) = 0.000 y Softmax obtuvo Recall(Alto) = 0.250 en el taller de triaje. ¿Qué conclusión técnica se deriva?",
           "options": [
-            "OvR es superior en todos los casos de clasificación médica porque tiene más parámetros ajustables.",
-            "Softmax es preferible para este problema porque detecta aunque sea el 25% de los pacientes de Riesgo Alto, mientras que OvR no detecta ninguno. En triaje, la estrategia que mejor identifica la clase más crítica es la correcta.",
-            "Ambos modelos son equivalentes porque su Accuracy general es casi idéntico (0.739 vs 0.742).",
-            "La diferencia entre ambos es irrelevante porque el Recall de Alto es bajo en ambos casos."
+            "Softmax es preferible porque detecta casos de la clase crítica; OvR no detectó ninguno y es inviable para el triaje médico.",
+            "Ambas opciones son indistintas porque su Accuracy fue casi idéntico (0.739 vs 0.742) en el conjunto de prueba evaluado aquí.",
+            "OvR es superior porque los clasificadores binarios independientes garantizan márgenes de separación más amplios en general.",
+            "Ambos modelos deben descartarse de inmediato porque ningún algoritmo con Recall inferior al 90% puede ser testeado en salud."
           ],
-          "correct": 1,
-          "feedback": "El taller concluye explícitamente: 'el Recall de la clase Alto es la métrica que más cambia entre OvR y Softmax, y la más importante clínicamente.' OvR con Recall(Alto)=0 es inútil para triaje hospitalario aunque tenga Accuracy similar."
+          "correct": 0,
+          "feedback": "Correcto. A pesar de tener un Accuracy global similar, OvR falló por completo al detectar a los pacientes de Riesgo Alto (Recall = 0.0), volviéndolo inutilizable en un hospital. Softmax, al optimizar conjuntamente las probabilidades, logró identificar al menos al 25% de los pacientes graves, demostrando ser la estrategia adecuada."
         },
         {
           "id": "17b183e7-bf91-4e56-89d7-4d3ed952a27d",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "El dataset de triaje tiene Bajo=66.5%, Medio=30.2%, Alto=3.4%. El taller advierte que 'un modelo que siempre prediga Bajo tendría Accuracy ≈ 66% aunque sea inútil'. ¿Qué métrica deberías revisar PRIMERO para detectar este problema?",
+          "text": "Si un modelo trivial predice siempre la clase mayoritaria 'Bajo' (66% del dataset), ¿qué métrica desenmascara de inmediato su ineficacia?",
           "options": [
-            "Accuracy, porque es la métrica más completa disponible en classification_report.",
-            "weighted avg F1, porque pondera por número de muestras y refleja el rendimiento real.",
-            "macro avg F1 o el Recall por clase. Un modelo que siempre predice 'Bajo' tendría Recall(Medio)=0 y Recall(Alto)=0, haciendo que el macro avg F1 sea muy bajo aunque el Accuracy sea 66%.",
-            "La inercia del clustering, porque indica qué tan separadas están las 3 clases en el espacio de variables."
+            "El Accuracy general, debido a que este valor caerá inmediatamente a cero al no predecir las clases minoritarias del problema.",
+            "El macro avg F1 y el Recall por clase, ya que ambas métricas serán cero para las clases minoritarias evidenciando la falla real.",
+            "El weighted avg F1, puesto que al ponderar por el soporte poblacional castiga severamente la ausencia de predicciones en Alto.",
+            "La inercia acumulada de las predicciones, dado que mide la distancia euclidiana hacia el centroide de la clase mayoritaria real."
           ],
-          "correct": 2,
-          "feedback": "El Accuracy del 66% de ese modelo 'dummy' engañaría. El macro avg F1 y el Recall por clase lo desenmascaran: Recall(Medio)=0/109=0, Recall(Alto)=0/12=0. macro avg F1 ≈ 0.26, revelando que el modelo no sirve para las clases minoritarias."
+          "correct": 1,
+          "feedback": "Correcto. El Accuracy de dicho modelo trivial sería falsamente optimista (~66%). Sin embargo, al inspeccionar el Recall por clase se observa Recall(Medio)=0 y Recall(Alto)=0, lo que hunde el promedio macro avg F1 a niveles inutilizables (~0.26), revelando de inmediato la inoperancia del sistema."
         },
         {
           "id": "39668123-a8df-44ea-a42c-13ae1f700a67",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "En el bloque B1 del taller se construye un pipeline simplificado:\n\npipeline2 = Pipeline([\n    ('scaler', StandardScaler()),\n    ('modelo', LogisticRegression(solver='lbfgs', max_iter=1000, random_state=42)),\n])\n\nEste pipeline solo usa variables numéricas y obtiene macro F1 = 0.630, mejor que el modelo completo (0.569). ¿Qué lección metodológica enseña este resultado?",
+          "text": "Un modelo que utiliza únicamente signos vitales numéricos superó en macro F1 al modelo completo que incluía provincia y sexo. ¿Qué lección aporta?",
           "options": [
-            "Agregar más variables siempre mejora el modelo; el resultado del B1 contradice esta afirmación, indicando un error en el taller.",
-            "Variables categóricas como provincia y sexo pueden introducir ruido o no aportar información relevante para el problema. Más variables no siempre significan mejor modelo — la selección de variables y el contexto del problema importan.",
-            "El modelo completo debe descartarse porque el modelo simplificado siempre supera al complejo.",
-            "StandardScaler es superior a ColumnTransformer en todos los escenarios de clasificación multiclase."
+            "Demuestra que agregar más variables siempre mejora el poder predictivo y que el resultado observado fue una anomalía aleatoria.",
+            "Indica que los estimadores lineales solo convergen cuando todas las variables predictoras del problema son numéricas continuas.",
+            "Enseña que variables no relacionadas pueden introducir ruido; más variables no siempre implican un mejor rendimiento predictivo.",
+            "Confirma que el transformador ColumnTransformer introduce distorsiones en los datos que deterioran la precisión de los modelos."
           ],
-          "correct": 1,
-          "feedback": "Los signos vitales (saturacion_o2, frecuencia_cardiaca, presion_sistolica) son predictores clínicamente más directos del riesgo que la provincia o el motivo de consulta. El resultado empírico confirma la intuición médica: las variables fisiológicas objetivas pesan más que las administrativas."
+          "correct": 2,
+          "feedback": "Correcto. En Machine Learning, incluir más características no garantiza mejores modelos. Atributos administrativos como la provincia pueden aportar ruido o correlaciones espurias, mientras que los signos vitales (presión, saturación de O2, pulso) tienen relación causal directa con el riesgo clínico."
         },
         {
           "id": "4b9f1d55-eb2b-4bc7-a7b3-07edca420f7d",
           "category": "semana5",
           "categoryName": "Semana 5 · SVM",
-          "text": "¿Cuál es la función principal del kernel lineal en un modelo SVM?",
+          "text": "¿Cuál es la función matemática primordial del kernel lineal dentro de un modelo Support Vector Classifier?",
           "options": [
-            "Transformar los datos a un espacio de dimensión infinita para buscar fronteras no lineales.",
-            "Buscar un hiperplano plano (recto) que separe las clases en el espacio original de características, siendo ideal cuando los datos son linealmente separables.",
-            "Clasificar automáticamente variables categóricas sin necesidad de hacer One-Hot Encoding.",
-            "Multiplicar todas las variables numéricas por un factor de escala constante para normalizarlas."
+            "Proyectar implícitamente las observaciones a un espacio de dimensión infinita para generar fronteras de decisión hiperbólicas en X.",
+            "Buscar un hiperplano recto de separación en el espacio original de variables, siendo óptimo ante datos separables linealmente.",
+            "Estimar las probabilidades bayesianas a posteriori de pertenencia a cada clase normalizando los márgenes con la función sigmoide.",
+            "Calcular matrices de covarianza diagonalizadas para reducir el número de variables antes de ejecutar la optimización de Lagrange."
           ],
           "correct": 1,
-          "feedback": "El kernel lineal busca una frontera recta (un hiperplano plano) en el espacio original. Es el modelo más simple, rápido y menos propenso al sobreajuste, por lo que suele ser el primero en probarse."
+          "feedback": "Correcto. El kernel lineal calcula el producto punto estándar $K(x, z) = x^T z$ en el espacio original de variables sin proyectar a dimensiones superiores. Encuentra un hiperplano recto (plano de decisión lineal), siendo la alternativa más rápida, interpretable y menos susceptible al sobreajuste."
         },
         {
           "id": "886a8774-8c4e-4bea-9fbd-36aed185a73b",
           "category": "semana5",
           "categoryName": "Semana 5 · SVM",
-          "text": "¿Qué caracteriza al kernel Gaussiano (RBF) frente al kernel lineal en Support Vector Machines?",
+          "text": "¿Qué propiedad distingue al kernel Gaussiano (RBF) frente al kernel lineal en clasificación con máquinas de soporte vectorial?",
           "options": [
-            "El kernel RBF solo puede generar fronteras rectas, mientras que el lineal puede generar curvas.",
-            "El kernel RBF proyecta implícitamente los datos a un espacio de infinitas dimensiones, permitiendo separar clases que están muy mezcladas mediante fronteras de decisión curvas y complejas.",
-            "El kernel RBF no utiliza vectores de soporte para definir su hiperplano.",
-            "El kernel RBF requiere obligatoriamente que las clases estén balanceadas (50/50)."
+            "Mide la similitud exponencial según la distancia euclidiana, modelando fronteras altamente no lineales en dimensiones infinitas.",
+            "Restringe las fronteras de decisión a ser estrictamente hiper-esferas concéntricas centradas en el origen de las coordenadas.",
+            "Elimina el uso de vectores de soporte al calcular la solución mediante un sistema cerrado de ecuaciones normales de regresión.",
+            "Requiere de forma obligatoria que el número de clases sea binario y que las muestras estén perfectamente equilibradas al 50%."
           ],
-          "correct": 1,
-          "feedback": "Radial Basis Function (RBF) es el kernel por defecto de SVC. Mide la similitud (distancia) entre puntos y permite fronteras altamente curvas. Si las clases están mezcladas, el RBF suele adaptarse mucho mejor que el lineal."
+          "correct": 0,
+          "feedback": "Correcto. El kernel RBF (Radial Basis Function) utiliza la función $K(x, z) = \\exp(-\\gamma \\|x - z\\|^2)$. Evalúa la cercanía espacial entre observaciones y equivale matemáticamente a proyectar los datos a un espacio de dimensión infinita, permitiendo trazar fronteras de decisión curvas y sumamente flexibles."
         },
         {
           "id": "81a4ec51-896f-484b-9a85-63106ed7ea14",
           "category": "semana5",
           "categoryName": "Semana 5 · SVM",
-          "text": "Al resolver un problema de clasificación nuevo con SVM, ¿cuál es la mejor práctica documentada para elegir el kernel inicial?",
+          "text": "Al abordar un nuevo problema de clasificación con SVM, ¿cuál es la mejor práctica documentada para seleccionar el kernel de inicio?",
           "options": [
-            "Empezar siempre con un kernel polinómico de grado 5 para abarcar toda la complejidad posible.",
-            "Comenzar probando un kernel lineal, ya que es el más rápido, interpretable y menos propenso a sobreajustar. Si el rendimiento (accuracy, recall, etc.) es pobre, escalar a un kernel RBF.",
-            "Nunca usar kernel lineal si hay variables continuas; ir directamente a RBF.",
-            "Elegir un kernel diferente aleatoriamente usando GridSearchCV hasta encontrar el de mayor precisión en el conjunto de prueba."
+            "Iniciar con un kernel polinomial de grado elevado para asegurar que el modelo capture todas las interacciones complejas reales.",
+            "Seleccionar aleatoriamente el tipo de kernel en cada iteración de validación cruzada hasta encontrar una solución convergente.",
+            "Emplear directamente un kernel sigmoidal pues replica de manera idéntica el comportamiento de una red neuronal profunda multicapa.",
+            "Comenzar evaluando un kernel lineal por su rapidez y simplicidad; si no alcanza rendimiento adecuado, transicionar a kernel RBF."
           ],
-          "correct": 1,
-          "feedback": "En la práctica de Data Science, se debe empezar por lo más simple ('Navaja de Ockham'). El kernel lineal evalúa si los datos son separables fácilmente. En el taller, vimos que a veces el modelo lineal balanceado incluso supera o iguala al RBF, siendo mucho más rápido y ligero."
+          "correct": 3,
+          "feedback": "Correcto. En ciencia de datos se recomienda seguir el principio de parsimonia: probar primero el modelo más simple y veloz (kernel lineal). Si el problema es linealmente separable o cuasi-separable, el modelo lineal ofrecerá excelente generalización e interpretabilidad; si se constata no linealidad, se escala al kernel RBF."
         },
         {
           "id": "eb23ebce-c375-4b42-a786-5b7e86c73858",
           "category": "semana5",
           "categoryName": "Semana 5 · SVM",
-          "text": "En el taller de Fraude, el dataset tiene 71% de transacciones legítimas y 29% de fraudes. ¿Qué efecto específico tiene usar el hiperparámetro class_weight='balanced' dentro de SVC()?",
+          "text": "En un dataset desbalanceado (71% legítimo y 29% fraude), ¿qué efecto produce configurar class_weight='balanced' en SVC?",
           "options": [
-            "Elimina aleatoriamente transacciones legítimas del conjunto de entrenamiento hasta que ambas clases queden exactamente con la misma cantidad de filas.",
-            "Multiplica (duplica o triplica) las filas de fraude en el DataFrame antes de entrenar el modelo.",
-            "Ajusta automáticamente los pesos de penalización de manera inversamente proporcional a la frecuencia de las clases. Así, un error al clasificar la clase minoritaria (Fraude) recibe una penalización mayor, obligando al modelo a prestarle más atención.",
-            "Activa una red neuronal oculta que reemplaza al modelo SVM original por uno balanceado."
+            "Elimina aleatoriamente muestras de la clase mayoritaria hasta que ambas categorías tengan exactamente el mismo número de filas.",
+            "Duplica sintéticamente las filas de la clase minoritaria mediante interpolación de vecinos cercanos en el espacio de atributos.",
+            "Ajusta los pesos de penalización inversamente a las frecuencias de clase, castigando con mayor rigor el error en la minoritaria.",
+            "Modifica la función de kernel para que las distancias se calculen utilizando la norma de Manhattan en lugar de la euclidiana real."
           ],
           "correct": 2,
-          "feedback": "El peso se calcula como n_total / (k × n_clase). Para Fraude, el peso fue 1.74, es decir, equivocarse en un caso de fraude penalizaba 1.74 veces más al algoritmo que equivocarse en una transacción legítima (peso 0.70). Es vital en clases desbalanceadas para mejorar el Recall de la clase minoritaria."
+          "feedback": "Correcto. `class_weight='balanced'` ajusta automáticamente los pesos de penalización según la fórmula $w_j = n\\_samples / (n\\_classes \\cdot n\\_samples_j)$. De este modo, cometer un error en una transacción de fraude (minoritaria) recibe una penalización mayor en la función de costo, forzando al algoritmo a elevar su sensibilidad o Recall."
         },
         {
           "id": "31244a30-28e7-4249-a78c-8997701e0271",
           "category": "semana5",
           "categoryName": "Semana 5 · SVM",
-          "text": "¿Qué significan las siglas SVC en scikit-learn y qué tarea específica de Machine Learning resuelve?",
+          "text": "¿Qué significan rigurosamente las siglas SVC en la biblioteca scikit-learn y qué tarea de aprendizaje resuelve?",
           "options": [
-            "Standard Vector Calculator, utilizado para normalizar vectores en redes neuronales.",
-            "Support Vector Classification, es el estimador principal de la librería para aplicar Máquinas de Vectores de Soporte a problemas de clasificación (asignar etiquetas).",
-            "Support Vector Clustering, utilizado para agrupar datos de forma no supervisada.",
-            "Scalar Vector Component, una alternativa al PCA para reducción de dimensionalidad."
+            "Standard Vector Calculator, un módulo destinado a la normalización de tensores en arquitecturas de deep learning supervisado.",
+            "Support Vector Clustering, un algoritmo de agrupamiento espacial no supervisado basado en núcleos de densidad multidimensional.",
+            "Support Vector Classification, el estimador principal para aplicar máquinas de soporte vectorial a problemas de clasificación.",
+            "Scalar Vector Component, una técnica de proyección lineal alternativa al análisis de componentes principales para variables."
           ],
-          "correct": 1,
-          "feedback": "SVC significa Support Vector Classifier. Scikit-learn también incluye SVR (Support Vector Regression) para problemas de predicción de números continuos usando el mismo principio de margen, pero SVC es específico para clasificación (binaria o multiclase)."
+          "correct": 2,
+          "feedback": "Correcto. SVC significa Support Vector Classification. Es la clase estándar de scikit-learn para resolver problemas de clasificación (tanto binaria como multiclase) mediante máquinas de soporte vectorial, a diferencia de SVR (Support Vector Regression), diseñada para predecir variables numéricas continuas."
         },
         {
           "id": "be76eef1-76cf-4e18-9b52-1aa4ef76f956",
           "category": "semana5",
           "categoryName": "Semana 5 · SVM",
-          "text": "En el taller de SVM, se predice una transacción usando decision_function() obteniendo un valor de +3.00, y otra obteniendo -1.00. Dado que la clase Fraude es 1 y Legítima es 0, ¿cómo se interpretan matemáticamente estos resultados?",
+          "text": "En SVM binaria (0: Legítima, 1: Fraude), decision_function() devuelve +3.00 para un caso y -1.00 para otro. ¿Cómo se interpretan?",
           "options": [
-            "Ambos indican fraude, porque los valores son distintos de cero.",
-            "decision_function() devuelve la distancia (con signo) del punto al hiperplano. Un valor positivo (+3.00) indica que el punto cayó del lado de la clase 1 (Fraude) y está lejos de la frontera (alta certeza). Un valor negativo (-1.00) indica clase 0 (Legítima).",
-            "decision_function() devuelve la probabilidad en porcentaje. +3.00 significa 300% de probabilidad, lo que indica un error del modelo.",
-            "El valor absoluto representa el número de vectores de soporte utilizados para predecir esa fila específica."
+            "Indica la distancia con signo al hiperplano: +3.00 cae del lado de Fraude con alta certeza; -1.00 cae del lado de Legítima.",
+            "Representa la probabilidad en escala porcentual: +3.00 significa 300% de probabilidad indicando un desborde numérico de cálculo.",
+            "Los valores positivos reflejan datos que fueron eliminados como outliers y los negativos identifican los vectores de soporte.",
+            "Cuantifica el número de iteraciones requeridas para clasificar cada transacción, donde valores altos indican convergencia lenta."
           ],
-          "correct": 1,
-          "feedback": "SVC por defecto no produce probabilidades (como LogisticRegression). Solo te dice de qué lado de la 'línea' (hiperplano) cayó el punto, y a qué distancia está. Mientras más alejado del cero, más seguro está el modelo de su clasificación."
+          "correct": 0,
+          "feedback": "Correcto. La función `decision_function()` computa el valor de $w^T x + b$, que representa la distancia geométrica con signo de cada punto al hiperplano separador. Un valor positivo (+3.00) sitúa la observación del lado de la clase positiva (Fraude) con holgura; un valor negativo (-1.00) la sitúa en la clase negativa (Legítima)."
         },
         {
           "id": "60ccf7a0-4225-4e01-980d-f670a3e83c3d",
           "category": "semana5",
           "categoryName": "Semana 5 · SVM",
-          "text": "A diferencia de la Regresión Logística, el modelo SVC estándar no tiene habilitado el método predict_proba(). ¿Qué técnica usa SVC internamente si habilitamos el parámetro probability=True para poder calcular probabilidades?",
+          "text": "A diferencia de la regresión logística, SVC estándar no calcula probabilidades. ¿Qué técnica aplica internamente probability=True?",
           "options": [
-            "Aplica la función Sigmoide Softmax directamente a los vectores de soporte.",
-            "Utiliza el método de Escalado de Platt (Platt Scaling), que entrena internamente un modelo de regresión logística adicional sobre los resultados del SVM (decision_function) mediante validación cruzada.",
-            "Cuenta el número de votos de los árboles de decisión subyacentes.",
-            "Divide la distancia al hiperplano por el hiperparámetro C."
+            "Aplica una función de umbral fija sobre el número de vectores de soporte dividiéndolos entre el total de muestras del dataset.",
+            "Utiliza el método de Escalado de Platt, ajustando una regresión logística sobre las distancias con validación cruzada interna.",
+            "Multiplica la norma euclidiana del vector normal w por el inverso del hiperparámetro C para obtener una función sigmoidal plana.",
+            "Ejecuta una descomposición en valores singulares sobre la matriz de kernel para extraer autovalores probabilísticos unitarios."
           ],
           "correct": 1,
-          "feedback": "El Platt Scaling ajusta una curva sigmoide sobre las distancias del SVM (decision_function). Sin embargo, habilitar probability=True vuelve el entrenamiento mucho más lento (porque requiere validación cruzada interna en 5 iteraciones) y las probabilidades resultantes a veces pueden ser inconsistentes con el resultado de predict()."
+          "feedback": "Correcto. Al configurar `probability=True` en SVC, scikit-learn aplica el método de Platt (Platt Scaling): entrena un modelo de regresión logística adicional que calibra las distancias de `decision_function()` en probabilidades válidas mediante validación cruzada interna en 5 particiones, lo que incrementa notablemente el tiempo de entrenamiento."
         },
         {
           "id": "f948a089-ed4a-4e98-8a75-76a55ed99517",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En Machine Learning, ¿qué son los parámetros de un modelo (como los coeficientes w₀, w₁ de una regresión lineal)?",
+          "text": "En Machine Learning, ¿qué son los parámetros internos de un modelo (como los coeficientes w de una regresión lineal)?",
           "options": [
-            "Valores que el programador configura manualmente antes de ejecutar el entrenamiento, como el número de folds de validación cruzada.",
-            "Valores internos que el modelo aprende automáticamente a partir de los datos durante el proceso de entrenamiento con fit(). Nunca se configuran a mano.",
-            "Etiquetas del eje X e Y que se usan para graficar las predicciones del modelo.",
-            "El número de observaciones del dataset que se usan para entrenar el modelo."
+            "Valores internos que el estimador aprende de forma autónoma durante el ajuste con fit(), sin intervención manual.",
+            "Valores que el científico de datos configura manualmente antes de iniciar el entrenamiento, como los folds de CV.",
+            "Etiquetas visuales asociadas a los ejes cartesianos para representar la dispersión de las predicciones en prueba.",
+            "Factores de escala que determinan la cantidad de muestras aleatorias que se reservan para la validación cruzada."
           ],
-          "correct": 1,
-          "feedback": "Los parámetros son los valores que el modelo ajusta internamente al llamar a fit(), como los coeficientes w en regresión o los pesos de una red neuronal. Se aprenden de los datos, no se configuran manualmente."
+          "correct": 0,
+          "feedback": "Correcto. Los parámetros son los valores numéricos internos que el modelo optimiza y aprende de los datos durante la llamada a fit() (por ejemplo, los coeficientes w y el sesgo b). No se configuran a mano, a diferencia de los hiperparámetros."
         },
         {
           "id": "d6f77df1-752d-4f50-ab11-d6a367032c30",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "¿Cuál es la diferencia fundamental entre un parámetro y un hiperparámetro en scikit-learn?",
+          "text": "¿Cuál es la diferencia conceptual fundamental entre un parámetro y un hiperparámetro en el flujo de scikit-learn?",
           "options": [
-            "Los parámetros son los que cambian el resultado del modelo; los hiperparámetros no tienen ningún efecto real en el rendimiento.",
-            "Los hiperparámetros se aprenden automáticamente con fit(); los parámetros se configuran antes del entrenamiento.",
-            "Los hiperparámetros son valores que se configuran ANTES del entrenamiento (como C, kernel, max_depth) y controlan el proceso de aprendizaje. Los parámetros son los que el modelo aprende durante fit() de los propios datos.",
-            "La única diferencia es el nombre; ambos funcionan de la misma manera internamente."
+            "Los parámetros definen la velocidad de convergencia estocástica; los hiperparámetros miden la inercia del modelo.",
+            "Los hiperparámetros se configuran antes de entrenar guiando el ajuste; los parámetros se aprenden durante el fit().",
+            "Los hiperparámetros son aprendidos de forma autónoma por el optimizador; los parámetros se eligen manualmente.",
+            "Ambos términos son sinónimos formales dentro de la API, diferenciándose solo en la función matemática de costo."
           ],
-          "correct": 2,
-          "feedback": "Los hiperparámetros (ej. C=1, kernel='rbf', cv=5) son decisiones de diseño que se toman ANTES del entrenamiento. Los parámetros (ej. los coeficientes de la SVM, los pesos de una red neuronal) son lo que el algoritmo aprende a partir de los datos al llamar a fit()."
+          "correct": 1,
+          "feedback": "Correcto. Los hiperparámetros (como C, gamma o max_depth) son decisiones de diseño estructural que se establecen antes del entrenamiento para controlar la complejidad. Los parámetros (como pesos y sesgos) son calculados por el algoritmo sobre los datos de entrenamiento."
         },
         {
           "id": "35cb0ce0-f248-4727-bb1e-7caa4716e327",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "¿Qué hace exactamente GridSearchCV de scikit-learn al ejecutar grid.fit(X_train, y_train)?",
+          "text": "¿Qué procedimiento ejecuta rigurosamente la clase GridSearchCV al invocar grid.fit(X_train, y_train)?",
           "options": [
-            "Escoge la combinación de hiperparámetros al azar y entrena el modelo solo una vez con esa combinación.",
-            "Prueba TODAS las combinaciones posibles del param_grid, evaluando cada una mediante validación cruzada (cv folds) sobre X_train. Guarda la combinación con la mejor métrica promedio en best_params_.",
-            "Divide el dataset automáticamente en entrenamiento y prueba, y selecciona la mejor métrica sobre el conjunto de prueba.",
-            "Entrena el modelo una vez con los hiperparámetros por defecto y reporta el mejor fold de validación cruzada."
+            "Selecciona al azar una configuración del diccionario y entrena una única vez el estimador sobre todo el conjunto de datos.",
+            "Divide los datos en train y test de manera automática, evaluando el estimador una sola vez sobre la partición retenida final.",
+            "Evalúa exhaustivamente todas las combinaciones del param_grid con validación cruzada, registrando la mejor en best_params_.",
+            "Entrena el estimador con los valores por defecto de la librería y descarta aquellas combinaciones con varianza no nula en CV."
           ],
-          "correct": 1,
-          "feedback": "GridSearchCV es una búsqueda exhaustiva: prueba cada combinación del param_grid. Con 32 combinaciones y cv=5, realiza 32×5=160 entrenamientos. Al final, identifica cuál combinación tuvo el mejor promedio en validación cruzada y la guarda en best_params_."
+          "correct": 2,
+          "feedback": "Correcto. GridSearchCV realiza una búsqueda exhaustiva probando el producto cartesiano de todas las combinaciones definidas en param_grid. Cada combinación se entrena y evalúa mediante validación cruzada en K folds sobre X_train, identificando la mejor configuración promedio."
         },
         {
           "id": "6ae52a80-ed6d-4029-838f-132b55f7da8f",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "¿En qué se diferencia RandomizedSearchCV de GridSearchCV y cuándo conviene usarlo?",
+          "text": "¿En qué se diferencia técnicamente RandomizedSearchCV de GridSearchCV y en qué escenario resulta conveniente emplearlo?",
           "options": [
-            "RandomizedSearchCV prueba todas las combinaciones del param_grid, igual que GridSearchCV, pero en orden aleatorio.",
-            "RandomizedSearchCV muestrea aleatoriamente un número fijo de combinaciones (n_iter) del espacio de hiperparámetros, en lugar de probarlas todas. Es mucho más rápido cuando el espacio de búsqueda es muy grande y conviene cuando hay muchos hiperparámetros con muchos valores posibles.",
-            "RandomizedSearchCV nunca usa validación cruzada; siempre evalúa en el conjunto de prueba directamente.",
-            "RandomizedSearchCV es simplemente un alias de GridSearchCV con cv=1."
+            "RandomizedSearchCV evalúa todas las combinaciones en orden aleatorio, requiriendo el mismo tiempo de procesamiento cómputo.",
+            "RandomizedSearchCV prescinde de la validación cruzada, midiendo el rendimiento directamente sobre los datos de producción.",
+            "RandomizedSearchCV es una función auxiliar que duplica las iteraciones de GridSearchCV para evitar mínimos locales falsos.",
+            "RandomizedSearchCV evalúa un número fijo n_iter de combinaciones al azar; conviene cuando el espacio de búsqueda es inmenso."
           ],
-          "correct": 1,
-          "feedback": "GridSearchCV es exhaustivo (prueba todo), lo que puede ser prohibitivo con muchos hiperparámetros. RandomizedSearchCV toma una muestra aleatoria (n_iter combinaciones) del espacio total, lo que permite explorar más eficientemente espacios grandes sin evaluar cada posibilidad."
+          "correct": 3,
+          "feedback": "Correcto. A diferencia de GridSearchCV (que evalúa todas las combinaciones posibles), RandomizedSearchCV muestrea aleatoriamente n_iter candidatos de una distribución o lista. Esto ahorra mucho tiempo computacional cuando el espacio de hiperparámetros es masivo."
         },
         {
           "id": "1985419f-42e8-4141-9e72-72fa5f9fa8ab",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "¿Qué acepta el parámetro 'estimator' de GridSearchCV y cuál es su función?",
+          "text": "¿Qué objeto se debe suministrar al parámetro 'estimator' de GridSearchCV y cuál es su función dentro del flujo?",
           "options": [
-            "Acepta el nombre del archivo CSV con los datos de entrenamiento.",
-            "Acepta el nombre de la métrica de evaluación como una cadena de texto (por ejemplo, 'f1' o 'recall').",
-            "Acepta el modelo o Pipeline que se va a optimizar. GridSearchCV entrenará este estimator con cada combinación de hiperparámetros del param_grid.",
-            "Acepta el número de combinaciones de hiperparámetros que se evaluarán aleatoriamente."
+            "Recibe el modelo o Pipeline que se optimizará, siendo clonado y ajustado para cada combinación del param_grid dado en train.",
+            "Recibe la métrica de evaluación como cadena de texto para determinar qué combinación de hiperparámetros resultará ganadora.",
+            "Recibe el nombre del archivo CSV con los datos de entrenamiento que serán procesados durante la validación cruzada K-fold.",
+            "Recibe el número entero de particiones que se crearán para distribuir el cómputo en paralelo a través de todos los cores."
           ],
-          "correct": 2,
-          "feedback": "estimator recibe la instancia del modelo o Pipeline que se quiere optimizar. Ejemplo: GridSearchCV(estimator=pipe, ...) donde pipe = Pipeline([('escalar', StandardScaler()), ('modelo', SVC())]). GridSearchCV clona este estimator para cada combinación."
+          "correct": 0,
+          "feedback": "Correcto. El parámetro `estimator` recibe la instancia del modelo base o Pipeline a optimizar (por ejemplo `estimator=pipe`). GridSearchCV clona este estimador en cada iteración y le inyecta las distintas combinaciones de hiperparámetros definidas."
         },
         {
           "id": "e167594c-1ff1-4e31-92a9-9b58df241e05",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En el taller de crédito, el param_grid se define así:\n\nparam_grid = {\n    'modelo__C':      [0.1, 1, 10, 100],\n    'modelo__gamma':  [0.001, 0.01, 0.1, 1],\n    'modelo__kernel': ['rbf', 'linear'],\n}\n\n¿Por qué los nombres de los hiperparámetros llevan el prefijo 'modelo__' (con dos guiones bajos)?",
+          "text": "Al optimizar un Pipeline con un paso llamado 'modelo', ¿por qué las claves del param_grid llevan el prefijo 'modelo__'?",
           "options": [
-            "Es una convención puramente estética; también funciona escribiendo solo 'C', 'gamma' y 'kernel'.",
-            "Porque el SVC está dentro de un Pipeline en un paso llamado 'modelo'. La notación 'paso__parámetro' es obligatoria para que GridSearchCV sepa a qué paso del Pipeline aplicar cada hiperparámetro. Sin el prefijo, scikit-learn lanza el error: Invalid parameter 'C' for estimator Pipeline.",
-            "Porque C, gamma y kernel son palabras reservadas en Python y necesitan el prefijo para usarse como claves de diccionario.",
-            "Porque solo funciona con el paso llamado 'modelo'; si el paso se llamara diferente, el param_grid no necesitaría prefijo."
+            "Es una convención estética opcional; scikit-learn infiere a qué paso corresponde cada hiperparámetro sin prefijo alguno.",
+            "Porque la sintaxis 'paso__parametro' indica a qué elemento del Pipeline corresponde cada hiperparámetro; sin ella falla.",
+            "Porque los hiperparámetros de soporte vectorial son palabras reservadas del lenguaje Python que requieren doble guion bajo.",
+            "Porque solo los estimadores no lineales requieren calificar sus hiperparámetros con el identificador del paso asignado."
           ],
           "correct": 1,
-          "feedback": "La notación 'paso__parámetro' (doble guion bajo) es la forma estándar de acceder a hiperparámetros de pasos internos de un Pipeline en scikit-learn. Si el SVC estuviera fuera del Pipeline, bastaría con 'C'. Dentro, es obligatorio usar 'modelo__C'."
+          "feedback": "Correcto. En scikit-learn, la notación `nombre_paso__hiperparametro` con doble guion bajo es obligatoria para que el Pipeline sepa exactamente a qué componente interno pertenece cada clave del diccionario (ejemplo: `'modelo__C'`). Omitir este prefijo provoca un error `ValueError`."
         },
         {
           "id": "b4e968f2-68e8-4241-8049-a867e8dbf7dd",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "¿Qué controla el parámetro cv=5 en GridSearchCV y por qué es crucial para obtener una estimación confiable del rendimiento?",
+          "text": "¿Qué función cumple el argumento cv=5 en GridSearchCV y por qué es indispensable para una estimación confiable?",
           "options": [
-            "Define el número de combinaciones de hiperparámetros que se probarán en total.",
-            "Indica que se usarán 5 folds de validación cruzada: para cada combinación de hiperparámetros, el dataset de entrenamiento se divide en 5 partes, el modelo se entrena 5 veces (con 4 partes) y se evalúa en la parte restante. El score promedio de los 5 folds es más robusto que evaluar una sola vez.",
-            "Especifica que el modelo se reentrenará 5 veces con diferentes semillas aleatorias (random_state) para medir la varianza.",
-            "Controla cuántas veces se muestra el progreso en pantalla durante el entrenamiento (verbose)."
+            "Fija el número de núcleos del procesador que ejecutarán los cálculos en paralelo reduciendo el tiempo total de búsqueda.",
+            "Determina cuántas veces se reentrenará el modelo sobre el conjunto de testeo final antes de guardar los pesos definitivos.",
+            "Aplica validación cruzada en 5 folds, entrenando con 4 y evaluando con 1 en rotación para promediar métricas robustas.",
+            "Especifica que solo se explorarán cinco combinaciones de hiperparámetros seleccionadas aleatoriamente del diccionario."
           ],
-          "correct": 1,
-          "feedback": "cv=5 significa 5-fold cross-validation. Para cada combinación, el dataset de entrenamiento se parte en 5 bloques: se entrena con 4 y se evalúa con el quinto, rotando 5 veces. El resultado (best_score_) es el promedio de los 5 folds, mucho más robusto que una sola división."
+          "correct": 2,
+          "feedback": "Correcto. `cv=5` implementa una validación cruzada de 5 particiones (5-fold CV). Cada configuración se entrena 5 veces sobre el 80% de los datos y se valida sobre el 20% restante rotativo. El promedio de los 5 puntajes produce una estimación más confiable y libre de varianza."
         },
         {
           "id": "61a8acea-91d2-4692-ba60-0fae673c7447",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En el taller de crédito se usa scoring='f1' y en el de diabetes se usa scoring='recall'. ¿Por qué se elige una métrica diferente para cada problema?",
+          "text": "¿Por qué se utiliza scoring='f1' en el problema de crédito y scoring='recall' en el diagnóstico de diabetes?",
           "options": [
-            "Es indiferente qué métrica se use; GridSearchCV siempre seleccionará la misma combinación de hiperparámetros sin importar el scoring.",
-            "Porque 'f1' solo funciona con datasets balanceados y 'recall' solo con datasets desbalanceados; scikit-learn selecciona automáticamente cuál usar.",
-            "Porque scoring define qué significa 'mejor': para crédito (clases balanceadas) el F1 equilibra Precision y Recall. Para diabetes, un falso negativo (no detectar a un enfermo) es mucho más costoso, por lo que se prioriza el Recall. La métrica seleccionada guía cuál combinación de hiperparámetros 'gana'.",
-            "Porque 'f1' y 'recall' son idénticos matemáticamente cuando las clases están balanceadas al 50%."
+            "Porque 'f1' opera únicamente en datos sintéticos; 'recall' solo se puede calcular cuando los datos provienen de salud.",
+            "Porque scikit-learn bloquea la métrica 'recall' en problemas binarios balanceados requiriendo 'f1' de forma mandatoria.",
+            "Porque ambas métricas arrojan el mismo resultado matemático, seleccionándose aleatoriamente por convención académica.",
+            "Porque el scoring guía la selección: crédito busca balancear aciertos; diabetes exige minimizar falsos negativos críticos."
           ],
-          "correct": 2,
-          "feedback": "La elección del scoring es una decisión de negocio/clínica. Para crédito, se quiere un balance entre Precision y Recall → F1. Para diabetes, no detectar a un enfermo (falso negativo) puede costar una vida → se prioriza el Recall. GridSearchCV elegirá combinaciones diferentes según la métrica usada."
+          "correct": 3,
+          "feedback": "Correcto. El parámetro `scoring` define qué significa 'mejor'. Para crédito (clases relativamente balanceadas) se prioriza equilibrar precisión y cobertura (`scoring='f1'`). En diabetes, un falso negativo puede comprometer la vida de un paciente, por lo que se prioriza la sensibilidad (`scoring='recall'`)."
         },
         {
           "id": "a788f505-2e84-445a-a5f1-2aac5e270633",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En el taller se usa GridSearchCV(..., n_jobs=-1, ...). ¿Qué significa n_jobs=-1?",
+          "text": "Al instanciar `GridSearchCV(..., n_jobs=-1)`, ¿qué comportamiento específico se activa en el sistema de cómputo?",
           "options": [
-            "Que GridSearchCV descartará el peor resultado (el que ocupa el último lugar en el ranking).",
-            "Que el entrenamiento de todas las combinaciones se realizará en paralelo usando todos los núcleos disponibles del procesador, reduciendo el tiempo de cómputo.",
-            "Que GridSearchCV evaluará solo el 1% de las combinaciones del param_grid para acelerar la búsqueda.",
-            "Que el proceso de búsqueda no generará ninguna salida de texto en pantalla."
+            "Ejecuta los ajustes en paralelo utilizando todos los núcleos del procesador disponibles para reducir el tiempo total.",
+            "Descarta la peor combinación evaluada en cada fold de validación cruzada para acelerar la convergencia numérica global.",
+            "Evalúa únicamente el último fold de validación cruzada omitiendo los cálculos de las cuatro particiones intermedias.",
+            "Silencia la emisión de mensajes por consola asegurando que no se generen registros de advertencia en el entorno local."
           ],
-          "correct": 1,
-          "feedback": "n_jobs=-1 significa 'usa todos los núcleos (cores) disponibles del CPU'. Las 160 ejecuciones del taller (32 combinaciones × 5 folds) se dividen entre los núcleos y corren en paralelo, lo que puede reducir drásticamente el tiempo de entrenamiento."
+          "correct": 0,
+          "feedback": "Correcto. `n_jobs=-1` indica a joblib que emplee todos los procesadores o hilos lógicos del CPU de la máquina para entrenar múltiples combinaciones y folds simultáneamente en paralelo, disminuyendo sustancialmente el tiempo de cómputo."
         },
         {
           "id": "a16e9731-e5d6-484c-8992-9f6deb7ee77e",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "¿Qué hace el parámetro refit=True (que es el valor por defecto) en GridSearchCV?",
+          "text": "¿Cuál es la función del parámetro refit=True (valor por defecto) tras concluir la exploración de GridSearchCV?",
           "options": [
-            "Fuerza al modelo a usar todos los folds de validación cruzada en orden inverso.",
-            "Una vez que se identifica la mejor combinación de hiperparámetros, refit=True reentrena automáticamente el modelo con TODA la X_train usando esa combinación. Esto crea best_estimator_, que está listo para predecir directamente.",
-            "Guarda los resultados de cada fold en un archivo CSV para su posterior análisis.",
-            "Evita que GridSearchCV use los datos de prueba (X_test) durante la búsqueda de hiperparámetros."
+            "Exporta automáticamente el mejor modelo serializado en un archivo de formato binario con extensión estándar joblib local.",
+            "Reentrena el estimador con toda la partición X_train usando la mejor combinación de hiperparámetros ganadora del proceso.",
+            "Obliga a recalcular la validación cruzada invirtiendo el orden de las particiones para comprobar la estabilidad numérica.",
+            "Calcula la matriz de confusión directamente sobre los datos de entrenamiento para reportar el porcentaje de aciertos final."
           ],
           "correct": 1,
-          "feedback": "refit=True (por defecto) hace que al terminar los 160 entrenamientos, GridSearchCV tome la mejor combinación y entrene un modelo final con el 100% de X_train. Este modelo final queda disponible en best_estimator_ y se usa cuando llamas a grid.predict()."
+          "feedback": "Correcto. Tras concluir todos los folds de validación cruzada, `refit=True` toma la combinación ganadora de hiperparámetros y entrena un estimador final con la totalidad de los datos de `X_train`. Este modelo optimizado queda accesible en `best_estimator_`."
         },
         {
           "id": "4852517d-a021-42ae-b7d1-3c913f173ce7",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "El taller usa GridSearchCV(..., verbose=1). Cuando se ejecuta, imprime: 'Fitting 5 folds for each of 32 candidates, totalling 160 fits'. ¿Para qué sirve el parámetro verbose?",
+          "text": "En el taller se utiliza `GridSearchCV(..., verbose=1)`. ¿Qué utilidad práctica aporta configurar este parámetro?",
           "options": [
-            "verbose controla cuántos resultados se muestran en cv_results_; verbose=1 muestra solo el mejor resultado.",
-            "verbose controla el nivel de detalle de los mensajes de progreso que GridSearchCV imprime durante la búsqueda. verbose=0 no imprime nada; verbose=1 muestra mensajes básicos; valores más altos muestran más detalles por fold.",
-            "verbose=1 activa la paralelización (n_jobs=-1) automáticamente.",
-            "verbose solo funciona con Jupyter Notebook y no tiene efecto en scripts de Python estándar."
+            "Modifica la precisión en punto flotante con la que se calculan las puntuaciones de validación cruzada en cada iteración.",
+            "Activa la paralelización en múltiples hilos de ejecución de la tarjeta gráfica acelerando los entrenamientos pesados.",
+            "Controla el nivel de detalle de los mensajes de progreso que se imprimen por pantalla durante las rondas de búsqueda.",
+            "Filtra las combinaciones con bajo rendimiento impidiendo que completen todos los folds de evaluación en el dataset."
           ],
-          "correct": 1,
-          "feedback": "verbose es útil para monitorear el progreso de búsquedas largas. Con verbose=1 ves mensajes como cuántos entrenamientos quedan. Con verbose=3 verías información de cada fold individual. verbose=0 silencia completamente la salida."
+          "correct": 2,
+          "feedback": "Correcto. `verbose` controla la verbosidad de la salida. Con `verbose=1`, GridSearchCV informa el número total de folds y candidatos a evaluar (ej. 'Fitting 5 folds for each of 32 candidates, totalling 160 fits'); valores más altos detallan el progreso fold por fold."
         },
         {
           "id": "f1aad530-b9ce-4c65-9eb7-6719e3c75e5f",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "Después de grid.fit(X_train, y_train), el taller imprime: grid.best_params_ → {'modelo__C': 10, 'modelo__gamma': 0.01, 'modelo__kernel': 'rbf'}. ¿Qué contiene best_params_ exactamente?",
+          "text": "Tras ejecutar fit() sobre GridSearchCV, se consulta grid.best_params_. ¿Qué contiene exactamente este atributo?",
           "options": [
-            "El nombre del modelo ganador y su score en el conjunto de prueba X_test.",
-            "Un diccionario con la combinación de hiperparámetros que obtuvo el mejor score promedio en validación cruzada sobre X_train. Solo existe DESPUÉS de llamar a fit().",
-            "El número total de entrenamientos realizados durante la búsqueda (equivalente a n_combinaciones × cv).",
-            "Los valores de los parámetros internos que el SVM aprendió (como los vectores de soporte)."
+            "El arreglo numérico de los pesos y coeficientes aprendidos por el modelo lineal durante la última ronda de ajuste.",
+            "La lista de los cinco mejores puntajes de prueba obtenidos en el conjunto de testeo independiente reservado al inicio.",
+            "La cantidad de iteraciones estocásticas requeridas por el estimador para converger en el mejor fold de entrenamiento.",
+            "Un diccionario con los valores de hiperparámetros que alcanzaron la mayor puntuación promedio en validación cruzada."
           ],
-          "correct": 1,
-          "feedback": "best_params_ es un atributo de resultado (solo existe tras fit()). Contiene el diccionario con los valores de hiperparámetros que maximizaron la métrica de scoring en validación cruzada. Estos son los valores que se usan en best_estimator_."
+          "correct": 3,
+          "feedback": "Correcto. `best_params_` es un atributo que se crea tras llamar a `fit()`. Contiene un diccionario cuyas claves y valores corresponden exactamente a la combinación de hiperparámetros que maximizó la métrica de scoring especificada durante la validación cruzada."
         },
         {
           "id": "b8087b03-ba64-4e5a-8ce1-143beb5e0615",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "El taller muestra: 'Mejor F1 promedio en CV: 0.895'. ¿Qué representa este valor de best_score_ y por qué NO es el rendimiento final del modelo?",
+          "text": "El taller muestra: 'Mejor F1 promedio en CV: 0.895'. ¿Qué representa este valor de best_score_ y por qué no es el score final?",
           "options": [
-            "Es el F1-score calculado sobre X_test; representa el rendimiento real que se puede esperar en producción.",
-            "Es el promedio del F1 en los cv folds de validación sobre X_train. NO es el rendimiento final porque fue calculado sobre subconjuntos de entrenamiento (nunca vio X_test). El rendimiento real se mide una sola vez sobre X_test en el Bloque A5.",
-            "Es el máximo F1 posible teóricamente; cualquier valor de prueba por encima de 0.895 indicaría sobreajuste severo.",
-            "Es el F1-score del modelo base (sin optimizar) que sirve como línea de referencia para la comparación."
+            "Es el límite teórico superior que cualquier modelo puede alcanzar; si el test lo supera indica sobreajuste inevitable.",
+            "Es la precisión calculada sobre todo el dataset de entrenamiento; no es final porque no incluye los datos de validación.",
+            "Es el promedio del F1 en los folds de validación sobre X_train; el rendimiento final debe medirse en el conjunto X_test.",
+            "Es el puntaje obtenido por el modelo base por defecto antes de iniciar la exploración de los hiperparámetros candidatos."
           ],
-          "correct": 1,
-          "feedback": "best_score_ = 0.895 es el F1 promedio en los 5 folds de validación dentro de X_train. El rendimiento en X_test puede ser diferente (generalmente algo menor). El taller confirma esto: el modelo base en X_test da F1=0.84, el optimizado da 0.87 — no 0.895."
+          "correct": 2,
+          "feedback": "Correcto. `best_score_` es el promedio de la métrica de evaluación en los folds de validación durante la búsqueda (sobre subconjuntos de `X_train`). No representa el rendimiento generalizado final, el cual debe corroborarse evaluando `best_estimator_` sobre el conjunto independiente `X_test`."
         },
         {
           "id": "4d9c9839-73d2-4f9e-9323-5af44ce9a9ee",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "¿Qué es grid.best_estimator_ y por qué grid.predict(X_test) es equivalente a usar best_estimator_ directamente?",
+          "text": "¿Qué relación técnica existe entre invocar `grid.predict(X_test)` y llamar directamente a `grid.best_estimator_.predict(X_test)`?",
           "options": [
-            "best_estimator_ es el modelo con los peores hiperparámetros, guardado como referencia para comparar con el ganador.",
-            "best_estimator_ es el Pipeline completo (preprocesador + SVM) ya reentrenado con toda la X_train usando la mejor combinación de hiperparámetros. grid.predict() delega automáticamente a best_estimator_.predict(), por lo que son equivalentes.",
-            "best_estimator_ es solo un resumen en texto de los hiperparámetros ganadores; no se puede usar directamente para predecir.",
-            "best_estimator_ es el modelo base antes de la optimización, guardado para comparación posterior."
+            "grid.predict() utiliza una votación por ensamble de todos los modelos; best_estimator_ predice solo con el ganador en test.",
+            "Son exactamente equivalentes; grid.predict() delega la inferencia de forma automática en el objeto best_estimator_ ajustado.",
+            "best_estimator_ predice sobre datos sin escalar; grid.predict() requiere que las muestras estén previamente normalizadas.",
+            "grid.predict() ejecuta una nueva búsqueda de validación cruzada antes de emitir las etiquetas sobre el conjunto de test."
           ],
           "correct": 1,
-          "feedback": "Cuando refit=True, GridSearchCV entrena un modelo final con la mejor combinación sobre toda X_train y lo almacena en best_estimator_. Este es el modelo que best_estimator_.predict() o directamente grid.predict() usará para predecir datos nuevos."
+          "feedback": "Correcto. Cuando `refit=True`, el objeto `GridSearchCV` implementa los métodos `predict()`, `predict_proba()` y `decision_function()` delegando directamente la llamada en `best_estimator_`, por lo que ambas expresiones son completamente intercambiables."
         },
         {
           "id": "6559e260-041c-4cec-99e1-d1368262641d",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Bloque A6 del taller se convierte cv_results_ en un DataFrame y se visualiza con seaborn. ¿Qué información contiene cv_results_?",
+          "text": "Al convertir grid.cv_results_ en un DataFrame de pandas, ¿qué información detallada queda disponible para el análisis?",
           "options": [
-            "Solo la mejor combinación de hiperparámetros y su score, igual que best_params_ y best_score_.",
-            "Un diccionario con los resultados de TODAS las combinaciones probadas: sus parámetros, el score promedio en CV, el ranking (rank_test_score=1 es la mejor), y los scores individuales de cada fold.",
-            "Solo los scores del conjunto de prueba X_test para cada combinación evaluada.",
-            "Un listado de los vectores de soporte encontrados por cada combinación de hiperparámetros del kernel RBF."
+            "Únicamente los hiperparámetros y la puntuación de la combinación ganadora, sin registrar las configuraciones evaluadas.",
+            "El listado de los errores de predicción individuales y los identificadores de los registros clasificados incorrectamente.",
+            "Un registro exhaustivo de todas las combinaciones con sus métricas por fold, puntajes medios, desviaciones y rankings.",
+            "Las coordenadas de los centroides geométricos calculados para cada una de las clases del modelo durante la validación."
           ],
-          "correct": 1,
-          "feedback": "cv_results_ es el registro completo de la búsqueda. Convertido a DataFrame con pd.DataFrame(grid.cv_results_), tiene una fila por combinación, con columnas como params (la combinación), mean_test_score (F1 promedio), rank_test_score (1=mejor). Útil para visualizar como mapa de calor."
+          "correct": 2,
+          "feedback": "Correcto. `cv_results_` es un diccionario exhaustivo que almacena todos los datos de la exploración: hiperparámetros evaluados (`params`), métricas individuales por fold (`split0_test_score`, etc.), medias (`mean_test_score`), desviaciones estándar y posiciones de ranking (`rank_test_score`)."
         },
         {
           "id": "b675490b-333f-4b4b-b789-8d4a7be3b025",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "El taller define:\n\nparam_grid = {\n    'modelo__C':      [0.1, 1, 10, 100],\n    'modelo__gamma':  [0.001, 0.01, 0.1, 1],\n    'modelo__kernel': ['rbf', 'linear'],\n}\n\nEl comentario dice: '32 combinaciones × 5 folds = 160 entrenamientos'. ¿Cómo se calculan las 32 combinaciones?",
+          "text": "Con param_grid = {'C': [0.1, 1, 10, 100], 'gamma': [0.001, 0.01, 0.1, 1], 'kernel': ['rbf', 'linear']}, ¿cómo se obtienen 32 candidatos?",
           "options": [
-            "32 = 4 + 4 + 2 (suma de los valores por hiperparámetro).",
-            "32 = 4 × 4 × 2 (producto del número de valores de cada hiperparámetro). GridSearchCV prueba todas las combinaciones posibles formando el producto cartesiano.",
-            "32 es un valor fijo que GridSearchCV usa por defecto cuando se pasa un diccionario.",
-            "32 = cv × n_jobs = 5 × (-1), lo cual python interpreta como 32 combinaciones al azar."
+            "Sumando la cantidad de valores de cada lista: 4 + 4 + 2 = 10 combinaciones multiplicadas por el factor de escala inicial.",
+            "Dividiendo el número de iteraciones máximas del optimizador estocástico entre los grados de libertad de las variables dadas.",
+            "Elevando la cantidad de hiperparámetros al cuadrado y multiplicando por el número de clases presentes en el problema actual.",
+            "Calculando el producto cartesiano de los valores definidos: 4 de C por 4 de gamma por 2 kernels resulta en 32 combinaciones."
           ],
-          "correct": 1,
-          "feedback": "El producto cartesiano: 4 valores de C × 4 valores de gamma × 2 kernels = 32 combinaciones. Con cv=5, cada combinación se evalúa 5 veces → 32 × 5 = 160 fits. Luego el refit final suma 1 más: 161 entrenamientos en total."
+          "correct": 3,
+          "feedback": "Correcto. GridSearchCV genera el producto cartesiano de todas las listas del diccionario: 4 valores de C × 4 valores de gamma × 2 kernels = 32 combinaciones posibles. Con `cv=5`, esto implica ejecutar $32 \times 5 = 160$ entrenamientos."
         },
         {
           "id": "f6173506-8662-484e-a5ec-92cdc12bb0b6",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "Un estudiante define el param_grid así:\n\nparam_grid = {\n    'C':      [0.1, 1, 10],\n    'kernel': ['rbf', 'linear'],\n}\ngrid = GridSearchCV(pipe, param_grid, cv=5)\ngrid.fit(X_train, y_train)\n\n¿Qué error obtendrá y por qué?",
+          "text": "Si se pasa un Pipeline con el paso 'modelo' a GridSearchCV usando param_grid = {'C': [1, 10]}, ¿qué error ocurrirá al llamar a fit()?",
           "options": [
-            "No habrá error; scikit-learn detecta automáticamente que 'C' y 'kernel' pertenecen al SVC dentro del Pipeline.",
-            "ValueError: Invalid parameter 'C' for estimator Pipeline. Porque el SVC está dentro de un Pipeline en el paso 'modelo', y la notación correcta es 'modelo__C' y 'modelo__kernel' (con doble guion bajo).",
-            "El código ejecutará correctamente pero ignorará los valores de 'C' y usará siempre C=1 por defecto.",
-            "TypeError: el param_grid debe ser una lista de diccionarios, no un solo diccionario."
+            "ValueError por parámetro inválido; las claves deben indicar el paso del Pipeline usando doble guion bajo ('modelo__C').",
+            "TypeError indicando que los valores de C deben definirse obligatoriamente en escala logarítmica para admitir la búsqueda.",
+            "El ajuste se ejecutará con éxito pero GridSearchCV ignorará los valores de C utilizando el valor por defecto de fábrica.",
+            "NotFittedError indicando que el objeto Pipeline debe ser ajustado manualmente antes de poder pasarse como estimador base."
           ],
-          "correct": 1,
-          "feedback": "Este es un error muy frecuente en el taller. Cuando el estimator es un Pipeline, los hiperparámetros de sus pasos se referencian con 'nombre_del_paso__hiperparametro'. Si el paso se llama 'modelo', entonces es 'modelo__C', 'modelo__kernel', etc."
+          "correct": 0,
+          "feedback": "Correcto. Al optimizar un Pipeline, scikit-learn no reconoce hiperparámetros directos como `'C'` porque pertenecen al paso interno y no al contenedor Pipeline. La llamada lanzará un `ValueError: Invalid parameter 'C' for estimator Pipeline`, exigiendo la sintaxis `'modelo__C'`."
         },
         {
           "id": "529e9914-a2ca-4983-b761-90f55ed0950f",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "El taller elige los valores de C y gamma en escala logarítmica: [0.1, 1, 10, 100] y [0.001, 0.01, 0.1, 1]. ¿Por qué se usa esta escala en lugar de valores lineales como [1, 2, 3, 4]?",
+          "text": "¿Por qué en GridSearchCV se eligen hiperparámetros como C y gamma en escala logarítmica en lugar de secuencias lineales como [1, 2, 3]?",
           "options": [
-            "Porque scikit-learn solo acepta valores que sean potencias de 10 en el param_grid.",
-            "Porque C y gamma actúan por órdenes de magnitud: la diferencia entre C=0.1 y C=1 es tan significativa como entre C=10 y C=100. Con escala lineal se desperdiciarían evaluaciones entre valores muy similares.",
-            "Porque la escala logarítmica garantiza que GridSearchCV encuentre siempre la combinación óptima en menos de 10 iteraciones.",
-            "Porque la escala lineal solo funciona con kernels lineales; la logarítmica es requerida para el kernel RBF."
+            "Porque la escala lineal introduce colinealidad en las matrices de proyección provocando divergencia en los estimadores dados.",
+            "Porque C y gamma actúan por órdenes de magnitud multiplicativos; pasar de 1 a 10 es mucho más significativo que de 1 a 2.",
+            "Porque la API de scikit-learn restringe los diccionarios param_grid para que solo admitan potencias enteras de diez en Python.",
+            "Porque la escala logarítmica asegura que todas las combinaciones evalúen el mismo número de vectores de soporte del modelo."
           ],
           "correct": 1,
-          "feedback": "C y gamma tienen un efecto multiplicativo, no aditivo. Pasar de C=1 a C=10 es un cambio dramático en el comportamiento del modelo; pasar de C=1 a C=2 es casi insignificante. Por eso se exploran órdenes de magnitud (×10) en lugar de valores consecutivos (+1)."
+          "feedback": "Correcto. El impacto de C y gamma sobre la función de costo y la curvatura del margen es exponencial y multiplicativo. Explorar saltos multiplicativos (0.001, 0.01, 0.1, 1, 10, 100) permite recorrer amplias regiones del espacio de regularización con pocas evaluaciones."
         },
         {
           "id": "98db59b4-31a0-40c5-ad32-600fe2f9e511",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Bloque A6 del taller, el mapa de calor muestra que C=0.1, gamma=0.001 da F1=0.000. El taller explica que 'el modelo predice rechazado para todos'. ¿Cómo se llama este problema y qué lo causa?",
+          "text": "En el mapa de calor de cv_results_, la combinación C=0.1 y gamma=0.001 obtiene F1 = 0.000 prediciendo siempre rechazado. ¿Qué problema ocurre?",
           "options": [
-            "Sobreajuste (Overfitting): el modelo memoriza los datos de entrenamiento y falla en el fold de validación.",
-            "Underfitting: con C muy bajo y gamma muy bajo, el modelo es tan simple que no puede aprender ninguna frontera de decisión útil, prediciendo la misma clase para todos los casos.",
-            "Data Leakage: los datos del fold de prueba contaminaron el entrenamiento a través del StandardScaler.",
-            "Convergencia prematura: el optimizador SVM se detuvo antes de encontrar el hiperplano óptimo."
+            "Fuga de información (Data Leakage) generada por ajustar el escalador antes de realizar la partición de entrenamiento.",
+            "Sobreajuste severo (Overfitting), donde el estimador memorizó los datos de train y falló en los folds de validación.",
+            "Subajuste severo (Underfitting): margen tan ancho e influencia tan difusa que el modelo colapsa a la clase mayoritaria.",
+            "Convergencia prematura del optimizador cuadrático debida a un valor insuficiente de iteraciones máximas permitidas."
           ],
-          "correct": 1,
-          "feedback": "C muy bajo → margen muy amplio, muy tolerante con errores. gamma muy bajo → cada punto tiene influencia global muy difusa. La combinación extrema produce un modelo trivial que ignora toda la estructura de los datos (underfitting severo), prediciendo siempre la clase mayoritaria."
+          "correct": 2,
+          "feedback": "Correcto. Un C muy bajo promueve un margen excesivamente tolerante y permisivo, mientras que un gamma diminuto hace que los puntos tengan un radio de influencia plano y global. Juntos producen un subajuste (underfitting) extremo: el modelo es incapaz de trazar una frontera útil y predice siempre la clase mayoritaria, arrojando F1 = 0.0."
         },
         {
           "id": "b4810785-8df4-4e7d-a7f4-b673f9a8a732",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "El taller advierte: 'Si el mejor valor queda en el BORDE del grid (ej. C=100, el máximo definido), conviene ampliar el rango antes de dar la búsqueda por terminada.' ¿Por qué es necesario ampliar el rango en ese caso?",
+          "text": "Si tras ejecutar GridSearchCV la mejor combinación se ubica en el límite superior del grid (ej. C = 100), ¿qué decisión se debe tomar?",
           "options": [
-            "Porque scikit-learn requiere que el mejor valor nunca esté en los extremos del param_grid.",
-            "Porque un valor ganador en el borde sugiere que el óptimo real podría estar más allá del rango explorado (ej. C=1000). Si no se amplía el rango, el modelo podría no ser el verdaderamente óptimo.",
-            "Porque los valores en los bordes del grid siempre causan sobreajuste.",
-            "Porque grid.best_params_ no puede devolver valores ubicados en los extremos del diccionario."
+            "Dar por finalizado el proceso de búsqueda asumiendo que el valor máximo probado representa el óptimo global del problema.",
+            "Reemplazar el estimador por un algoritmo de árboles de decisión para evitar que el hiperparámetro desborde la memoria RAM.",
+            "Reducir los valores del param_grid hacia el límite inferior para forzar a que el mejor candidato quede en el centro exacto.",
+            "Ampliar el rango de búsqueda hacia valores superiores (ej. C = 1000) porque el óptimo real podría estar más allá del borde."
           ],
-          "correct": 1,
-          "feedback": "Si el mejor C=100 (el máximo del grid [0.1, 1, 10, 100]), significa que dentro del rango explorado, más es mejor. Pero quizás C=1000 sería aún mejor. El óptimo real puede estar fuera del rango definido, por lo que se deben agregar más valores al límite superior."
+          "correct": 3,
+          "feedback": "Correcto. Cuando el mejor valor seleccionado queda en el borde exterior del rango analizado, indica que el rendimiento crecía hacia ese extremo. Es una buena práctica ampliar el límite de búsqueda para comprobar si valores aún mayores (como C=1000) mejoran el desempeño o si se alcanza una meseta."
         },
         {
           "id": "2c777dea-2c12-4373-9fa7-6b1e8aeccef3",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "¿Por qué el taller enfatiza que el StandardScaler DEBE ir dentro del Pipeline al usar GridSearchCV, y no aplicarse manualmente antes?",
+          "text": "¿Por qué es un error metodológico grave estandarizar todo X_train con StandardScaler antes de ingresarlo a GridSearchCV?",
           "options": [
-            "Porque StandardScaler no funciona fuera de un Pipeline en versiones recientes de scikit-learn.",
-            "Porque si se escala todo X_train antes de GridSearchCV, el scaler aprende la media y desviación de TODOS los datos de entrenamiento, incluidos los folds de validación. Esto genera fuga de datos (data leakage): el fold de validación ya no simula datos completamente nuevos.",
-            "Porque el Pipeline aplica el escalado en paralelo, lo que acelera el entrenamiento.",
-            "Porque fuera del Pipeline, StandardScaler escala la variable objetivo y en lugar de X."
+            "Provoca que scikit-learn escale de manera errónea la variable objetivo y en lugar de transformar las columnas de X.",
+            "Invalida la convergencia numérica de los kernels no lineales al forzar a que los atributos tengan varianza unitaria.",
+            "Genera una excepción de tipo TypeError porque GridSearchCV requiere obligatoriamente matrices de datos sin procesar.",
+            "Provoca fuga de datos (data leakage) porque el scaler aprendería medias y desviaciones de los folds de validación."
           ],
-          "correct": 1,
-          "feedback": "Dentro del Pipeline, GridSearchCV hace que el StandardScaler se ajuste SOLO con los 4 folds de entrenamiento de cada iteración, y el fold de validación se transforma con esa estadística (sin haberla visto). Esto simula fielmente el proceso con datos nuevos reales."
+          "correct": 3,
+          "feedback": "Correcto. Si se estandariza todo `X_train` antes de la validación cruzada, las estadísticas de media y dispersión calculadas incluirán los datos de los folds que actuarán como prueba temporal en cada iteración. Integrar `StandardScaler` dentro de un `Pipeline` garantiza que el escalador se ajuste únicamente con los folds de entrenamiento de cada partición."
         },
         {
           "id": "1897f7bf-fa14-47f2-856c-40bdfc2598c5",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "El Bloque B3 del taller explica que gamma no afecta al kernel lineal. Para evitar combinaciones redundantes, se usa param_grid como lista de diccionarios:\n\nparam_grid_lista = [\n    {'modelo__kernel': ['rbf'],    'modelo__C': [0.1,1,10,100], 'modelo__gamma': [0.001,0.01,0.1,1]},\n    {'modelo__kernel': ['linear'], 'modelo__C': [0.1,1,10,100]},\n]\n\n¿Cuántas combinaciones totales evalúa este grid y cuántas se ahorró frente al grid original (32 combinaciones)?",
+          "text": "Para evitar evaluar gamma en el kernel lineal (donde no tiene efecto), se define param_grid como una lista de diccionarios. ¿Qué se logra?",
           "options": [
-            "20 combinaciones totales (16 RBF + 4 lineal). Se ahorraron 12 combinaciones (48 menos entrenamientos con cv=5).",
-            "20 combinaciones totales. Se ahorró 0 combinaciones porque ambos grids tienen el mismo total.",
-            "8 combinaciones totales (4 RBF + 4 lineal). Se ahorraron 24 combinaciones.",
-            "24 combinaciones totales (16+8). Se ahorró 1 combinación."
+            "Obligar a que el estimador utilice paralelismo en tarjeta gráfica reduciendo el consumo de memoria en la CPU del equipo.",
+            "Eliminar combinaciones redundantes evaluando gamma solo con RBF, ahorrando entrenamientos innecesarios en la búsqueda.",
+            "Garantizar que el kernel lineal y el kernel RBF utilicen exactamente los mismos vectores de soporte en el ajuste final.",
+            "Permitir que GridSearchCV asigne pesos diferenciados a cada partición de validación cruzada según su representatividad."
           ],
-          "correct": 0,
-          "feedback": "16 combinaciones RBF (4C × 4gamma) + 4 combinaciones lineal (4C × 1, sin gamma) = 20 total. El grid original tenía 32 (4×4×2=32, probando gamma 4 veces para lineal aunque no sirva). Se ahorraron 12 combinaciones = 12×5=60 entrenamientos innecesarios."
+          "correct": 1,
+          "feedback": "Correcto. Dado que el hiperparámetro `gamma` no interviene en la formulación del kernel lineal ($K(x, z) = x^T z$), evaluarlo para distintos valores de gamma en dicho kernel es un desperdicio de cómputo. Al estructurar `param_grid` como una lista de diccionarios independientes, se descartan esas combinaciones superfluas."
         },
         {
           "id": "1968539e-170e-4313-a88c-84b416e0f428",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "¿Cuál de los siguientes bloques de código corresponde correctamente a crear y ejecutar un GridSearchCV para optimizar un Pipeline que contiene un paso 'modelo' (SVC) sobre el dataset de crédito del taller?",
+          "text": "¿Cuál de las siguientes estructuras representa la forma metodológicamente correcta de configurar y ejecutar GridSearchCV?",
           "options": [
-            "grid = GridSearchCV({'C': [1,10], 'kernel': ['rbf']}, pipe, cv=5)\ngrid.fit(X_train, y_train)",
-            "from sklearn.model_selection import GridSearchCV\nparam_grid = {'modelo__C': [0.1, 1, 10, 100], 'modelo__gamma': [0.001, 0.01, 0.1, 1], 'modelo__kernel': ['rbf', 'linear']}\ngrid = GridSearchCV(pipe, param_grid, cv=5, scoring='f1', n_jobs=-1, verbose=1)\ngrid.fit(X_train, y_train)",
-            "grid = GridSearchCV(pipe, cv=5, scoring='f1')\ngrid.param_grid = {'C': [1, 10]}\ngrid.fit(X_train, y_train)",
-            "grid = GridSearchCV(SVC(), {'C': [1,10]}, cv=5)\ngrid.fit(X, y)  # Se pasa el dataset completo"
+            "grid = GridSearchCV(pipe, param_grid, cv=5, scoring='f1', n_jobs=-1, verbose=1); grid.fit(X_train, y_train)",
+            "grid = GridSearchCV(SVC(), param_grid, cv=5, scoring='f1'); grid.fit(X, y)  # Evaluando en todo el dataset",
+            "grid = GridSearchCV(param_grid, pipe, cv=5); grid.fit(X_test, y_test)  # Optimizando sobre datos de prueba",
+            "grid = GridSearchCV(pipe, cv=5, scoring='f1'); grid.param_grid = param_grid; grid.fit(X_train_scaled, y_test)"
           ],
-          "correct": 1,
-          "feedback": "La estructura correcta del taller: 1) importar GridSearchCV, 2) definir param_grid con prefijo 'modelo__', 3) crear GridSearchCV(estimator=pipe, param_grid, cv=5, scoring='f1', n_jobs=-1), 4) llamar fit solo con X_train (X_test queda reservado)."
+          "correct": 0,
+          "feedback": "Correcto. La estructura adecuada consiste en suministrar el Pipeline completo como estimator, asociar el diccionario param_grid con notación de doble guion bajo, definir la métrica de scoring y la validación cruzada, y ejecutar `fit()` estrictamente sobre `X_train` e `y_train`."
         },
         {
           "id": "c78cab64-f4f7-4e02-841c-27dcc5f530d9",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Bloque A6 del taller se ejecuta este código:\n\nresultados = pd.DataFrame(grid.cv_results_)\nresultados.sort_values('rank_test_score')[['params', 'mean_test_score', 'rank_test_score']].head(5)\n\n¿Qué muestra la columna 'rank_test_score'?",
+          "text": "Al ordenar los resultados con `sort_values('rank_test_score')`, ¿qué información técnica proporciona la columna 'rank_test_score'?",
           "options": [
-            "El número de vectores de soporte que cada combinación generó durante el entrenamiento.",
-            "El ranking de cada combinación según su mean_test_score. rank=1 es la mejor combinación; valores más altos indican peor rendimiento promedio en validación cruzada.",
-            "El número del fold (1 a 5) en el que cada combinación obtuvo su mejor resultado.",
-            "El porcentaje de ahorro computacional de cada combinación respecto al tiempo total de búsqueda."
+            "El número del fold específico (1 a 5) en el cual la combinación respectiva alcanzó su mayor puntaje de evaluación.",
+            "El ranking ordinal según el desempeño medio en validación cruzada, donde 1 corresponde a la configuración óptima.",
+            "La cantidad de vectores de soporte seleccionados por el algoritmo durante el entrenamiento de esa combinación puntual.",
+            "El porcentaje de reducción en tiempo de ejecución obtenido respecto al promedio de todos los candidatos analizados."
           ],
           "correct": 1,
-          "feedback": "rank_test_score enumera las combinaciones de mejor (1) a peor según el mean_test_score. Es útil para identificar rápidamente cuáles fueron los top-5 candidatos y si hay empates (varias combinaciones con rank=1)."
+          "feedback": "Correcto. `rank_test_score` clasifica ordinalmente todas las combinaciones evaluadas de mejor a peor según su puntuación media (`mean_test_score`). La combinación con ranking 1 es la ganadora (o las ganadoras en caso de empate)."
         },
         {
           "id": "7fc3fc83-4cef-4b61-bfc5-c6f5ba1d694f",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "El Bloque A6 genera un mapa de calor con este código:\n\nrbf = resultados[resultados['param_modelo__kernel'] == 'rbf']\ntabla = rbf.pivot_table(values='mean_test_score', index='param_modelo__C', columns='param_modelo__gamma')\nsns.heatmap(tabla, annot=True, fmt='.3f', cmap='Blues')\n\n¿Qué visualiza este gráfico y para qué sirve?",
+          "text": "En el taller se genera un mapa de calor con `pivot_table(values='mean_test_score', index='param_C', columns='param_gamma')`. ¿Para qué sirve?",
           "options": [
-            "Muestra la matriz de confusión del mejor modelo sobre X_test, con colores que representan los aciertos y errores.",
-            "Muestra una tabla bidimensional donde cada celda es el F1 promedio en CV para una combinación (C, gamma) del kernel RBF. Permite identificar visualmente qué zona del espacio de búsqueda tiene el mejor rendimiento.",
-            "Grafica la curva ROC de cada combinación de hiperparámetros superpuesta en un solo eje.",
-            "Muestra la distribución de los tiempos de entrenamiento de cada combinación para identificar cuellos de botella."
+            "Para proyectar los datos sobre las dos primeras componentes principales evaluando la separabilidad de los datos en 2D.",
+            "Para visualizar la matriz de confusión multiclase identificando qué etiquetas concentran los mayores falsos negativos.",
+            "Para examinar la interacción continua entre C y gamma, identificando visualmente qué región del espacio maximiza el F1.",
+            "Para comparar la distribución temporal de los entrenamientos y detectar qué combinaciones saturaron la memoria del CPU."
           ],
-          "correct": 1,
-          "feedback": "El pivot_table organiza C en filas y gamma en columnas; cada celda contiene el F1 promedio de esa combinación. El mapa de calor permite ver de un vistazo cuál zona (ej. C=10, gamma=0.01) es la óptima y cuáles zonas extremas sufren underfitting o overfitting."
+          "correct": 2,
+          "feedback": "Correcto. La tabla pivote cruza los hiperparámetros C (filas) y gamma (columnas) con la métrica promedio en sus celdas. Desplegarla como mapa de calor permite al analista inspeccionar de un vistazo la topología de la superficie de rendimiento y confirmar si el óptimo es estable."
         },
         {
           "id": "3efb4262-e13c-4685-8ff0-0986274e98ad",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Taller de Fraude (Sección 4.1), se define el param_grid para Regresión Logística así:\n\nparam_grid_lr = {\n    'C': [0.01, 0.1, 1, 10],\n    'penalty': ['l1', 'l2'],\n    'solver': ['liblinear']\n}\n\n¿Por qué es obligatorio incluir 'solver': ['liblinear'] en el param_grid cuando se usa penalty='l1'?",
+          "text": "Al incluir penalty='l1' en el param_grid de Regresión Logística, ¿por qué es obligatorio especificar solver=['liblinear'] o ['saga']?",
           "options": [
-            "Porque liblinear es el único solver que acepta valores flotantes de C; el resto solo acepta enteros.",
-            "Porque la penalización L1 (Lasso) no está implementada en todos los solvers de LogisticRegression. El solver 'lbfgs' (por defecto) no soporta L1. 'liblinear' sí lo hace, por lo que es obligatorio especificarlo para que la combinación L1 no falle.",
-            "Porque liblinear activa la paralelización automática en CPU, equivalente a n_jobs=-1.",
-            "Porque sin solver='liblinear', GridSearchCV no puede procesar variables categóricas en X."
+            "Porque los solvers como liblinear son los únicos que admiten paralelización en múltiples núcleos mediante n_jobs=-1 en CPU.",
+            "Porque la penalización L1 requiere datos escalados y los demás solvers omiten automáticamente el paso de preprocesado previo.",
+            "Porque liblinear transforma variables continuas en discretas para que la función Lasso no presente singularidades en train.",
+            "Porque el solver predeterminado 'lbfgs' no soporta la penalización L1; emplearlo con L1 generaría una excepción de error."
           ],
-          "correct": 1,
-          "feedback": "El solver predeterminado de LogisticRegression en scikit-learn ('lbfgs') solo soporta penalty='l2'. Para usar penalty='l1' es obligatorio cambiar a un solver compatible como 'liblinear' o 'saga'. Sin esto, scikit-learn lanzaría un error al intentar la combinación L1+lbfgs."
+          "correct": 3,
+          "feedback": "Correcto. En scikit-learn, el solver por defecto de LogisticRegression (`'lbfgs'`) solo admite regularización L2 o ninguna. Si se incluye la regularización L1 (Lasso) en la búsqueda, es obligatorio emparejarla con un solver compatible como `'liblinear'` o `'saga'` para evitar excepciones."
         },
         {
           "id": "64dd2b22-8e18-4d56-ac21-31b4a56d8e46",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Taller de Fraude, después de gs_lr.fit(X_train_scaled, y_train), se ejecuta:\n\nbest_lr = gs_lr.best_estimator_\ny_pred_lr_opt = best_lr.predict(X_test_scaled)\n\n¿Qué ventaja tiene acceder a best_estimator_ directamente en lugar de llamar gs_lr.predict(X_test_scaled)?",
+          "text": "¿Qué utilidad práctica tiene acceder directamente al atributo grid.best_estimator_ tras concluir la optimización de hiperparámetros?",
           "options": [
-            "best_estimator_.predict() es más rápido porque ya no necesita ejecutar la búsqueda de hiperparámetros.",
-            "Ambos son funcionalmente equivalentes. La ventaja de acceder a best_estimator_ es que permite exportarlo con joblib por separado, inspeccionar sus coeficientes (coef_), o pasarlo como estimator a otro GridSearchCV.",
-            "gs_lr.predict() siempre falla si se usa con datos escalados (X_test_scaled); best_estimator_ no tiene esta limitación.",
-            "best_estimator_ permite deshacer el escalado automáticamente antes de hacer la predicción."
+            "Permite inspeccionar atributos del modelo (como coef_), exportarlo por separado con joblib o integrarlo en otros pipelines.",
+            "Permite reiniciar los hiperparámetros a sus valores iniciales en caso de que la validación cruzada haya divergido en test.",
+            "Permite eliminar automáticamente variables redundantes de la matriz X reduciendo la dimensionalidad del dataset de entrada.",
+            "Permite calcular la inercia intra-clúster para determinar si los datos forman agrupaciones esféricas bien delimitadas en test."
           ],
-          "correct": 1,
-          "feedback": "gs_lr.predict() y best_estimator_.predict() dan el mismo resultado. Sin embargo, best_estimator_ es útil cuando necesitas inspeccionar el modelo (ej. ver coef_ de la regresión logística), guardarlo con joblib, o usarlo en otro contexto independientemente del objeto GridSearchCV."
+          "correct": 0,
+          "feedback": "Correcto. `best_estimator_` contiene el estimador o Pipeline entrenado definitivo. Acceder a él permite examinar sus parámetros internos aprendidos (como los pesos `coef_`, el intercepto `intercept_` o los vectores de soporte), serializarlo de forma liviana con `joblib.dump()`, o reutilizarlo en arquitecturas más complejas."
         },
         {
           "id": "dd5decf6-24b3-4898-ac9c-6bd91f2260e4",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Taller de Fraude, el GridSearch para SVM obtiene: best_params_ = {'C': 0.1, 'gamma': 'scale', 'kernel': 'linear'} con scoring='f1'. En el Taller GridSearch (Parte B diabetes), con scoring='recall', el resultado fue: best_params_ = {'modelo__C': 1, 'modelo__gamma': 0.001, 'modelo__kernel': 'linear'}. ¿Qué demuestra esta diferencia?",
+          "text": "Al optimizar SVM con scoring='f1' el ganador fue C=0.1, y con scoring='recall' el ganador fue C=1. ¿Qué demuestra este resultado?",
           "options": [
-            "Demuestra que el kernel RBF nunca es óptimo en problemas médicos.",
-            "Demuestra que el parámetro scoring cambia fundamentalmente cuál combinación es la 'ganadora'. Optimizar para Recall maximiza la detección (a costa de más falsos positivos); optimizar para F1 busca un balance. El mismo dataset con diferente scoring puede elegir combinaciones distintas.",
-            "Demuestra que el kernel lineal siempre es mejor que el RBF cuando se usa GridSearchCV.",
-            "Demuestra que los valores de C=0.1 y C=1 son equivalentes para cualquier tipo de problema."
+            "Demuestra que el algoritmo es inestable y que los hiperparámetros óptimos cambian de forma puramente aleatoria en cada corrida.",
+            "Demuestra que la métrica de scoring altera la selección: optimizar para Recall tolera más falsos positivos que optimizar F1.",
+            "Demuestra que los modelos lineales siempre superan a los núcleos gaussianos cuando la regularización C es inferior a la unidad.",
+            "Demuestra que el conjunto de validación cruzada no fue estratificado adecuadamente en train, falseando las métricas de prueba."
           ],
           "correct": 1,
-          "feedback": "La elección de scoring es crucial: define qué significa 'mejor'. Con scoring='f1', una combinación que sacrifica algo de Recall para ganar Precision puede ganar. Con scoring='recall', se priorizan combinaciones que maximizan la detección de casos positivos aunque bajen la Precision."
+          "feedback": "Correcto. La función objetivo de optimización responde estrictamente a la métrica declarada en `scoring`. Una búsqueda orientada a Recall preferirá hiperparámetros que aumenten la sensibilidad (capturando más casos positivos aunque aumenten los falsos positivos), mientras que orientada a F1 buscará el equilibrio óptimo con la precisión."
         },
         {
           "id": "634c30f8-7db3-48ca-944c-9173b5152ad1",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Bloque A5 del taller, el código compara el modelo base con el optimizado:\n\ncomparacion = pd.DataFrame({\n    'Modelo': ['Base (por defecto)', 'GridSearchCV'],\n    'Accuracy': [accuracy_score(y_test, y_pred_base), accuracy_score(y_test, y_pred_opt)],\n    'Recall':   [recall_score(y_test, y_pred_base),   recall_score(y_test, y_pred_opt)],\n    'F1':       [f1_score(y_test, y_pred_base),       f1_score(y_test, y_pred_opt)],\n})\n\nLos resultados son: Base F1=0.84 vs Optimizado F1=0.87. ¿Qué conclusión importante se puede sacar?",
+          "text": "El modelo base obtuvo F1 = 0.84 y el optimizado obtuvo F1 = 0.87 evaluados ambos sobre X_test. ¿Por qué es una conclusión sólida?",
           "options": [
-            "La mejora de 0.03 en F1 demuestra que GridSearchCV siempre mejora el modelo base en al menos un 10%.",
-            "La comparación se hace sobre X_test (datos nunca vistos durante la búsqueda), lo que valida que la mejora del 0.03 en F1 es real y está respaldada por haber comparado 32 configuraciones sistemáticamente con validación cruzada.",
-            "El modelo base es mejor porque requiere menos recursos computacionales y tiene un F1 razonablemente alto.",
-            "La diferencia de 0.03 es estadísticamente insignificante; ambos modelos son equivalentes para producción."
+            "Porque la evaluación se realizó sobre datos independientes (X_test) que jamás participaron en la búsqueda de hiperparámetros.",
+            "Porque un incremento del 3% en la métrica F1 garantiza matemáticamente que el clasificador no cometerá errores en producción.",
+            "Porque el conjunto de prueba se utilizó para reentrenar los estimadores candidatos asegurando la paridad en la comparación.",
+            "Porque scikit-learn ajusta internamente los intervalos de confianza del testeo para validar la hipótesis de superioridad."
           ],
-          "correct": 1,
-          "feedback": "La clave es que la comparación usa X_test, que nunca participó en la búsqueda de hiperparámetros. Esto garantiza que la mejora (F1: 0.84→0.87) es una estimación honesta del beneficio real de la optimización, no un resultado inflado por haber visto los datos de prueba."
+          "correct": 0,
+          "feedback": "Correcto. La validez de la comparación radica en que `X_test` permaneció completamente aislado durante toda la etapa de búsqueda y ajuste con GridSearchCV. Evaluar ambos modelos sobre este conjunto garantiza que la mejora observada refleja generalización real y no memorización."
         },
         {
           "id": "97a2d23b-c284-4942-9377-b78374198528",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Bloque C del taller, después de elegir la mejor combinación (C=10, gamma=0.01, kernel='rbf'), el código es:\n\npipeline_final = Pipeline([\n    ('escalar', StandardScaler()),\n    ('modelo', SVC(C=10, gamma=0.01, kernel='rbf')),\n])\npipeline_final.fit(X, y)  # X, y completos — no X_train\n\n¿Por qué se pasan X e y completos en lugar de X_train e y_train?",
+          "text": "Tras elegir la mejor configuración con GridSearchCV, el taller entrena pipeline_final.fit(X, y) con el 100% de los datos. ¿Por qué?",
           "options": [
-            "Porque con los hiperparámetros ya fijados por GridSearchCV, el modelo necesita ver X_test para calibrar sus vectores de soporte finales.",
-            "Porque el split 80/20 sirvió para elegir y evaluar la combinación de hiperparámetros. Una vez elegida, el modelo de producción se reentrena con el 100% de los datos disponibles: más datos producen una frontera de decisión más precisa y el modelo ya no necesita reservar datos para medir.",
-            "Porque scikit-learn requiere que el pipeline_final use exactamente el mismo conjunto de datos que grid para que la exportación con joblib sea consistente.",
-            "Porque al usar X completo, el modelo evita el sesgo introducido por el split del train_test_split."
+            "Porque el split sirvió para seleccionar y evaluar; para producción ya no se reserva test y más datos enriquecen la frontera.",
+            "Porque los clasificadores Support Vector Machine descartan las predicciones en producción si el modelo no vio todo el dataset.",
+            "Porque la función joblib.dump exige que las dimensiones del objeto serializado coincidan con el tamaño total del archivo CSV.",
+            "Porque de lo contrario el estimador continuaría ejecutando internamente validación cruzada cada vez que se invoque predict()."
           ],
-          "correct": 1,
-          "feedback": "El flujo es: 1) Dividir en 80/20 para búsqueda + evaluación. 2) GridSearchCV encuentra los mejores hiperparámetros. 3) Se evalúa en X_test para medir el rendimiento real. 4) Pipeline_final se entrena con el 100% (600 filas en vez de 480) para producción."
+          "correct": 0,
+          "feedback": "Correcto. La partición train/test se realiza exclusivamente con fines de validación y medición honesta del rendimiento. Una vez seleccionada la combinación óptima y comprobada su capacidad de generalización, el modelo final de producción debe aprovechar el 100% de las muestras disponibles para maximizar su precisión."
         },
         {
           "id": "d050234a-1a8e-4cb8-b440-c5c9c11959a1",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "El Bloque C exporta pipeline_final con joblib, no el objeto grid. ¿Por qué se exporta pipeline_final y no grid directamente?",
+          "text": "¿Por qué en el Bloque C se serializa con joblib únicamente el objeto pipeline_final en lugar de guardar todo el objeto grid?",
           "options": [
-            "Porque joblib no puede serializar objetos GridSearchCV, solo Pipelines simples.",
-            "Porque grid contiene los resultados de las 32 combinaciones (cv_results_), el historial completo de entrenamiento y todos los modelos intermedios. pipeline_final es mucho más liviano: solo tiene el preprocesador y el modelo final. Además, grid.predict() funciona igual, pero el archivo .pkl sería innecesariamente grande.",
-            "Porque si se exportara grid, al cargarlo en producción ejecutaría automáticamente la búsqueda de nuevo con los datos nuevos.",
-            "Porque pipeline_final fue entrenado con X_test, lo que lo hace más preciso para producción."
+            "Porque el objeto grid no es serializable con joblib y arroja un error fatal de sistema al intentar guardarlo en disco.",
+            "Porque grid exporta también las predicciones intermedias de test, lo que generaría un conflicto de seguridad informática.",
+            "Porque el archivo de grid sería excesivamente pesado con 160 modelos y resultados de CV; pipeline_final es ligero y óptimo.",
+            "Porque al cargar el objeto grid en producción este reanudaría la búsqueda de hiperparámetros sobre los nuevos registros."
           ],
-          "correct": 1,
-          "feedback": "joblib puede serializar GridSearchCV, pero no tiene sentido en producción: el sistema de producción solo necesita hacer predict(), no re-explorar hiperparámetros. pipeline_final contiene solo lo necesario: el scaler ajustado y el SVM con los mejores hiperparámetros, mucho más liviano."
+          "correct": 2,
+          "feedback": "Correcto. El objeto `grid` almacena el histórico completo de todas las combinaciones evaluadas, los puntajes de los 160 fits y los estimadores clonados, resultando en un archivo muy voluminoso. En producción solo se necesita hacer inferencias, por lo que `pipeline_final` (que solo guarda el preprocesador y el modelo ganador) es infinitamente más ligero y eficiente."
         },
         {
           "id": "095c8d41-52c6-4250-bec1-c3684245f7ed",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "¿Qué hace el siguiente fragmento de código del Taller Fraude?\n\ngs_lr = GridSearchCV(\n    estimator=LogisticRegression(random_state=42),\n    param_grid=param_grid_lr,\n    cv=5,\n    scoring='f1',\n    n_jobs=-1\n)\ngs_lr.fit(X_train_scaled, y_train)\nprint(gs_lr.best_params_)\nprint(gs_lr.best_score_)",
+          "text": "Se ejecuta: `gs = GridSearchCV(LogisticRegression(), param_grid, cv=5, scoring='f1').fit(X_tr, y_tr)`. ¿Qué realiza este bloque?",
           "options": [
-            "Entrena una sola Regresión Logística con los parámetros definidos en param_grid_lr y evalúa en X_train_scaled.",
-            "Busca exhaustivamente la mejor combinación de C, penalty y solver para Regresión Logística usando validación cruzada de 5 folds sobre X_train_scaled. Imprime la mejor combinación encontrada y su F1 promedio en validación cruzada.",
-            "Compara el rendimiento de LogisticRegression con SVC e imprime cuál tiene mejor F1 promedio.",
-            "Aplica RandomizedSearchCV con 5 iteraciones aleatorias y muestra la combinación ganadora."
+            "Entrena una regresión logística simple evaluando únicamente los coeficientes sobre el conjunto de validación cruzada K-fold.",
+            "Calcula la correlación lineal de Pearson entre cada variable y la clase objetivo utilizando cinco particiones estratificadas.",
+            "Aplica una búsqueda aleatoria de hiperparámetros seleccionando cinco combinaciones continuas para predecir probabilidades.",
+            "Explora de forma exhaustiva las combinaciones de hiperparámetros sobre regresión logística optimizando el F1 promedio en CV."
           ],
-          "correct": 1,
-          "feedback": "Este es el bloque completo de Grid Search sobre Regresión Logística del Taller de Fraude. Prueba 4×2×1=8 combinaciones de (C, penalty, solver), cada una con cv=5 → 40 entrenamientos. El resultado fue best_params_={'C':0.1, 'penalty':'l1', 'solver':'liblinear'}, best_score_≈0.817."
+          "correct": 3,
+          "feedback": "Correcto. El bloque de código instancia y ejecuta un proceso exhaustivo de Grid Search para optimizar la regresión logística sobre los datos de entrenamiento, evaluando cada combinación mediante 5 folds de validación cruzada y seleccionando la configuración que maximice el puntaje F1."
         },
         {
           "id": "b8f57b62-400c-4fc8-8dfc-0ccf54fc5f66",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Taller de Fraude, el siguiente código:\n\ndf_cv_svm = pd.DataFrame(gs_svm.cv_results_)\ndf_cv_svm[['params', 'mean_test_score', 'rank_test_score']].sort_values('rank_test_score').head(5)\n\n¿Qué hace la línea sort_values('rank_test_score').head(5)?",
+          "text": "En el taller se ejecuta: `df_cv[['params', 'mean_test_score', 'rank_test_score']].sort_values('rank_test_score').head(5)`. ¿Qué hace?",
           "options": [
-            "Ordena el DataFrame por el valor de C de mayor a menor y muestra los 5 primeros resultados.",
-            "Ordena todas las combinaciones de hiperparámetros del mejor al peor (rank=1 primero) y muestra solo las 5 combinaciones con el mejor F1 promedio en validación cruzada.",
-            "Filtra el DataFrame para mostrar solo las combinaciones con rank_test_score ≤ 5, es decir, con F1 mayor a 0.5.",
-            "Calcula el promedio de las 5 mejores métricas y lo guarda en una nueva columna llamada 'rank_test_score'."
+            "Presenta las cinco mejores configuraciones de hiperparámetros ordenadas de mejor a peor según su puntaje promedio en CV dado.",
+            "Filtra las cinco combinaciones con mayor varianza en sus resultados descartándolas antes del reentrenamiento final en train.",
+            "Muestra únicamente los resultados obtenidos en el quinto fold de validación cruzada para verificar la convergencia del modelo.",
+            "Ordena las variables predictoras del dataset según su coeficiente de importancia en el clasificador de soporte vectorial."
           ],
-          "correct": 1,
-          "feedback": "sort_values('rank_test_score') ordena de 1 (mejor) al máximo (peor). head(5) toma las primeras 5 filas. El resultado es una tabla con el top-5 de combinaciones de hiperparámetros, mostrando cuáles fueron las más prometedoras para el problema de detección de fraude."
+          "correct": 0,
+          "feedback": "Correcto. `sort_values('rank_test_score')` ordena la tabla de resultados de validación cruzada de menor a mayor ranking (donde 1 es el mejor resultado), y `.head(5)` extrae los 5 primeros registros, permitiendo al analista examinar el 'top 5' de configuraciones más prometedoras."
         },
         {
           "id": "7ff570d2-e380-4581-ae9a-61ff307f1cc9",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "El Bloque C del taller ejecuta:\n\nprint(grid.best_params_)\n# {'modelo__C': 10, 'modelo__gamma': 0.01, 'modelo__kernel': 'rbf'}\n\npipeline_final = Pipeline([\n    ('escalar', StandardScaler()),\n    ('modelo', SVC(C=10, gamma=0.01, kernel='rbf')),\n])\npipeline_final.fit(X, y)\n\n¿Por qué se construye un Pipeline nuevo en lugar de simplemente usar grid.best_estimator_.fit(X, y)?",
+          "text": "En lugar de usar best_estimator_ directamente, el taller reconstruye explícitamente `Pipeline([('escalar', ...), ('modelo', ...)])`. ¿Por qué?",
           "options": [
-            "Porque grid.best_estimator_ pierde sus hiperparámetros optimizados al llamar a fit() de nuevo.",
-            "Ambas opciones son equivalentes. Se construye un Pipeline nuevo por claridad y legibilidad del código: hace explícito qué hiperparámetros se usan en producción. grid.best_estimator_.fit(X, y) funcionaría igualmente.",
-            "Porque grid.best_estimator_ no incluye el StandardScaler, solo el SVC.",
-            "Porque Pipeline solo acepta StandardScaler como primer paso; best_estimator_ puede usar cualquier preprocesador."
+            "Porque best_estimator_ no conserva el escalador StandardScaler una vez que concluye toda la búsqueda de hiperparámetros.",
+            "Por claridad y trazabilidad del código: documenta explícitamente en el script qué hiperparámetros se despliegan en producción.",
+            "Porque scikit-learn bloquea la invocación de fit() sobre el objeto best_estimator_ si este fue generado por GridSearchCV en C.",
+            "Para obligar a que el modelo reentrenado descarte los vectores de soporte previos y aprenda una frontera estrictamente plana."
           ],
           "correct": 1,
-          "feedback": "Ambas opciones producen el mismo resultado. El taller crea un Pipeline explícito para mayor claridad: cualquier persona que lea el código entiende inmediatamente qué configuración se desplegará en producción sin tener que inspeccionar el objeto GridSearchCV."
+          "feedback": "Correcto. Aunque invocar `grid.best_estimator_.fit(X, y)` es funcionalmente idéntico, reconstruir explícitamente el Pipeline con los valores óptimos (ej. `SVC(C=10, gamma=0.01, kernel='rbf')`) aporta claridad, legibilidad y documentación limpia para auditoría técnica de software en producción."
         },
         {
           "id": "d57131f4-5489-407a-bce1-8d9ce54aaee6",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "El Bloque C.3 del taller muestra cómo usar el modelo exportado:\n\nmodelo = joblib.load('modelo_credito_svm.pkl')\nsolicitudes_nuevas['prediccion'] = modelo.predict(solicitudes_nuevas)\n\n¿Por qué modelo.predict() puede recibir solicitudes_nuevas con datos en su escala original (sin escalar manualmente)?",
+          "text": "Al cargar el pipeline exportado `modelo = joblib.load('modelo.pkl')`, ¿por qué modelo.predict() recibe solicitudes sin escalar manualmente?",
           "options": [
-            "Porque joblib.load() aplica el escalado automáticamente al cargar el modelo desde el archivo .pkl.",
-            "Porque el Pipeline cargado incluye el StandardScaler como primer paso. Al llamar a predict(), primero escala los datos con la media y desviación aprendidas en el entrenamiento original, y luego pasa el resultado al SVC internamente.",
-            "Porque después de GridSearchCV, el SVC ya no necesita datos escalados; aprende a trabajar con cualquier escala.",
-            "Porque solicitudes_nuevas solo tiene columnas numéricas simples que scikit-learn escala automáticamente."
+            "Porque los datos en producción se escalan automáticamente por el sistema operativo antes de ingresar al intérprete de Python.",
+            "Porque tras la optimización con GridSearchCV, el estimador SVC aprende a operar con independencia de la escala de las variables.",
+            "Porque el Pipeline contiene el StandardScaler ajustado, aplicando la escala a los datos nuevos antes de pasarlos al modelo.",
+            "Porque la función joblib.load modifica el código de inferencia reemplazando el cálculo de distancias por árboles de decisión."
           ],
-          "correct": 1,
-          "feedback": "Esta es la ventaja central del Pipeline: encapsula el preprocesamiento. El .pkl guarda tanto el StandardScaler (con su media y desviación de entrenamiento) como el SVC. Al llamar predict(), el Pipeline transforma automáticamente los datos crudos antes de predecir."
+          "correct": 2,
+          "feedback": "Correcto. El objeto Pipeline guarda internamente tanto el transformador `StandardScaler` (con las medias y desviaciones estándar aprendidas en el entrenamiento) como el estimador SVC. Al llamar a `predict()`, el Pipeline ejecuta de forma transparente la estandarización sobre los datos crudos antes de alimentarlos al clasificador."
         },
         {
           "id": "adbce8fb-5101-453a-b828-bd8e439b4d16",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Taller de Fraude, los resultados del Grid Search fueron: RL Optimizada F1=0.829, SVM Optimizado F1=0.824. Ambos mejoraron ligeramente sus modelos base. ¿Qué conclusión metodológica extrae el taller de este resultado?",
+          "text": "En el taller de fraude, Grid Search mejoró el F1 solo un 2-3% frente a los modelos base. ¿Qué conclusión metodológica se extrae?",
           "options": [
-            "Que la Regresión Logística siempre supera a SVM cuando se aplica Grid Search correctamente.",
-            "Que el Grid Search siempre mejora drásticamente las métricas del modelo base en al menos un 20%.",
-            "Que en este dataset específico, la optimización de hiperparámetros produce mejoras modestas (~2-3%), lo que sugiere que los modelos base con hiperparámetros por defecto ya eran competitivos. La elección del modelo final debe considerar también la interpretabilidad y el costo computacional.",
-            "Que el Grid Search falla cuando el dataset está balanceado (50/50), pues no hay clase minoritaria para optimizar."
+            "Que la optimización de hiperparámetros fue defectuosa y debe repetirse ampliando el número de folds de validación cruzada en CV.",
+            "Que los modelos de Machine Learning no supervisado no responden ante variaciones de regularización y margen en el testeo real.",
+            "Que los valores por defecto ya eran muy competitivos; la elección final debe considerar interpretabilidad y costo computacional.",
+            "Que cuando la ganancia es modesta se debe descartar el algoritmo y sustituirlo obligatoriamente por una red neuronal profunda."
           ],
           "correct": 2,
-          "feedback": "No siempre el Grid Search produce ganancias espectaculares. En el Taller de Fraude, los defaults ya eran buenos. En el Taller de Crédito, la mejora fue de F1=0.84 a 0.87. La utilidad del GridSearch depende del problema; en algunos datasets, los defaults son suficientemente competitivos."
+          "feedback": "Correcto. No siempre la optimización de hiperparámetros arroja saltos espectaculares de rendimiento. En muchos conjuntos de datos tabulares, los valores predeterminados de la librería ya son sólidos. La experimentación rigurosa permite comprobar empíricamente cuál es el techo del modelo y ponderar si el costo computacional justifica el despliegue."
         },
         {
           "id": "3b3d2bca-e4fd-47af-a7f9-b739dcc9eeea",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Taller de Fraude, el Grid Search de Regresión Logística incluye 'penalty': ['l1', 'l2']. ¿Cuál es la diferencia práctica entre la penalización L1 (Lasso) y L2 (Ridge) en Regresión Logística?",
+          "text": "En el taller de fraude, GridSearchCV seleccionó penalty='l1' frente a penalty='l2'. ¿Cuál es la diferencia práctica entre ambas?",
           "options": [
-            "L1 y L2 son idénticas en resultado; solo difieren en el nombre histórico.",
-            "L1 (Lasso) puede llevar coeficientes exactamente a cero, produciendo un modelo disperso (selección de variables implícita). L2 (Ridge) reduce los coeficientes pero rara vez a exactamente cero. El Grid Search eligió L1, lo que indica que algunos predictores no aportaban información.",
-            "L2 es más agresiva que L1 en la penalización; siempre produce coeficientes más pequeños.",
-            "L1 solo funciona con datasets balanceados; L2 es para datasets con clases desbalanceadas."
+            "L1 reduce los pesos de forma proporcional; L2 los anula completamente convirtiendo el clasificador en un árbol binario.",
+            "L1 es una penalización cuadrática; L2 utiliza el valor absoluto permitiendo calcular derivadas continuas en todo el espacio.",
+            "L1 y L2 son funcionalmente idénticas, existiendo únicamente diferencias en el algoritmo numérico de inversión matricial.",
+            "L1 (Lasso) puede anular coeficientes realizando selección de variables; L2 (Ridge) los reduce pero rara vez a cero exacto."
           ],
-          "correct": 1,
-          "feedback": "L1 (Lasso) aplica penalización de valor absoluto y puede anular coeficientes completamente → selección automática de variables. L2 (Ridge) aplica penalización cuadrática → reduce coeficientes uniformemente pero rara vez a cero. El GridSearch eligió L1 con C=0.1 en el Taller de Fraude."
+          "correct": 3,
+          "feedback": "Correcto. La regularización L1 (Lasso) aplica una penalización basada en el valor absoluto de los coeficientes, lo que empuja a los pesos de variables no informativas a ser exactamente cero (esparcidad o selección implícita de variables). En cambio, la regularización L2 (Ridge) contrae los pesos hacia cero pero sin anularlos totalmente."
         },
         {
           "id": "d3774e81-2009-4865-a460-dd25324c45ba",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En la Parte B del taller (diabetes), el modelo base tiene Recall=0.769. Después del Grid Search con scoring='recall', sube a Recall=0.885. ¿Cuántos pacientes con diabetes adicionales detecta el modelo optimizado sobre el conjunto de prueba (que tiene 52 pacientes con diabetes)?",
+          "text": "En diabetes, optimizar con scoring='recall' elevó el Recall de 0.769 a 0.885 en un test de 52 enfermos. ¿Qué impacto clínico se obtuvo?",
           "options": [
-            "6 pacientes adicionales (52 × 0.885 ≈ 46 versus 52 × 0.769 ≈ 40).",
-            "12 pacientes adicionales (de 40 a 52, detectando todos).",
-            "0 pacientes adicionales; el Recall mejoró pero el número absoluto se mantuvo igual.",
-            "16 pacientes adicionales."
+            "El modelo diagnosticó con éxito a los 52 pacientes diabéticos alcanzando una sensibilidad perfecta del cien por ciento en prueba.",
+            "Se eliminaron todos los falsos positivos del conjunto de prueba asegurando que ningún paciente sano reciba diagnósticos erróneos.",
+            "Se duplicó la cantidad de aciertos en la clase negativa reduciendo a la mitad los costos de exámenes clínicos complementarios.",
+            "Se detectaron 6 pacientes con diabetes adicionales (de 40 a 46 casos detectados) que de otro modo habrían sido ignorados en test."
           ],
-          "correct": 0,
-          "feedback": "El taller lo calcula explícitamente: base detecta 52×0.769≈40 pacientes con diabetes; optimizado detecta 52×0.885≈46 pacientes. La diferencia: 6 pacientes adicionales detectados gracias a la optimización del Recall. Cada uno de esos 6 representa un diagnóstico que de otra manera habría sido ignorado."
+          "correct": 3,
+          "feedback": "Correcto. El impacto práctico es tangible: con el modelo base se detectaban $52 \times 0.769 \u0007pprox 40$ pacientes enfermos, mientras que con el modelo optimizado para Recall se detectaron $52 \times 0.885 \u0007pprox 46$ pacientes. Esos 6 pacientes adicionales representan diagnósticos y tratamientos tempranos que salvan vidas."
         },
         {
           "id": "4e271604-01f8-482e-bb52-cd17e5877e0c",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Bloque B3, el taller observa que para el kernel lineal, todas las combinaciones con el mismo C pero diferente gamma producen exactamente el mismo Recall. ¿Por qué?",
+          "text": "En el taller se observa que en kernel='linear', variar gamma no altera en absoluto las métricas de rendimiento. ¿Cuál es el motivo?",
           "options": [
-            "Porque GridSearchCV ignora el parámetro gamma cuando el resultado de la validación cruzada ya fue calculado.",
-            "Porque el kernel lineal no usa gamma en su función de decisión matemática; gamma controla el radio de influencia en kernels como RBF o polynomial que trabajan con distancias en espacios de mayor dimensión. Para kernel='linear', gamma simplemente no existe en la ecuación.",
-            "Porque para el kernel lineal, gamma y C son sinónimos y controlan lo mismo.",
-            "Porque scikit-learn normaliza automáticamente gamma a 1.0 cuando se detecta kernel='linear'."
+            "Porque el kernel lineal no incluye gamma en su formulación; gamma solo opera en núcleos que evalúan distancias como RBF.",
+            "Porque scikit-learn fija internamente gamma en un valor constante unitario cuando detecta que la matriz está estandarizada.",
+            "Porque el algoritmo de optimización cuadrática ignora las opciones secundarias si el hiperparámetro C es menor que diez.",
+            "Porque las variables numéricas al ser estandarizadas pierden la dispersión radial sobre la que actúa el hiperparámetro gamma."
           ],
-          "correct": 1,
-          "feedback": "La función del kernel lineal es K(x,z) = x·z (producto punto). No hay ningún parámetro de radio o anchura (que es para lo que sirve gamma). Solo en kernels RBF (e^(-gamma|x-z|²)) y polinómico (gamma·x·z + coef0)^degree tiene efecto el parámetro gamma."
+          "correct": 0,
+          "feedback": "Correcto. La función matemática del kernel lineal es simplemente el producto escalar plano $K(x, z) = x^T z$. El hiperparámetro gamma define el radio o ancho de banda de la campana gaussiana en el kernel RBF ($\\exp(-\\gamma \\|x - z\\|^2)$) o el factor de escala en polinomios; en la ecuación lineal, gamma no existe y no tiene ningún efecto."
         },
         {
           "id": "9b97859a-0bc6-41d3-b2c6-4ebc5aa6c6c2",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "Ordena correctamente el flujo completo de un proyecto de optimización de hiperparámetros con GridSearchCV según el taller de crédito:",
+          "text": "¿Cuál es la secuencia metodológica completa y ordenada para un proyecto de optimización con GridSearchCV según el taller?",
           "options": [
-            "1) fit(X, y) completo → 2) train_test_split → 3) GridSearchCV → 4) Evaluar en X_test → 5) Exportar pipeline_final",
-            "1) train_test_split → 2) Construir Pipeline (preproc+modelo) → 3) Definir param_grid → 4) GridSearchCV.fit(X_train) → 5) Evaluar mejor modelo en X_test → 6) pipeline_final.fit(X, y) con 100% → 7) joblib.dump(pipeline_final)",
-            "1) GridSearchCV.fit(X, y) completo → 2) train_test_split → 3) Evaluar best_estimator_ en X_test → 4) joblib.dump(grid)",
-            "1) Definir param_grid → 2) fit(X, y) → 3) GridSearchCV.fit(X_test) → 4) Evaluar en X_train → 5) joblib.dump"
+            "1) GridSearchCV en todo el dataset -> 2) train_test_split -> 3) Evaluar en X_test -> 4) Exportar estimador base con joblib final.",
+            "1) Split train/test -> 2) Pipeline preproc+modelo -> 3) GridSearchCV en train -> 4) Evaluar en test -> 5) Reentrenar 100% y exportar.",
+            "1) Ajustar Pipeline en todo el dataset -> 2) Definir param_grid -> 3) GridSearchCV en test -> 4) Evaluar en train -> 5) Exportar.",
+            "1) Definir param_grid -> 2) Reentrenar con el 100% de muestras -> 3) GridSearchCV con cv=5 -> 4) Serializar sin preprocesamiento."
           ],
           "correct": 1,
-          "feedback": "El orden correcto del taller: 1) Dividir 80/20, 2) Construir Pipeline, 3) Definir param_grid con notación 'paso__param', 4) GridSearchCV.fit(X_train) — nunca X_test, 5) Comparar base vs optimizado en X_test, 6) Reentrenar pipeline_final con el 100% de los datos, 7) Exportar solo pipeline_final con joblib."
+          "feedback": "Correcto. El flujo metodológico riguroso comprende: 1) separar train y test con train_test_split; 2) estructurar el Pipeline con transformadores y modelo; 3) ejecutar GridSearchCV sobre X_train; 4) contrastar el modelo base y el optimizado en X_test; 5) reajustar el pipeline final con el 100% de datos; y 6) serializarlo con joblib."
         },
         {
           "id": "06fdf90b-160a-4ba0-ba24-69b4dc35af63",
@@ -9594,704 +9594,704 @@ window.QUIZ_DATA = {
       ],
       "preguntas": [
         {
-          "id": "a70d3a4b-b91d-4dae-97d0-fa7ea716e2e0",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Cuál es la diferencia fundamental entre la estrategia OvR (OneVsRestClassifier) y Softmax (LogisticRegression por defecto) al clasificar con 3 o más clases?",
+          "text": "¿Cuál es la diferencia fundamental entre la estrategia OvR (OneVsRestClassifier) y Softmax al clasificar con 3 o más clases?",
           "options": [
-            "OvR entrena un único modelo que produce probabilidades para todas las clases simultáneamente; Softmax entrena K modelos separados.",
-            "OvR entrena K modelos binarios, uno por clase (esa clase vs. todas las demás); Softmax entrena un único modelo que asigna probabilidades a todas las clases a la vez, garantizando que sumen 1.",
-            "OvR y Softmax son idénticos en su funcionamiento; la única diferencia es el nombre del parámetro en scikit-learn.",
-            "Softmax solo funciona cuando las clases están perfectamente balanceadas; OvR no tiene esta restricción."
+            "OvR entrena un único modelo que produce probabilidades simultáneas; Softmax entrena clasificadores binarios independientes.",
+            "OvR entrena K clasificadores binarios independientes; Softmax entrena un único modelo cuyas probabilidades suman siempre 1.0.",
+            "OvR requiere que las clases estén balanceadas; Softmax aplica regularizaciones que permiten procesar clases desbalanceadas.",
+            "OvR y Softmax son idénticos matemáticamente; la diferencia radica en el nombre del optimizador empleado en el entrenamiento."
           ],
           "correct": 1,
-          "feedback": "OvR (One-vs-Rest) entrena K clasificadores binarios independientes, uno por clase. Softmax extiende la regresión logística para producir directamente probabilidades para K clases en un solo modelo, con la restricción de que siempre sumen 1.0."
+          "feedback": "Correcto. OvR (One-vs-Rest) entrena K clasificadores binarios independientes, uno para cada clase frente al resto. Softmax extiende la regresión logística a nivel multiclase en un único modelo probabilístico conjunto, garantizando por definición matemática que las probabilidades asignadas a las clases sumen exactamente 1.0.",
+          "id": "a70d3a4b-b91d-4dae-97d0-fa7ea716e2e0"
         },
         {
-          "id": "2a0ca74f-1e2b-4400-81c0-1dc6e0e588cd",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Por qué NO se puede calcular directamente la probabilidad calibrada con OvR (OneVsRestClassifier), mientras que Softmax sí lo garantiza?",
+          "text": "¿Por qué NO se puede garantizar que las probabilidades calculadas con OvR sumen 1.0, mientras que Softmax sí lo garantiza?",
           "options": [
-            "Porque OneVsRestClassifier no implementa el método predict_proba() en scikit-learn.",
-            "Porque OvR entrena K modelos binarios independientes cuyos scores no necesariamente suman 1.0; Softmax sí garantiza que las probabilidades de todas las clases sumen exactamente 1.0 por construcción matemática.",
-            "Porque OvR solo funciona con variables numéricas y no puede procesar variables categóricas.",
-            "Porque Softmax usa la función sigmoide mientras que OvR usa una función de umbral, lo que hace imposible el cálculo de probabilidades en OvR."
-          ],
-          "correct": 1,
-          "feedback": "Los K modelos de OvR son independientes entre sí y sus probabilidades no están coordinadas, por lo que pueden sumar más o menos de 1.0. Softmax, al usar la función exponencial normalizada, garantiza matemáticamente que P(Alto) + P(Bajo) + P(Medio) = 1.0 exactamente."
-        },
-        {
-          "id": "2214b8c0-f8b5-4565-9a02-94e5a141ef27",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "En scikit-learn 1.7+, ¿qué ocurre si se instancia LogisticRegression() sin ningún parámetro adicional y se entrena con una variable objetivo y que tiene 3 clases distintas?",
-          "options": [
-            "El modelo lanza un error porque LogisticRegression solo soporta clasificación binaria de forma nativa.",
-            "El modelo entrena en modo OvR automáticamente, porque ese es el comportamiento por defecto.",
-            "El modelo entrena en modo Softmax (multinomial) automáticamente, porque es el comportamiento nativo cuando y tiene 3 o más clases.",
-            "El modelo requiere que se especifique explícitamente multi_class='multinomial' para activar Softmax."
+            "Porque OneVsRestClassifier no implementa internamente el método predict_proba() para estimar la probabilidad de cada clase.",
+            "Porque Softmax utiliza la función sigmoide independiente en cada neurona, mientras que OvR implementa una función de umbral.",
+            "Porque OvR entrena K modelos binarios desconectados cuyos puntajes no están bien coordinados; Softmax normaliza exponenciales.",
+            "Porque OvR solo opera con variables numéricas y no procesa atributos categóricos sin aplicar binarización previa en el dataset."
           ],
           "correct": 2,
-          "feedback": "Desde scikit-learn 1.5+, el parámetro multi_class fue eliminado (deprecado). LogisticRegression() detecta automáticamente que y tiene 3 clases y entrena en modo Softmax (multinomial). El parámetro multi_class='ovr'/'multinomial' ya no existe."
+          "feedback": "Correcto. En la estrategia OvR, cada uno de los K clasificadores se entrena de forma aislada sin comunicarse con los demás, por lo que la suma de sus puntuaciones puede ser arbitrariamente mayor o menor a 1.0. Softmax, en cambio, aplica la exponencial normalizada sobre todas las clases simultáneamente, forzando matemáticamente que sumen 1.0.",
+          "id": "2a0ca74f-1e2b-4400-81c0-1dc6e0e588cd"
         },
         {
-          "id": "e8776ce0-70f8-4ff6-9a84-2f00609aabf3",
           "category": "semana5",
           "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Qué es pipeline.classes_ y para qué es crítico conocerlo al interpretar predict_proba() en clasificación multiclase?",
+          "text": "En scikit-learn 1.7+, ¿qué ocurre si se instancia LogisticRegression() sin parámetros adicionales y se entrena con 3 o más clases?",
           "options": [
-            "Es el número total de clases del dataset, necesario para configurar el número de neuronas de salida del modelo.",
-            "Es un atributo que se configura antes del entrenamiento para definir el orden de las clases.",
-            "Es un atributo post-entrenamiento que guarda el orden alfabético en que el modelo indexó las clases. La columna i de predict_proba() corresponde siempre a classes_[i], por lo que confundirlo genera interpretaciones incorrectas.",
-            "Es una lista de las clases mal predichas por el modelo, útil para identificar errores sistemáticos."
-          ],
-          "correct": 2,
-          "feedback": "classes_ solo existe después de .fit(). En el taller el output fue ['Alto' 'Bajo' 'Medio'] — orden alfabético. Esto significa que predict_proba() devuelve [P(Alto), P(Bajo), P(Medio)] en ese orden. Si asumes el orden incorrecto, interpretas las probabilidades de forma equivocada."
-        },
-        {
-          "id": "41462464-bf06-47f7-90a8-b5673639041f",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Qué mide macro avg en classification_report y cuándo deberías priorizarlo sobre weighted avg?",
-          "options": [
-            "macro avg es el promedio ponderado por el número de muestras por clase; se usa cuando las clases mayoritarias son más importantes.",
-            "macro avg es el promedio simple entre clases (todas pesan igual, independientemente de su tamaño); se usa cuando todas las clases tienen la misma importancia clínica o de negocio, aunque estén desbalanceadas.",
-            "macro avg mide la varianza de las métricas entre clases; valores altos indican que el modelo tiene rendimiento irregular.",
-            "macro avg solo se puede calcular cuando el número de clases es par."
-          ],
-          "correct": 1,
-          "feedback": "macro avg promedia Precision, Recall y F1 de cada clase con igual peso. En el taller de triaje, detectar un Riesgo Alto (solo 12 pacientes en test) es tan crítico como detectar un Riesgo Bajo (239 pacientes). macro avg penaliza por igual fallar en cualquier clase."
-        },
-        {
-          "id": "f7f2fe7f-ccb0-48a4-889d-e12cdc2a83e7",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "En el reporte del modelo Softmax sobre el dataset de triaje, se observa Accuracy = 0.742, macro avg F1 = 0.569 y weighted avg F1 = 0.724. ¿Por qué el Accuracy y el weighted avg son tan superiores al macro avg?",
-          "options": [
-            "Porque el modelo tiene sobreajuste: memorizó bien el entrenamiento pero no generaliza en prueba.",
-            "Porque hay un error en el cálculo de las métricas; matemáticamente no pueden diferir tanto.",
-            "Porque el dataset está desbalanceado: Riesgo Bajo representa ~66% de los datos. El Accuracy y weighted avg están dominados por esa clase mayoritaria; el macro avg revela que el modelo falla severamente con Riesgo Alto (Recall=0.250).",
-            "Porque macro avg excluye automáticamente la clase con más muestras para evitar sesgos."
-          ],
-          "correct": 2,
-          "feedback": "Con un dataset donde Bajo=66%, Medio=30%, Alto=3.4%, un modelo que predice bien 'Bajo' obtiene Accuracy alto. Pero el macro avg revela la verdad: F1(Alto)=0.353, F1(Medio)=0.519, F1(Bajo)=0.837 → promedio simple = 0.569, muy inferior al 0.724 ponderado por volumen."
-        },
-        {
-          "id": "fe845457-6525-4394-b303-d790ab3feb30",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Qué calcula el Precision de una clase específica (por ejemplo, Precision de 'Alto' = 0.600 en el reporte)?",
-          "options": [
-            "De todos los pacientes que REALMENTE son Riesgo Alto, ¿qué proporción el modelo detectó correctamente?",
-            "De todos los pacientes que el modelo PREDIJO como Riesgo Alto, ¿qué proporción realmente lo era? (TP / (TP + FP))",
-            "La proporción de pacientes de Riesgo Alto en el total del dataset.",
-            "El número total de aciertos del modelo dividido entre el total de predicciones realizadas."
-          ],
-          "correct": 1,
-          "feedback": "Precision = TP / (TP + FP): de todos los que el modelo clasificó como 'Alto', el 60% realmente lo eran. Es el costo de las falsas alarmas. Si Precision=0.600 para Alto, el 40% de las veces que el modelo dijo 'Alto' estaba equivocado."
-        },
-        {
-          "id": "6aa5a60c-5f63-4386-ae92-9c1058f07c6d",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "En el taller de triaje hospitalario, el modelo OvR obtuvo Recall(Alto) = 0.000 mientras que Softmax obtuvo Recall(Alto) = 0.250. ¿Por qué el Recall es la métrica más crítica para la clase 'Alto' en este contexto?",
-          "options": [
-            "Porque el Recall es siempre la métrica más importante en cualquier problema de clasificación médica.",
-            "Porque Recall = TP / (TP + FN): mide cuántos pacientes de Riesgo Alto REAL fueron detectados. Un Recall bajo significa que el modelo deja pasar pacientes en peligro sin clasificarlos correctamente — los falsos negativos son clínicamente inaceptables.",
-            "Porque el Recall incluye automáticamente la corrección por desbalance de clases que el Precision no considera.",
-            "Porque Recall = 0.000 indica que el modelo tiene sobreajuste severo y debe descartarse completamente."
-          ],
-          "correct": 1,
-          "feedback": "Recall(Alto) = 0.000 en OvR significa que de los 12 pacientes de Riesgo Alto en el conjunto de prueba, el modelo no detectó ninguno — todos fueron clasificados como Medio o Bajo. Un Recall de 0 en la clase más crítica hace al modelo inutilizable en triaje hospitalario."
-        },
-        {
-          "id": "6a7ff7a3-3845-407f-9ab3-a320caade9f5",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Qué mide el F1-Score y por qué es más informativo que usar Precision o Recall de forma aislada?",
-          "options": [
-            "F1-Score es la suma de Precision y Recall; valores mayores a 1.5 indican un modelo excelente.",
-            "F1-Score es la media armónica de Precision y Recall: F1 = 2·P·R / (P+R). Equilibra ambas métricas; un modelo que sacrifica una para maximizar la otra obtiene un F1 bajo, reflejando el trade-off real.",
-            "F1-Score es el porcentaje de predicciones correctas totales, equivalente al Accuracy pero calculado clase por clase.",
-            "F1-Score penaliza únicamente los falsos positivos, haciéndolo ideal para problemas donde la Precision es más importante que el Recall."
-          ],
-          "correct": 1,
-          "feedback": "La media armónica penaliza los desequilibrios: si Precision=1.0 y Recall=0.0, F1=0 (no 0.5). Esto evita que un modelo que nunca predice una clase obtenga puntuaciones engañosamente altas al reportar solo una de las dos métricas."
-        },
-        {
-          "id": "c7c7f1f8-0f5d-4a98-9a34-4f6cf280b9cf",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Para qué sirve StandardScaler en el pipeline de preprocesamiento y a qué variables se aplica en el taller de triaje?",
-          "options": [
-            "StandardScaler convierte variables categóricas (como sexo y provincia) en números enteros para que el modelo pueda procesarlas.",
-            "StandardScaler transforma las variables numéricas para que tengan media 0 y varianza 1, eliminando diferencias de escala que afectarían al modelo. En el taller se aplica a: edad, frecuencia_cardiaca, presion_sistolica, temperatura y saturacion_o2.",
-            "StandardScaler elimina los valores atípicos (outliers) del dataset normalizando todos los valores al rango [0, 1].",
-            "StandardScaler se aplica a la variable objetivo y (riesgo) para codificarla numéricamente antes del entrenamiento."
-          ],
-          "correct": 1,
-          "feedback": "Sin estandarización, una variable como presion_sistolica (rango 60-200 mmHg) dominaría sobre temperatura (rango 35-40°C) solo por su escala. StandardScaler centra y escala las variables numéricas: X_std = (X - media) / desviación_estándar."
-        },
-        {
-          "id": "cbf89b9b-5623-4263-8fe0-96dac41e56db",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "En el taller de triaje, la variable objetivo y contiene los textos 'Bajo', 'Medio', 'Alto'. ¿Necesita aplicarse One-Hot Encoding (OHE) a y antes de entrenar LogisticRegression?",
-          "options": [
-            "Sí, obligatoriamente. scikit-learn requiere que y sea numérica (0, 1, 2) antes de poder entrenar cualquier modelo supervisado.",
-            "No. scikit-learn acepta directamente etiquetas de texto en y para clasificación multiclase. El OHE solo se aplica a las variables predictoras categóricas de X (como sexo, provincia, motivo_consulta).",
-            "Sí, pero solo cuando se usa OvR. Para Softmax, y puede dejarse en texto.",
-            "No aplica, porque y siempre debe ser de tipo float para que funcione classification_report."
-          ],
-          "correct": 1,
-          "feedback": "El notebook lo confirma explícitamente: 'La variable objetivo y contiene texto (Bajo, Medio, Alto). scikit-learn la acepta directamente — no necesita One-Hot Encoding.' Solo se aplica OHE a variables categóricas de X que son predictoras."
-        },
-        {
-          "id": "9fe0fa22-c058-47a4-8b07-6588bcfe3aaa",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Cuál es la ventaja crítica de usar ColumnTransformer dentro de un Pipeline sobre pd.get_dummies() al predecir datos nuevos en producción?",
-          "options": [
-            "ColumnTransformer es más rápido computacionalmente que pd.get_dummies() al procesar datasets grandes.",
-            "pd.get_dummies() puede generar columnas distintas si los datos nuevos no tienen todas las categorías del entrenamiento, causando predicciones silenciosamente incorrectas. ColumnTransformer aprende las categorías con .fit() y aplica exactamente esa misma transformación a cualquier dato nuevo con .transform().",
-            "ColumnTransformer puede codificar variables numéricas en categóricas, funcionalidad que pd.get_dummies() no tiene.",
-            "pd.get_dummies() solo funciona con Python 2; ColumnTransformer fue introducido para compatibilidad con Python 3."
-          ],
-          "correct": 1,
-          "feedback": "Si un paciente nuevo llega de una provincia no vista en entrenamiento, pd.get_dummies() generaría columnas faltantes o extras sin ningún error ni aviso. ColumnTransformer con handle_unknown='ignore' maneja este caso graciosamente, devolviendo 0 para categorías desconocidas."
-        },
-        {
-          "id": "7e076f98-72a4-43a8-ba09-f6b279cbb168",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "En clasificación multiclase con 3 clases, pipeline_soft.predict_proba(paciente) devuelve [0.073, 0.059, 0.868]. ¿Qué propiedad matemática garantiza Softmax sobre estos valores?",
-          "options": [
-            "Los valores están normalizados entre -1 y 1, y su promedio es siempre 0.",
-            "Los tres valores siempre suman exactamente 1.0, ya que cada uno representa la probabilidad de pertenecer a una clase y son mutuamente excluyentes.",
-            "El valor más alto siempre es mayor a 0.5, garantizando que el modelo siempre tenga certeza sobre su predicción.",
-            "Los valores están ordenados de menor a mayor automáticamente, independientemente del orden de classes_."
-          ],
-          "correct": 1,
-          "feedback": "0.073 + 0.059 + 0.868 = 1.000. Softmax garantiza esto por diseño matemático: divide cada exponencial por la suma de todas las exponenciales. En OvR esto no se garantiza — los K scores independientes no necesariamente suman 1."
-        },
-        {
-          "id": "5bf4e1aa-3d51-4cc6-9daa-e055863d1e6d",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "El modelo Softmax predice un paciente con probabilidades: P(Alto)=0.073, P(Bajo)=0.059, P(Medio)=0.868. La clase predicha es 'Medio'. ¿Qué debería hacerse si un modelo predice P(Bajo)=0.52 y P(Medio)=0.41 para un paciente hospitalario?",
-          "options": [
-            "Dar al paciente de alta inmediatamente con la clase Bajo, porque es la más probable.",
-            "Ignorar la predicción del modelo porque la incertidumbre invalida cualquier resultado.",
-            "Solicitar revisión clínica presencial: cuando las probabilidades son muy cercanas entre sí, el modelo no tiene certeza suficiente y un profesional de salud debe tomar la decisión final.",
-            "Reentrenar el modelo con más datos porque cualquier probabilidad por debajo de 0.8 indica que el modelo está mal calibrado."
-          ],
-          "correct": 2,
-          "feedback": "El notebook lo documenta explícitamente: 'Si las probabilidades están muy cerca entre sí, el caso debe revisarse manualmente.' Una diferencia de solo 11 puntos porcentuales (52% vs 41%) en un paciente hospitalario no justifica una decisión clínica automatizada."
-        },
-        {
-          "id": "ca08def5-2eaa-46dd-8b63-17cda95bfb3a",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "En la matriz de confusión multiclase del taller (clases: Bajo, Medio, Alto), el valor cm[2, 0] = 2 representa pacientes de 'Riesgo Alto clasificados como Bajo'. ¿Por qué este error es el más grave del modelo?",
-          "options": [
-            "Porque el valor 2 es el más alto de toda la matriz, indicando que es el error más frecuente.",
-            "Porque clasificar un paciente que realmente necesita atención urgente (Riesgo Alto) como Riesgo Bajo podría resultar en que se le dé de alta o no se le atienda prioritariamente, con consecuencias potencialmente fatales.",
-            "Porque el modelo debería siempre predecir la clase de la diagonal, y cm[2,0] indica que el modelo no aprendió la clase Alto.",
-            "Porque los errores fuera de la diagonal siempre son más graves que los de la diagonal en cualquier problema de clasificación."
-          ],
-          "correct": 1,
-          "feedback": "El taller lo documenta como 'el más grave': cm[2, 0] = Riesgo Alto → predicho como Bajo. El costo asimétrico de los errores es clave: clasificar Alto como Bajo en triaje hospitalario puede costar vidas. No todos los errores fuera de la diagonal son igualmente críticos."
-        },
-        {
-          "id": "3d53ef77-c92c-4cf3-81b4-b6956d6ee2c9",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Qué representan los valores que están EN la diagonal de la matriz de confusión y los que están FUERA de ella?",
-          "options": [
-            "Los valores en la diagonal son falsos positivos; los valores fuera de la diagonal son verdaderos positivos.",
-            "Los valores en la diagonal son predicciones correctas (el modelo predijo la misma clase que era real); los valores fuera de la diagonal son errores (el modelo predijo una clase diferente a la real).",
-            "Los valores en la diagonal miden el Precision por clase; los fuera de la diagonal miden el Recall.",
-            "Los valores en la diagonal son el soporte de cada clase (número total de muestras reales); los fuera son las muestras mal clasificadas por ambos modelos."
-          ],
-          "correct": 1,
-          "feedback": "Diagonal = TP por clase (real=X, predicho=X). Fuera de diagonal = errores. En el taller: cm[0,0]=215 (Bajo correctos), cm[1,1]=49 (Medio correctos), cm[2,2]=3 (Alto correctos). El resto son errores de clasificación."
-        },
-        {
-          "id": "73edc91a-51f4-4ef0-94a7-ad4179b69693",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "Observa este código del taller:\n\npreproc = ColumnTransformer([\n    ('cat', OneHotEncoder(drop='first', handle_unknown='ignore'), cat_cols),\n    ('num', StandardScaler(), num_cols),\n])\n\n¿Qué hace el parámetro drop='first' en OneHotEncoder?",
-          "options": [
-            "Elimina la primera columna del DataFrame original antes de aplicar el encoding.",
-            "Elimina la primera categoría de cada variable categórica al crear las columnas dummy, evitando la multicolinealidad perfecta (trampa de las variables dummy).",
-            "Hace que el OneHotEncoder procese primero las columnas numéricas antes que las categóricas.",
-            "Descarta las observaciones donde la primera categoría sea la más frecuente para balancear las clases."
-          ],
-          "correct": 1,
-          "feedback": "drop='first' elimina la primera categoría de cada variable. Por ejemplo, para 'sexo' (M/F), crea solo una columna: sexo_M=1 significa M, sexo_M=0 significa F. Sin drop='first', el modelo tendría multicolinealidad perfecta entre las columnas dummy."
-        },
-        {
-          "id": "c36a4184-b2d9-4aeb-b4ef-e5e8bac3b72d",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "Dado este fragmento de código del taller:\n\npipeline_ovr.fit(X_train, y_train)\npipeline_soft.fit(X_train, y_train)\nprint('Orden de clases:', pipeline_soft.classes_)\n# Output: ['Alto' 'Bajo' 'Medio']\n\n¿Por qué el orden de clases es alfabético y no el orden en que aparecen en el dataset?",
-          "options": [
-            "Porque el programador configuró sort=True como parámetro del Pipeline.",
-            "Porque scikit-learn ordena internamente las clases en orden alfabético al hacer .fit(), independientemente del orden en que aparezcan en y_train.",
-            "Porque Python ordena automáticamente cualquier array de strings al asignarlo a una variable.",
-            "Porque el taller usa random_state=42 que fuerza el orden alfabético para reproducibilidad."
-          ],
-          "correct": 1,
-          "feedback": "scikit-learn siempre ordena las etiquetas de clase alfabéticamente durante el entrenamiento. Por eso classes_ = ['Alto', 'Bajo', 'Medio'] aunque en los datos aparezcan en orden ['Medio', 'Bajo', 'Alto']. La columna 0 de predict_proba() es siempre P(Alto)."
-        },
-        {
-          "id": "61e33580-8b99-4d25-b2e8-f1897fd3d56d",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "En el taller se usa train_test_split(X, y, test_size=0.2, random_state=42, stratify=y). ¿Por qué es especialmente importante el parámetro stratify=y cuando hay una clase minoritaria como 'Riesgo Alto' (solo el 3.4% del dataset)?",
-          "options": [
-            "Para que X_train y X_test tengan exactamente la misma cantidad de filas.",
-            "Para garantizar que la proporción de las 3 clases en train y test sea representativa de la distribución original. Sin stratify, podría ocurrir que 'Riesgo Alto' quede completamente excluida del test, haciendo imposible evaluar el modelo en esa clase crítica.",
-            "Para ordenar las filas del dataset por nivel de riesgo antes de dividirlo.",
-            "Para aplicar el mismo escalado de StandardScaler tanto a X_train como a X_test durante la división."
-          ],
-          "correct": 1,
-          "feedback": "Sin stratify, con solo 61 pacientes de Riesgo Alto (3.4%), una división aleatoria simple podría poner todos en train y ninguno en test. El output del taller confirma: train tiene 49 Altos y test tiene 12 Altos, manteniendo la proporción ~80/20 en cada clase."
-        },
-        {
-          "id": "04a762b9-edc7-44f1-b700-f6084b5085cc",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "En el bloque C del taller se crea pipeline_final.fit(X, y) usando el dataset COMPLETO, mientras que en A3 se usó pipeline_soft.fit(X_train, y_train). ¿Por qué se reentrena con el 100% de los datos para producción?",
-          "options": [
-            "Porque el modelo no funcionará correctamente en producción si fue entrenado con menos del 100% de los datos disponibles.",
-            "Porque el train/test split (80/20) sirve para MEDIR la capacidad de generalización del modelo. Una vez validado ese resultado, el modelo de producción se reentrena con el 100% de los datos: ya no se necesita reservar una porción para medir, y más datos producen un modelo más robusto.",
-            "Porque joblib solo puede serializar modelos entrenados con el dataset completo.",
-            "Porque scikit-learn requiere que el pipeline_final use los mismos datos que el pipeline de evaluación para mantener consistencia."
-          ],
-          "correct": 1,
-          "feedback": "El principio es claro: evalúas con el 80% para estimar cómo generaliza, luego usas el 100% para producción porque ya no necesitas medir. pipeline_final.fit(X, y) vio todos los 1800 pacientes del taller, mientras pipeline_soft solo vio los 1440 del train."
-        },
-        {
-          "id": "986fc3d9-b819-4715-b81e-f844e3f9f0b2",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "¿Cuál es la ventaja de exportar pipeline_final completo con joblib.dump() en lugar de guardar el modelo y el preprocesador por separado?",
-          "options": [
-            "joblib.dump() comprime el archivo a un tamaño menor que si se guardaran los objetos por separado.",
-            "Al guardar el Pipeline completo (preproc + modelo), ambos objetos están sincronizados y no pueden cargarse en el orden equivocado. El sistema de producción solo llama predict() sobre el pipeline y obtiene el resultado — sin repetir OHE ni escalado manualmente.",
-            "joblib solo puede serializar objetos Pipeline; no puede guardar modelos ni scalers de forma independiente.",
-            "Guardar el pipeline completo evita que otros programadores puedan acceder a los parámetros del modelo entrenado."
-          ],
-          "correct": 1,
-          "feedback": "El taller lo documenta: 'Al exportar pipeline_final se guardan preproc y modelo juntos, como un solo objeto: nunca pueden desincronizarse ni cargarse en el orden equivocado.' Esto es la clave de un flujo de producción robusto."
-        },
-        {
-          "id": "f7e9aa43-9c93-484f-9373-97dc2b287e30",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "Observa este código de producción del bloque C:\n\npipeline_prod = joblib.load('modelo_triaje.pkl')\npred = pipeline_prod.predict(paciente_nuevo)\nproba = pipeline_prod.predict_proba(paciente_nuevo)\n\n¿Por qué no es necesario aplicar OHE ni StandardScaler manualmente a paciente_nuevo antes de llamar predict()?",
-          "options": [
-            "Porque predict() ignora automáticamente las variables categóricas y solo usa las numéricas.",
-            "Porque el Pipeline ya incluye el preprocesamiento internamente. Al llamar predict(), aplica preproc (OHE + StandardScaler) con las mismas categorías y escala aprendidas durante el entrenamiento, antes de pasarlos al modelo.",
-            "Porque en producción los datos siempre llegan ya preprocesados desde la base de datos.",
-            "Porque joblib.load() aplica automáticamente el preprocesamiento al cargar el modelo."
-          ],
-          "correct": 1,
-          "feedback": "Este es el beneficio central del Pipeline: encapsula todo el flujo. paciente_nuevo es un DataFrame con columnas originales (edad=24, sexo='M', etc.) y el pipeline internamente hace OHE a categóricas y StandardScaler a numéricas antes de predecir."
-        },
-        {
-          "id": "a43b5c6a-ba20-40c0-a6f9-57c096f6e78f",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "Comparando los resultados del taller de triaje: OvR obtuvo Recall(Alto)=0.000 y Softmax obtuvo Recall(Alto)=0.250. ¿Qué conclusión práctica extrae el taller de esta comparación?",
-          "options": [
-            "OvR es superior en todos los casos de clasificación médica porque tiene más parámetros ajustables.",
-            "Softmax es preferible para este problema porque detecta aunque sea el 25% de los pacientes de Riesgo Alto, mientras que OvR no detecta ninguno. En triaje, la estrategia que mejor identifica la clase más crítica es la correcta.",
-            "Ambos modelos son equivalentes porque su Accuracy general es casi idéntico (0.739 vs 0.742).",
-            "La diferencia entre ambos es irrelevante porque el Recall de Alto es bajo en ambos casos."
-          ],
-          "correct": 1,
-          "feedback": "El taller concluye explícitamente: 'el Recall de la clase Alto es la métrica que más cambia entre OvR y Softmax, y la más importante clínicamente.' OvR con Recall(Alto)=0 es inútil para triaje hospitalario aunque tenga Accuracy similar."
-        },
-        {
-          "id": "17b183e7-bf91-4e56-89d7-4d3ed952a27d",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "El dataset de triaje tiene Bajo=66.5%, Medio=30.2%, Alto=3.4%. El taller advierte que 'un modelo que siempre prediga Bajo tendría Accuracy ≈ 66% aunque sea inútil'. ¿Qué métrica deberías revisar PRIMERO para detectar este problema?",
-          "options": [
-            "Accuracy, porque es la métrica más completa disponible en classification_report.",
-            "weighted avg F1, porque pondera por número de muestras y refleja el rendimiento real.",
-            "macro avg F1 o el Recall por clase. Un modelo que siempre predice 'Bajo' tendría Recall(Medio)=0 y Recall(Alto)=0, haciendo que el macro avg F1 sea muy bajo aunque el Accuracy sea 66%.",
-            "La inercia del clustering, porque indica qué tan separadas están las 3 clases en el espacio de variables."
-          ],
-          "correct": 2,
-          "feedback": "El Accuracy del 66% de ese modelo 'dummy' engañaría. El macro avg F1 y el Recall por clase lo desenmascaran: Recall(Medio)=0/109=0, Recall(Alto)=0/12=0. macro avg F1 ≈ 0.26, revelando que el modelo no sirve para las clases minoritarias."
-        },
-        {
-          "id": "39668123-a8df-44ea-a42c-13ae1f700a67",
-          "category": "semana5",
-          "categoryName": "Semana 5 · Multiclase",
-          "text": "En el bloque B1 del taller se construye un pipeline simplificado:\n\npipeline2 = Pipeline([\n    ('scaler', StandardScaler()),\n    ('modelo', LogisticRegression(solver='lbfgs', max_iter=1000, random_state=42)),\n])\n\nEste pipeline solo usa variables numéricas y obtiene macro F1 = 0.630, mejor que el modelo completo (0.569). ¿Qué lección metodológica enseña este resultado?",
-          "options": [
-            "Agregar más variables siempre mejora el modelo; el resultado del B1 contradice esta afirmación, indicando un error en el taller.",
-            "Variables categóricas como provincia y sexo pueden introducir ruido o no aportar información relevante para el problema. Más variables no siempre significan mejor modelo — la selección de variables y el contexto del problema importan.",
-            "El modelo completo debe descartarse porque el modelo simplificado siempre supera al complejo.",
-            "StandardScaler es superior a ColumnTransformer en todos los escenarios de clasificación multiclase."
-          ],
-          "correct": 1,
-          "feedback": "Los signos vitales (saturacion_o2, frecuencia_cardiaca, presion_sistolica) son predictores clínicamente más directos del riesgo que la provincia o el motivo de consulta. El resultado empírico confirma la intuición médica: las variables fisiológicas objetivas pesan más que las administrativas."
-        },
-        {
-          "id": "f44dc609-86a6-445a-9fae-0b30523eb1ed",
-          "category": "teoria_rda2",
-          "categoryName": "Teoría RDA2",
-          "text": "# Observa el siguiente código svc = SVC(random_state=42) grid_search = GridSearchCV( ``` estimator=svc, param_grid=param_grid, cv=5, scoring='f1', n_jobs=-1 ```",
-          "options": [
-            ")",
-            "grid_search.fit(X_train_s, y_train) mejor_modelo = grid_search.best_estimator_ y_pred = mejor_modelo.predict(X_test_s) ## ¿Sobre qué datos se entrena el modelo final que queda en mejor_modelo?",
-            "Sobre todo X_train_s, después de identificar los mejores hiperparámetros mediante validación cruzada. Tras seleccionar los mejores hiperparámetros por validación cruzada, GridSearchCV re-entrena automáticamente el modelo sobre todo X_train_s. Esto maximiza los datos de entrenamiento para el modelo final.",
-            "Sobre X_test_s, para garantizar que el modelo visto por el evaluador sea el mismo que predice."
-          ],
-          "correct": 2,
-          "feedback": "Tras seleccionar los mejores hiperparámetros por validación cruzada, GridSearchCV re-entrena automáticamente el modelo sobre todo X_train_s. Esto maximiza los datos de entrenamiento para el modelo final."
-        },
-        {
-          "id": "cc4889e7-bbdf-47cb-9906-fd88afdcd327",
-          "category": "teoria_rda2",
-          "categoryName": "Teoría RDA2",
-          "text": "En una SVM, el hiperplano de separación se define matemáticamente como w·x + b = 0. ¿Qué representa el vector w en esta ecuación?",
-          "options": [
-            "El vector de distancias de cada punto al centroide de su clase.",
-            "El vector de probabilidades de clase calculado por el modelo.",
-            "El vector perpendicular al hiperplano que define su dirección en el espacio. w es el vector normal al hiperplano. Su dirección determina la orientación de la frontera de decisión en el espacio de características.",
-            "El vector de medias de cada variable del dataset de entrenamiento."
-          ],
-          "correct": 2,
-          "feedback": "w es el vector normal al hiperplano. Su dirección determina la orientación de la frontera de decisión en el espacio de características."
-        },
-        {
-          "id": "fad1f49d-029d-47b2-a89b-7e32a35cc154",
-          "category": "teoria_rda2",
-          "categoryName": "Teoría RDA2",
-          "text": "¿Cuál es la ventaja principal del **truco del kernel** frente a transformar explícitamente los datos a un espacio de mayor dimensión?",
-          "options": [
-            "Permite visualizar los datos en el espacio transformado mediante gráficos de dispersión en 3D.",
-            "Reduce automáticamente el número de variables del dataset original para acelerar el entrenamiento.",
-            "Calcula el producto interno en el espacio transformado sin necesidad de calcular las coordenadas de los puntos en ese espacio. Esta es la propiedad esencial del truco del kernel: operar en el espacio transformado usando solo productos internos, sin materializar las nuevas coordenadas. Es especialmente útil cuando el espacio tiene dimensión infinita, como en el kernel RBF.",
-            "Elimina la necesidad de escalar los datos antes del entrenamiento."
-          ],
-          "correct": 2,
-          "feedback": "Esta es la propiedad esencial del truco del kernel: operar en el espacio transformado usando solo productos internos, sin materializar las nuevas coordenadas. Es especialmente útil cuando el espacio tiene dimensión infinita, como en el kernel RBF."
-        },
-        {
-          "id": "1c9a89a6-b582-48ae-a808-52b8d1283a1c",
-          "category": "teoria_rda2",
-          "categoryName": "Teoría RDA2",
-          "text": "¿Por qué se recomienda usar escala logarítmica al definir los valores de C y gamma en param_grid?",
-          "options": [
-            "Porque con escala logarítmica el heatmap de cv_results_ siempre muestra un gradiente de color más uniforme.",
-            "Porque estos parámetros actúan en órdenes de magnitud; la diferencia entre C=1 y C=10 es mucho más significativa que entre C=1 y C=2. C y gamma tienen efecto multiplicativo sobre el comportamiento del modelo. La escala logarítmica permite explorar órdenes de magnitud con pocos valores, cubriendo eficientemente un rango amplio como [0.001, 0.01, 0.1, 1, 10, 100].",
-            "Porque scikit-learn requiere que los valores de C y gamma estén en escala logarítmica para funcionar correctamente.",
-            "Porque la escala logarítmica reduce el número de combinaciones totales, acelerando GridSearchCV."
-          ],
-          "correct": 1,
-          "feedback": "C y gamma tienen efecto multiplicativo sobre el comportamiento del modelo. La escala logarítmica permite explorar órdenes de magnitud con pocos valores, cubriendo eficientemente un rango amplio como [0.001, 0.01, 0.1, 1, 10, 100]."
-        },
-        {
-          "id": "9e3e958a-a9a2-4539-80af-c8e4451935a8",
-          "category": "teoria_rda2",
-          "categoryName": "Teoría RDA2",
-          "text": "¿Por qué los árboles de decisión no requieren normalizar ni escalar las variables numéricas, a diferencia de SVM?",
-          "options": [
-            "Porque los árboles no requieren escalar datos; esta es una de sus ventajas sobre modelos basados en distancias como SVM. El material documenta explícitamente que no requerir escalado es una ventaja del árbol de decisión. Es una característica que lo diferencia de modelos como SVM, que sí dependen del cálculo de distancias entre puntos.",
-            "Porque los árboles transforman internamente todas las variables a una escala logarítmica antes de calcular las divisiones.",
-            "Porque los árboles solo pueden procesar variables binarias, que por definición ya están en la misma escala.",
-            "Porque el índice Gini normaliza automáticamente las proporciones de clase, compensando cualquier diferencia de escala entre variables."
+            "El estimador entrena en modo Softmax automáticamente, pues es el comportamiento nativo al detectar tres o más clases en y.",
+            "El estimador lanza un error de excepción exigiendo configurar explícitamente en código el parámetro deprecado multi_class.",
+            "El estimador entrena obligatoriamente en modo OvR porque dicha estrategia continúa siendo la predeterminada en scikit-learn.",
+            "El estimador restringe el entrenamiento a las dos clases más frecuentes del conjunto descartando las muestras minoritarias."
           ],
           "correct": 0,
-          "feedback": "El material documenta explícitamente que no requerir escalado es una ventaja del árbol de decisión. Es una característica que lo diferencia de modelos como SVM, que sí dependen del cálculo de distancias entre puntos."
+          "feedback": "Correcto. En las versiones recientes de scikit-learn (1.5+ y 1.7+), el parámetro multi_class fue deprecado y removido. LogisticRegression detecta automáticamente si la variable objetivo posee 3 o más clases y activa de forma nativa la formulación multinomial (Softmax).",
+          "id": "2214b8c0-f8b5-4565-9a02-94e5a141ef27"
         },
         {
-          "id": "09f79c29-7917-4fb9-99d1-01e052d16a76",
-          "category": "teoria_rda2",
-          "categoryName": "Teoría RDA2",
-          "text": "¿Qué efecto tiene usar un valor de C muy alto (por ejemplo, C = 1000) en una SVM de margen suave?",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Qué representa el atributo pipeline.classes_ y por qué es crítico conocerlo al interpretar la salida de predict_proba()?",
           "options": [
-            "El modelo produce un margen muy amplio y tolera muchas violaciones, lo que puede llevar a underfitting.",
-            "El modelo penaliza duramente cada error de clasificación, ajustando el hiperplano muy cerca de los datos, con riesgo de overfitting. C alto hace que el modelo sea muy intolerante con los errores de entrenamiento. El hiperplano se acerca a los datos para clasificarlos todos correctamente, memorizando el ruido.",
-            "El modelo reduce automáticamente el número de vectores de soporte a cero, simplificando la frontera de decisión.",
-            "El modelo ignora el parámetro kernel y se comporta siempre como un clasificador lineal."
-          ],
-          "correct": 1,
-          "feedback": "C alto hace que el modelo sea muy intolerante con los errores de entrenamiento. El hiperplano se acerca a los datos para clasificarlos todos correctamente, memorizando el ruido."
-        },
-        {
-          "id": "be94fd67-19c4-41ef-864e-6398807f2156",
-          "category": "teoria_rda2",
-          "categoryName": "Teoría RDA2",
-          "text": "¿Cuál de las siguientes diferencias entre SVM y Regresión Logística es correcta?",
-          "options": [
-            "SVM es más rápida que la Regresión Logística en datasets con más de 100 000 registros.",
-            "SVM produce probabilidades de clase directamente, mientras que la Regresión Logística no.",
-            "La Regresión Logística maximiza el margen entre clases; SVM maximiza la verosimilitud.",
-            "SVM es más eficiente en espacios de alta dimensionalidad; la Regresión Logística produce probabilidades directamente. Esta afirmación recoge correctamente dos diferencias documentadas: la ventaja de SVM en alta dimensionalidad y la ventaja de Regresión Logística en producir probabilidades nativas sin configuración adicional."
+            "Indica el número total de clases presentes en el conjunto de entrenamiento para dimensionar bien los hiperplanos separadores.",
+            "Almacena las predicciones erróneas detectadas en la validación para construir la matriz de confusión sin evaluar el test real.",
+            "Especifica la lista de hiperparámetros validados en el modelo para verificar que las penalizaciones aplicadas sean válidas.",
+            "Contiene las clases ordenadas alfabéticamente tras fit(), determinando la correspondencia de cada columna de probabilidad."
           ],
           "correct": 3,
-          "feedback": "Esta afirmación recoge correctamente dos diferencias documentadas: la ventaja de SVM en alta dimensionalidad y la ventaja de Regresión Logística en producir probabilidades nativas sin configuración adicional."
+          "feedback": "Correcto. El atributo classes_ se genera tras ejecutar fit() y contiene las etiquetas únicas ordenadas alfabéticamente (por ejemplo ['Alto', 'Bajo', 'Medio']). La columna i del arreglo retornado por predict_proba() corresponde estrictamente a la clase classes_[i]; asumir un orden distinto genera interpretaciones clínicas o de negocio erróneas.",
+          "id": "e8776ce0-70f8-4ff6-9a84-2f00609aabf3"
         },
         {
-          "id": "1956aeff-ab95-483e-8259-55e05a9e2c97",
-          "category": "teoria_rda2",
-          "categoryName": "Teoría RDA2",
-          "text": "Una SVM se entrena con 10 000 registros y al revisar el modelo se encuentra que solo 45 puntos son vectores de soporte. ¿Qué ocurriría si se eliminaran los otros 9 955 registros del dataset y se reentrenara el modelo?",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Qué mide la métrica macro avg en classification_report y cuándo se debe priorizar sobre la métrica weighted avg?",
           "options": [
-            "El modelo cambiaría completamente porque necesita todos los datos para calcular el hiperplano óptimo.",
-            "El modelo fallaría porque scikit-learn requiere un mínimo de registros para entrenar una SVM.",
-            "El modelo sería exactamente el mismo, porque el hiperplano queda determinado únicamente por los vectores de soporte. Los vectores de soporte son los únicos puntos que determinan la posición del hiperplano. Todos los demás registros son irrelevantes para la frontera de decisión final.",
-            "El modelo mejoraría su accuracy porque eliminar datos reduce el ruido en el entrenamiento."
-          ],
-          "correct": 2,
-          "feedback": "Los vectores de soporte son los únicos puntos que determinan la posición del hiperplano. Todos los demás registros son irrelevantes para la frontera de decisión final."
-        },
-        {
-          "id": "da782e0e-a4e8-4a90-8800-a3a43b8c2392",
-          "category": "teoria_rda2",
-          "categoryName": "Teoría RDA2",
-          "text": "¿Por qué SVM elige el hiperplano con el mayor margen posible en lugar de cualquier hiperplano que separe correctamente las clases?",
-          "options": [
-            "Porque un margen mayor garantiza que el modelo producirá probabilidades más calibradas para cada clase.",
-            "Porque un margen mayor actúa como zona de seguridad, reduciendo el riesgo de clasificar mal puntos nuevos y mejorando la generalización. El margen actúa como un colchón de seguridad geométrico. Un margen amplio significa que un punto nuevo necesita alejarse bastante de la frontera para ser mal clasificado, dando robustez al modelo.",
-            "Porque un margen mayor reduce el tiempo de entrenamiento al necesitar menos iteraciones del optimizador.",
-            "Porque un margen mayor implica que el modelo encontró menos vectores de soporte, lo que siempre indica menor complejidad del modelo."
-          ],
-          "correct": 1,
-          "feedback": "El margen actúa como un colchón de seguridad geométrico. Un margen amplio significa que un punto nuevo necesita alejarse bastante de la frontera para ser mal clasificado, dando robustez al modelo."
-        },
-        {
-          "id": "a3e4adca-2cff-40f7-a9fa-3373e765cd9a",
-          "category": "teoria_rda2",
-          "categoryName": "Teoría RDA2",
-          "text": "Un equipo entrena una SVM para detectar diabetes. El dataset tiene 85% de pacientes sin diabetes y 15% con diabetes. ¿Qué métrica de scoring es más adecuada para GridSearchCV en este caso?",
-          "options": [
-            "**accuracy**, porque mide el porcentaje global de predicciones correctas y siempre es la métrica más informativa.",
-            "**recall**, porque en detección de enfermedad los falsos negativos (no detectar diabetes real) son más costosos que los falsos positivos. En detección de enfermedades, perder un caso real (falso negativo) es más grave que alertar a un paciente sano (falso positivo). Recall maximiza la detección de casos positivos reales.",
-            "**accuracy**, porque con datasets desbalanceados esta métrica es más confiable que recall o f1.",
-            "**precision**, porque en detección de enfermedad lo más importante es no alarmar innecesariamente a pacientes sanos."
-          ],
-          "correct": 1,
-          "feedback": "En detección de enfermedades, perder un caso real (falso negativo) es más grave que alertar a un paciente sano (falso positivo). Recall maximiza la detección de casos positivos reales."
-        },
-        {
-          "id": "1922351c-d45c-4a7d-91aa-0b77e16887bd",
-          "category": "teoria_rda2",
-          "categoryName": "Teoría RDA2",
-          "text": "# Después de entrenar el siguiente modelo modelo_rbf = SVC(kernel=**rbf**, C=1.0, gamma=**scale**, random_state=42) modelo_rbf.fit(X_train_s, y_train) print(modelo_rbf.n_support_) ## La salida es [452 410]. ¿Qué indica este resultado?",
-          "options": [
-            "El modelo clasificó correctamente 452 registros de la clase 0 y 410 de la clase 1 en el conjunto de prueba.",
-            "El modelo descartó 452 y 410 registros por ser outliers antes de encontrar el hiperplano.",
-            "El modelo necesitó 452 iteraciones para converger en la clase 0 y 410 para la clase 1.",
-            "El modelo encontró 452 vectores de soporte de la clase 0 (Legítima) y 410 de la clase 1 (Fraude) en el conjunto de entrenamiento. n_support_ es un atributo de SVC entrenado que indica cuántos vectores de soporte pertenecen a cada clase. Estos son los puntos del conjunto de entrenamiento que determinan el hiperplano."
+            "Promedia ponderando por el soporte de cada clase; se prioriza cuando las clases mayoritarias definen el beneficio global.",
+            "Cuantifica la variabilidad entre las métricas de cada clase; se prioriza cuando se busca minimizar la dispersión del modelo.",
+            "Mide el desempeño global ignorando las clases minoritarias; se prioriza cuando el desbalance no compromete la seguridad.",
+            "Promedia aritméticamente las métricas de las clases con igual peso; se prioriza cuando la clase minoritaria es crítica."
           ],
           "correct": 3,
-          "feedback": "n_support_ es un atributo de SVC entrenado que indica cuántos vectores de soporte pertenecen a cada clase. Estos son los puntos del conjunto de entrenamiento que determinan el hiperplano."
+          "feedback": "Correcto. La métrica macro avg calcula la media aritmética simple de Precision, Recall o F1 entre todas las clases, asignando a cada una el mismo peso sin importar cuántas observaciones tenga. Es indispensable priorizarla cuando detectar una clase minoritaria (como Riesgo Alto en triaje o Fraude) tiene una importancia crítica equiparable o superior a las clases comunes.",
+          "id": "41462464-bf06-47f7-90a8-b5673639041f"
         },
         {
-          "id": "20026114-38ef-4f5c-a2d9-aa286abc11c2",
-          "category": "teoria_rda2",
-          "categoryName": "Teoría RDA2",
-          "text": "Dos modelos SVM producen los siguientes resultados sobre el mismo conjunto de prueba: Modelo              Accuracy   Recall fraude   F1 fraude LinearSVC            0.7475        0.2818        0.3804 SVC (Kernel RBF)     0.7325        0.2182        0.3097 ¿Cuál modelo es preferible para un sistema de detección de fraude bancario y por qué?",
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En el reporte de triaje hospitalario, Accuracy fue 0.742 pero macro avg F1 fue 0.569. ¿A qué se debe esta notable discrepancia?",
           "options": [
-            "SVC (Kernel RBF), porque el kernel RBF siempre supera al lineal cuando los datos tienen variables categóricas.",
-            "Ninguno de los dos; ambos deben descartarse porque el recall de fraude es inferior al 50%.",
-            "SVC (Kernel RBF), porque tiene menor accuracy, lo que indica que el modelo no está sobreajustado.",
-            "LinearSVC, porque tiene mayor accuracy, recall de fraude y F1 de fraude en todas las métricas. LinearSVC supera al RBF en las tres métricas: accuracy (0.7475 vs 0.7325), recall de fraude (0.2818 vs 0.2182) y F1 de fraude (0.3804 vs 0.3097). El kernel más complejo no siempre gana; la elección debe basarse en evidencia empírica."
-          ],
-          "correct": 3,
-          "feedback": "LinearSVC supera al RBF en las tres métricas: accuracy (0.7475 vs 0.7325), recall de fraude (0.2818 vs 0.2182) y F1 de fraude (0.3804 vs 0.3097). El kernel más complejo no siempre gana; la elección debe basarse en evidencia empírica."
-        },
-        {
-          "id": "7c5fd583-7fd2-4f6d-acd4-e977a6d1332f",
-          "category": "teoria_rda2",
-          "categoryName": "Teoría RDA2",
-          "text": "¿Cuál es el orden correcto del pipeline de preprocesamiento para entrenar una SVM?",
-          "options": [
-            "OHE → Train/Test Split → StandardScaler (fit solo en train) → entrenar SVM El OHE se aplica primero (no aprende estadísticas de los datos), luego se divide, y finalmente se escala ajustando el scaler solo sobre los datos de entrenamiento para evitar fuga de información.",
-            "StandardScaler → OHE → Train/Test Split → entrenar SVM",
-            "Train/Test Split → StandardScaler → OHE → entrenar SVM",
-            "OHE → StandardScaler (fit en todo X) → Train/Test Split → entrenar SVM"
+            "A que el dataset está muy desbalanceado: la clase mayoritaria infla el Accuracy, pero el modelo falla en la clase crítica.",
+            "A un error matemático en el cálculo de las métricas, ya que teóricamente el Accuracy no puede superar al macro F1 del test.",
+            "A un sobreajuste severo del algoritmo que memorizó las muestras de validación cruzada impidiendo generalizar en el testeo.",
+            "A que la función classification_report excluye por defecto los verdaderos positivos de la clase minoritaria del cálculo."
           ],
           "correct": 0,
-          "feedback": "El OHE se aplica primero (no aprende estadísticas de los datos), luego se divide, y finalmente se escala ajustando el scaler solo sobre los datos de entrenamiento para evitar fuga de información."
+          "feedback": "Correcto. En el dataset de triaje, la clase Riesgo Bajo representaba cerca del 66% de las observaciones. Un modelo que prediga bien esa clase obtendrá un Accuracy elevado. Sin embargo, el macro avg F1 promedia por igual todas las categorías y delata que el modelo tuvo un desempeño deficiente en Riesgo Alto (Recall de apenas 0.250).",
+          "id": "f7f2fe7f-ccb0-48a4-889d-e12cdc2a83e7"
         },
         {
-          "id": "089a5d90-9874-4cf8-a477-c8efccd7590d",
-          "category": "teoria_rda2",
-          "categoryName": "Teoría RDA2",
-          "text": "¿Cuál es la principal razón por la que el margen suave (soft margin) es el estándar en la práctica, mientras que el margen duro (hard margin) casi no se usa?",
-          "options": [
-            "El margen suave es más rápido de calcular porque no requiere resolver el problema de optimización completo.",
-            "El margen duro solo funciona si los datos son perfectamente separables; un único outlier puede hacer que no exista solución.",
-            "El margen suave siempre produce un margen más amplio que el duro, lo que garantiza mejor generalización en todos los casos.",
-            "El margen duro produce probabilidades incorrectas porque no incorpora variables de holgura."
-          ],
-          "correct": 1,
-          "feedback": "En datos reales siempre hay ruido y outliers. El margen duro exige clasificación perfecta de todos los puntos, condición imposible de cumplir en casi cualquier problema práctico."
-        },
-        {
-          "id": "01e80d10-e679-4aa1-b9f4-6c8c3b80716d",
-          "category": "teoria_rda2",
-          "categoryName": "Teoría RDA2",
-          "text": "Un modelo SVM tiene buen desempeño en entrenamiento pero generaliza mal en datos nuevos. ¿Qué ajuste al parámetro C es recomendable?",
-          "options": [
-            "Fijar C = 0 para eliminar toda penalización y obtener el margen máximo posible.",
-            "Aumentar C para que el modelo penalice más los errores y mejore en datos nuevos.",
-            "Mantener C fijo y cambiar únicamente el tipo de kernel a uno más simple.",
-            "Reducir C para ampliar el margen y reducir el overfitting."
-          ],
-          "correct": 3,
-          "feedback": "Buen entrenamiento y mala generalización es la señal clásica de overfitting. Reducir C amplía el margen y hace al modelo más tolerante con errores de entrenamiento, mejorando la generalización."
-        },
-        {
-          "id": "83cbe5a7-949e-4547-921a-7cf1db4ed27a",
-          "category": "teoria_rda2",
-          "categoryName": "Teoría RDA2",
-          "text": "¿Qué hace el siguiente fragmento de código? from sklearn.svm import LinearSVC from sklearn.preprocessing import StandardScaler sc = StandardScaler() X_train_s = sc.fit_transform(X_train) X_test_s  = sc.transform(X_test) modelo = LinearSVC(C=1.0, max_iter=2000, random_state=42) modelo.fit(X_train_s, y_train)",
-          "options": [
-            "Escala los datos ajustando el scaler solo sobre el entrenamiento, y entrena una SVM lineal con C=1.0.",
-            "Entrena el scaler sobre el conjunto de prueba y luego entrena la SVM sobre el conjunto de entrenamiento.",
-            "Entrena una SVM con kernel RBF después de escalar los datos de entrenamiento y prueba con el mismo scaler.",
-            "Escala todo el dataset completo y entrena una SVM polinómica de grado 2."
-          ],
-          "correct": 0,
-          "feedback": "fit_transform en X_train ajusta y transforma; transform en X_test aplica la misma escala sin reaprender. LinearSVC implementa un kernel lineal, no RBF ni polinómico."
-        },
-        {
-          "id": "1bf87b86-c790-42ef-8095-ba355e7bfbb6",
-          "category": "teoria_rda2",
-          "categoryName": "Teoría RDA2",
-          "text": "¿Qué visualiza el siguiente código? resultados = pd.DataFrame(grid_search.cv_results_) rbf_df = resultados[resultados[**param_kernel**] == **rbf**] pivot_rbf = rbf_df.pivot_table( ``` values='mean_test_score', index='param_C', columns='param_gamma' ```",
-          "options": [
-            ") sns.heatmap(pivot_rbf, annot=True, fmt=**.3f**, cmap=**Blues**)",
-            "El número de vectores de soporte encontrados por cada combinación de C y gamma con kernel RBF.",
-            "La distribución de probabilidades de clase para cada combinación de hiperparámetros probada.",
-            "La matriz de confusión del mejor modelo evaluado sobre X_test."
-          ],
-          "correct": 4,
-          "feedback": "El código filtra cv_results_ para kernel RBF, construye una tabla pivote con mean_test_score (el F1 CV promedio) en función de C y gamma, y lo visualiza como heatmap. Permite identificar visualmente las mejores combinaciones."
-        },
-        {
-          "id": "526796bc-acce-437f-b0e9-c7820671efd0",
-          "category": "teoria_rda2",
-          "categoryName": "Teoría RDA2",
-          "text": "¿Por qué es obligatorio aplicar StandardScaler antes de entrenar una SVM?",
-          "options": [
-            "Porque sin escalado, la función de kernel RBF produce siempre similitud = 1 entre todos los puntos.",
-            "Porque SVM calcula distancias entre puntos para encontrar el margen, y variables con mayor rango dominarían ese cálculo injustamente.",
-            "Porque el escalado convierte las variables categóricas a numéricas, paso previo necesario para SVM.",
-            "Porque scikit-learn lanza un error si las variables no están escaladas antes de llamar a fit()."
-          ],
-          "correct": 1,
-          "feedback": "El margen se define en términos de distancias euclidianas. Si una variable tiene un rango mucho mayor que las demás, domina el cálculo del margen independientemente de su relevancia predictiva."
-        },
-        {
-          "id": "4b9f1d55-eb2b-4bc7-a7b3-07edca420f7d",
           "category": "semana5",
-          "categoryName": "Semana 5 · SVM",
-          "text": "¿Cuál es la función principal del kernel lineal en un modelo SVM?",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Cómo se interpreta conceptualmente la métrica Precision para la clase 'Alto' en un modelo de clasificación multiclase?",
           "options": [
-            "Transformar los datos a un espacio de dimensión infinita para buscar fronteras no lineales.",
-            "Buscar un hiperplano plano (recto) que separe las clases en el espacio original de características, siendo ideal cuando los datos son linealmente separables.",
-            "Clasificar automáticamente variables categóricas sin necesidad de hacer One-Hot Encoding.",
-            "Multiplicar todas las variables numéricas por un factor de escala constante para normalizarlas."
+            "De todos los pacientes que realmente eran de Riesgo Alto, cuantifica qué proporción fue clasificada correctamente por el modelo.",
+            "De todos los pacientes diagnosticados como Riesgo Alto por el modelo, cuantifica qué fracción correspondía realmente a esa clase.",
+            "Mide la proporción total de pacientes con diagnóstico de Riesgo Alto respecto al tamaño global de todo el conjunto de prueba dado.",
+            "Calcula la media geométrica entre la sensibilidad clínica y el porcentaje de falsos positivos en la matriz de confusión evaluada."
           ],
           "correct": 1,
-          "feedback": "El kernel lineal busca una frontera recta (un hiperplano plano) en el espacio original. Es el modelo más simple, rápido y menos propenso al sobreajuste, por lo que suele ser el primero en probarse."
+          "feedback": "Correcto. Precision = TP / (TP + FP). Responde a la pregunta: de todos los casos que el clasificador etiquetó como 'Alto', ¿cuántos eran verdaderamente de Riesgo Alto? Es un indicador directo del control sobre las falsas alarmas del sistema predictivo.",
+          "id": "fe845457-6525-4394-b303-d790ab3feb30"
         },
         {
-          "id": "886a8774-8c4e-4bea-9fbd-36aed185a73b",
           "category": "semana5",
-          "categoryName": "Semana 5 · SVM",
-          "text": "¿Qué caracteriza al kernel Gaussiano (RBF) frente al kernel lineal en Support Vector Machines?",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Por qué el Recall de la clase 'Alto' es la métrica más crítica en el problema de triaje hospitalario evaluado en el taller?",
           "options": [
-            "El kernel RBF solo puede generar fronteras rectas, mientras que el lineal puede generar curvas.",
-            "El kernel RBF proyecta implícitamente los datos a un espacio de infinitas dimensiones, permitiendo separar clases que están muy mezcladas mediante fronteras de decisión curvas y complejas.",
-            "El kernel RBF no utiliza vectores de soporte para definir su hiperplano.",
-            "El kernel RBF requiere obligatoriamente que las clases estén balanceadas (50/50)."
-          ],
-          "correct": 1,
-          "feedback": "Radial Basis Function (RBF) es el kernel por defecto de SVC. Mide la similitud (distancia) entre puntos y permite fronteras altamente curvas. Si las clases están mezcladas, el RBF suele adaptarse mucho mejor que el lineal."
-        },
-        {
-          "id": "81a4ec51-896f-484b-9a85-63106ed7ea14",
-          "category": "semana5",
-          "categoryName": "Semana 5 · SVM",
-          "text": "Al resolver un problema de clasificación nuevo con SVM, ¿cuál es la mejor práctica documentada para elegir el kernel inicial?",
-          "options": [
-            "Empezar siempre con un kernel polinómico de grado 5 para abarcar toda la complejidad posible.",
-            "Comenzar probando un kernel lineal, ya que es el más rápido, interpretable y menos propenso a sobreajustar. Si el rendimiento (accuracy, recall, etc.) es pobre, escalar a un kernel RBF.",
-            "Nunca usar kernel lineal si hay variables continuas; ir directamente a RBF.",
-            "Elegir un kernel diferente aleatoriamente usando GridSearchCV hasta encontrar el de mayor precisión en el conjunto de prueba."
-          ],
-          "correct": 1,
-          "feedback": "En la práctica de Data Science, se debe empezar por lo más simple ('Navaja de Ockham'). El kernel lineal evalúa si los datos son separables fácilmente. En el taller, vimos que a veces el modelo lineal balanceado incluso supera o iguala al RBF, siendo mucho más rápido y ligero."
-        },
-        {
-          "id": "eb23ebce-c375-4b42-a786-5b7e86c73858",
-          "category": "semana5",
-          "categoryName": "Semana 5 · SVM",
-          "text": "En el taller de Fraude, el dataset tiene 71% de transacciones legítimas y 29% de fraudes. ¿Qué efecto específico tiene usar el hiperparámetro class_weight='balanced' dentro de SVC()?",
-          "options": [
-            "Elimina aleatoriamente transacciones legítimas del conjunto de entrenamiento hasta que ambas clases queden exactamente con la misma cantidad de filas.",
-            "Multiplica (duplica o triplica) las filas de fraude en el DataFrame antes de entrenar el modelo.",
-            "Ajusta automáticamente los pesos de penalización de manera inversamente proporcional a la frecuencia de las clases. Así, un error al clasificar la clase minoritaria (Fraude) recibe una penalización mayor, obligando al modelo a prestarle más atención.",
-            "Activa una red neuronal oculta que reemplaza al modelo SVM original por uno balanceado."
+            "Porque clasificar a un paciente sano como grave satura la infraestructura del hospital elevando los costos de operación clínica.",
+            "Porque permite calcular el soporte estadístico requerido para balancear las clases mediante técnicas de sobremuestreo sintético.",
+            "Porque un Recall bajo significa dejar escapar pacientes graves sin atención urgente, con consecuencias potencialmente mortales.",
+            "Porque garantiza que el hiperplano de soporte vectorial maximice el margen euclidiano respecto a los centroides de cada cluster."
           ],
           "correct": 2,
-          "feedback": "El peso se calcula como n_total / (k × n_clase). Para Fraude, el peso fue 1.74, es decir, equivocarse en un caso de fraude penalizaba 1.74 veces más al algoritmo que equivocarse en una transacción legítima (peso 0.70). Es vital en clases desbalanceadas para mejorar el Recall de la clase minoritaria."
+          "feedback": "Correcto. Recall = TP / (TP + FN). En un entorno hospitalario, no identificar a un paciente en condición crítica (falso negativo) puede ocasionar su fallecimiento por falta de atención inmediata. Por ende, maximizar el Recall en la clase de mayor riesgo es el objetivo prioritario del triaje.",
+          "id": "6aa5a60c-5f63-4386-ae92-9c1058f07c6d"
         },
         {
-          "id": "31244a30-28e7-4249-a78c-8997701e0271",
           "category": "semana5",
-          "categoryName": "Semana 5 · SVM",
-          "text": "¿Qué significan las siglas SVC en scikit-learn y qué tarea específica de Machine Learning resuelve?",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Por qué el F1-Score es más informativo que analizar el Precision y el Recall de manera aislada en problemas desbalanceados?",
           "options": [
-            "Standard Vector Calculator, utilizado para normalizar vectores en redes neuronales.",
-            "Support Vector Classification, es el estimador principal de la librería para aplicar Máquinas de Vectores de Soporte a problemas de clasificación (asignar etiquetas).",
-            "Support Vector Clustering, utilizado para agrupar datos de forma no supervisada.",
-            "Scalar Vector Component, una alternativa al PCA para reducción de dimensionalidad."
+            "Porque suma directamente el Precision y el Recall normalizando el valor resultante para que fluctúe en una escala entre 0 y 100.",
+            "Porque es el promedio ponderado por el número de observaciones de cada clase, evitando el sesgo introducido por las mayoritarias.",
+            "Porque penaliza únicamente los falsos positivos garantizando que la especificidad del modelo alcance el óptimo global deseado.",
+            "Porque es la media armónica entre Precision y Recall, penalizando fuertemente los desequilibrios extremos entre ambas métricas."
           ],
-          "correct": 1,
-          "feedback": "SVC significa Support Vector Classifier. Scikit-learn también incluye SVR (Support Vector Regression) para problemas de predicción de números continuos usando el mismo principio de margen, pero SVC es específico para clasificación (binaria o multiclase)."
+          "correct": 3,
+          "feedback": "Correcto. El F1-Score se define como 2·(Precision·Recall) / (Precision + Recall). Al ser una media armónica, castiga drásticamente a aquellos modelos que sacrifican una métrica en favor de la otra (por ejemplo, Precision = 1.0 con Recall = 0.0 produce F1 = 0), reflejando fielmente el balance real.",
+          "id": "6a7ff7a3-3845-407f-9ab3-a320caade9f5"
         },
         {
-          "id": "be76eef1-76cf-4e18-9b52-1aa4ef76f956",
           "category": "semana5",
-          "categoryName": "Semana 5 · SVM",
-          "text": "En el taller de SVM, se predice una transacción usando decision_function() obteniendo un valor de +3.00, y otra obteniendo -1.00. Dado que la clase Fraude es 1 y Legítima es 0, ¿cómo se interpretan matemáticamente estos resultados?",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Cuál es el propósito del transformador StandardScaler sobre las variables numéricas en el pipeline de clasificación?",
           "options": [
-            "Ambos indican fraude, porque los valores son distintos de cero.",
-            "decision_function() devuelve la distancia (con signo) del punto al hiperplano. Un valor positivo (+3.00) indica que el punto cayó del lado de la clase 1 (Fraude) y está lejos de la frontera (alta certeza). Un valor negativo (-1.00) indica clase 0 (Legítima).",
-            "decision_function() devuelve la probabilidad en porcentaje. +3.00 significa 300% de probabilidad, lo que indica un error del modelo.",
-            "El valor absoluto representa el número de vectores de soporte utilizados para predecir esa fila específica."
+            "Transformar las columnas numéricas a media cero y desviación estándar uno, evitando que variables con rangos grandes dominen bien.",
+            "Convertir las variables categóricas en representaciones numéricas continuas para que los algoritmos puedan calcular gradientes.",
+            "Eliminar los valores atípicos del dataset acotando todas las observaciones numéricas estrictamente dentro del rango de cero a uno.",
+            "Codificar la variable objetivo multiclase a valores continuos para permitir el ajuste de regresiones con regularización penalizada."
           ],
-          "correct": 1,
-          "feedback": "SVC por defecto no produce probabilidades (como LogisticRegression). Solo te dice de qué lado de la 'línea' (hiperplano) cayó el punto, y a qué distancia está. Mientras más alejado del cero, más seguro está el modelo de su clasificación."
+          "correct": 0,
+          "feedback": "Correcto. StandardScaler estandariza cada variable restando su media y dividiendo por su desviación estándar (puntuaciones z). Esto impide que variables con magnitudes elevadas (como la presión arterial de 60 a 200) eclipsen a atributos con valores reducidos (como la temperatura de 36 a 40).",
+          "id": "c7c7f1f8-0f5d-4a98-9a34-4f6cf280b9cf"
         },
         {
-          "id": "60ccf7a0-4225-4e01-980d-f670a3e83c3d",
           "category": "semana5",
-          "categoryName": "Semana 5 · SVM",
-          "text": "A diferencia de la Regresión Logística, el modelo SVC estándar no tiene habilitado el método predict_proba(). ¿Qué técnica usa SVC internamente si habilitamos el parámetro probability=True para poder calcular probabilidades?",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En el taller de triaje, la variable objetivo y contiene textos ('Bajo', 'Medio', 'Alto'). ¿Es necesario aplicar One-Hot Encoding a y?",
           "options": [
-            "Aplica la función Sigmoide Softmax directamente a los vectores de soporte.",
-            "Utiliza el método de Escalado de Platt (Platt Scaling), que entrena internamente un modelo de regresión logística adicional sobre los resultados del SVM (decision_function) mediante validación cruzada.",
-            "Cuenta el número de votos de los árboles de decisión subyacentes.",
-            "Divide la distancia al hiperplano por el hiperparámetro C."
+            "Sí, es obligatorio porque scikit-learn solo admite variables objetivo expresadas en formato binario mediante matrices dispersas.",
+            "No, porque scikit-learn acepta directamente etiquetas de texto en y; el One-Hot Encoding se aplica solo a predictoras de X base.",
+            "Sí, pero únicamente si se utiliza la formulación Softmax, ya que la estrategia OvR procesa texto de forma nativa sin codificar.",
+            "No, porque las variables de texto deben transformarse obligatoriamente mediante un escalamiento estándar con StandardScaler base."
           ],
           "correct": 1,
-          "feedback": "El Platt Scaling ajusta una curva sigmoide sobre las distancias del SVM (decision_function). Sin embargo, habilitar probability=True vuelve el entrenamiento mucho más lento (porque requiere validación cruzada interna en 5 iteraciones) y las probabilidades resultantes a veces pueden ser inconsistentes con el resultado de predict()."
+          "feedback": "Correcto. Los clasificadores de scikit-learn aceptan de forma nativa arreglos o series de texto como variable objetivo y, gestionando internamente la asignación de etiquetas numéricas mediante el atributo `classes_`. El One-Hot Encoding se reserva para las variables predictoras categóricas de la matriz X.",
+          "id": "cbf89b9b-5623-4263-8fe0-96dac41e56db"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Cuál es la principal ventaja técnica de utilizar ColumnTransformer dentro de un Pipeline en lugar de la función pd.get_dummies()?",
+          "options": [
+            "Acelera exponencialmente el tiempo de cómputo al utilizar algoritmos paralelos en memoria compartida al procesar strings de texto.",
+            "Permite codificar variables continuas en rangos discretos sin necesidad de estimar la función de densidad de probabilidad previa.",
+            "Aprende las categorías con fit() y aplica exactamente esa misma estructura a datos nuevos, evitando discrepancias de columnas.",
+            "Garantiza que todas las variables numéricas se transformen a distribuciones gaussianas perfectas con simetría estadística total."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Si se emplea pd.get_dummies() sobre un registro nuevo que carezca de alguna categoría vista en el entrenamiento (o contenga una categoría desconocida), se generará un número o disposición distinta de columnas, rompiendo la predicción. ColumnTransformer integrado en el Pipeline aprende el esquema en el entrenamiento y lo replica fielmente en producción.",
+          "id": "9fe0fa22-c058-47a4-8b07-6588bcfe3aaa"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En un problema con 3 clases, pipeline_soft.predict_proba() devuelve [0.073, 0.059, 0.868]. ¿Qué propiedad matemática garantiza Softmax?",
+          "options": [
+            "Garantiza que todos los valores devueltos sean mutuamente independientes y tengan un promedio exactamente igual a cero en test.",
+            "Garantiza que el valor máximo del arreglo supere obligatoriamente el umbral de 0.50 para confirmar la convergencia del ajuste.",
+            "Garantiza que las probabilidades se ordenen de menor a mayor de forma automática facilitando la selección de la clase ganadora.",
+            "Garantiza que los valores sean no negativos y sumen exactamente 1.0, representando una distribución de probabilidad coherente."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. La función Softmax calcula la exponencial de cada puntuación lineal dividida entre la suma de las exponenciales de todas las clases. Esta formulación asegura de manera intrínseca que cada salida pertenezca al intervalo (0, 1) y que la sumatoria de las probabilidades de todas las clases sea rigurosamente 1.0.",
+          "id": "7e076f98-72a4-43a8-ba09-f6b279cbb168"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "Un modelo hospitalario predice para un paciente P(Bajo) = 0.52 y P(Medio) = 0.41. ¿Cuál es el protocolo de actuación recomendado?",
+          "options": [
+            "Solicitar una revisión clínica humana, pues probabilidades tan cercanas indican incertidumbre que desaconseja automatización total.",
+            "Otorgar el alta médica inmediata al paciente, debido a que la clase Riesgo Bajo obtuvo la mayor probabilidad matemática puntual.",
+            "Descartar la predicción y reentrenar el modelo con más épocas, ya que probabilidades menores al 80% invalidan el estimador base.",
+            "Invertir la decisión clínica asignando la clase minoritaria para compensar el desbalance estadístico del conjunto de prueba real."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. Cuando la diferencia entre las probabilidades predichas para las dos clases más probables es muy reducida (apenas 11 puntos porcentuales en un entorno crítico), el modelo exhibe alta ambigüedad. En aplicaciones médicas sensibles, estos casos limítrofes deben derivarse a inspección manual por parte de un profesional de la salud.",
+          "id": "5bf4e1aa-3d51-4cc6-9daa-e055863d1e6d"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En la matriz de confusión (Bajo, Medio, Alto), el valor cm[2, 0] = 2 corresponde a Alto clasificado como Bajo. ¿Por qué es el más grave?",
+          "options": [
+            "Porque representa el valor numérico más elevado fuera de la diagonal principal, distorsionando la precisión del modelo final.",
+            "Porque scikit-learn asigna una penalización cuadrática doble a los errores situados en la última fila de la matriz evaluada.",
+            "Porque altera el balance de soporte del conjunto de testeo, obligando a recalcular los intervalos de confianza en validación.",
+            "Porque un paciente con riesgo vital inminente sería clasificado como leve, privándolo de atención médica oportuna y crítica."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Los errores de clasificación en medicina conllevan costos asimétricos. Asignar un paciente de Riesgo Alto a Riesgo Bajo implica que no recibirá atención prioritaria y podría ser enviado a sala de espera o dado de alta, comprometiendo severamente su supervivencia.",
+          "id": "ca08def5-2eaa-46dd-8b63-17cda95bfb3a"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Qué representan los valores ubicados en la diagonal principal de una matriz de confusión multiclase frente a los ubicados fuera de ella?",
+          "options": [
+            "Los valores en la diagonal son falsos positivos de cada clase; los valores fuera de la diagonal representan verdaderos negativos.",
+            "Los valores en la diagonal miden el soporte muestral; los valores fuera representan las probabilidades condicionadas de Bayes.",
+            "La diagonal contiene las clasificaciones correctas (TP); los elementos fuera de la diagonal representan los errores del modelo.",
+            "La diagonal indica los coeficientes de correlación lineal; los valores externos cuantifican la devianza residual del clasificador."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. En una matriz de confusión, cada celda (i, i) de la diagonal principal registra la cantidad de observaciones cuya clase real i coincidió con la predicción i del modelo (aciertos o verdaderos positivos). Cualquier elemento situado fuera de la diagonal representa una discrepancia o error de clasificación.",
+          "id": "3d53ef77-c92c-4cf3-81b4-b6956d6ee2c9"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "Al preprocesar con OneHotEncoder(drop='first', handle_unknown='ignore'), ¿cuál es la función técnica del argumento drop='first'?",
+          "options": [
+            "Eliminar la primera observación del conjunto de datos antes de calcular las frecuencias de las variables categóricas dadas.",
+            "Forzar al codificador a transformar únicamente variables binarias, descartando atributos con tres o más categorías distintas.",
+            "Ordenar las categorías alfabéticamente antes de transformarlas para que coincidan con la indexación del estimador final.",
+            "Omitir la primera categoría dummy de cada variable para prevenir la multicolinealidad perfecta en modelos lineales ajustados."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Si una variable categórica posee K categorías y se crean K columnas dummy, la suma de esas K columnas es idénticamente 1, generando dependencia lineal exacta con el intercepto (la trampa de las variables dummy). Al fijar drop='first', se descarta una categoría de referencia y se evita la multicolinealidad perfecta.",
+          "id": "73edc91a-51f4-4ef0-94a7-ad4179b69693"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "Al entrenar un pipeline multiclase con etiquetas ['Medio', 'Bajo', 'Alto'], classes_ devuelve ['Alto', 'Bajo', 'Medio']. ¿Por qué?",
+          "options": [
+            "Porque scikit-learn indexa y clasifica internamente las etiquetas en orden léxico alfabético al invocar el método fit().",
+            "Porque el programador especificó un parámetro de ordenamiento jerárquico dentro de la configuración del estimador lineal.",
+            "Porque la función de pérdida optimiza los gradientes según la clase que posee el menor soporte muestral de entrenamiento.",
+            "Porque Python reordena automáticamente cualquier lista de cadenas según su longitud al pasarla como argumento posicional."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. Durante la ejecución de fit(), los estimadores de scikit-learn identifican los valores únicos de la variable objetivo y los ordenan internamente por orden léxico (alfabético). Así, la columna 0 de predict_proba() siempre se asociará a 'Alto', la columna 1 a 'Bajo' y la columna 2 a 'Medio'.",
+          "id": "c36a4184-b2d9-4aeb-b4ef-e5e8bac3b72d"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Por qué es crucial configurar stratify=y en train_test_split cuando se trabaja con datasets desbalanceados como el de triaje?",
+          "options": [
+            "Para asegurar que las particiones de entrenamiento y prueba tengan exactamente la misma cantidad total de observaciones numéricas.",
+            "Para preservar la proporción porcentual original de cada clase en train y test, evitando excluir a la clase minoritaria en prueba.",
+            "Para ordenar los registros de forma determinista según la gravedad clínica del paciente antes de realizar la división aleatoria.",
+            "Para estandarizar los datos con StandardScaler dentro de la misma función sin necesidad de recurrir a un objeto Pipeline previo."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. En datasets donde una clase crítica representa un porcentaje ínfimo (como Riesgo Alto con solo el 3.4%), una partición aleatoria simple podría dejar la clase minoritaria subrepresentada o completamente ausente en el conjunto de prueba. El parámetro stratify=y garantiza que tanto train como test mantengan la proporción original de cada clase.",
+          "id": "61e33580-8b99-4d25-b2e8-f1897fd3d56d"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "En el taller se ajusta pipeline_final.fit(X, y) con el 100% de los datos antes de exportar. ¿Cuál es el fundamento de esta práctica?",
+          "options": [
+            "La división train/test sirve para evaluar generalización; una vez validado, se usa todo el dataset para un modelo más robusto.",
+            "Porque la librería joblib emite una excepción si intenta serializar un modelo ajustado sobre subconjuntos parciales de datos.",
+            "Porque scikit-learn requiere que el tamaño de entrenamiento coincida con las dimensiones de producción para admitir predict().",
+            "Para recalcular los hiperparámetros óptimos mediante un descenso de gradiente completo sobre los datos de validación cruzada."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. El split 80/20 tiene como único fin estimar objetivamente la capacidad de generalización del algoritmo sobre datos no vistos. Una vez seleccionada la mejor arquitectura, ya no se requiere reservar datos para evaluación, por lo que reentrenar con el 100% de las muestras maximiza la información disponible y fortalece el modelo de producción.",
+          "id": "04a762b9-edc7-44f1-b700-f6084b5085cc"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Cuál es la principal ventaja operativa de serializar con joblib el Pipeline completo en lugar de exportar preprocesador y modelo por separado?",
+          "options": [
+            "Reduce el tamaño del archivo serializado en disco al comprimir los pesos del modelo mediante algoritmos de cuantización binaria.",
+            "Permite modificar los hiperparámetros del estimador en caliente durante la ejecución en el servidor sin necesidad de recargar.",
+            "Mantiene sincronizados el preprocesamiento y el clasificador en un solo objeto, impidiendo errores de secuencia en producción.",
+            "Habilita el cálculo automático de matrices de confusión sobre todos los datos nuevos que ingresen a la base de datos operativa."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Al exportar el objeto Pipeline unificado (`modelo_triaje.pkl`), las transformaciones de escalado, codificación categórica y el clasificador quedan integrados de forma indisoluble. Esto elimina el riesgo de que en el entorno de producción se apliquen transformaciones en orden inverso o con escaladores no ajustados.",
+          "id": "986fc3d9-b819-4715-b81e-f844e3f9f0b2"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "¿Por qué no se debe aplicar escalado ni One-Hot Encoding manualmente a un paciente nuevo antes de pasarlo a pipeline_prod.predict()?",
+          "options": [
+            "Porque la función predict() descarta automáticamente las columnas categóricas procesando únicamente las variables continuas.",
+            "Porque en entornos productivos los registros hospitalarios provienen de sistemas que ya incorporan estandarización de fábrica.",
+            "Porque la inferencia emplea una representación interna comprimida que no depende de la escala de las características de entrada.",
+            "Porque el Pipeline encapsula el preprocesamiento y aplica internamente la misma transformación aprendida en el entrenamiento."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. La ventaja fundamental del Pipeline es la encapsulación: al llamar a predict(paciente_nuevo), el pipeline toma el DataFrame crudo con sus columnas y tipos originales, ejecuta de manera transparente el ColumnTransformer (OHE y StandardScaler) con las estadísticas guardadas, y alimenta directamente al clasificador.",
+          "id": "f7e9aa43-9c93-484f-9373-97dc2b287e30"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "OvR obtuvo Recall(Alto) = 0.000 y Softmax obtuvo Recall(Alto) = 0.250 en el taller de triaje. ¿Qué conclusión técnica se deriva?",
+          "options": [
+            "Softmax es preferible porque detecta casos de la clase crítica; OvR no detectó ninguno y es inviable para el triaje médico.",
+            "Ambas opciones son indistintas porque su Accuracy fue casi idéntico (0.739 vs 0.742) en el conjunto de prueba evaluado aquí.",
+            "OvR es superior porque los clasificadores binarios independientes garantizan márgenes de separación más amplios en general.",
+            "Ambos modelos deben descartarse de inmediato porque ningún algoritmo con Recall inferior al 90% puede ser testeado en salud."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. A pesar de tener un Accuracy global similar, OvR falló por completo al detectar a los pacientes de Riesgo Alto (Recall = 0.0), volviéndolo inutilizable en un hospital. Softmax, al optimizar conjuntamente las probabilidades, logró identificar al menos al 25% de los pacientes graves, demostrando ser la estrategia adecuada.",
+          "id": "a43b5c6a-ba20-40c0-a6f9-57c096f6e78f"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "Si un modelo trivial predice siempre la clase mayoritaria 'Bajo' (66% del dataset), ¿qué métrica desenmascara de inmediato su ineficacia?",
+          "options": [
+            "El Accuracy general, debido a que este valor caerá inmediatamente a cero al no predecir las clases minoritarias del problema.",
+            "El macro avg F1 y el Recall por clase, ya que ambas métricas serán cero para las clases minoritarias evidenciando la falla real.",
+            "El weighted avg F1, puesto que al ponderar por el soporte poblacional castiga severamente la ausencia de predicciones en Alto.",
+            "La inercia acumulada de las predicciones, dado que mide la distancia euclidiana hacia el centroide de la clase mayoritaria real."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El Accuracy de dicho modelo trivial sería falsamente optimista (~66%). Sin embargo, al inspeccionar el Recall por clase se observa Recall(Medio)=0 y Recall(Alto)=0, lo que hunde el promedio macro avg F1 a niveles inutilizables (~0.26), revelando de inmediato la inoperancia del sistema.",
+          "id": "17b183e7-bf91-4e56-89d7-4d3ed952a27d"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · Multiclase",
+          "text": "Un modelo que utiliza únicamente signos vitales numéricos superó en macro F1 al modelo completo que incluía provincia y sexo. ¿Qué lección aporta?",
+          "options": [
+            "Demuestra que agregar más variables siempre mejora el poder predictivo y que el resultado observado fue una anomalía aleatoria.",
+            "Indica que los estimadores lineales solo convergen cuando todas las variables predictoras del problema son numéricas continuas.",
+            "Enseña que variables no relacionadas pueden introducir ruido; más variables no siempre implican un mejor rendimiento predictivo.",
+            "Confirma que el transformador ColumnTransformer introduce distorsiones en los datos que deterioran la precisión de los modelos."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. En Machine Learning, incluir más características no garantiza mejores modelos. Atributos administrativos como la provincia pueden aportar ruido o correlaciones espurias, mientras que los signos vitales (presión, saturación de O2, pulso) tienen relación causal directa con el riesgo clínico.",
+          "id": "39668123-a8df-44ea-a42c-13ae1f700a67"
+        },
+        {
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "Al ejecutar GridSearchCV con refit=True sobre un clasificador SVC, ¿sobre qué datos específicos se entrena el estimador best_estimator_?",
+          "options": [
+            "Se entrena exclusivamente sobre las instancias que formaron parte del último fold de validación en la búsqueda de hiperparámetros.",
+            "Se entrena sobre el testeo final para garantizar que las predicciones tengan el menor margen de error cuadrático medio posible.",
+            "Se entrena sobre una partición sintética generada mediante remuestreo bootstrap para evitar el sobreajuste a los datos de prueba.",
+            "Se entrena sobre todo el conjunto de entrenamiento (X_train) utilizando la mejor combinación de hiperparámetros identificada aquí."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Cuando el parámetro refit=True (valor predeterminado en scikit-learn) está activo, una vez que GridSearchCV evalúa todas las combinaciones y selecciona la óptima mediante validación cruzada, ajusta automáticamente un modelo final con dicha configuración sobre la totalidad de X_train.",
+          "id": "f44dc609-86a6-445a-9fae-0b30523eb1ed"
+        },
+        {
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "En la formulación matemática de una máquina de soporte vectorial w·x + b = 0, ¿qué representa geométricamente el vector de pesos w?",
+          "options": [
+            "El vector perpendicular (normal) al hiperplano que determina su orientación direccional en el espacio de características.",
+            "El vector de distancias euclidianas calculado desde el origen de coordenadas hacia los centroides geométricos de cada clase.",
+            "El arreglo de multiplicadores de Lagrange asociados exclusivamente a los puntos de entrenamiento que violaron el margen.",
+            "El vector que contiene las probabilidades a priori estimadas para cada una de las clases del problema de clasificación dado."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. En la ecuación lineal del hiperplano de decisión $w^T x + b = 0$, el vector $w$ es el vector normal (perpendicular) a la superficie de separación. Su dirección determina la orientación espacial del hiperplano y su norma $\\|w\\|$ se relaciona inversamente con el ancho del margen ($2/\\|w\\|$).) ",
+          "id": "cc4889e7-bbdf-47cb-9906-fd88afdcd327"
+        },
+        {
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Cuál es la ventaja matemática fundamental del truco del kernel (Kernel Trick) en Máquinas de Vectores de Soporte?",
+          "options": [
+            "Reduce automáticamente la dimensionalidad del conjunto de datos proyectando todas las variables sobre su primer componente lineal.",
+            "Calcula el producto interno en un espacio transformado sin computar explícitamente las coordenadas en dicha dimensión superior.",
+            "Elimina la necesidad de aplicar estandarización sobre las variables predictoras antes de ajustar los hiperplanos de separación.",
+            "Garantiza que la función de costo sea estrictamente cuadrática para permitir que el descenso de gradiente converja en una época."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El truco del kernel permite operar en espacios de dimensión muy alta (o infinita, como en el kernel RBF) calculando únicamente la función de kernel $K(x, z) = \\langle \\phi(x), \\phi(z) \\rangle$ sobre pares de puntos originales, evitando el costo computacional inviable de transformar y almacenar explícitamente las coordenadas $\\phi(x)$.",
+          "id": "fad1f49d-029d-47b2-a89b-7e32a35cc154"
+        },
+        {
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Por qué es una práctica estándar utilizar una escala logarítmica (ej. [0.01, 0.1, 1, 10]) al definir los rangos de C y gamma?",
+          "options": [
+            "Porque scikit-learn bloquea la ejecución de GridSearchCV si los valores de los hiperparámetros no son potencias enteras de diez.",
+            "Porque la escala logarítmica garantiza que el clasificador SVC converja siempre a un margen rígido sin violaciones admisibles.",
+            "Porque estos hiperparámetros actúan por órdenes de magnitud multiplicativos, variando su efecto drásticamente entre escalas.",
+            "Porque permite que la matriz de correlación de las variables de entrada se vuelva diagonal acelerando el cómputo de gradientes."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Hiperparámetros como C y gamma tienen un impacto multiplicativo en el comportamiento del modelo. La diferencia de comportamiento entre C=1 y C=10 es radicalmente más informativa que entre C=1 y C=2; explorar potencias de diez cubre eficientemente un espectro amplio del espacio de hipótesis.",
+          "id": "1c9a89a6-b582-48ae-a808-52b8d1283a1c"
+        },
+        {
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Por qué los árboles de decisión no requieren estandarizar variables numéricas, mientras que las SVM sí lo requieren de forma obligatoria?",
+          "options": [
+            "Porque las SVM utilizan funciones de pérdida estocásticas que divergen si las variables predictoras superan el valor unitario.",
+            "Porque los árboles normalizan las variables mediante transformaciones logarítmicas previas al cálculo del índice Gini de impureza.",
+            "Porque los árboles evalúan divisiones monotónicas sobre cada variable de forma aislada, sin medir distancias euclidianas en X.",
+            "Porque los árboles solo procesan variables discretas descartando automáticamente la escala de todas las columnas numéricas dadas."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Los árboles de decisión encuentran umbrales de división del tipo $x_j \\le c$ variable por variable de manera independiente, siendo invariantes a transformaciones monotónicas de escala. En contraste, las SVM optimizan márgenes geométricos basados en distancias euclidianas, donde atributos con escalas grandes distorsionarían por completo la frontera.",
+          "id": "9e3e958a-a9a2-4539-80af-c8e4451935a8"
+        },
+        {
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Qué efecto directo produce configurar un valor de regularización C excesivamente alto (ej. C = 1000) en una SVM de margen suave?",
+          "options": [
+            "Amplía el margen de separación tolerando gran cantidad de violaciones, lo que puede inducir problemas de subajuste (underfitting).",
+            "Penaliza duramente cualquier error de clasificación, estrechando el margen y aumentando el riesgo de sobreajuste (overfitting).",
+            "Reduce el número total de vectores de soporte a cero, forzando a que la frontera de decisión se vuelva lineal por definición.",
+            "Desactiva automáticamente el kernel no lineal haciendo que el estimador se comporte exactamente como una regresión logística."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El parámetro C controla el compromiso entre la amplitud del margen y la penalización de errores. Un valor de C muy alto impone una penalización severa a las violaciones del margen, obligando al algoritmo a estrechar el margen para clasificar correctamente cada punto de entrenamiento, lo que memoriza el ruido y propicia el overfitting.",
+          "id": "09f79c29-7917-4fb9-99d1-01e052d16a76"
+        },
+        {
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Cuál de las siguientes comparaciones conceptuales entre Support Vector Machines y Regresión Logística es rigurosamente correcta?",
+          "options": [
+            "SVM es más veloz en conjuntos con millones de instancias; la Regresión Logística requiere proyecciones en espacios infinitos.",
+            "La Regresión Logística maximiza el margen geométrico; SVM optimiza exclusivamente la verosimilitud logística condicionada.",
+            "Ambos métodos resuelven exactamente la misma función objetivo matemática, diferenciándose únicamente en la librería de soporte.",
+            "SVM es muy eficaz en espacios de alta dimensionalidad; la Regresión Logística produce probabilidades directas y calibradas."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. SVM destaca por su solidez matemática en espacios de alta dimensionalidad (incluso cuando hay más variables que muestras) al basarse en vectores de soporte marginales. Por su parte, la Regresión Logística modela directamente la probabilidad de clase a través de la función sigmoide o Softmax sin requerir calibraciones adicionales.",
+          "id": "be94fd67-19c4-41ef-864e-6398807f2156"
+        },
+        {
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "Una SVM entrenada con 10 000 filas utiliza solo 45 vectores de soporte. ¿Qué pasaría si se reentrena el modelo solo con esos 45 puntos?",
+          "options": [
+            "El modelo resultante sería exactamente el mismo, pues la posición del hiperplano depende únicamente de los vectores de soporte.",
+            "El modelo fallaría críticamente porque los algoritmos de optimización cuadrática exigen un mínimo de cien registros muestrales.",
+            "El hiperplano cambiaría drásticamente su orientación espacial al perder la información probabilística del resto del dataset.",
+            "El modelo incrementaría su margen geométrico al infinito al carecer de puntos interiores que restrinjan la función objetivo."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. En SVM, los vectores de soporte son los únicos puntos de entrenamiento que determinan la ubicación y orientación del hiperplano separador (tienen multiplicadores de Lagrange $\u0007lpha_i > 0$). Todos los demás puntos que caen fuera del margen son matemáticamente irrelevantes para la solución final.",
+          "id": "1956aeff-ab95-483e-8259-55e05a9e2c97"
+        },
+        {
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Por qué el algoritmo SVM selecciona el hiperplano que maximiza el margen en lugar de cualquier plano que separe las clases?",
+          "options": [
+            "Porque un margen máximo reduce el tiempo de entrenamiento computacional al requerir menos pasos de descenso por gradiente.",
+            "Porque maximizar el margen asegura que el número de vectores de soporte seleccionados por el algoritmo sea estrictamente nulo.",
+            "Porque un margen mayor garantiza que el estimador produzca probabilidades calibradas que sumen 1.0 sin aplicar Platt Scaling.",
+            "Porque un margen máximo proporciona una zona de seguridad geométrica que reduce el riesgo de error ante observaciones nuevas."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. El margen actúa como una banda o colchón de seguridad geométrico entre las clases. Al maximizar la distancia a los puntos más cercanos de cada categoría, se reduce sustancialmente la probabilidad de que una nueva observación ligeramente ruidosa o desplazada caiga en el lado incorrecto, favoreciendo la generalización.",
+          "id": "da782e0e-a4e8-4a90-8800-a3a43b8c2392"
+        },
+        {
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "Al optimizar una SVM para detectar diabetes en un dataset desbalanceado (15% positivos), ¿qué métrica de scoring es la más apropiada?",
+          "options": [
+            "Accuracy, porque evalúa la proporción total de predicciones correctas y es la métrica más robusta en conjuntos desbalanceados.",
+            "Inercia cuadrática, porque cuantifica la compacidad de los vectores de soporte respecto a los centroides de cada fold evaluado.",
+            "Recall, porque en diagnóstico médico no detectar a un paciente enfermo (falso negativo) resulta mucho más costoso y peligroso.",
+            "Precision, porque en el ámbito clínico lo prioritario es evitar a toda costa alertar innecesariamente a los pacientes sanos aquí."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. En aplicaciones médicas de detección de patologías, cometer un falso negativo (no detectar a un paciente diabético, privándolo de tratamiento oportuno) es mucho más grave que un falso positivo (que se descarta con exámenes complementarios). Por ello, el scoring de búsqueda debe configurarse como `scoring='recall'`.",
+          "id": "a3e4adca-2cff-40f7-a9fa-3373e765cd9a"
+        },
+        {
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "Tras entrenar un modelo SVC binario, se imprime modelo.n_support_ obteniendo [452, 410]. ¿Qué indica con precisión este resultado?",
+          "options": [
+            "Indica la cantidad de iteraciones que necesitó el algoritmo de optimización para converger en la clase 0 y en la clase 1.",
+            "Indica el número de muestras que fueron descartadas por ser consideradas valores atípicos antes de ajustar el hiperplano.",
+            "Indica el total de aciertos obtenidos por el clasificador sobre el conjunto de testeo para la clase 0 y para la clase 1.",
+            "Indica que el modelo seleccionó 452 vectores de soporte de la clase 0 y 410 de la clase 1 para sostener el hiperplano final."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. El atributo `n_support_` de un estimador SVC ajustado contiene un arreglo con el número de vectores de soporte identificados para cada una de las clases del problema. En este caso, 452 puntos de la clase 0 y 410 puntos de la clase 1 definen la geometría de la frontera de decisión.",
+          "id": "1922351c-d45c-4a7d-91aa-0b77e16887bd"
+        },
+        {
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "En el taller de fraude, LinearSVC obtuvo F1 = 0.380 y SVC(RBF) obtuvo F1 = 0.310 en test. ¿Qué modelo debe seleccionarse y por qué?",
+          "options": [
+            "LinearSVC, porque superó al kernel RBF en todas las métricas; la evidencia empírica prevalece sobre la complejidad teórica real.",
+            "SVC con kernel RBF, porque los núcleos no lineales garantizan teóricamente una mejor separación en cualquier problema tabular.",
+            "Ninguno de los dos, pues al tratarse de fraude un F1 menor a 0.50 invalida automáticamente cualquier clasificador de soporte.",
+            "SVC con kernel RBF, porque al poseer menor Accuracy en prueba demuestra que no sufrió de sobreajuste durante el entrenamiento."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. En la práctica de Machine Learning, la complejidad no garantiza superioridad. Si un modelo lineal simple y ligero supera empíricamente a un kernel RBF complejo en el conjunto de prueba no visto, debe elegirse el modelo lineal. Esto refuerza el principio de parsimonia (Navaja de Ockham).",
+          "id": "20026114-38ef-4f5c-a2d9-aa286abc11c2"
+        },
+        {
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Cuál es la secuencia metodológica rigurosa para construir y entrenar un pipeline de preprocesamiento para una SVM?",
+          "options": [
+            "Estandarizar con StandardScaler sobre todo el dataset, dividir en train/test, aplicar codificación OHE y entrenar la SVM.",
+            "Dividir con train_test_split, construir Pipeline con preprocesamiento y modelo, ajustar fit() solo en train y evaluar en test.",
+            "Entrenar la SVM directamente con datos sin escalar, evaluar en test y aplicar StandardScaler en caso de detectar sobreajuste.",
+            "Aplicar validación cruzada sobre el conjunto de testeo, extraer los mejores hiperparámetros y escalar la variable objetivo y."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. La secuencia rigurosa exige: 1) separar train y test con train_test_split; 2) encapsular transformadores y estimador en un Pipeline; 3) ejecutar fit() exclusivamente sobre el conjunto de entrenamiento (garantizando que el escalador aprenda solo de train para evitar fuga de datos); y 4) evaluar el rendimiento sobre test.",
+          "id": "7c5fd583-7fd2-4f6d-acd4-e977a6d1332f"
+        },
+        {
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Cuál es la razón fundamental por la que el margen suave (soft margin) es el estándar práctico frente al margen duro (hard margin)?",
+          "options": [
+            "Porque el margen suave computa probabilidades directas sin requerir transformaciones sigmoidales mediante el escalado de Platt.",
+            "Porque los datos reales rara vez son linealmente separables; el margen duro colapsa y no encuentra solución ante mínimos outliers.",
+            "Porque el margen suave siempre produce tiempos de entrenamiento menores al omitir la optimización de multiplicadores de Lagrange.",
+            "Porque el margen duro solo puede implementarse cuando el espacio de características posee más de cien dimensiones ortogonales."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El margen duro exige que absolutamente todas las observaciones queden clasificadas de forma perfecta fuera del margen sin error alguno. En datos del mundo real, la presencia de ruido, solapamiento o un solo outlier hace que el problema de optimización no tenga solución factible. El margen suave introduce variables de holgura $\\xi_i$ para tolerar violaciones controladas.",
+          "id": "089a5d90-9874-4cf8-a477-c8efccd7590d"
+        },
+        {
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "Un modelo SVM presenta un desempeño perfecto en entrenamiento pero generaliza mal en datos nuevos de test. ¿Qué ajuste a C se recomienda?",
+          "options": [
+            "Aumentar el valor de C para penalizar más estrictamente los errores residuales y forzar al modelo a ajustar la frontera dada.",
+            "Fijar C en cero absoluto para desactivar la función de penalización permitiendo que el hiperplano elimine todos los márgenes.",
+            "Reducir el valor de C para ampliar el margen de separación y hacer al modelo más tolerante frente a irregularidades del train.",
+            "Mantener C inalterado y reemplazar el kernel lineal por un kernel polinómico de grado superior para mejorar la flexibilidad."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Rendimiento sobresaliente en train acoplado a un desempeño deficiente en test es el síntoma inequívoco de sobreajuste (overfitting). Reducir el hiperparámetro C flexibiliza la regularización, ampliando el margen geométrico y permitiendo que el modelo tolere pequeñas desviaciones en entrenamiento para ganar generalización.",
+          "id": "01e80d10-e679-4aa1-b9f4-6c8c3b80716d"
+        },
+        {
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "Se ejecuta: sc.fit_transform(X_train), sc.transform(X_test) y modelo = LinearSVC(C=1.0).fit(X_train_s, y_train). ¿Qué se logra con este código?",
+          "options": [
+            "Ajustar el escalador en todo el dataset de forma global antes de entrenar un estimador Support Vector con kernel no lineal RBF.",
+            "Escalar el entrenamiento y prueba con el escalador ajustado sobre prueba, entrenando una SVM polinomial con regularización L1.",
+            "Estandarizar aprendiendo estadísticas solo de train, aplicando esa escala a test y ajustando una SVM lineal con margen suave.",
+            "Entrenar un clasificador no supervisado para agrupar las muestras continuas según la distancia euclidiana al hiperplano central."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. El código implementa las buenas prácticas de preprocesamiento: `fit_transform` sobre `X_train` aprende la media y desviación estándar de entrenamiento y las transforma; `transform` sobre `X_test` proyecta la prueba usando idénticos parámetros sin fuga de información; y `LinearSVC` entrena un hiperplano lineal con $C=1.0$.",
+          "id": "83cbe5a7-949e-4547-921a-7cf1db4ed27a"
+        },
+        {
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Qué visualiza la siguiente rutina?: `rbf = res[res['param_kernel']=='rbf']; piv = rbf.pivot_table(values='mean_test_score', index='param_C', columns='param_gamma'); sns.heatmap(piv, annot=True)`",
+          "options": [
+            "La distribución de probabilidades de cada clase en el espacio bidimensional de componentes principales ortogonales del modelo.",
+            "Un mapa de calor bidimensional que muestra el F1 promedio de validación cruzada para cada combinación de C y gamma en kernel RBF.",
+            "La matriz de confusión del mejor estimador obtenida sobre todo el conjunto de testeo, coloreando aciertos y falsos positivos reales.",
+            "El tiempo de entrenamiento requerido por cada fold de validación cruzada para descartar combinaciones computacionalmente lentas."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El código filtra los resultados del Grid Search para el kernel RBF, organiza una tabla dinámica cruzando los valores del hiperparámetro C en las filas y gamma en las columnas con la métrica `mean_test_score` en las celdas, y la despliega visualmente como un mapa de calor (heatmap) para identificar rápidamente la región óptima.",
+          "id": "1bf87b86-c790-42ef-8095-ba355e7bfbb6"
+        },
+        {
+          "category": "teoria_rda2",
+          "categoryName": "Teoría RDA2",
+          "text": "¿Por qué es obligatorio aplicar StandardScaler antes de entrenar un modelo Support Vector Machine en datos tabulares numéricos?",
+          "options": [
+            "Porque el algoritmo optimiza márgenes basados en distancias euclidianas; variables de escala amplia dominarían la optimización.",
+            "Porque scikit-learn bloquea la ejecución del método fit() si las características predictoras poseen varianza diferente a uno.",
+            "Porque el escalamiento convierte de forma automática las variables predictoras continuas a representaciones gaussianas estándar.",
+            "Porque sin escalado previo, las funciones de kernel no lineal arrojan divisiones por cero al invertir la matriz de covarianza."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. El cálculo de la distancia geométrica de los puntos al hiperplano separador se basa en la norma euclidiana. Si una variable tiene un rango numérico de miles y otra de decimales, la primera monopolizará la función de costo y el cálculo del margen, ignorando por completo la información de la segunda.",
+          "id": "526796bc-acce-437f-b0e9-c7820671efd0"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · SVM",
+          "text": "¿Cuál es la función matemática primordial del kernel lineal dentro de un modelo Support Vector Classifier?",
+          "options": [
+            "Proyectar implícitamente las observaciones a un espacio de dimensión infinita para generar fronteras de decisión hiperbólicas en X.",
+            "Buscar un hiperplano recto de separación en el espacio original de variables, siendo óptimo ante datos separables linealmente.",
+            "Estimar las probabilidades bayesianas a posteriori de pertenencia a cada clase normalizando los márgenes con la función sigmoide.",
+            "Calcular matrices de covarianza diagonalizadas para reducir el número de variables antes de ejecutar la optimización de Lagrange."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El kernel lineal calcula el producto punto estándar $K(x, z) = x^T z$ en el espacio original de variables sin proyectar a dimensiones superiores. Encuentra un hiperplano recto (plano de decisión lineal), siendo la alternativa más rápida, interpretable y menos susceptible al sobreajuste.",
+          "id": "4b9f1d55-eb2b-4bc7-a7b3-07edca420f7d"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · SVM",
+          "text": "¿Qué propiedad distingue al kernel Gaussiano (RBF) frente al kernel lineal en clasificación con máquinas de soporte vectorial?",
+          "options": [
+            "Mide la similitud exponencial según la distancia euclidiana, modelando fronteras altamente no lineales en dimensiones infinitas.",
+            "Restringe las fronteras de decisión a ser estrictamente hiper-esferas concéntricas centradas en el origen de las coordenadas.",
+            "Elimina el uso de vectores de soporte al calcular la solución mediante un sistema cerrado de ecuaciones normales de regresión.",
+            "Requiere de forma obligatoria que el número de clases sea binario y que las muestras estén perfectamente equilibradas al 50%."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. El kernel RBF (Radial Basis Function) utiliza la función $K(x, z) = \\exp(-\\gamma \\|x - z\\|^2)$. Evalúa la cercanía espacial entre observaciones y equivale matemáticamente a proyectar los datos a un espacio de dimensión infinita, permitiendo trazar fronteras de decisión curvas y sumamente flexibles.",
+          "id": "886a8774-8c4e-4bea-9fbd-36aed185a73b"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · SVM",
+          "text": "Al abordar un nuevo problema de clasificación con SVM, ¿cuál es la mejor práctica documentada para seleccionar el kernel de inicio?",
+          "options": [
+            "Iniciar con un kernel polinomial de grado elevado para asegurar que el modelo capture todas las interacciones complejas reales.",
+            "Seleccionar aleatoriamente el tipo de kernel en cada iteración de validación cruzada hasta encontrar una solución convergente.",
+            "Emplear directamente un kernel sigmoidal pues replica de manera idéntica el comportamiento de una red neuronal profunda multicapa.",
+            "Comenzar evaluando un kernel lineal por su rapidez y simplicidad; si no alcanza rendimiento adecuado, transicionar a kernel RBF."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. En ciencia de datos se recomienda seguir el principio de parsimonia: probar primero el modelo más simple y veloz (kernel lineal). Si el problema es linealmente separable o cuasi-separable, el modelo lineal ofrecerá excelente generalización e interpretabilidad; si se constata no linealidad, se escala al kernel RBF.",
+          "id": "81a4ec51-896f-484b-9a85-63106ed7ea14"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · SVM",
+          "text": "En un dataset desbalanceado (71% legítimo y 29% fraude), ¿qué efecto produce configurar class_weight='balanced' en SVC?",
+          "options": [
+            "Elimina aleatoriamente muestras de la clase mayoritaria hasta que ambas categorías tengan exactamente el mismo número de filas.",
+            "Duplica sintéticamente las filas de la clase minoritaria mediante interpolación de vecinos cercanos en el espacio de atributos.",
+            "Ajusta los pesos de penalización inversamente a las frecuencias de clase, castigando con mayor rigor el error en la minoritaria.",
+            "Modifica la función de kernel para que las distancias se calculen utilizando la norma de Manhattan en lugar de la euclidiana real."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. `class_weight='balanced'` ajusta automáticamente los pesos de penalización según la fórmula $w_j = n\\_samples / (n\\_classes \\cdot n\\_samples_j)$. De este modo, cometer un error en una transacción de fraude (minoritaria) recibe una penalización mayor en la función de costo, forzando al algoritmo a elevar su sensibilidad o Recall.",
+          "id": "eb23ebce-c375-4b42-a786-5b7e86c73858"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · SVM",
+          "text": "¿Qué significan rigurosamente las siglas SVC en la biblioteca scikit-learn y qué tarea de aprendizaje resuelve?",
+          "options": [
+            "Standard Vector Calculator, un módulo destinado a la normalización de tensores en arquitecturas de deep learning supervisado.",
+            "Support Vector Clustering, un algoritmo de agrupamiento espacial no supervisado basado en núcleos de densidad multidimensional.",
+            "Support Vector Classification, el estimador principal para aplicar máquinas de soporte vectorial a problemas de clasificación.",
+            "Scalar Vector Component, una técnica de proyección lineal alternativa al análisis de componentes principales para variables."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. SVC significa Support Vector Classification. Es la clase estándar de scikit-learn para resolver problemas de clasificación (tanto binaria como multiclase) mediante máquinas de soporte vectorial, a diferencia de SVR (Support Vector Regression), diseñada para predecir variables numéricas continuas.",
+          "id": "31244a30-28e7-4249-a78c-8997701e0271"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · SVM",
+          "text": "En SVM binaria (0: Legítima, 1: Fraude), decision_function() devuelve +3.00 para un caso y -1.00 para otro. ¿Cómo se interpretan?",
+          "options": [
+            "Indica la distancia con signo al hiperplano: +3.00 cae del lado de Fraude con alta certeza; -1.00 cae del lado de Legítima.",
+            "Representa la probabilidad en escala porcentual: +3.00 significa 300% de probabilidad indicando un desborde numérico de cálculo.",
+            "Los valores positivos reflejan datos que fueron eliminados como outliers y los negativos identifican los vectores de soporte.",
+            "Cuantifica el número de iteraciones requeridas para clasificar cada transacción, donde valores altos indican convergencia lenta."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La función `decision_function()` computa el valor de $w^T x + b$, que representa la distancia geométrica con signo de cada punto al hiperplano separador. Un valor positivo (+3.00) sitúa la observación del lado de la clase positiva (Fraude) con holgura; un valor negativo (-1.00) la sitúa en la clase negativa (Legítima).",
+          "id": "be76eef1-76cf-4e18-9b52-1aa4ef76f956"
+        },
+        {
+          "category": "semana5",
+          "categoryName": "Semana 5 · SVM",
+          "text": "A diferencia de la regresión logística, SVC estándar no calcula probabilidades. ¿Qué técnica aplica internamente probability=True?",
+          "options": [
+            "Aplica una función de umbral fija sobre el número de vectores de soporte dividiéndolos entre el total de muestras del dataset.",
+            "Utiliza el método de Escalado de Platt, ajustando una regresión logística sobre las distancias con validación cruzada interna.",
+            "Multiplica la norma euclidiana del vector normal w por el inverso del hiperparámetro C para obtener una función sigmoidal plana.",
+            "Ejecuta una descomposición en valores singulares sobre la matriz de kernel para extraer autovalores probabilísticos unitarios."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Al configurar `probability=True` en SVC, scikit-learn aplica el método de Platt (Platt Scaling): entrena un modelo de regresión logística adicional que calibra las distancias de `decision_function()` en probabilidades válidas mediante validación cruzada interna en 5 particiones, lo que incrementa notablemente el tiempo de entrenamiento.",
+          "id": "60ccf7a0-4225-4e01-980d-f670a3e83c3d"
         }
       ]
     },
@@ -10318,564 +10318,564 @@ window.QUIZ_DATA = {
       ],
       "preguntas": [
         {
-          "id": "f948a089-ed4a-4e98-8a75-76a55ed99517",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En Machine Learning, ¿qué son los parámetros de un modelo (como los coeficientes w₀, w₁ de una regresión lineal)?",
+          "text": "En Machine Learning, ¿qué son los parámetros internos de un modelo (como los coeficientes w de una regresión lineal)?",
           "options": [
-            "Valores que el programador configura manualmente antes de ejecutar el entrenamiento, como el número de folds de validación cruzada.",
-            "Valores internos que el modelo aprende automáticamente a partir de los datos durante el proceso de entrenamiento con fit(). Nunca se configuran a mano.",
-            "Etiquetas del eje X e Y que se usan para graficar las predicciones del modelo.",
-            "El número de observaciones del dataset que se usan para entrenar el modelo."
-          ],
-          "correct": 1,
-          "feedback": "Los parámetros son los valores que el modelo ajusta internamente al llamar a fit(), como los coeficientes w en regresión o los pesos de una red neuronal. Se aprenden de los datos, no se configuran manualmente."
-        },
-        {
-          "id": "d6f77df1-752d-4f50-ab11-d6a367032c30",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "¿Cuál es la diferencia fundamental entre un parámetro y un hiperparámetro en scikit-learn?",
-          "options": [
-            "Los parámetros son los que cambian el resultado del modelo; los hiperparámetros no tienen ningún efecto real en el rendimiento.",
-            "Los hiperparámetros se aprenden automáticamente con fit(); los parámetros se configuran antes del entrenamiento.",
-            "Los hiperparámetros son valores que se configuran ANTES del entrenamiento (como C, kernel, max_depth) y controlan el proceso de aprendizaje. Los parámetros son los que el modelo aprende durante fit() de los propios datos.",
-            "La única diferencia es el nombre; ambos funcionan de la misma manera internamente."
-          ],
-          "correct": 2,
-          "feedback": "Los hiperparámetros (ej. C=1, kernel='rbf', cv=5) son decisiones de diseño que se toman ANTES del entrenamiento. Los parámetros (ej. los coeficientes de la SVM, los pesos de una red neuronal) son lo que el algoritmo aprende a partir de los datos al llamar a fit()."
-        },
-        {
-          "id": "35cb0ce0-f248-4727-bb1e-7caa4716e327",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "¿Qué hace exactamente GridSearchCV de scikit-learn al ejecutar grid.fit(X_train, y_train)?",
-          "options": [
-            "Escoge la combinación de hiperparámetros al azar y entrena el modelo solo una vez con esa combinación.",
-            "Prueba TODAS las combinaciones posibles del param_grid, evaluando cada una mediante validación cruzada (cv folds) sobre X_train. Guarda la combinación con la mejor métrica promedio en best_params_.",
-            "Divide el dataset automáticamente en entrenamiento y prueba, y selecciona la mejor métrica sobre el conjunto de prueba.",
-            "Entrena el modelo una vez con los hiperparámetros por defecto y reporta el mejor fold de validación cruzada."
-          ],
-          "correct": 1,
-          "feedback": "GridSearchCV es una búsqueda exhaustiva: prueba cada combinación del param_grid. Con 32 combinaciones y cv=5, realiza 32×5=160 entrenamientos. Al final, identifica cuál combinación tuvo el mejor promedio en validación cruzada y la guarda en best_params_."
-        },
-        {
-          "id": "6ae52a80-ed6d-4029-838f-132b55f7da8f",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "¿En qué se diferencia RandomizedSearchCV de GridSearchCV y cuándo conviene usarlo?",
-          "options": [
-            "RandomizedSearchCV prueba todas las combinaciones del param_grid, igual que GridSearchCV, pero en orden aleatorio.",
-            "RandomizedSearchCV muestrea aleatoriamente un número fijo de combinaciones (n_iter) del espacio de hiperparámetros, en lugar de probarlas todas. Es mucho más rápido cuando el espacio de búsqueda es muy grande y conviene cuando hay muchos hiperparámetros con muchos valores posibles.",
-            "RandomizedSearchCV nunca usa validación cruzada; siempre evalúa en el conjunto de prueba directamente.",
-            "RandomizedSearchCV es simplemente un alias de GridSearchCV con cv=1."
-          ],
-          "correct": 1,
-          "feedback": "GridSearchCV es exhaustivo (prueba todo), lo que puede ser prohibitivo con muchos hiperparámetros. RandomizedSearchCV toma una muestra aleatoria (n_iter combinaciones) del espacio total, lo que permite explorar más eficientemente espacios grandes sin evaluar cada posibilidad."
-        },
-        {
-          "id": "1985419f-42e8-4141-9e72-72fa5f9fa8ab",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "¿Qué acepta el parámetro 'estimator' de GridSearchCV y cuál es su función?",
-          "options": [
-            "Acepta el nombre del archivo CSV con los datos de entrenamiento.",
-            "Acepta el nombre de la métrica de evaluación como una cadena de texto (por ejemplo, 'f1' o 'recall').",
-            "Acepta el modelo o Pipeline que se va a optimizar. GridSearchCV entrenará este estimator con cada combinación de hiperparámetros del param_grid.",
-            "Acepta el número de combinaciones de hiperparámetros que se evaluarán aleatoriamente."
-          ],
-          "correct": 2,
-          "feedback": "estimator recibe la instancia del modelo o Pipeline que se quiere optimizar. Ejemplo: GridSearchCV(estimator=pipe, ...) donde pipe = Pipeline([('escalar', StandardScaler()), ('modelo', SVC())]). GridSearchCV clona este estimator para cada combinación."
-        },
-        {
-          "id": "e167594c-1ff1-4e31-92a9-9b58df241e05",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "En el taller de crédito, el param_grid se define así:\n\nparam_grid = {\n    'modelo__C':      [0.1, 1, 10, 100],\n    'modelo__gamma':  [0.001, 0.01, 0.1, 1],\n    'modelo__kernel': ['rbf', 'linear'],\n}\n\n¿Por qué los nombres de los hiperparámetros llevan el prefijo 'modelo__' (con dos guiones bajos)?",
-          "options": [
-            "Es una convención puramente estética; también funciona escribiendo solo 'C', 'gamma' y 'kernel'.",
-            "Porque el SVC está dentro de un Pipeline en un paso llamado 'modelo'. La notación 'paso__parámetro' es obligatoria para que GridSearchCV sepa a qué paso del Pipeline aplicar cada hiperparámetro. Sin el prefijo, scikit-learn lanza el error: Invalid parameter 'C' for estimator Pipeline.",
-            "Porque C, gamma y kernel son palabras reservadas en Python y necesitan el prefijo para usarse como claves de diccionario.",
-            "Porque solo funciona con el paso llamado 'modelo'; si el paso se llamara diferente, el param_grid no necesitaría prefijo."
-          ],
-          "correct": 1,
-          "feedback": "La notación 'paso__parámetro' (doble guion bajo) es la forma estándar de acceder a hiperparámetros de pasos internos de un Pipeline en scikit-learn. Si el SVC estuviera fuera del Pipeline, bastaría con 'C'. Dentro, es obligatorio usar 'modelo__C'."
-        },
-        {
-          "id": "b4e968f2-68e8-4241-8049-a867e8dbf7dd",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "¿Qué controla el parámetro cv=5 en GridSearchCV y por qué es crucial para obtener una estimación confiable del rendimiento?",
-          "options": [
-            "Define el número de combinaciones de hiperparámetros que se probarán en total.",
-            "Indica que se usarán 5 folds de validación cruzada: para cada combinación de hiperparámetros, el dataset de entrenamiento se divide en 5 partes, el modelo se entrena 5 veces (con 4 partes) y se evalúa en la parte restante. El score promedio de los 5 folds es más robusto que evaluar una sola vez.",
-            "Especifica que el modelo se reentrenará 5 veces con diferentes semillas aleatorias (random_state) para medir la varianza.",
-            "Controla cuántas veces se muestra el progreso en pantalla durante el entrenamiento (verbose)."
-          ],
-          "correct": 1,
-          "feedback": "cv=5 significa 5-fold cross-validation. Para cada combinación, el dataset de entrenamiento se parte en 5 bloques: se entrena con 4 y se evalúa con el quinto, rotando 5 veces. El resultado (best_score_) es el promedio de los 5 folds, mucho más robusto que una sola división."
-        },
-        {
-          "id": "61a8acea-91d2-4692-ba60-0fae673c7447",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "En el taller de crédito se usa scoring='f1' y en el de diabetes se usa scoring='recall'. ¿Por qué se elige una métrica diferente para cada problema?",
-          "options": [
-            "Es indiferente qué métrica se use; GridSearchCV siempre seleccionará la misma combinación de hiperparámetros sin importar el scoring.",
-            "Porque 'f1' solo funciona con datasets balanceados y 'recall' solo con datasets desbalanceados; scikit-learn selecciona automáticamente cuál usar.",
-            "Porque scoring define qué significa 'mejor': para crédito (clases balanceadas) el F1 equilibra Precision y Recall. Para diabetes, un falso negativo (no detectar a un enfermo) es mucho más costoso, por lo que se prioriza el Recall. La métrica seleccionada guía cuál combinación de hiperparámetros 'gana'.",
-            "Porque 'f1' y 'recall' son idénticos matemáticamente cuando las clases están balanceadas al 50%."
-          ],
-          "correct": 2,
-          "feedback": "La elección del scoring es una decisión de negocio/clínica. Para crédito, se quiere un balance entre Precision y Recall → F1. Para diabetes, no detectar a un enfermo (falso negativo) puede costar una vida → se prioriza el Recall. GridSearchCV elegirá combinaciones diferentes según la métrica usada."
-        },
-        {
-          "id": "a788f505-2e84-445a-a5f1-2aac5e270633",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "En el taller se usa GridSearchCV(..., n_jobs=-1, ...). ¿Qué significa n_jobs=-1?",
-          "options": [
-            "Que GridSearchCV descartará el peor resultado (el que ocupa el último lugar en el ranking).",
-            "Que el entrenamiento de todas las combinaciones se realizará en paralelo usando todos los núcleos disponibles del procesador, reduciendo el tiempo de cómputo.",
-            "Que GridSearchCV evaluará solo el 1% de las combinaciones del param_grid para acelerar la búsqueda.",
-            "Que el proceso de búsqueda no generará ninguna salida de texto en pantalla."
-          ],
-          "correct": 1,
-          "feedback": "n_jobs=-1 significa 'usa todos los núcleos (cores) disponibles del CPU'. Las 160 ejecuciones del taller (32 combinaciones × 5 folds) se dividen entre los núcleos y corren en paralelo, lo que puede reducir drásticamente el tiempo de entrenamiento."
-        },
-        {
-          "id": "a16e9731-e5d6-484c-8992-9f6deb7ee77e",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "¿Qué hace el parámetro refit=True (que es el valor por defecto) en GridSearchCV?",
-          "options": [
-            "Fuerza al modelo a usar todos los folds de validación cruzada en orden inverso.",
-            "Una vez que se identifica la mejor combinación de hiperparámetros, refit=True reentrena automáticamente el modelo con TODA la X_train usando esa combinación. Esto crea best_estimator_, que está listo para predecir directamente.",
-            "Guarda los resultados de cada fold en un archivo CSV para su posterior análisis.",
-            "Evita que GridSearchCV use los datos de prueba (X_test) durante la búsqueda de hiperparámetros."
-          ],
-          "correct": 1,
-          "feedback": "refit=True (por defecto) hace que al terminar los 160 entrenamientos, GridSearchCV tome la mejor combinación y entrene un modelo final con el 100% de X_train. Este modelo final queda disponible en best_estimator_ y se usa cuando llamas a grid.predict()."
-        },
-        {
-          "id": "4852517d-a021-42ae-b7d1-3c913f173ce7",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "El taller usa GridSearchCV(..., verbose=1). Cuando se ejecuta, imprime: 'Fitting 5 folds for each of 32 candidates, totalling 160 fits'. ¿Para qué sirve el parámetro verbose?",
-          "options": [
-            "verbose controla cuántos resultados se muestran en cv_results_; verbose=1 muestra solo el mejor resultado.",
-            "verbose controla el nivel de detalle de los mensajes de progreso que GridSearchCV imprime durante la búsqueda. verbose=0 no imprime nada; verbose=1 muestra mensajes básicos; valores más altos muestran más detalles por fold.",
-            "verbose=1 activa la paralelización (n_jobs=-1) automáticamente.",
-            "verbose solo funciona con Jupyter Notebook y no tiene efecto en scripts de Python estándar."
-          ],
-          "correct": 1,
-          "feedback": "verbose es útil para monitorear el progreso de búsquedas largas. Con verbose=1 ves mensajes como cuántos entrenamientos quedan. Con verbose=3 verías información de cada fold individual. verbose=0 silencia completamente la salida."
-        },
-        {
-          "id": "f1aad530-b9ce-4c65-9eb7-6719e3c75e5f",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "Después de grid.fit(X_train, y_train), el taller imprime: grid.best_params_ → {'modelo__C': 10, 'modelo__gamma': 0.01, 'modelo__kernel': 'rbf'}. ¿Qué contiene best_params_ exactamente?",
-          "options": [
-            "El nombre del modelo ganador y su score en el conjunto de prueba X_test.",
-            "Un diccionario con la combinación de hiperparámetros que obtuvo el mejor score promedio en validación cruzada sobre X_train. Solo existe DESPUÉS de llamar a fit().",
-            "El número total de entrenamientos realizados durante la búsqueda (equivalente a n_combinaciones × cv).",
-            "Los valores de los parámetros internos que el SVM aprendió (como los vectores de soporte)."
-          ],
-          "correct": 1,
-          "feedback": "best_params_ es un atributo de resultado (solo existe tras fit()). Contiene el diccionario con los valores de hiperparámetros que maximizaron la métrica de scoring en validación cruzada. Estos son los valores que se usan en best_estimator_."
-        },
-        {
-          "id": "b8087b03-ba64-4e5a-8ce1-143beb5e0615",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "El taller muestra: 'Mejor F1 promedio en CV: 0.895'. ¿Qué representa este valor de best_score_ y por qué NO es el rendimiento final del modelo?",
-          "options": [
-            "Es el F1-score calculado sobre X_test; representa el rendimiento real que se puede esperar en producción.",
-            "Es el promedio del F1 en los cv folds de validación sobre X_train. NO es el rendimiento final porque fue calculado sobre subconjuntos de entrenamiento (nunca vio X_test). El rendimiento real se mide una sola vez sobre X_test en el Bloque A5.",
-            "Es el máximo F1 posible teóricamente; cualquier valor de prueba por encima de 0.895 indicaría sobreajuste severo.",
-            "Es el F1-score del modelo base (sin optimizar) que sirve como línea de referencia para la comparación."
-          ],
-          "correct": 1,
-          "feedback": "best_score_ = 0.895 es el F1 promedio en los 5 folds de validación dentro de X_train. El rendimiento en X_test puede ser diferente (generalmente algo menor). El taller confirma esto: el modelo base en X_test da F1=0.84, el optimizado da 0.87 — no 0.895."
-        },
-        {
-          "id": "4d9c9839-73d2-4f9e-9323-5af44ce9a9ee",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "¿Qué es grid.best_estimator_ y por qué grid.predict(X_test) es equivalente a usar best_estimator_ directamente?",
-          "options": [
-            "best_estimator_ es el modelo con los peores hiperparámetros, guardado como referencia para comparar con el ganador.",
-            "best_estimator_ es el Pipeline completo (preprocesador + SVM) ya reentrenado con toda la X_train usando la mejor combinación de hiperparámetros. grid.predict() delega automáticamente a best_estimator_.predict(), por lo que son equivalentes.",
-            "best_estimator_ es solo un resumen en texto de los hiperparámetros ganadores; no se puede usar directamente para predecir.",
-            "best_estimator_ es el modelo base antes de la optimización, guardado para comparación posterior."
-          ],
-          "correct": 1,
-          "feedback": "Cuando refit=True, GridSearchCV entrena un modelo final con la mejor combinación sobre toda X_train y lo almacena en best_estimator_. Este es el modelo que best_estimator_.predict() o directamente grid.predict() usará para predecir datos nuevos."
-        },
-        {
-          "id": "6559e260-041c-4cec-99e1-d1368262641d",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Bloque A6 del taller se convierte cv_results_ en un DataFrame y se visualiza con seaborn. ¿Qué información contiene cv_results_?",
-          "options": [
-            "Solo la mejor combinación de hiperparámetros y su score, igual que best_params_ y best_score_.",
-            "Un diccionario con los resultados de TODAS las combinaciones probadas: sus parámetros, el score promedio en CV, el ranking (rank_test_score=1 es la mejor), y los scores individuales de cada fold.",
-            "Solo los scores del conjunto de prueba X_test para cada combinación evaluada.",
-            "Un listado de los vectores de soporte encontrados por cada combinación de hiperparámetros del kernel RBF."
-          ],
-          "correct": 1,
-          "feedback": "cv_results_ es el registro completo de la búsqueda. Convertido a DataFrame con pd.DataFrame(grid.cv_results_), tiene una fila por combinación, con columnas como params (la combinación), mean_test_score (F1 promedio), rank_test_score (1=mejor). Útil para visualizar como mapa de calor."
-        },
-        {
-          "id": "b675490b-333f-4b4b-b789-8d4a7be3b025",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "El taller define:\n\nparam_grid = {\n    'modelo__C':      [0.1, 1, 10, 100],\n    'modelo__gamma':  [0.001, 0.01, 0.1, 1],\n    'modelo__kernel': ['rbf', 'linear'],\n}\n\nEl comentario dice: '32 combinaciones × 5 folds = 160 entrenamientos'. ¿Cómo se calculan las 32 combinaciones?",
-          "options": [
-            "32 = 4 + 4 + 2 (suma de los valores por hiperparámetro).",
-            "32 = 4 × 4 × 2 (producto del número de valores de cada hiperparámetro). GridSearchCV prueba todas las combinaciones posibles formando el producto cartesiano.",
-            "32 es un valor fijo que GridSearchCV usa por defecto cuando se pasa un diccionario.",
-            "32 = cv × n_jobs = 5 × (-1), lo cual python interpreta como 32 combinaciones al azar."
-          ],
-          "correct": 1,
-          "feedback": "El producto cartesiano: 4 valores de C × 4 valores de gamma × 2 kernels = 32 combinaciones. Con cv=5, cada combinación se evalúa 5 veces → 32 × 5 = 160 fits. Luego el refit final suma 1 más: 161 entrenamientos en total."
-        },
-        {
-          "id": "f6173506-8662-484e-a5ec-92cdc12bb0b6",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "Un estudiante define el param_grid así:\n\nparam_grid = {\n    'C':      [0.1, 1, 10],\n    'kernel': ['rbf', 'linear'],\n}\ngrid = GridSearchCV(pipe, param_grid, cv=5)\ngrid.fit(X_train, y_train)\n\n¿Qué error obtendrá y por qué?",
-          "options": [
-            "No habrá error; scikit-learn detecta automáticamente que 'C' y 'kernel' pertenecen al SVC dentro del Pipeline.",
-            "ValueError: Invalid parameter 'C' for estimator Pipeline. Porque el SVC está dentro de un Pipeline en el paso 'modelo', y la notación correcta es 'modelo__C' y 'modelo__kernel' (con doble guion bajo).",
-            "El código ejecutará correctamente pero ignorará los valores de 'C' y usará siempre C=1 por defecto.",
-            "TypeError: el param_grid debe ser una lista de diccionarios, no un solo diccionario."
-          ],
-          "correct": 1,
-          "feedback": "Este es un error muy frecuente en el taller. Cuando el estimator es un Pipeline, los hiperparámetros de sus pasos se referencian con 'nombre_del_paso__hiperparametro'. Si el paso se llama 'modelo', entonces es 'modelo__C', 'modelo__kernel', etc."
-        },
-        {
-          "id": "529e9914-a2ca-4983-b761-90f55ed0950f",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "El taller elige los valores de C y gamma en escala logarítmica: [0.1, 1, 10, 100] y [0.001, 0.01, 0.1, 1]. ¿Por qué se usa esta escala en lugar de valores lineales como [1, 2, 3, 4]?",
-          "options": [
-            "Porque scikit-learn solo acepta valores que sean potencias de 10 en el param_grid.",
-            "Porque C y gamma actúan por órdenes de magnitud: la diferencia entre C=0.1 y C=1 es tan significativa como entre C=10 y C=100. Con escala lineal se desperdiciarían evaluaciones entre valores muy similares.",
-            "Porque la escala logarítmica garantiza que GridSearchCV encuentre siempre la combinación óptima en menos de 10 iteraciones.",
-            "Porque la escala lineal solo funciona con kernels lineales; la logarítmica es requerida para el kernel RBF."
-          ],
-          "correct": 1,
-          "feedback": "C y gamma tienen un efecto multiplicativo, no aditivo. Pasar de C=1 a C=10 es un cambio dramático en el comportamiento del modelo; pasar de C=1 a C=2 es casi insignificante. Por eso se exploran órdenes de magnitud (×10) en lugar de valores consecutivos (+1)."
-        },
-        {
-          "id": "98db59b4-31a0-40c5-ad32-600fe2f9e511",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Bloque A6 del taller, el mapa de calor muestra que C=0.1, gamma=0.001 da F1=0.000. El taller explica que 'el modelo predice rechazado para todos'. ¿Cómo se llama este problema y qué lo causa?",
-          "options": [
-            "Sobreajuste (Overfitting): el modelo memoriza los datos de entrenamiento y falla en el fold de validación.",
-            "Underfitting: con C muy bajo y gamma muy bajo, el modelo es tan simple que no puede aprender ninguna frontera de decisión útil, prediciendo la misma clase para todos los casos.",
-            "Data Leakage: los datos del fold de prueba contaminaron el entrenamiento a través del StandardScaler.",
-            "Convergencia prematura: el optimizador SVM se detuvo antes de encontrar el hiperplano óptimo."
-          ],
-          "correct": 1,
-          "feedback": "C muy bajo → margen muy amplio, muy tolerante con errores. gamma muy bajo → cada punto tiene influencia global muy difusa. La combinación extrema produce un modelo trivial que ignora toda la estructura de los datos (underfitting severo), prediciendo siempre la clase mayoritaria."
-        },
-        {
-          "id": "b4810785-8df4-4e7d-a7f4-b673f9a8a732",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "El taller advierte: 'Si el mejor valor queda en el BORDE del grid (ej. C=100, el máximo definido), conviene ampliar el rango antes de dar la búsqueda por terminada.' ¿Por qué es necesario ampliar el rango en ese caso?",
-          "options": [
-            "Porque scikit-learn requiere que el mejor valor nunca esté en los extremos del param_grid.",
-            "Porque un valor ganador en el borde sugiere que el óptimo real podría estar más allá del rango explorado (ej. C=1000). Si no se amplía el rango, el modelo podría no ser el verdaderamente óptimo.",
-            "Porque los valores en los bordes del grid siempre causan sobreajuste.",
-            "Porque grid.best_params_ no puede devolver valores ubicados en los extremos del diccionario."
-          ],
-          "correct": 1,
-          "feedback": "Si el mejor C=100 (el máximo del grid [0.1, 1, 10, 100]), significa que dentro del rango explorado, más es mejor. Pero quizás C=1000 sería aún mejor. El óptimo real puede estar fuera del rango definido, por lo que se deben agregar más valores al límite superior."
-        },
-        {
-          "id": "2c777dea-2c12-4373-9fa7-6b1e8aeccef3",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "¿Por qué el taller enfatiza que el StandardScaler DEBE ir dentro del Pipeline al usar GridSearchCV, y no aplicarse manualmente antes?",
-          "options": [
-            "Porque StandardScaler no funciona fuera de un Pipeline en versiones recientes de scikit-learn.",
-            "Porque si se escala todo X_train antes de GridSearchCV, el scaler aprende la media y desviación de TODOS los datos de entrenamiento, incluidos los folds de validación. Esto genera fuga de datos (data leakage): el fold de validación ya no simula datos completamente nuevos.",
-            "Porque el Pipeline aplica el escalado en paralelo, lo que acelera el entrenamiento.",
-            "Porque fuera del Pipeline, StandardScaler escala la variable objetivo y en lugar de X."
-          ],
-          "correct": 1,
-          "feedback": "Dentro del Pipeline, GridSearchCV hace que el StandardScaler se ajuste SOLO con los 4 folds de entrenamiento de cada iteración, y el fold de validación se transforma con esa estadística (sin haberla visto). Esto simula fielmente el proceso con datos nuevos reales."
-        },
-        {
-          "id": "1897f7bf-fa14-47f2-856c-40bdfc2598c5",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "El Bloque B3 del taller explica que gamma no afecta al kernel lineal. Para evitar combinaciones redundantes, se usa param_grid como lista de diccionarios:\n\nparam_grid_lista = [\n    {'modelo__kernel': ['rbf'],    'modelo__C': [0.1,1,10,100], 'modelo__gamma': [0.001,0.01,0.1,1]},\n    {'modelo__kernel': ['linear'], 'modelo__C': [0.1,1,10,100]},\n]\n\n¿Cuántas combinaciones totales evalúa este grid y cuántas se ahorró frente al grid original (32 combinaciones)?",
-          "options": [
-            "20 combinaciones totales (16 RBF + 4 lineal). Se ahorraron 12 combinaciones (48 menos entrenamientos con cv=5).",
-            "20 combinaciones totales. Se ahorró 0 combinaciones porque ambos grids tienen el mismo total.",
-            "8 combinaciones totales (4 RBF + 4 lineal). Se ahorraron 24 combinaciones.",
-            "24 combinaciones totales (16+8). Se ahorró 1 combinación."
+            "Valores internos que el estimador aprende de forma autónoma durante el ajuste con fit(), sin intervención manual.",
+            "Valores que el científico de datos configura manualmente antes de iniciar el entrenamiento, como los folds de CV.",
+            "Etiquetas visuales asociadas a los ejes cartesianos para representar la dispersión de las predicciones en prueba.",
+            "Factores de escala que determinan la cantidad de muestras aleatorias que se reservan para la validación cruzada."
           ],
           "correct": 0,
-          "feedback": "16 combinaciones RBF (4C × 4gamma) + 4 combinaciones lineal (4C × 1, sin gamma) = 20 total. El grid original tenía 32 (4×4×2=32, probando gamma 4 veces para lineal aunque no sirva). Se ahorraron 12 combinaciones = 12×5=60 entrenamientos innecesarios."
+          "feedback": "Correcto. Los parámetros son los valores numéricos internos que el modelo optimiza y aprende de los datos durante la llamada a fit() (por ejemplo, los coeficientes w y el sesgo b). No se configuran a mano, a diferencia de los hiperparámetros.",
+          "id": "f948a089-ed4a-4e98-8a75-76a55ed99517"
         },
         {
-          "id": "1968539e-170e-4313-a88c-84b416e0f428",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "¿Cuál de los siguientes bloques de código corresponde correctamente a crear y ejecutar un GridSearchCV para optimizar un Pipeline que contiene un paso 'modelo' (SVC) sobre el dataset de crédito del taller?",
+          "text": "¿Cuál es la diferencia conceptual fundamental entre un parámetro y un hiperparámetro en el flujo de scikit-learn?",
           "options": [
-            "grid = GridSearchCV({'C': [1,10], 'kernel': ['rbf']}, pipe, cv=5)\ngrid.fit(X_train, y_train)",
-            "from sklearn.model_selection import GridSearchCV\nparam_grid = {'modelo__C': [0.1, 1, 10, 100], 'modelo__gamma': [0.001, 0.01, 0.1, 1], 'modelo__kernel': ['rbf', 'linear']}\ngrid = GridSearchCV(pipe, param_grid, cv=5, scoring='f1', n_jobs=-1, verbose=1)\ngrid.fit(X_train, y_train)",
-            "grid = GridSearchCV(pipe, cv=5, scoring='f1')\ngrid.param_grid = {'C': [1, 10]}\ngrid.fit(X_train, y_train)",
-            "grid = GridSearchCV(SVC(), {'C': [1,10]}, cv=5)\ngrid.fit(X, y)  # Se pasa el dataset completo"
+            "Los parámetros definen la velocidad de convergencia estocástica; los hiperparámetros miden la inercia del modelo.",
+            "Los hiperparámetros se configuran antes de entrenar guiando el ajuste; los parámetros se aprenden durante el fit().",
+            "Los hiperparámetros son aprendidos de forma autónoma por el optimizador; los parámetros se eligen manualmente.",
+            "Ambos términos son sinónimos formales dentro de la API, diferenciándose solo en la función matemática de costo."
           ],
           "correct": 1,
-          "feedback": "La estructura correcta del taller: 1) importar GridSearchCV, 2) definir param_grid con prefijo 'modelo__', 3) crear GridSearchCV(estimator=pipe, param_grid, cv=5, scoring='f1', n_jobs=-1), 4) llamar fit solo con X_train (X_test queda reservado)."
+          "feedback": "Correcto. Los hiperparámetros (como C, gamma o max_depth) son decisiones de diseño estructural que se establecen antes del entrenamiento para controlar la complejidad. Los parámetros (como pesos y sesgos) son calculados por el algoritmo sobre los datos de entrenamiento.",
+          "id": "d6f77df1-752d-4f50-ab11-d6a367032c30"
         },
         {
-          "id": "c78cab64-f4f7-4e02-841c-27dcc5f530d9",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Bloque A6 del taller se ejecuta este código:\n\nresultados = pd.DataFrame(grid.cv_results_)\nresultados.sort_values('rank_test_score')[['params', 'mean_test_score', 'rank_test_score']].head(5)\n\n¿Qué muestra la columna 'rank_test_score'?",
+          "text": "¿Qué procedimiento ejecuta rigurosamente la clase GridSearchCV al invocar grid.fit(X_train, y_train)?",
           "options": [
-            "El número de vectores de soporte que cada combinación generó durante el entrenamiento.",
-            "El ranking de cada combinación según su mean_test_score. rank=1 es la mejor combinación; valores más altos indican peor rendimiento promedio en validación cruzada.",
-            "El número del fold (1 a 5) en el que cada combinación obtuvo su mejor resultado.",
-            "El porcentaje de ahorro computacional de cada combinación respecto al tiempo total de búsqueda."
-          ],
-          "correct": 1,
-          "feedback": "rank_test_score enumera las combinaciones de mejor (1) a peor según el mean_test_score. Es útil para identificar rápidamente cuáles fueron los top-5 candidatos y si hay empates (varias combinaciones con rank=1)."
-        },
-        {
-          "id": "7fc3fc83-4cef-4b61-bfc5-c6f5ba1d694f",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "El Bloque A6 genera un mapa de calor con este código:\n\nrbf = resultados[resultados['param_modelo__kernel'] == 'rbf']\ntabla = rbf.pivot_table(values='mean_test_score', index='param_modelo__C', columns='param_modelo__gamma')\nsns.heatmap(tabla, annot=True, fmt='.3f', cmap='Blues')\n\n¿Qué visualiza este gráfico y para qué sirve?",
-          "options": [
-            "Muestra la matriz de confusión del mejor modelo sobre X_test, con colores que representan los aciertos y errores.",
-            "Muestra una tabla bidimensional donde cada celda es el F1 promedio en CV para una combinación (C, gamma) del kernel RBF. Permite identificar visualmente qué zona del espacio de búsqueda tiene el mejor rendimiento.",
-            "Grafica la curva ROC de cada combinación de hiperparámetros superpuesta en un solo eje.",
-            "Muestra la distribución de los tiempos de entrenamiento de cada combinación para identificar cuellos de botella."
-          ],
-          "correct": 1,
-          "feedback": "El pivot_table organiza C en filas y gamma en columnas; cada celda contiene el F1 promedio de esa combinación. El mapa de calor permite ver de un vistazo cuál zona (ej. C=10, gamma=0.01) es la óptima y cuáles zonas extremas sufren underfitting o overfitting."
-        },
-        {
-          "id": "3efb4262-e13c-4685-8ff0-0986274e98ad",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Taller de Fraude (Sección 4.1), se define el param_grid para Regresión Logística así:\n\nparam_grid_lr = {\n    'C': [0.01, 0.1, 1, 10],\n    'penalty': ['l1', 'l2'],\n    'solver': ['liblinear']\n}\n\n¿Por qué es obligatorio incluir 'solver': ['liblinear'] en el param_grid cuando se usa penalty='l1'?",
-          "options": [
-            "Porque liblinear es el único solver que acepta valores flotantes de C; el resto solo acepta enteros.",
-            "Porque la penalización L1 (Lasso) no está implementada en todos los solvers de LogisticRegression. El solver 'lbfgs' (por defecto) no soporta L1. 'liblinear' sí lo hace, por lo que es obligatorio especificarlo para que la combinación L1 no falle.",
-            "Porque liblinear activa la paralelización automática en CPU, equivalente a n_jobs=-1.",
-            "Porque sin solver='liblinear', GridSearchCV no puede procesar variables categóricas en X."
-          ],
-          "correct": 1,
-          "feedback": "El solver predeterminado de LogisticRegression en scikit-learn ('lbfgs') solo soporta penalty='l2'. Para usar penalty='l1' es obligatorio cambiar a un solver compatible como 'liblinear' o 'saga'. Sin esto, scikit-learn lanzaría un error al intentar la combinación L1+lbfgs."
-        },
-        {
-          "id": "64dd2b22-8e18-4d56-ac21-31b4a56d8e46",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Taller de Fraude, después de gs_lr.fit(X_train_scaled, y_train), se ejecuta:\n\nbest_lr = gs_lr.best_estimator_\ny_pred_lr_opt = best_lr.predict(X_test_scaled)\n\n¿Qué ventaja tiene acceder a best_estimator_ directamente en lugar de llamar gs_lr.predict(X_test_scaled)?",
-          "options": [
-            "best_estimator_.predict() es más rápido porque ya no necesita ejecutar la búsqueda de hiperparámetros.",
-            "Ambos son funcionalmente equivalentes. La ventaja de acceder a best_estimator_ es que permite exportarlo con joblib por separado, inspeccionar sus coeficientes (coef_), o pasarlo como estimator a otro GridSearchCV.",
-            "gs_lr.predict() siempre falla si se usa con datos escalados (X_test_scaled); best_estimator_ no tiene esta limitación.",
-            "best_estimator_ permite deshacer el escalado automáticamente antes de hacer la predicción."
-          ],
-          "correct": 1,
-          "feedback": "gs_lr.predict() y best_estimator_.predict() dan el mismo resultado. Sin embargo, best_estimator_ es útil cuando necesitas inspeccionar el modelo (ej. ver coef_ de la regresión logística), guardarlo con joblib, o usarlo en otro contexto independientemente del objeto GridSearchCV."
-        },
-        {
-          "id": "dd5decf6-24b3-4898-ac9c-6bd91f2260e4",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Taller de Fraude, el GridSearch para SVM obtiene: best_params_ = {'C': 0.1, 'gamma': 'scale', 'kernel': 'linear'} con scoring='f1'. En el Taller GridSearch (Parte B diabetes), con scoring='recall', el resultado fue: best_params_ = {'modelo__C': 1, 'modelo__gamma': 0.001, 'modelo__kernel': 'linear'}. ¿Qué demuestra esta diferencia?",
-          "options": [
-            "Demuestra que el kernel RBF nunca es óptimo en problemas médicos.",
-            "Demuestra que el parámetro scoring cambia fundamentalmente cuál combinación es la 'ganadora'. Optimizar para Recall maximiza la detección (a costa de más falsos positivos); optimizar para F1 busca un balance. El mismo dataset con diferente scoring puede elegir combinaciones distintas.",
-            "Demuestra que el kernel lineal siempre es mejor que el RBF cuando se usa GridSearchCV.",
-            "Demuestra que los valores de C=0.1 y C=1 son equivalentes para cualquier tipo de problema."
-          ],
-          "correct": 1,
-          "feedback": "La elección de scoring es crucial: define qué significa 'mejor'. Con scoring='f1', una combinación que sacrifica algo de Recall para ganar Precision puede ganar. Con scoring='recall', se priorizan combinaciones que maximizan la detección de casos positivos aunque bajen la Precision."
-        },
-        {
-          "id": "634c30f8-7db3-48ca-944c-9173b5152ad1",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Bloque A5 del taller, el código compara el modelo base con el optimizado:\n\ncomparacion = pd.DataFrame({\n    'Modelo': ['Base (por defecto)', 'GridSearchCV'],\n    'Accuracy': [accuracy_score(y_test, y_pred_base), accuracy_score(y_test, y_pred_opt)],\n    'Recall':   [recall_score(y_test, y_pred_base),   recall_score(y_test, y_pred_opt)],\n    'F1':       [f1_score(y_test, y_pred_base),       f1_score(y_test, y_pred_opt)],\n})\n\nLos resultados son: Base F1=0.84 vs Optimizado F1=0.87. ¿Qué conclusión importante se puede sacar?",
-          "options": [
-            "La mejora de 0.03 en F1 demuestra que GridSearchCV siempre mejora el modelo base en al menos un 10%.",
-            "La comparación se hace sobre X_test (datos nunca vistos durante la búsqueda), lo que valida que la mejora del 0.03 en F1 es real y está respaldada por haber comparado 32 configuraciones sistemáticamente con validación cruzada.",
-            "El modelo base es mejor porque requiere menos recursos computacionales y tiene un F1 razonablemente alto.",
-            "La diferencia de 0.03 es estadísticamente insignificante; ambos modelos son equivalentes para producción."
-          ],
-          "correct": 1,
-          "feedback": "La clave es que la comparación usa X_test, que nunca participó en la búsqueda de hiperparámetros. Esto garantiza que la mejora (F1: 0.84→0.87) es una estimación honesta del beneficio real de la optimización, no un resultado inflado por haber visto los datos de prueba."
-        },
-        {
-          "id": "97a2d23b-c284-4942-9377-b78374198528",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Bloque C del taller, después de elegir la mejor combinación (C=10, gamma=0.01, kernel='rbf'), el código es:\n\npipeline_final = Pipeline([\n    ('escalar', StandardScaler()),\n    ('modelo', SVC(C=10, gamma=0.01, kernel='rbf')),\n])\npipeline_final.fit(X, y)  # X, y completos — no X_train\n\n¿Por qué se pasan X e y completos en lugar de X_train e y_train?",
-          "options": [
-            "Porque con los hiperparámetros ya fijados por GridSearchCV, el modelo necesita ver X_test para calibrar sus vectores de soporte finales.",
-            "Porque el split 80/20 sirvió para elegir y evaluar la combinación de hiperparámetros. Una vez elegida, el modelo de producción se reentrena con el 100% de los datos disponibles: más datos producen una frontera de decisión más precisa y el modelo ya no necesita reservar datos para medir.",
-            "Porque scikit-learn requiere que el pipeline_final use exactamente el mismo conjunto de datos que grid para que la exportación con joblib sea consistente.",
-            "Porque al usar X completo, el modelo evita el sesgo introducido por el split del train_test_split."
-          ],
-          "correct": 1,
-          "feedback": "El flujo es: 1) Dividir en 80/20 para búsqueda + evaluación. 2) GridSearchCV encuentra los mejores hiperparámetros. 3) Se evalúa en X_test para medir el rendimiento real. 4) Pipeline_final se entrena con el 100% (600 filas en vez de 480) para producción."
-        },
-        {
-          "id": "d050234a-1a8e-4cb8-b440-c5c9c11959a1",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "El Bloque C exporta pipeline_final con joblib, no el objeto grid. ¿Por qué se exporta pipeline_final y no grid directamente?",
-          "options": [
-            "Porque joblib no puede serializar objetos GridSearchCV, solo Pipelines simples.",
-            "Porque grid contiene los resultados de las 32 combinaciones (cv_results_), el historial completo de entrenamiento y todos los modelos intermedios. pipeline_final es mucho más liviano: solo tiene el preprocesador y el modelo final. Además, grid.predict() funciona igual, pero el archivo .pkl sería innecesariamente grande.",
-            "Porque si se exportara grid, al cargarlo en producción ejecutaría automáticamente la búsqueda de nuevo con los datos nuevos.",
-            "Porque pipeline_final fue entrenado con X_test, lo que lo hace más preciso para producción."
-          ],
-          "correct": 1,
-          "feedback": "joblib puede serializar GridSearchCV, pero no tiene sentido en producción: el sistema de producción solo necesita hacer predict(), no re-explorar hiperparámetros. pipeline_final contiene solo lo necesario: el scaler ajustado y el SVM con los mejores hiperparámetros, mucho más liviano."
-        },
-        {
-          "id": "095c8d41-52c6-4250-bec1-c3684245f7ed",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "¿Qué hace el siguiente fragmento de código del Taller Fraude?\n\ngs_lr = GridSearchCV(\n    estimator=LogisticRegression(random_state=42),\n    param_grid=param_grid_lr,\n    cv=5,\n    scoring='f1',\n    n_jobs=-1\n)\ngs_lr.fit(X_train_scaled, y_train)\nprint(gs_lr.best_params_)\nprint(gs_lr.best_score_)",
-          "options": [
-            "Entrena una sola Regresión Logística con los parámetros definidos en param_grid_lr y evalúa en X_train_scaled.",
-            "Busca exhaustivamente la mejor combinación de C, penalty y solver para Regresión Logística usando validación cruzada de 5 folds sobre X_train_scaled. Imprime la mejor combinación encontrada y su F1 promedio en validación cruzada.",
-            "Compara el rendimiento de LogisticRegression con SVC e imprime cuál tiene mejor F1 promedio.",
-            "Aplica RandomizedSearchCV con 5 iteraciones aleatorias y muestra la combinación ganadora."
-          ],
-          "correct": 1,
-          "feedback": "Este es el bloque completo de Grid Search sobre Regresión Logística del Taller de Fraude. Prueba 4×2×1=8 combinaciones de (C, penalty, solver), cada una con cv=5 → 40 entrenamientos. El resultado fue best_params_={'C':0.1, 'penalty':'l1', 'solver':'liblinear'}, best_score_≈0.817."
-        },
-        {
-          "id": "b8f57b62-400c-4fc8-8dfc-0ccf54fc5f66",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Taller de Fraude, el siguiente código:\n\ndf_cv_svm = pd.DataFrame(gs_svm.cv_results_)\ndf_cv_svm[['params', 'mean_test_score', 'rank_test_score']].sort_values('rank_test_score').head(5)\n\n¿Qué hace la línea sort_values('rank_test_score').head(5)?",
-          "options": [
-            "Ordena el DataFrame por el valor de C de mayor a menor y muestra los 5 primeros resultados.",
-            "Ordena todas las combinaciones de hiperparámetros del mejor al peor (rank=1 primero) y muestra solo las 5 combinaciones con el mejor F1 promedio en validación cruzada.",
-            "Filtra el DataFrame para mostrar solo las combinaciones con rank_test_score ≤ 5, es decir, con F1 mayor a 0.5.",
-            "Calcula el promedio de las 5 mejores métricas y lo guarda en una nueva columna llamada 'rank_test_score'."
-          ],
-          "correct": 1,
-          "feedback": "sort_values('rank_test_score') ordena de 1 (mejor) al máximo (peor). head(5) toma las primeras 5 filas. El resultado es una tabla con el top-5 de combinaciones de hiperparámetros, mostrando cuáles fueron las más prometedoras para el problema de detección de fraude."
-        },
-        {
-          "id": "7ff570d2-e380-4581-ae9a-61ff307f1cc9",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "El Bloque C del taller ejecuta:\n\nprint(grid.best_params_)\n# {'modelo__C': 10, 'modelo__gamma': 0.01, 'modelo__kernel': 'rbf'}\n\npipeline_final = Pipeline([\n    ('escalar', StandardScaler()),\n    ('modelo', SVC(C=10, gamma=0.01, kernel='rbf')),\n])\npipeline_final.fit(X, y)\n\n¿Por qué se construye un Pipeline nuevo en lugar de simplemente usar grid.best_estimator_.fit(X, y)?",
-          "options": [
-            "Porque grid.best_estimator_ pierde sus hiperparámetros optimizados al llamar a fit() de nuevo.",
-            "Ambas opciones son equivalentes. Se construye un Pipeline nuevo por claridad y legibilidad del código: hace explícito qué hiperparámetros se usan en producción. grid.best_estimator_.fit(X, y) funcionaría igualmente.",
-            "Porque grid.best_estimator_ no incluye el StandardScaler, solo el SVC.",
-            "Porque Pipeline solo acepta StandardScaler como primer paso; best_estimator_ puede usar cualquier preprocesador."
-          ],
-          "correct": 1,
-          "feedback": "Ambas opciones producen el mismo resultado. El taller crea un Pipeline explícito para mayor claridad: cualquier persona que lea el código entiende inmediatamente qué configuración se desplegará en producción sin tener que inspeccionar el objeto GridSearchCV."
-        },
-        {
-          "id": "d57131f4-5489-407a-bce1-8d9ce54aaee6",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "El Bloque C.3 del taller muestra cómo usar el modelo exportado:\n\nmodelo = joblib.load('modelo_credito_svm.pkl')\nsolicitudes_nuevas['prediccion'] = modelo.predict(solicitudes_nuevas)\n\n¿Por qué modelo.predict() puede recibir solicitudes_nuevas con datos en su escala original (sin escalar manualmente)?",
-          "options": [
-            "Porque joblib.load() aplica el escalado automáticamente al cargar el modelo desde el archivo .pkl.",
-            "Porque el Pipeline cargado incluye el StandardScaler como primer paso. Al llamar a predict(), primero escala los datos con la media y desviación aprendidas en el entrenamiento original, y luego pasa el resultado al SVC internamente.",
-            "Porque después de GridSearchCV, el SVC ya no necesita datos escalados; aprende a trabajar con cualquier escala.",
-            "Porque solicitudes_nuevas solo tiene columnas numéricas simples que scikit-learn escala automáticamente."
-          ],
-          "correct": 1,
-          "feedback": "Esta es la ventaja central del Pipeline: encapsula el preprocesamiento. El .pkl guarda tanto el StandardScaler (con su media y desviación de entrenamiento) como el SVC. Al llamar predict(), el Pipeline transforma automáticamente los datos crudos antes de predecir."
-        },
-        {
-          "id": "adbce8fb-5101-453a-b828-bd8e439b4d16",
-          "category": "semana6",
-          "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Taller de Fraude, los resultados del Grid Search fueron: RL Optimizada F1=0.829, SVM Optimizado F1=0.824. Ambos mejoraron ligeramente sus modelos base. ¿Qué conclusión metodológica extrae el taller de este resultado?",
-          "options": [
-            "Que la Regresión Logística siempre supera a SVM cuando se aplica Grid Search correctamente.",
-            "Que el Grid Search siempre mejora drásticamente las métricas del modelo base en al menos un 20%.",
-            "Que en este dataset específico, la optimización de hiperparámetros produce mejoras modestas (~2-3%), lo que sugiere que los modelos base con hiperparámetros por defecto ya eran competitivos. La elección del modelo final debe considerar también la interpretabilidad y el costo computacional.",
-            "Que el Grid Search falla cuando el dataset está balanceado (50/50), pues no hay clase minoritaria para optimizar."
+            "Selecciona al azar una configuración del diccionario y entrena una única vez el estimador sobre todo el conjunto de datos.",
+            "Divide los datos en train y test de manera automática, evaluando el estimador una sola vez sobre la partición retenida final.",
+            "Evalúa exhaustivamente todas las combinaciones del param_grid con validación cruzada, registrando la mejor en best_params_.",
+            "Entrena el estimador con los valores por defecto de la librería y descarta aquellas combinaciones con varianza no nula en CV."
           ],
           "correct": 2,
-          "feedback": "No siempre el Grid Search produce ganancias espectaculares. En el Taller de Fraude, los defaults ya eran buenos. En el Taller de Crédito, la mejora fue de F1=0.84 a 0.87. La utilidad del GridSearch depende del problema; en algunos datasets, los defaults son suficientemente competitivos."
+          "feedback": "Correcto. GridSearchCV realiza una búsqueda exhaustiva probando el producto cartesiano de todas las combinaciones definidas en param_grid. Cada combinación se entrena y evalúa mediante validación cruzada en K folds sobre X_train, identificando la mejor configuración promedio.",
+          "id": "35cb0ce0-f248-4727-bb1e-7caa4716e327"
         },
         {
-          "id": "3b3d2bca-e4fd-47af-a7f9-b739dcc9eeea",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Taller de Fraude, el Grid Search de Regresión Logística incluye 'penalty': ['l1', 'l2']. ¿Cuál es la diferencia práctica entre la penalización L1 (Lasso) y L2 (Ridge) en Regresión Logística?",
+          "text": "¿En qué se diferencia técnicamente RandomizedSearchCV de GridSearchCV y en qué escenario resulta conveniente emplearlo?",
           "options": [
-            "L1 y L2 son idénticas en resultado; solo difieren en el nombre histórico.",
-            "L1 (Lasso) puede llevar coeficientes exactamente a cero, produciendo un modelo disperso (selección de variables implícita). L2 (Ridge) reduce los coeficientes pero rara vez a exactamente cero. El Grid Search eligió L1, lo que indica que algunos predictores no aportaban información.",
-            "L2 es más agresiva que L1 en la penalización; siempre produce coeficientes más pequeños.",
-            "L1 solo funciona con datasets balanceados; L2 es para datasets con clases desbalanceadas."
+            "RandomizedSearchCV evalúa todas las combinaciones en orden aleatorio, requiriendo el mismo tiempo de procesamiento cómputo.",
+            "RandomizedSearchCV prescinde de la validación cruzada, midiendo el rendimiento directamente sobre los datos de producción.",
+            "RandomizedSearchCV es una función auxiliar que duplica las iteraciones de GridSearchCV para evitar mínimos locales falsos.",
+            "RandomizedSearchCV evalúa un número fijo n_iter de combinaciones al azar; conviene cuando el espacio de búsqueda es inmenso."
           ],
-          "correct": 1,
-          "feedback": "L1 (Lasso) aplica penalización de valor absoluto y puede anular coeficientes completamente → selección automática de variables. L2 (Ridge) aplica penalización cuadrática → reduce coeficientes uniformemente pero rara vez a cero. El GridSearch eligió L1 con C=0.1 en el Taller de Fraude."
+          "correct": 3,
+          "feedback": "Correcto. A diferencia de GridSearchCV (que evalúa todas las combinaciones posibles), RandomizedSearchCV muestrea aleatoriamente n_iter candidatos de una distribución o lista. Esto ahorra mucho tiempo computacional cuando el espacio de hiperparámetros es masivo.",
+          "id": "6ae52a80-ed6d-4029-838f-132b55f7da8f"
         },
         {
-          "id": "d3774e81-2009-4865-a460-dd25324c45ba",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En la Parte B del taller (diabetes), el modelo base tiene Recall=0.769. Después del Grid Search con scoring='recall', sube a Recall=0.885. ¿Cuántos pacientes con diabetes adicionales detecta el modelo optimizado sobre el conjunto de prueba (que tiene 52 pacientes con diabetes)?",
+          "text": "¿Qué objeto se debe suministrar al parámetro 'estimator' de GridSearchCV y cuál es su función dentro del flujo?",
           "options": [
-            "6 pacientes adicionales (52 × 0.885 ≈ 46 versus 52 × 0.769 ≈ 40).",
-            "12 pacientes adicionales (de 40 a 52, detectando todos).",
-            "0 pacientes adicionales; el Recall mejoró pero el número absoluto se mantuvo igual.",
-            "16 pacientes adicionales."
+            "Recibe el modelo o Pipeline que se optimizará, siendo clonado y ajustado para cada combinación del param_grid dado en train.",
+            "Recibe la métrica de evaluación como cadena de texto para determinar qué combinación de hiperparámetros resultará ganadora.",
+            "Recibe el nombre del archivo CSV con los datos de entrenamiento que serán procesados durante la validación cruzada K-fold.",
+            "Recibe el número entero de particiones que se crearán para distribuir el cómputo en paralelo a través de todos los cores."
           ],
           "correct": 0,
-          "feedback": "El taller lo calcula explícitamente: base detecta 52×0.769≈40 pacientes con diabetes; optimizado detecta 52×0.885≈46 pacientes. La diferencia: 6 pacientes adicionales detectados gracias a la optimización del Recall. Cada uno de esos 6 representa un diagnóstico que de otra manera habría sido ignorado."
+          "feedback": "Correcto. El parámetro `estimator` recibe la instancia del modelo base o Pipeline a optimizar (por ejemplo `estimator=pipe`). GridSearchCV clona este estimador en cada iteración y le inyecta las distintas combinaciones de hiperparámetros definidas.",
+          "id": "1985419f-42e8-4141-9e72-72fa5f9fa8ab"
         },
         {
-          "id": "4e271604-01f8-482e-bb52-cd17e5877e0c",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "En el Bloque B3, el taller observa que para el kernel lineal, todas las combinaciones con el mismo C pero diferente gamma producen exactamente el mismo Recall. ¿Por qué?",
+          "text": "Al optimizar un Pipeline con un paso llamado 'modelo', ¿por qué las claves del param_grid llevan el prefijo 'modelo__'?",
           "options": [
-            "Porque GridSearchCV ignora el parámetro gamma cuando el resultado de la validación cruzada ya fue calculado.",
-            "Porque el kernel lineal no usa gamma en su función de decisión matemática; gamma controla el radio de influencia en kernels como RBF o polynomial que trabajan con distancias en espacios de mayor dimensión. Para kernel='linear', gamma simplemente no existe en la ecuación.",
-            "Porque para el kernel lineal, gamma y C son sinónimos y controlan lo mismo.",
-            "Porque scikit-learn normaliza automáticamente gamma a 1.0 cuando se detecta kernel='linear'."
+            "Es una convención estética opcional; scikit-learn infiere a qué paso corresponde cada hiperparámetro sin prefijo alguno.",
+            "Porque la sintaxis 'paso__parametro' indica a qué elemento del Pipeline corresponde cada hiperparámetro; sin ella falla.",
+            "Porque los hiperparámetros de soporte vectorial son palabras reservadas del lenguaje Python que requieren doble guion bajo.",
+            "Porque solo los estimadores no lineales requieren calificar sus hiperparámetros con el identificador del paso asignado."
           ],
           "correct": 1,
-          "feedback": "La función del kernel lineal es K(x,z) = x·z (producto punto). No hay ningún parámetro de radio o anchura (que es para lo que sirve gamma). Solo en kernels RBF (e^(-gamma|x-z|²)) y polinómico (gamma·x·z + coef0)^degree tiene efecto el parámetro gamma."
+          "feedback": "Correcto. En scikit-learn, la notación `nombre_paso__hiperparametro` con doble guion bajo es obligatoria para que el Pipeline sepa exactamente a qué componente interno pertenece cada clave del diccionario (ejemplo: `'modelo__C'`). Omitir este prefijo provoca un error `ValueError`.",
+          "id": "e167594c-1ff1-4e31-92a9-9b58df241e05"
         },
         {
-          "id": "9b97859a-0bc6-41d3-b2c6-4ebc5aa6c6c2",
           "category": "semana6",
           "categoryName": "Semana 6 · GridSearch",
-          "text": "Ordena correctamente el flujo completo de un proyecto de optimización de hiperparámetros con GridSearchCV según el taller de crédito:",
+          "text": "¿Qué función cumple el argumento cv=5 en GridSearchCV y por qué es indispensable para una estimación confiable?",
           "options": [
-            "1) fit(X, y) completo → 2) train_test_split → 3) GridSearchCV → 4) Evaluar en X_test → 5) Exportar pipeline_final",
-            "1) train_test_split → 2) Construir Pipeline (preproc+modelo) → 3) Definir param_grid → 4) GridSearchCV.fit(X_train) → 5) Evaluar mejor modelo en X_test → 6) pipeline_final.fit(X, y) con 100% → 7) joblib.dump(pipeline_final)",
-            "1) GridSearchCV.fit(X, y) completo → 2) train_test_split → 3) Evaluar best_estimator_ en X_test → 4) joblib.dump(grid)",
-            "1) Definir param_grid → 2) fit(X, y) → 3) GridSearchCV.fit(X_test) → 4) Evaluar en X_train → 5) joblib.dump"
+            "Fija el número de núcleos del procesador que ejecutarán los cálculos en paralelo reduciendo el tiempo total de búsqueda.",
+            "Determina cuántas veces se reentrenará el modelo sobre el conjunto de testeo final antes de guardar los pesos definitivos.",
+            "Aplica validación cruzada en 5 folds, entrenando con 4 y evaluando con 1 en rotación para promediar métricas robustas.",
+            "Especifica que solo se explorarán cinco combinaciones de hiperparámetros seleccionadas aleatoriamente del diccionario."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. `cv=5` implementa una validación cruzada de 5 particiones (5-fold CV). Cada configuración se entrena 5 veces sobre el 80% de los datos y se valida sobre el 20% restante rotativo. El promedio de los 5 puntajes produce una estimación más confiable y libre de varianza.",
+          "id": "b4e968f2-68e8-4241-8049-a867e8dbf7dd"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "¿Por qué se utiliza scoring='f1' en el problema de crédito y scoring='recall' en el diagnóstico de diabetes?",
+          "options": [
+            "Porque 'f1' opera únicamente en datos sintéticos; 'recall' solo se puede calcular cuando los datos provienen de salud.",
+            "Porque scikit-learn bloquea la métrica 'recall' en problemas binarios balanceados requiriendo 'f1' de forma mandatoria.",
+            "Porque ambas métricas arrojan el mismo resultado matemático, seleccionándose aleatoriamente por convención académica.",
+            "Porque el scoring guía la selección: crédito busca balancear aciertos; diabetes exige minimizar falsos negativos críticos."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. El parámetro `scoring` define qué significa 'mejor'. Para crédito (clases relativamente balanceadas) se prioriza equilibrar precisión y cobertura (`scoring='f1'`). En diabetes, un falso negativo puede comprometer la vida de un paciente, por lo que se prioriza la sensibilidad (`scoring='recall'`).",
+          "id": "61a8acea-91d2-4692-ba60-0fae673c7447"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "Al instanciar `GridSearchCV(..., n_jobs=-1)`, ¿qué comportamiento específico se activa en el sistema de cómputo?",
+          "options": [
+            "Ejecuta los ajustes en paralelo utilizando todos los núcleos del procesador disponibles para reducir el tiempo total.",
+            "Descarta la peor combinación evaluada en cada fold de validación cruzada para acelerar la convergencia numérica global.",
+            "Evalúa únicamente el último fold de validación cruzada omitiendo los cálculos de las cuatro particiones intermedias.",
+            "Silencia la emisión de mensajes por consola asegurando que no se generen registros de advertencia en el entorno local."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. `n_jobs=-1` indica a joblib que emplee todos los procesadores o hilos lógicos del CPU de la máquina para entrenar múltiples combinaciones y folds simultáneamente en paralelo, disminuyendo sustancialmente el tiempo de cómputo.",
+          "id": "a788f505-2e84-445a-a5f1-2aac5e270633"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "¿Cuál es la función del parámetro refit=True (valor por defecto) tras concluir la exploración de GridSearchCV?",
+          "options": [
+            "Exporta automáticamente el mejor modelo serializado en un archivo de formato binario con extensión estándar joblib local.",
+            "Reentrena el estimador con toda la partición X_train usando la mejor combinación de hiperparámetros ganadora del proceso.",
+            "Obliga a recalcular la validación cruzada invirtiendo el orden de las particiones para comprobar la estabilidad numérica.",
+            "Calcula la matriz de confusión directamente sobre los datos de entrenamiento para reportar el porcentaje de aciertos final."
           ],
           "correct": 1,
-          "feedback": "El orden correcto del taller: 1) Dividir 80/20, 2) Construir Pipeline, 3) Definir param_grid con notación 'paso__param', 4) GridSearchCV.fit(X_train) — nunca X_test, 5) Comparar base vs optimizado en X_test, 6) Reentrenar pipeline_final con el 100% de los datos, 7) Exportar solo pipeline_final con joblib."
+          "feedback": "Correcto. Tras concluir todos los folds de validación cruzada, `refit=True` toma la combinación ganadora de hiperparámetros y entrena un estimador final con la totalidad de los datos de `X_train`. Este modelo optimizado queda accesible en `best_estimator_`.",
+          "id": "a16e9731-e5d6-484c-8992-9f6deb7ee77e"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "En el taller se utiliza `GridSearchCV(..., verbose=1)`. ¿Qué utilidad práctica aporta configurar este parámetro?",
+          "options": [
+            "Modifica la precisión en punto flotante con la que se calculan las puntuaciones de validación cruzada en cada iteración.",
+            "Activa la paralelización en múltiples hilos de ejecución de la tarjeta gráfica acelerando los entrenamientos pesados.",
+            "Controla el nivel de detalle de los mensajes de progreso que se imprimen por pantalla durante las rondas de búsqueda.",
+            "Filtra las combinaciones con bajo rendimiento impidiendo que completen todos los folds de evaluación en el dataset."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. `verbose` controla la verbosidad de la salida. Con `verbose=1`, GridSearchCV informa el número total de folds y candidatos a evaluar (ej. 'Fitting 5 folds for each of 32 candidates, totalling 160 fits'); valores más altos detallan el progreso fold por fold.",
+          "id": "4852517d-a021-42ae-b7d1-3c913f173ce7"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "Tras ejecutar fit() sobre GridSearchCV, se consulta grid.best_params_. ¿Qué contiene exactamente este atributo?",
+          "options": [
+            "El arreglo numérico de los pesos y coeficientes aprendidos por el modelo lineal durante la última ronda de ajuste.",
+            "La lista de los cinco mejores puntajes de prueba obtenidos en el conjunto de testeo independiente reservado al inicio.",
+            "La cantidad de iteraciones estocásticas requeridas por el estimador para converger en el mejor fold de entrenamiento.",
+            "Un diccionario con los valores de hiperparámetros que alcanzaron la mayor puntuación promedio en validación cruzada."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. `best_params_` es un atributo que se crea tras llamar a `fit()`. Contiene un diccionario cuyas claves y valores corresponden exactamente a la combinación de hiperparámetros que maximizó la métrica de scoring especificada durante la validación cruzada.",
+          "id": "f1aad530-b9ce-4c65-9eb7-6719e3c75e5f"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "El taller muestra: 'Mejor F1 promedio en CV: 0.895'. ¿Qué representa este valor de best_score_ y por qué no es el score final?",
+          "options": [
+            "Es el límite teórico superior que cualquier modelo puede alcanzar; si el test lo supera indica sobreajuste inevitable.",
+            "Es la precisión calculada sobre todo el dataset de entrenamiento; no es final porque no incluye los datos de validación.",
+            "Es el promedio del F1 en los folds de validación sobre X_train; el rendimiento final debe medirse en el conjunto X_test.",
+            "Es el puntaje obtenido por el modelo base por defecto antes de iniciar la exploración de los hiperparámetros candidatos."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. `best_score_` es el promedio de la métrica de evaluación en los folds de validación durante la búsqueda (sobre subconjuntos de `X_train`). No representa el rendimiento generalizado final, el cual debe corroborarse evaluando `best_estimator_` sobre el conjunto independiente `X_test`.",
+          "id": "b8087b03-ba64-4e5a-8ce1-143beb5e0615"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "¿Qué relación técnica existe entre invocar `grid.predict(X_test)` y llamar directamente a `grid.best_estimator_.predict(X_test)`?",
+          "options": [
+            "grid.predict() utiliza una votación por ensamble de todos los modelos; best_estimator_ predice solo con el ganador en test.",
+            "Son exactamente equivalentes; grid.predict() delega la inferencia de forma automática en el objeto best_estimator_ ajustado.",
+            "best_estimator_ predice sobre datos sin escalar; grid.predict() requiere que las muestras estén previamente normalizadas.",
+            "grid.predict() ejecuta una nueva búsqueda de validación cruzada antes de emitir las etiquetas sobre el conjunto de test."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Cuando `refit=True`, el objeto `GridSearchCV` implementa los métodos `predict()`, `predict_proba()` y `decision_function()` delegando directamente la llamada en `best_estimator_`, por lo que ambas expresiones son completamente intercambiables.",
+          "id": "4d9c9839-73d2-4f9e-9323-5af44ce9a9ee"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "Al convertir grid.cv_results_ en un DataFrame de pandas, ¿qué información detallada queda disponible para el análisis?",
+          "options": [
+            "Únicamente los hiperparámetros y la puntuación de la combinación ganadora, sin registrar las configuraciones evaluadas.",
+            "El listado de los errores de predicción individuales y los identificadores de los registros clasificados incorrectamente.",
+            "Un registro exhaustivo de todas las combinaciones con sus métricas por fold, puntajes medios, desviaciones y rankings.",
+            "Las coordenadas de los centroides geométricos calculados para cada una de las clases del modelo durante la validación."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. `cv_results_` es un diccionario exhaustivo que almacena todos los datos de la exploración: hiperparámetros evaluados (`params`), métricas individuales por fold (`split0_test_score`, etc.), medias (`mean_test_score`), desviaciones estándar y posiciones de ranking (`rank_test_score`).",
+          "id": "6559e260-041c-4cec-99e1-d1368262641d"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "Con param_grid = {'C': [0.1, 1, 10, 100], 'gamma': [0.001, 0.01, 0.1, 1], 'kernel': ['rbf', 'linear']}, ¿cómo se obtienen 32 candidatos?",
+          "options": [
+            "Sumando la cantidad de valores de cada lista: 4 + 4 + 2 = 10 combinaciones multiplicadas por el factor de escala inicial.",
+            "Dividiendo el número de iteraciones máximas del optimizador estocástico entre los grados de libertad de las variables dadas.",
+            "Elevando la cantidad de hiperparámetros al cuadrado y multiplicando por el número de clases presentes en el problema actual.",
+            "Calculando el producto cartesiano de los valores definidos: 4 de C por 4 de gamma por 2 kernels resulta en 32 combinaciones."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. GridSearchCV genera el producto cartesiano de todas las listas del diccionario: 4 valores de C × 4 valores de gamma × 2 kernels = 32 combinaciones posibles. Con `cv=5`, esto implica ejecutar $32 \times 5 = 160$ entrenamientos.",
+          "id": "b675490b-333f-4b4b-b789-8d4a7be3b025"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "Si se pasa un Pipeline con el paso 'modelo' a GridSearchCV usando param_grid = {'C': [1, 10]}, ¿qué error ocurrirá al llamar a fit()?",
+          "options": [
+            "ValueError por parámetro inválido; las claves deben indicar el paso del Pipeline usando doble guion bajo ('modelo__C').",
+            "TypeError indicando que los valores de C deben definirse obligatoriamente en escala logarítmica para admitir la búsqueda.",
+            "El ajuste se ejecutará con éxito pero GridSearchCV ignorará los valores de C utilizando el valor por defecto de fábrica.",
+            "NotFittedError indicando que el objeto Pipeline debe ser ajustado manualmente antes de poder pasarse como estimador base."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. Al optimizar un Pipeline, scikit-learn no reconoce hiperparámetros directos como `'C'` porque pertenecen al paso interno y no al contenedor Pipeline. La llamada lanzará un `ValueError: Invalid parameter 'C' for estimator Pipeline`, exigiendo la sintaxis `'modelo__C'`.",
+          "id": "f6173506-8662-484e-a5ec-92cdc12bb0b6"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "¿Por qué en GridSearchCV se eligen hiperparámetros como C y gamma en escala logarítmica en lugar de secuencias lineales como [1, 2, 3]?",
+          "options": [
+            "Porque la escala lineal introduce colinealidad en las matrices de proyección provocando divergencia en los estimadores dados.",
+            "Porque C y gamma actúan por órdenes de magnitud multiplicativos; pasar de 1 a 10 es mucho más significativo que de 1 a 2.",
+            "Porque la API de scikit-learn restringe los diccionarios param_grid para que solo admitan potencias enteras de diez en Python.",
+            "Porque la escala logarítmica asegura que todas las combinaciones evalúen el mismo número de vectores de soporte del modelo."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El impacto de C y gamma sobre la función de costo y la curvatura del margen es exponencial y multiplicativo. Explorar saltos multiplicativos (0.001, 0.01, 0.1, 1, 10, 100) permite recorrer amplias regiones del espacio de regularización con pocas evaluaciones.",
+          "id": "529e9914-a2ca-4983-b761-90f55ed0950f"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "En el mapa de calor de cv_results_, la combinación C=0.1 y gamma=0.001 obtiene F1 = 0.000 prediciendo siempre rechazado. ¿Qué problema ocurre?",
+          "options": [
+            "Fuga de información (Data Leakage) generada por ajustar el escalador antes de realizar la partición de entrenamiento.",
+            "Sobreajuste severo (Overfitting), donde el estimador memorizó los datos de train y falló en los folds de validación.",
+            "Subajuste severo (Underfitting): margen tan ancho e influencia tan difusa que el modelo colapsa a la clase mayoritaria.",
+            "Convergencia prematura del optimizador cuadrático debida a un valor insuficiente de iteraciones máximas permitidas."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Un C muy bajo promueve un margen excesivamente tolerante y permisivo, mientras que un gamma diminuto hace que los puntos tengan un radio de influencia plano y global. Juntos producen un subajuste (underfitting) extremo: el modelo es incapaz de trazar una frontera útil y predice siempre la clase mayoritaria, arrojando F1 = 0.0.",
+          "id": "98db59b4-31a0-40c5-ad32-600fe2f9e511"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "Si tras ejecutar GridSearchCV la mejor combinación se ubica en el límite superior del grid (ej. C = 100), ¿qué decisión se debe tomar?",
+          "options": [
+            "Dar por finalizado el proceso de búsqueda asumiendo que el valor máximo probado representa el óptimo global del problema.",
+            "Reemplazar el estimador por un algoritmo de árboles de decisión para evitar que el hiperparámetro desborde la memoria RAM.",
+            "Reducir los valores del param_grid hacia el límite inferior para forzar a que el mejor candidato quede en el centro exacto.",
+            "Ampliar el rango de búsqueda hacia valores superiores (ej. C = 1000) porque el óptimo real podría estar más allá del borde."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Cuando el mejor valor seleccionado queda en el borde exterior del rango analizado, indica que el rendimiento crecía hacia ese extremo. Es una buena práctica ampliar el límite de búsqueda para comprobar si valores aún mayores (como C=1000) mejoran el desempeño o si se alcanza una meseta.",
+          "id": "b4810785-8df4-4e7d-a7f4-b673f9a8a732"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "¿Por qué es un error metodológico grave estandarizar todo X_train con StandardScaler antes de ingresarlo a GridSearchCV?",
+          "options": [
+            "Provoca que scikit-learn escale de manera errónea la variable objetivo y en lugar de transformar las columnas de X.",
+            "Invalida la convergencia numérica de los kernels no lineales al forzar a que los atributos tengan varianza unitaria.",
+            "Genera una excepción de tipo TypeError porque GridSearchCV requiere obligatoriamente matrices de datos sin procesar.",
+            "Provoca fuga de datos (data leakage) porque el scaler aprendería medias y desviaciones de los folds de validación."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. Si se estandariza todo `X_train` antes de la validación cruzada, las estadísticas de media y dispersión calculadas incluirán los datos de los folds que actuarán como prueba temporal en cada iteración. Integrar `StandardScaler` dentro de un `Pipeline` garantiza que el escalador se ajuste únicamente con los folds de entrenamiento de cada partición.",
+          "id": "2c777dea-2c12-4373-9fa7-6b1e8aeccef3"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "Para evitar evaluar gamma en el kernel lineal (donde no tiene efecto), se define param_grid como una lista de diccionarios. ¿Qué se logra?",
+          "options": [
+            "Obligar a que el estimador utilice paralelismo en tarjeta gráfica reduciendo el consumo de memoria en la CPU del equipo.",
+            "Eliminar combinaciones redundantes evaluando gamma solo con RBF, ahorrando entrenamientos innecesarios en la búsqueda.",
+            "Garantizar que el kernel lineal y el kernel RBF utilicen exactamente los mismos vectores de soporte en el ajuste final.",
+            "Permitir que GridSearchCV asigne pesos diferenciados a cada partición de validación cruzada según su representatividad."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Dado que el hiperparámetro `gamma` no interviene en la formulación del kernel lineal ($K(x, z) = x^T z$), evaluarlo para distintos valores de gamma en dicho kernel es un desperdicio de cómputo. Al estructurar `param_grid` como una lista de diccionarios independientes, se descartan esas combinaciones superfluas.",
+          "id": "1897f7bf-fa14-47f2-856c-40bdfc2598c5"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "¿Cuál de las siguientes estructuras representa la forma metodológicamente correcta de configurar y ejecutar GridSearchCV?",
+          "options": [
+            "grid = GridSearchCV(pipe, param_grid, cv=5, scoring='f1', n_jobs=-1, verbose=1); grid.fit(X_train, y_train)",
+            "grid = GridSearchCV(SVC(), param_grid, cv=5, scoring='f1'); grid.fit(X, y)  # Evaluando en todo el dataset",
+            "grid = GridSearchCV(param_grid, pipe, cv=5); grid.fit(X_test, y_test)  # Optimizando sobre datos de prueba",
+            "grid = GridSearchCV(pipe, cv=5, scoring='f1'); grid.param_grid = param_grid; grid.fit(X_train_scaled, y_test)"
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La estructura adecuada consiste en suministrar el Pipeline completo como estimator, asociar el diccionario param_grid con notación de doble guion bajo, definir la métrica de scoring y la validación cruzada, y ejecutar `fit()` estrictamente sobre `X_train` e `y_train`.",
+          "id": "1968539e-170e-4313-a88c-84b416e0f428"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "Al ordenar los resultados con `sort_values('rank_test_score')`, ¿qué información técnica proporciona la columna 'rank_test_score'?",
+          "options": [
+            "El número del fold específico (1 a 5) en el cual la combinación respectiva alcanzó su mayor puntaje de evaluación.",
+            "El ranking ordinal según el desempeño medio en validación cruzada, donde 1 corresponde a la configuración óptima.",
+            "La cantidad de vectores de soporte seleccionados por el algoritmo durante el entrenamiento de esa combinación puntual.",
+            "El porcentaje de reducción en tiempo de ejecución obtenido respecto al promedio de todos los candidatos analizados."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. `rank_test_score` clasifica ordinalmente todas las combinaciones evaluadas de mejor a peor según su puntuación media (`mean_test_score`). La combinación con ranking 1 es la ganadora (o las ganadoras en caso de empate).",
+          "id": "c78cab64-f4f7-4e02-841c-27dcc5f530d9"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "En el taller se genera un mapa de calor con `pivot_table(values='mean_test_score', index='param_C', columns='param_gamma')`. ¿Para qué sirve?",
+          "options": [
+            "Para proyectar los datos sobre las dos primeras componentes principales evaluando la separabilidad de los datos en 2D.",
+            "Para visualizar la matriz de confusión multiclase identificando qué etiquetas concentran los mayores falsos negativos.",
+            "Para examinar la interacción continua entre C y gamma, identificando visualmente qué región del espacio maximiza el F1.",
+            "Para comparar la distribución temporal de los entrenamientos y detectar qué combinaciones saturaron la memoria del CPU."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. La tabla pivote cruza los hiperparámetros C (filas) y gamma (columnas) con la métrica promedio en sus celdas. Desplegarla como mapa de calor permite al analista inspeccionar de un vistazo la topología de la superficie de rendimiento y confirmar si el óptimo es estable.",
+          "id": "7fc3fc83-4cef-4b61-bfc5-c6f5ba1d694f"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "Al incluir penalty='l1' en el param_grid de Regresión Logística, ¿por qué es obligatorio especificar solver=['liblinear'] o ['saga']?",
+          "options": [
+            "Porque los solvers como liblinear son los únicos que admiten paralelización en múltiples núcleos mediante n_jobs=-1 en CPU.",
+            "Porque la penalización L1 requiere datos escalados y los demás solvers omiten automáticamente el paso de preprocesado previo.",
+            "Porque liblinear transforma variables continuas en discretas para que la función Lasso no presente singularidades en train.",
+            "Porque el solver predeterminado 'lbfgs' no soporta la penalización L1; emplearlo con L1 generaría una excepción de error."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. En scikit-learn, el solver por defecto de LogisticRegression (`'lbfgs'`) solo admite regularización L2 o ninguna. Si se incluye la regularización L1 (Lasso) en la búsqueda, es obligatorio emparejarla con un solver compatible como `'liblinear'` o `'saga'` para evitar excepciones.",
+          "id": "3efb4262-e13c-4685-8ff0-0986274e98ad"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "¿Qué utilidad práctica tiene acceder directamente al atributo grid.best_estimator_ tras concluir la optimización de hiperparámetros?",
+          "options": [
+            "Permite inspeccionar atributos del modelo (como coef_), exportarlo por separado con joblib o integrarlo en otros pipelines.",
+            "Permite reiniciar los hiperparámetros a sus valores iniciales en caso de que la validación cruzada haya divergido en test.",
+            "Permite eliminar automáticamente variables redundantes de la matriz X reduciendo la dimensionalidad del dataset de entrada.",
+            "Permite calcular la inercia intra-clúster para determinar si los datos forman agrupaciones esféricas bien delimitadas en test."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. `best_estimator_` contiene el estimador o Pipeline entrenado definitivo. Acceder a él permite examinar sus parámetros internos aprendidos (como los pesos `coef_`, el intercepto `intercept_` o los vectores de soporte), serializarlo de forma liviana con `joblib.dump()`, o reutilizarlo en arquitecturas más complejas.",
+          "id": "64dd2b22-8e18-4d56-ac21-31b4a56d8e46"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "Al optimizar SVM con scoring='f1' el ganador fue C=0.1, y con scoring='recall' el ganador fue C=1. ¿Qué demuestra este resultado?",
+          "options": [
+            "Demuestra que el algoritmo es inestable y que los hiperparámetros óptimos cambian de forma puramente aleatoria en cada corrida.",
+            "Demuestra que la métrica de scoring altera la selección: optimizar para Recall tolera más falsos positivos que optimizar F1.",
+            "Demuestra que los modelos lineales siempre superan a los núcleos gaussianos cuando la regularización C es inferior a la unidad.",
+            "Demuestra que el conjunto de validación cruzada no fue estratificado adecuadamente en train, falseando las métricas de prueba."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. La función objetivo de optimización responde estrictamente a la métrica declarada en `scoring`. Una búsqueda orientada a Recall preferirá hiperparámetros que aumenten la sensibilidad (capturando más casos positivos aunque aumenten los falsos positivos), mientras que orientada a F1 buscará el equilibrio óptimo con la precisión.",
+          "id": "dd5decf6-24b3-4898-ac9c-6bd91f2260e4"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "El modelo base obtuvo F1 = 0.84 y el optimizado obtuvo F1 = 0.87 evaluados ambos sobre X_test. ¿Por qué es una conclusión sólida?",
+          "options": [
+            "Porque la evaluación se realizó sobre datos independientes (X_test) que jamás participaron en la búsqueda de hiperparámetros.",
+            "Porque un incremento del 3% en la métrica F1 garantiza matemáticamente que el clasificador no cometerá errores en producción.",
+            "Porque el conjunto de prueba se utilizó para reentrenar los estimadores candidatos asegurando la paridad en la comparación.",
+            "Porque scikit-learn ajusta internamente los intervalos de confianza del testeo para validar la hipótesis de superioridad."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La validez de la comparación radica en que `X_test` permaneció completamente aislado durante toda la etapa de búsqueda y ajuste con GridSearchCV. Evaluar ambos modelos sobre este conjunto garantiza que la mejora observada refleja generalización real y no memorización.",
+          "id": "634c30f8-7db3-48ca-944c-9173b5152ad1"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "Tras elegir la mejor configuración con GridSearchCV, el taller entrena pipeline_final.fit(X, y) con el 100% de los datos. ¿Por qué?",
+          "options": [
+            "Porque el split sirvió para seleccionar y evaluar; para producción ya no se reserva test y más datos enriquecen la frontera.",
+            "Porque los clasificadores Support Vector Machine descartan las predicciones en producción si el modelo no vio todo el dataset.",
+            "Porque la función joblib.dump exige que las dimensiones del objeto serializado coincidan con el tamaño total del archivo CSV.",
+            "Porque de lo contrario el estimador continuaría ejecutando internamente validación cruzada cada vez que se invoque predict()."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La partición train/test se realiza exclusivamente con fines de validación y medición honesta del rendimiento. Una vez seleccionada la combinación óptima y comprobada su capacidad de generalización, el modelo final de producción debe aprovechar el 100% de las muestras disponibles para maximizar su precisión.",
+          "id": "97a2d23b-c284-4942-9377-b78374198528"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "¿Por qué en el Bloque C se serializa con joblib únicamente el objeto pipeline_final en lugar de guardar todo el objeto grid?",
+          "options": [
+            "Porque el objeto grid no es serializable con joblib y arroja un error fatal de sistema al intentar guardarlo en disco.",
+            "Porque grid exporta también las predicciones intermedias de test, lo que generaría un conflicto de seguridad informática.",
+            "Porque el archivo de grid sería excesivamente pesado con 160 modelos y resultados de CV; pipeline_final es ligero y óptimo.",
+            "Porque al cargar el objeto grid en producción este reanudaría la búsqueda de hiperparámetros sobre los nuevos registros."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. El objeto `grid` almacena el histórico completo de todas las combinaciones evaluadas, los puntajes de los 160 fits y los estimadores clonados, resultando en un archivo muy voluminoso. En producción solo se necesita hacer inferencias, por lo que `pipeline_final` (que solo guarda el preprocesador y el modelo ganador) es infinitamente más ligero y eficiente.",
+          "id": "d050234a-1a8e-4cb8-b440-c5c9c11959a1"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "Se ejecuta: `gs = GridSearchCV(LogisticRegression(), param_grid, cv=5, scoring='f1').fit(X_tr, y_tr)`. ¿Qué realiza este bloque?",
+          "options": [
+            "Entrena una regresión logística simple evaluando únicamente los coeficientes sobre el conjunto de validación cruzada K-fold.",
+            "Calcula la correlación lineal de Pearson entre cada variable y la clase objetivo utilizando cinco particiones estratificadas.",
+            "Aplica una búsqueda aleatoria de hiperparámetros seleccionando cinco combinaciones continuas para predecir probabilidades.",
+            "Explora de forma exhaustiva las combinaciones de hiperparámetros sobre regresión logística optimizando el F1 promedio en CV."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. El bloque de código instancia y ejecuta un proceso exhaustivo de Grid Search para optimizar la regresión logística sobre los datos de entrenamiento, evaluando cada combinación mediante 5 folds de validación cruzada y seleccionando la configuración que maximice el puntaje F1.",
+          "id": "095c8d41-52c6-4250-bec1-c3684245f7ed"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "En el taller se ejecuta: `df_cv[['params', 'mean_test_score', 'rank_test_score']].sort_values('rank_test_score').head(5)`. ¿Qué hace?",
+          "options": [
+            "Presenta las cinco mejores configuraciones de hiperparámetros ordenadas de mejor a peor según su puntaje promedio en CV dado.",
+            "Filtra las cinco combinaciones con mayor varianza en sus resultados descartándolas antes del reentrenamiento final en train.",
+            "Muestra únicamente los resultados obtenidos en el quinto fold de validación cruzada para verificar la convergencia del modelo.",
+            "Ordena las variables predictoras del dataset según su coeficiente de importancia en el clasificador de soporte vectorial."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. `sort_values('rank_test_score')` ordena la tabla de resultados de validación cruzada de menor a mayor ranking (donde 1 es el mejor resultado), y `.head(5)` extrae los 5 primeros registros, permitiendo al analista examinar el 'top 5' de configuraciones más prometedoras.",
+          "id": "b8f57b62-400c-4fc8-8dfc-0ccf54fc5f66"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "En lugar de usar best_estimator_ directamente, el taller reconstruye explícitamente `Pipeline([('escalar', ...), ('modelo', ...)])`. ¿Por qué?",
+          "options": [
+            "Porque best_estimator_ no conserva el escalador StandardScaler una vez que concluye toda la búsqueda de hiperparámetros.",
+            "Por claridad y trazabilidad del código: documenta explícitamente en el script qué hiperparámetros se despliegan en producción.",
+            "Porque scikit-learn bloquea la invocación de fit() sobre el objeto best_estimator_ si este fue generado por GridSearchCV en C.",
+            "Para obligar a que el modelo reentrenado descarte los vectores de soporte previos y aprenda una frontera estrictamente plana."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Aunque invocar `grid.best_estimator_.fit(X, y)` es funcionalmente idéntico, reconstruir explícitamente el Pipeline con los valores óptimos (ej. `SVC(C=10, gamma=0.01, kernel='rbf')`) aporta claridad, legibilidad y documentación limpia para auditoría técnica de software en producción.",
+          "id": "7ff570d2-e380-4581-ae9a-61ff307f1cc9"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "Al cargar el pipeline exportado `modelo = joblib.load('modelo.pkl')`, ¿por qué modelo.predict() recibe solicitudes sin escalar manualmente?",
+          "options": [
+            "Porque los datos en producción se escalan automáticamente por el sistema operativo antes de ingresar al intérprete de Python.",
+            "Porque tras la optimización con GridSearchCV, el estimador SVC aprende a operar con independencia de la escala de las variables.",
+            "Porque el Pipeline contiene el StandardScaler ajustado, aplicando la escala a los datos nuevos antes de pasarlos al modelo.",
+            "Porque la función joblib.load modifica el código de inferencia reemplazando el cálculo de distancias por árboles de decisión."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. El objeto Pipeline guarda internamente tanto el transformador `StandardScaler` (con las medias y desviaciones estándar aprendidas en el entrenamiento) como el estimador SVC. Al llamar a `predict()`, el Pipeline ejecuta de forma transparente la estandarización sobre los datos crudos antes de alimentarlos al clasificador.",
+          "id": "d57131f4-5489-407a-bce1-8d9ce54aaee6"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "En el taller de fraude, Grid Search mejoró el F1 solo un 2-3% frente a los modelos base. ¿Qué conclusión metodológica se extrae?",
+          "options": [
+            "Que la optimización de hiperparámetros fue defectuosa y debe repetirse ampliando el número de folds de validación cruzada en CV.",
+            "Que los modelos de Machine Learning no supervisado no responden ante variaciones de regularización y margen en el testeo real.",
+            "Que los valores por defecto ya eran muy competitivos; la elección final debe considerar interpretabilidad y costo computacional.",
+            "Que cuando la ganancia es modesta se debe descartar el algoritmo y sustituirlo obligatoriamente por una red neuronal profunda."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. No siempre la optimización de hiperparámetros arroja saltos espectaculares de rendimiento. En muchos conjuntos de datos tabulares, los valores predeterminados de la librería ya son sólidos. La experimentación rigurosa permite comprobar empíricamente cuál es el techo del modelo y ponderar si el costo computacional justifica el despliegue.",
+          "id": "adbce8fb-5101-453a-b828-bd8e439b4d16"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "En el taller de fraude, GridSearchCV seleccionó penalty='l1' frente a penalty='l2'. ¿Cuál es la diferencia práctica entre ambas?",
+          "options": [
+            "L1 reduce los pesos de forma proporcional; L2 los anula completamente convirtiendo el clasificador en un árbol binario.",
+            "L1 es una penalización cuadrática; L2 utiliza el valor absoluto permitiendo calcular derivadas continuas en todo el espacio.",
+            "L1 y L2 son funcionalmente idénticas, existiendo únicamente diferencias en el algoritmo numérico de inversión matricial.",
+            "L1 (Lasso) puede anular coeficientes realizando selección de variables; L2 (Ridge) los reduce pero rara vez a cero exacto."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. La regularización L1 (Lasso) aplica una penalización basada en el valor absoluto de los coeficientes, lo que empuja a los pesos de variables no informativas a ser exactamente cero (esparcidad o selección implícita de variables). En cambio, la regularización L2 (Ridge) contrae los pesos hacia cero pero sin anularlos totalmente.",
+          "id": "3b3d2bca-e4fd-47af-a7f9-b739dcc9eeea"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "En diabetes, optimizar con scoring='recall' elevó el Recall de 0.769 a 0.885 en un test de 52 enfermos. ¿Qué impacto clínico se obtuvo?",
+          "options": [
+            "El modelo diagnosticó con éxito a los 52 pacientes diabéticos alcanzando una sensibilidad perfecta del cien por ciento en prueba.",
+            "Se eliminaron todos los falsos positivos del conjunto de prueba asegurando que ningún paciente sano reciba diagnósticos erróneos.",
+            "Se duplicó la cantidad de aciertos en la clase negativa reduciendo a la mitad los costos de exámenes clínicos complementarios.",
+            "Se detectaron 6 pacientes con diabetes adicionales (de 40 a 46 casos detectados) que de otro modo habrían sido ignorados en test."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. El impacto práctico es tangible: con el modelo base se detectaban $52 \times 0.769 \u0007pprox 40$ pacientes enfermos, mientras que con el modelo optimizado para Recall se detectaron $52 \times 0.885 \u0007pprox 46$ pacientes. Esos 6 pacientes adicionales representan diagnósticos y tratamientos tempranos que salvan vidas.",
+          "id": "d3774e81-2009-4865-a460-dd25324c45ba"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "En el taller se observa que en kernel='linear', variar gamma no altera en absoluto las métricas de rendimiento. ¿Cuál es el motivo?",
+          "options": [
+            "Porque el kernel lineal no incluye gamma en su formulación; gamma solo opera en núcleos que evalúan distancias como RBF.",
+            "Porque scikit-learn fija internamente gamma en un valor constante unitario cuando detecta que la matriz está estandarizada.",
+            "Porque el algoritmo de optimización cuadrática ignora las opciones secundarias si el hiperparámetro C es menor que diez.",
+            "Porque las variables numéricas al ser estandarizadas pierden la dispersión radial sobre la que actúa el hiperparámetro gamma."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La función matemática del kernel lineal es simplemente el producto escalar plano $K(x, z) = x^T z$. El hiperparámetro gamma define el radio o ancho de banda de la campana gaussiana en el kernel RBF ($\\exp(-\\gamma \\|x - z\\|^2)$) o el factor de escala en polinomios; en la ecuación lineal, gamma no existe y no tiene ningún efecto.",
+          "id": "4e271604-01f8-482e-bb52-cd17e5877e0c"
+        },
+        {
+          "category": "semana6",
+          "categoryName": "Semana 6 · GridSearch",
+          "text": "¿Cuál es la secuencia metodológica completa y ordenada para un proyecto de optimización con GridSearchCV según el taller?",
+          "options": [
+            "1) GridSearchCV en todo el dataset -> 2) train_test_split -> 3) Evaluar en X_test -> 4) Exportar estimador base con joblib final.",
+            "1) Split train/test -> 2) Pipeline preproc+modelo -> 3) GridSearchCV en train -> 4) Evaluar en test -> 5) Reentrenar 100% y exportar.",
+            "1) Ajustar Pipeline en todo el dataset -> 2) Definir param_grid -> 3) GridSearchCV en test -> 4) Evaluar en train -> 5) Exportar.",
+            "1) Definir param_grid -> 2) Reentrenar con el 100% de muestras -> 3) GridSearchCV con cv=5 -> 4) Serializar sin preprocesamiento."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El flujo metodológico riguroso comprende: 1) separar train y test con train_test_split; 2) estructurar el Pipeline con transformadores y modelo; 3) ejecutar GridSearchCV sobre X_train; 4) contrastar el modelo base y el optimizado en X_test; 5) reajustar el pipeline final con el 100% de datos; y 6) serializarlo con joblib.",
+          "id": "9b97859a-0bc6-41d3-b2c6-4ebc5aa6c6c2"
         }
       ]
     },
