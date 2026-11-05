@@ -555,7 +555,7 @@
                     </div>
                 </div>
                 <div class="space-y-2">
-                    <textarea id="syncDirectInput" rows="3" placeholder="Pega aquí el enlace completo de WhatsApp (ej: https://alex171215.github.io/repasoIARDA1/index.html?v=18#sync=...) o el código de sincronización..."
+                    <textarea id="syncDirectInput" rows="3" placeholder="Pega aquí el enlace completo de WhatsApp (ej: https://alex171215.github.io/repasoIARDA1/index.html?v=19#sync=...) o el código de sincronización..."
                         class="w-full bg-slate-950 border border-indigo-500/60 rounded-xl p-3 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 select-all"></textarea>
                     <button id="btnApplyDirectSync"
                         class="w-full py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition active:scale-[0.98]">
@@ -628,7 +628,7 @@
 
 
         <!-- Cargar banco de preguntas (con versión para forzar recarga) -->
-    <script src="data/banco_preguntas_v7.js?v=18"></script>
+    <script src="data/banco_preguntas_v7.js?v=19"></script>
     <script>
         // Sistema de Audio Sintetizado Web Audio API (Sin dependencias externas)
         class SoundFX {
@@ -838,8 +838,9 @@
                 // Migración inmediata: cualquier pregunta actualmente errada activa el estado secundario
                 var bankQuestions = getBankQuestions();
                 bankQuestions.forEach(q => {
+                    ensureCanonicalQuestion(q);
                     var ans = userAnswers[q.id];
-                    if (ans !== undefined && ans !== q.correct) {
+                    if (ans !== undefined && Number(ans) !== Number(getQuestionCorrect(q))) {
                         recordFailedQuestion(q.id);
                     }
                 });
@@ -864,6 +865,20 @@
         let failedHistory = new Set(); // Historial persistente de preguntas respondidas erróneamente
         let examFinished = false;
         let immediateFeedback = true;
+
+        function getQuestionCorrect(q) {
+            if (!q) return undefined;
+            if (q.canonicalCorrect !== undefined) return q.canonicalCorrect;
+            return q.correct;
+        }
+
+        function ensureCanonicalQuestion(q) {
+            if (!q) return;
+            if (!q.canonicalOptions) {
+                q.canonicalOptions = [...q.options];
+                q.canonicalCorrect = q.correct;
+            }
+        }
 
         function isQuestionFailed(qId) {
             if (!failedHistory) return false;
@@ -1064,8 +1079,9 @@
                 // Activar estado secundario para preguntas actualmente erradas
                 var bankQuestions = getBankQuestions();
                 bankQuestions.forEach(q => {
+                    ensureCanonicalQuestion(q);
                     var ans = userAnswers[q.id];
-                    if (ans !== undefined && ans !== q.correct) {
+                    if (ans !== undefined && Number(ans) !== Number(getQuestionCorrect(q))) {
                         recordFailedQuestion(q.id);
                     }
                 });
@@ -1112,7 +1128,9 @@
                 }
             } else if (cat === 'incorrect') {
                 currentQuestions = bank.filter(function(q) {
-                    return isQuestionFailed(q.id) || (userAnswers[q.id] !== undefined && userAnswers[q.id] !== q.correct);
+                    ensureCanonicalQuestion(q);
+                    var ans = userAnswers[q.id];
+                    return isQuestionFailed(q.id) || (ans !== undefined && Number(ans) !== Number(getQuestionCorrect(q)));
                 });
                 if (currentQuestions.length === 0) {
                     currentQuestions = [...bank];
@@ -1142,9 +1160,11 @@
                 const isMarked = isQuestionBookmarked(q.id);
                 const showFeedback = examFinished || immediateFeedback;
 
+                const isCorrect = isAnswered && (Number(ans) === Number(getQuestionCorrect(q)));
+
                 // 1. Estilos según estado de respuesta y marca de duda
                 if (isMarked && isAnswered && showFeedback) {
-                    if (ans === q.correct) {
+                    if (isCorrect) {
                         // Bicolor: Mitad Verde y Mitad Amarillo
                         btn.style.background = 'linear-gradient(135deg, #059669 50%, #f59e0b 50%)';
                         btn.style.textShadow = '0 1px 2px rgba(0,0,0,0.85)';
@@ -1166,7 +1186,7 @@
                 } else if (!isMarked && isAnswered) {
                     // No marcada, respondida
                     if (showFeedback) {
-                        if (ans === q.correct) {
+                        if (isCorrect) {
                             btn.className += 'bg-emerald-900/70 text-emerald-300 border-emerald-600/80 hover:bg-emerald-800/80 ';
                         } else {
                             btn.className += 'bg-rose-900/70 text-rose-300 border-rose-600/80 hover:bg-rose-800/80 ';
@@ -1223,10 +1243,11 @@
                     qFailBadge.classList.remove('hidden');
                     qFailBadge.classList.add('flex');
                     const curAns = userAnswers[q.id];
-                    if (curAns !== undefined && curAns === q.correct) {
+                    const canonC = getQuestionCorrect(q);
+                    if (curAns !== undefined && Number(curAns) === Number(canonC)) {
                         qFailBadge.className = "flex text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-950/90 text-emerald-300 border border-emerald-500/60 items-center gap-1 shadow-sm";
                         qFailBadge.innerHTML = "<span>✓</span><span>Error Superado</span>";
-                    } else if (curAns !== undefined && curAns !== q.correct) {
+                    } else if (curAns !== undefined && Number(curAns) !== Number(canonC)) {
                         qFailBadge.className = "flex text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-rose-950/90 text-rose-300 border border-rose-500/60 items-center gap-1 shadow-sm";
                         qFailBadge.innerHTML = "<span>✗</span><span>Requiere Refuerzo</span>";
                     } else {
@@ -1262,19 +1283,33 @@
                 bookmarkText.className = "text-slate-400";
             }
 
-            // Renderizar Opciones
+            // Renderizar Opciones (Canónicas y Resistentes al Barajado)
             optionsContainer.innerHTML = '';
             const letters = ['A', 'B', 'C', 'D'];
             const currentAnswer = userAnswers[q.id];
             const hasAnswered = currentAnswer !== undefined;
             const showCorrection = hasAnswered && (immediateFeedback || examFinished);
+            const canonCorrect = getQuestionCorrect(q);
 
-            q.options.forEach((optText, optIdx) => {
+            // Si displayOptions existe (tras barajar opciones), se usa; de lo contrario se deriva de canonicalOptions
+            let optsToRender = q.displayOptions;
+            if (!optsToRender) {
+                ensureCanonicalQuestion(q);
+                optsToRender = q.canonicalOptions.map((text, idx) => ({
+                    text: text,
+                    canonIdx: idx,
+                    isCorrect: idx === canonCorrect
+                }));
+            }
+
+            optsToRender.forEach((optItem, dispIdx) => {
                 const optBtn = document.createElement('button');
                 optBtn.className = `w-full text-left p-4 rounded-xl border transition-all duration-200 flex items-start gap-3 text-xs sm:text-sm `;
 
-                let isThisSelected = currentAnswer === optIdx;
-                let isThisCorrect = optIdx === q.correct;
+                const canonIdx = optItem.canonIdx;
+                const optText = optItem.text;
+                let isThisSelected = hasAnswered && (Number(currentAnswer) === Number(canonIdx));
+                let isThisCorrect = (Number(canonIdx) === Number(canonCorrect));
 
                 if (showCorrection) {
                     if (isThisCorrect) {
@@ -1290,7 +1325,7 @@
                     optBtn.className += 'bg-slate-800/60 border-slate-700/80 text-slate-200 hover:bg-slate-800 hover:border-slate-600 ';
                 }
 
-                // Letra identificadora
+                // Letra identificadora según posición visual en pantalla (A, B, C, D)
                 const badge = document.createElement('span');
                 badge.className = `flex-shrink-0 w-6 h-6 rounded-lg flex items-center justify-center font-bold text-xs font-mono border `;
 
@@ -1303,14 +1338,14 @@
                         badge.innerHTML = '✗';
                     } else {
                         badge.className += 'bg-slate-800 text-slate-500 border-slate-700';
-                        badge.textContent = letters[optIdx];
+                        badge.textContent = letters[dispIdx];
                     }
                 } else if (isThisSelected) {
                     badge.className += 'bg-indigo-600 text-white border-indigo-400';
-                    badge.textContent = letters[optIdx];
+                    badge.textContent = letters[dispIdx];
                 } else {
                     badge.className += 'bg-slate-700/60 text-slate-400 border-slate-600';
-                    badge.textContent = letters[optIdx];
+                    badge.textContent = letters[dispIdx];
                 }
 
                 const textSpan = document.createElement('span');
@@ -1322,7 +1357,7 @@
 
                 optBtn.onclick = () => {
                     if (examFinished) return;
-                    selectOption(q.id, optIdx);
+                    selectOption(q.id, canonIdx);
                 };
 
                 optionsContainer.appendChild(optBtn);
@@ -1331,7 +1366,7 @@
             // Caja de retroalimentación
             if (showCorrection) {
                 feedbackBox.classList.remove('hidden');
-                const isUserCorrect = currentAnswer === q.correct;
+                const isUserCorrect = (Number(currentAnswer) === Number(canonCorrect));
                 if (isUserCorrect) {
                     feedbackBox.className = "mt-6 p-4 rounded-xl border bg-emerald-950/40 border-emerald-800/80 text-emerald-200";
                     feedbackIconContainer.className = "w-6 h-6 rounded-full bg-emerald-700 text-white flex items-center justify-center font-bold";
@@ -1357,14 +1392,16 @@
             updateHeaderStats();
         }
 
-        function selectOption(qId, optIdx) {
+        function selectOption(qId, canonOptIdx) {
             const q = currentQuestions.find(item => item.id === qId);
-            const isAlreadyChosen = userAnswers[qId] === optIdx;
+            ensureCanonicalQuestion(q);
+            userAnswers[qId] = canonOptIdx;
 
-            userAnswers[qId] = optIdx;
+            const canonCorrect = getQuestionCorrect(q);
+            const isCorrect = (canonCorrect !== undefined && Number(canonOptIdx) === Number(canonCorrect));
 
             // Si respondió incorrectamente, se activa de forma permanente el estado secundario de error
-            if (q && optIdx !== q.correct) {
+            if (!isCorrect) {
                 recordFailedQuestion(qId);
             }
             // Si respondió correctamente, NO se elimina de failedHistory; se mantiene para el filtro de repaso persistente
@@ -1372,7 +1409,7 @@
             saveState();
 
             if (immediateFeedback) {
-                if (optIdx === q.correct) {
+                if (isCorrect) {
                     sound.playCorrect();
                 } else {
                     sound.playWrong();
@@ -1394,7 +1431,8 @@
             currentQuestions.forEach(q => {
                 const a = userAnswers[q.id];
                 if (a !== undefined) {
-                    if (a === q.correct) correct++;
+                    const c = getQuestionCorrect(q);
+                    if (Number(a) === Number(c)) correct++;
                     else incorrect++;
                 }
             });
@@ -1452,7 +1490,8 @@
                 }
 
                 // 2. Si tenía respuesta actual incorrecta, limpiarla para evitar re-registro automático
-                if (userAnswers[q.id] !== undefined && userAnswers[q.id] !== q.correct) {
+                const c = getQuestionCorrect(q);
+                if (userAnswers[q.id] !== undefined && Number(userAnswers[q.id]) !== Number(c)) {
                     delete userAnswers[q.id];
                 }
 
@@ -1516,19 +1555,25 @@
         }
 
         function shuffleQuestionsAndOptions() {
-            // Barajar preguntas
+            // 1. Barajar el orden de las preguntas visualmente en pantalla
             currentQuestions = shuffleArray([...currentQuestions]);
-            // Barajar opciones de cada pregunta ajustando índice correcto
+
+            // 2. Barajar opciones de visualización preservando el índice canónico oficial
             currentQuestions.forEach(q => {
-                const optionsWithIndices = q.options.map((opt, idx) => ({
-                    text: opt,
-                    isCorrect: idx === q.correct
+                ensureCanonicalQuestion(q);
+                const optItems = q.canonicalOptions.map((text, idx) => ({
+                    text: text,
+                    canonIdx: idx,
+                    isCorrect: idx === q.canonicalCorrect
                 }));
-                shuffleArray(optionsWithIndices);
-                q.options = optionsWithIndices.map(o => o.text);
-                q.correct = optionsWithIndices.findIndex(o => o.isCorrect);
+                shuffleArray(optItems);
+                q.displayOptions = optItems;
+                // Mantener q.options y q.correct alineados para compatibilidad
+                q.options = optItems.map(o => o.text);
+                q.correct = optItems.findIndex(o => o.isCorrect);
             });
-            // Reiniciar respuestas SOLO de las preguntas actuales
+
+            // 3. Reiniciar respuestas SOLO de las preguntas de la lista actual
             currentQuestions.forEach(q => {
                 delete userAnswers[q.id];
             });
@@ -1537,7 +1582,7 @@
             saveState();
             renderGrid();
             renderCurrentQuestion();
-            showToast("¡Barajado aleatorio listo! Respuestas de esta lista reiniciadas.");
+            showToast("¡Preguntas y opciones barajadas! Respuestas reiniciadas.");
         }
 
         shuffleAllBtn.addEventListener('click', () => {
@@ -1580,7 +1625,8 @@
                 const userChoice = userAnswers[q.id];
                 if (userChoice !== undefined) {
                     answered++;
-                    if (userChoice === q.correct) {
+                    const c = getQuestionCorrect(q);
+                    if (Number(userChoice) === Number(c)) {
                         correct++;
                         catStats[q.categoryName].correct++;
                     }
@@ -1638,7 +1684,8 @@
         reviewErrorsBtn.addEventListener('click', () => {
             const errorQuestions = currentQuestions.filter(q => {
                 const a = userAnswers[q.id];
-                return a === undefined || a !== q.correct || isQuestionFailed(q.id);
+                const c = getQuestionCorrect(q);
+                return a === undefined || Number(a) !== Number(c) || isQuestionFailed(q.id);
             });
 
             if (errorQuestions.length === 0) {
@@ -1649,7 +1696,8 @@
             // Registrar los fallos actuales en failedHistory
             currentQuestions.forEach(q => {
                 const a = userAnswers[q.id];
-                if (a !== undefined && a !== q.correct) {
+                const c = getQuestionCorrect(q);
+                if (a !== undefined && Number(a) !== Number(c)) {
                     recordFailedQuestion(q.id);
                 }
             });
@@ -2348,7 +2396,7 @@
                 if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                     baseUrl = 'https://alex171215.github.io/repasoIARDA1/index.html';
                 }
-                const magicUrl = baseUrl + '?v=18#sync=' + currentCompressedCode;
+                const magicUrl = baseUrl + '?v=19#sync=' + currentCompressedCode;
                 syncMagicUrlInput.value = magicUrl;
 
                 if (copySuccessMsg) copySuccessMsg.classList.add('hidden');
