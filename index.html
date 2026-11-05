@@ -243,15 +243,25 @@
                             class="hidden text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider items-center gap-1 shadow-sm">
                         </span>
                     </div>
-                    <button id="bookmarkBtn"
-                        class="flex items-center gap-1 text-xs font-medium text-slate-400 hover:text-amber-400 transition-colors p-1.5 rounded-lg hover:bg-slate-800">
-                        <svg id="bookmarkIcon" class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor"
-                            viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
-                        </svg>
-                        <span id="bookmarkText">Marcar duda</span>
-                    </button>
+                    <div class="flex items-center gap-2">
+                        <button id="removeFromErrorsBtn"
+                            class="hidden items-center gap-1.5 text-xs font-semibold text-rose-300 hover:text-rose-100 bg-rose-950/40 hover:bg-rose-900/70 border border-rose-800/70 transition-all px-2.5 py-1.5 rounded-lg shadow-sm active:scale-95"
+                            title="Quitar esta pregunta del filtro de erradas de este banco">
+                            <svg class="w-3.5 h-3.5 text-rose-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6m1-10V4a1 1 0 00-1-1h-4a1 1 0 00-1 1v3M4 7h16" />
+                            </svg>
+                            <span>Quitar del historial de erradas</span>
+                        </button>
+                        <button id="bookmarkBtn"
+                            class="flex items-center gap-1 text-xs font-medium text-slate-400 hover:text-amber-400 transition-colors p-1.5 rounded-lg hover:bg-slate-800">
+                            <svg id="bookmarkIcon" class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor"
+                                viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                    d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z" />
+                            </svg>
+                            <span id="bookmarkText">Marcar duda</span>
+                        </button>
+                    </div>
                 </div>
 
                 <!-- Enunciado -->
@@ -545,7 +555,7 @@
                     </div>
                 </div>
                 <div class="space-y-2">
-                    <textarea id="syncDirectInput" rows="3" placeholder="Pega aquí el enlace completo de WhatsApp (ej: https://alex171215.github.io/repasoIARDA1/index.html?v=17#sync=...) o el código de sincronización..."
+                    <textarea id="syncDirectInput" rows="3" placeholder="Pega aquí el enlace completo de WhatsApp (ej: https://alex171215.github.io/repasoIARDA1/index.html?v=18#sync=...) o el código de sincronización..."
                         class="w-full bg-slate-950 border border-indigo-500/60 rounded-xl p-3 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 select-all"></textarea>
                     <button id="btnApplyDirectSync"
                         class="w-full py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition active:scale-[0.98]">
@@ -618,7 +628,7 @@
 
 
         <!-- Cargar banco de preguntas (con versión para forzar recarga) -->
-    <script src="data/banco_preguntas_v7.js?v=17"></script>
+    <script src="data/banco_preguntas_v7.js?v=18"></script>
     <script>
         // Sistema de Audio Sintetizado Web Audio API (Sin dependencias externas)
         class SoundFX {
@@ -904,6 +914,7 @@
         const feedbackTitle = document.getElementById('feedbackTitle');
         const feedbackText = document.getElementById('feedbackText');
         const feedbackIconContainer = document.getElementById('feedbackIconContainer');
+        const removeFromErrorsBtn = document.getElementById('removeFromErrorsBtn');
         const bookmarkBtn = document.getElementById('bookmarkBtn');
         const bookmarkIcon = document.getElementById('bookmarkIcon');
         const bookmarkText = document.getElementById('bookmarkText');
@@ -1206,8 +1217,8 @@
             qText.textContent = q.text;
 
             // Badge de estado secundario de historial de error
+            const wasFailed = isQuestionFailed(q.id);
             if (qFailBadge) {
-                const wasFailed = isQuestionFailed(q.id);
                 if (wasFailed) {
                     qFailBadge.classList.remove('hidden');
                     qFailBadge.classList.add('flex');
@@ -1225,6 +1236,17 @@
                 } else {
                     qFailBadge.classList.add('hidden');
                     qFailBadge.classList.remove('flex');
+                }
+            }
+
+            // Botón para quitar solo esta pregunta del historial de erradas
+            if (removeFromErrorsBtn) {
+                if (categoryFilter.value === 'incorrect' || wasFailed) {
+                    removeFromErrorsBtn.classList.remove('hidden');
+                    removeFromErrorsBtn.classList.add('flex');
+                } else {
+                    removeFromErrorsBtn.classList.add('hidden');
+                    removeFromErrorsBtn.classList.remove('flex');
                 }
             }
 
@@ -1413,6 +1435,49 @@
             renderGrid();
             renderCurrentQuestion();
         });
+
+        if (removeFromErrorsBtn) {
+            removeFromErrorsBtn.addEventListener('click', () => {
+                if (currentQuestions.length === 0) return;
+                const q = currentQuestions[currentIndex];
+                sound.playClick();
+
+                // 1. Eliminar identificador del historial secundario de errores
+                const sId = String(q.id);
+                const nId = Number(q.id);
+                if (failedHistory) {
+                    failedHistory.delete(q.id);
+                    failedHistory.delete(sId);
+                    if (!isNaN(nId)) failedHistory.delete(nId);
+                }
+
+                // 2. Si tenía respuesta actual incorrecta, limpiarla para evitar re-registro automático
+                if (userAnswers[q.id] !== undefined && userAnswers[q.id] !== q.correct) {
+                    delete userAnswers[q.id];
+                }
+
+                saveState();
+
+                // 3. Si nos encontramos en el filtro "Solo Preguntas Erradas", retirarla de la lista activa
+                if (categoryFilter.value === 'incorrect') {
+                    currentQuestions = currentQuestions.filter(item => item.id !== q.id);
+                    if (currentQuestions.length === 0) {
+                        showToast("¡Has completado y limpiado todas las preguntas erradas de este banco!");
+                        categoryFilter.value = 'all';
+                        applyFilter();
+                        return;
+                    }
+                    if (currentIndex >= currentQuestions.length) {
+                        currentIndex = currentQuestions.length - 1;
+                    }
+                }
+
+                updateHeaderStats();
+                renderGrid();
+                renderCurrentQuestion();
+                showToast("Pregunta eliminada del historial de erradas.");
+            });
+        }
 
         bookmarkBtn.addEventListener('click', () => {
             sound.playClick();
@@ -2283,7 +2348,7 @@
                 if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                     baseUrl = 'https://alex171215.github.io/repasoIARDA1/index.html';
                 }
-                const magicUrl = baseUrl + '?v=17#sync=' + currentCompressedCode;
+                const magicUrl = baseUrl + '?v=18#sync=' + currentCompressedCode;
                 syncMagicUrlInput.value = magicUrl;
 
                 if (copySuccessMsg) copySuccessMsg.classList.add('hidden');
