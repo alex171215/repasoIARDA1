@@ -234,10 +234,15 @@
 
                 <!-- Indicador de Categoría y Marcador de Duda -->
                 <div class="flex items-center justify-between mb-4">
-                    <span id="qBadge"
-                        class="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-900/50 text-indigo-300 border border-indigo-700/50 uppercase tracking-wider">
-                        Unidad 01 · Historia
-                    </span>
+                    <div class="flex items-center gap-2 flex-wrap">
+                        <span id="qBadge"
+                            class="text-xs font-semibold px-3 py-1 rounded-full bg-indigo-900/50 text-indigo-300 border border-indigo-700/50 uppercase tracking-wider">
+                            Unidad 01 · Historia
+                        </span>
+                        <span id="qFailBadge"
+                            class="hidden text-[10px] font-bold px-2.5 py-0.5 rounded-full uppercase tracking-wider items-center gap-1 shadow-sm">
+                        </span>
+                    </div>
                     <button id="bookmarkBtn"
                         class="flex items-center gap-1 text-xs font-medium text-slate-400 hover:text-amber-400 transition-colors p-1.5 rounded-lg hover:bg-slate-800">
                         <svg id="bookmarkIcon" class="w-4 h-4 text-slate-400" fill="none" stroke="currentColor"
@@ -334,6 +339,7 @@
                     <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm border border-amber-400/80" style="background: linear-gradient(135deg, #059669 50%, #f59e0b 50%);"></span> Duda + Correcta</span>
                     <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm border border-amber-400/80" style="background: linear-gradient(135deg, #e11d48 50%, #f59e0b 50%);"></span> Duda + Incorrecta</span>
                     <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-slate-800 border border-slate-700"></span> Pendiente</span>
+                    <span class="flex items-center gap-1.5"><span class="w-2.5 h-2.5 rounded-sm bg-slate-800 border border-rose-500/70 text-rose-300"></span> Repaso Pendiente</span>
                 </div>
             </div>
 
@@ -539,7 +545,7 @@
                     </div>
                 </div>
                 <div class="space-y-2">
-                    <textarea id="syncDirectInput" rows="3" placeholder="Pega aquí el enlace completo de WhatsApp (ej: https://alex171215.github.io/repasoIARDA1/index.html?v=16#sync=...) o el código de sincronización..."
+                    <textarea id="syncDirectInput" rows="3" placeholder="Pega aquí el enlace completo de WhatsApp (ej: https://alex171215.github.io/repasoIARDA1/index.html?v=17#sync=...) o el código de sincronización..."
                         class="w-full bg-slate-950 border border-indigo-500/60 rounded-xl p-3 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 select-all"></textarea>
                     <button id="btnApplyDirectSync"
                         class="w-full py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition active:scale-[0.98]">
@@ -612,7 +618,7 @@
 
 
         <!-- Cargar banco de preguntas (con versión para forzar recarga) -->
-    <script src="data/banco_preguntas_v7.js?v=16"></script>
+    <script src="data/banco_preguntas_v7.js?v=17"></script>
     <script>
         // Sistema de Audio Sintetizado Web Audio API (Sin dependencias externas)
         class SoundFX {
@@ -799,6 +805,7 @@
             localStorage.setItem('ai_quiz_active_bank', bankName);
             userAnswers = {};
             bookmarked = new Set();
+            failedHistory = new Set();
             try {
                 var sa = localStorage.getItem(getBankStorageKey('ans'));
                 if (sa) userAnswers = JSON.parse(sa);
@@ -810,6 +817,22 @@
                         bookmarked.add(String(id));
                     });
                 }
+                var sf = localStorage.getItem(getBankStorageKey('fail'));
+                if (sf) {
+                    failedHistory = new Set();
+                    JSON.parse(sf).forEach(id => {
+                        failedHistory.add(id);
+                        failedHistory.add(String(id));
+                    });
+                }
+                // Migración inmediata: cualquier pregunta actualmente errada activa el estado secundario
+                var bankQuestions = getBankQuestions();
+                bankQuestions.forEach(q => {
+                    var ans = userAnswers[q.id];
+                    if (ans !== undefined && ans !== q.correct) {
+                        recordFailedQuestion(q.id);
+                    }
+                });
             } catch(e) {}
             var select = document.getElementById('bankSelectDropdown');
             if (select) select.value = bankName;
@@ -828,8 +851,33 @@
         let currentIndex = 0;
         let userAnswers = {}; // { qId: selectedOptionIndex }
         let bookmarked = new Set();
+        let failedHistory = new Set(); // Historial persistente de preguntas respondidas erróneamente
         let examFinished = false;
         let immediateFeedback = true;
+
+        function isQuestionFailed(qId) {
+            if (!failedHistory) return false;
+            if (failedHistory.has(qId)) return true;
+            if (failedHistory.has(String(qId))) return true;
+            if (typeof qId === 'string' && !isNaN(Number(qId)) && failedHistory.has(Number(qId))) return true;
+            return false;
+        }
+
+        function getUniqueFailedCount() {
+            if (!failedHistory) return 0;
+            const s = new Set();
+            failedHistory.forEach(id => s.add(String(id)));
+            return s.size;
+        }
+
+        function recordFailedQuestion(qId) {
+            if (!failedHistory) failedHistory = new Set();
+            failedHistory.add(qId);
+            failedHistory.add(String(qId));
+            if (typeof qId === 'string' && !isNaN(Number(qId))) {
+                failedHistory.add(Number(qId));
+            }
+        }
 
         function isQuestionBookmarked(qId) {
             if (!bookmarked) return false;
@@ -848,6 +896,7 @@
 
         // ELEMENTOS DOM
         const qBadge = document.getElementById('qBadge');
+        const qFailBadge = document.getElementById('qFailBadge');
         const qNumber = document.getElementById('qNumber');
         const qText = document.getElementById('qText');
         const optionsContainer = document.getElementById('optionsContainer');
@@ -916,6 +965,8 @@
                 localStorage.setItem(getBankStorageKey('ans'), JSON.stringify(userAnswers));
                 const uniqueBm = Array.from(new Set(Array.from(bookmarked).map(id => String(id))));
                 localStorage.setItem(getBankStorageKey('bm'), JSON.stringify(uniqueBm));
+                const uniqueFail = Array.from(new Set(Array.from(failedHistory).map(id => String(id))));
+                localStorage.setItem(getBankStorageKey('fail'), JSON.stringify(uniqueFail));
                 localStorage.setItem(getBankStorageKey('cat'), categoryFilter.value);
                 localStorage.setItem(getBankStorageKey('idx'), currentIndex.toString());
                 localStorage.setItem(getBankStorageKey('order'), JSON.stringify(currentQuestions.map(q => q.id)));
@@ -991,6 +1042,22 @@
                         bookmarked.add(String(id));
                     });
                 }
+                var savedFail = localStorage.getItem(getBankStorageKey('fail'));
+                if (savedFail) {
+                    failedHistory = new Set();
+                    JSON.parse(savedFail).forEach(id => {
+                        failedHistory.add(id);
+                        failedHistory.add(String(id));
+                    });
+                }
+                // Activar estado secundario para preguntas actualmente erradas
+                var bankQuestions = getBankQuestions();
+                bankQuestions.forEach(q => {
+                    var ans = userAnswers[q.id];
+                    if (ans !== undefined && ans !== q.correct) {
+                        recordFailedQuestion(q.id);
+                    }
+                });
             } catch(e) {
                 console.error("Error loading state:", e);
             }
@@ -1034,12 +1101,11 @@
                 }
             } else if (cat === 'incorrect') {
                 currentQuestions = bank.filter(function(q) {
-                    var ans = userAnswers[q.id];
-                    return ans !== undefined && ans !== q.correct;
+                    return isQuestionFailed(q.id) || (userAnswers[q.id] !== undefined && userAnswers[q.id] !== q.correct);
                 });
                 if (currentQuestions.length === 0) {
                     currentQuestions = [...bank];
-                    showToast("No tienes preguntas respondidas incorrectamente en este banco. Mostrando todas.");
+                    showToast("No tienes preguntas con historial de error en este banco. Mostrando todas.");
                     categoryFilter.value = 'all';
                 }
             } else {
@@ -1099,8 +1165,12 @@
                     }
                 } else {
                     // Ni marcada ni respondida (Pendiente)
+                    const wasFailed = isQuestionFailed(q.id);
                     if (isCurrent) {
                         btn.className += 'bg-indigo-600 text-white border-indigo-400 shadow-lg shadow-indigo-600/40 ';
+                    } else if (wasFailed) {
+                        // Pendiente con historial previo de error: sutil borde rosa / texto rosa para destacar
+                        btn.className += 'bg-slate-800/90 text-rose-300 border-rose-500/60 hover:bg-rose-950/40 hover:border-rose-400 ';
                     } else {
                         btn.className += 'bg-slate-800/80 text-slate-400 border-slate-700/60 hover:bg-slate-800 hover:text-slate-200 ';
                     }
@@ -1134,6 +1204,29 @@
             qBadge.textContent = q.categoryName;
             qNumber.textContent = `PREGUNTA ${(currentIndex + 1).toString().padStart(2, '0')} DE ${currentQuestions.length.toString().padStart(2, '0')}`;
             qText.textContent = q.text;
+
+            // Badge de estado secundario de historial de error
+            if (qFailBadge) {
+                const wasFailed = isQuestionFailed(q.id);
+                if (wasFailed) {
+                    qFailBadge.classList.remove('hidden');
+                    qFailBadge.classList.add('flex');
+                    const curAns = userAnswers[q.id];
+                    if (curAns !== undefined && curAns === q.correct) {
+                        qFailBadge.className = "flex text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-emerald-950/90 text-emerald-300 border border-emerald-500/60 items-center gap-1 shadow-sm";
+                        qFailBadge.innerHTML = "<span>✓</span><span>Error Superado</span>";
+                    } else if (curAns !== undefined && curAns !== q.correct) {
+                        qFailBadge.className = "flex text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-rose-950/90 text-rose-300 border border-rose-500/60 items-center gap-1 shadow-sm";
+                        qFailBadge.innerHTML = "<span>✗</span><span>Requiere Refuerzo</span>";
+                    } else {
+                        qFailBadge.className = "flex text-[10px] font-bold px-2.5 py-0.5 rounded-full bg-amber-950/80 text-amber-300 border border-amber-500/60 items-center gap-1 shadow-sm";
+                        qFailBadge.innerHTML = "<span>⚠️</span><span>Historial de Error</span>";
+                    }
+                } else {
+                    qFailBadge.classList.add('hidden');
+                    qFailBadge.classList.remove('flex');
+                }
+            }
 
             // Estado del botón Duda
             const isMarked = isQuestionBookmarked(q.id);
@@ -1247,6 +1340,13 @@
             const isAlreadyChosen = userAnswers[qId] === optIdx;
 
             userAnswers[qId] = optIdx;
+
+            // Si respondió incorrectamente, se activa de forma permanente el estado secundario de error
+            if (q && optIdx !== q.correct) {
+                recordFailedQuestion(qId);
+            }
+            // Si respondió correctamente, NO se elimina de failedHistory; se mantiene para el filtro de repaso persistente
+
             saveState();
 
             if (immediateFeedback) {
@@ -1473,7 +1573,7 @@
         reviewErrorsBtn.addEventListener('click', () => {
             const errorQuestions = currentQuestions.filter(q => {
                 const a = userAnswers[q.id];
-                return a === undefined || a !== q.correct;
+                return a === undefined || a !== q.correct || isQuestionFailed(q.id);
             });
 
             if (errorQuestions.length === 0) {
@@ -1481,8 +1581,21 @@
                 return;
             }
 
+            // Registrar los fallos actuales en failedHistory
+            currentQuestions.forEach(q => {
+                const a = userAnswers[q.id];
+                if (a !== undefined && a !== q.correct) {
+                    recordFailedQuestion(q.id);
+                }
+            });
+
+            // Reiniciar solo las respuestas de las preguntas a repasar para permitir nuevo intento limpio
+            errorQuestions.forEach(q => {
+                delete userAnswers[q.id];
+            });
+
             currentQuestions = errorQuestions;
-            userAnswers = {};
+            categoryFilter.value = 'incorrect';
             examFinished = false;
             currentIndex = 0;
             saveState();
@@ -1607,8 +1720,10 @@
             const catalog = getBankQuestionCatalog();
             const answers = [];
             const bookmarks = [];
+            const failedList = [];
             const customAnswers = [];
             const customBookmarks = [];
+            const customFailed = [];
 
             for (let i = 0; i < localStorage.length; i++) {
                 const k = localStorage.key(i);
@@ -1640,6 +1755,19 @@
                             }
                         });
                     } catch(e) {}
+                } else if (k.startsWith('ai_quiz_fail_') && k.endsWith('_v3')) {
+                    const bankId = k.replace('ai_quiz_fail_', '').replace('_v3', '');
+                    try {
+                        const arr = JSON.parse(localStorage.getItem(k) || '[]');
+                        arr.forEach(qId => {
+                            const key = bankId + '::' + String(qId);
+                            if (catalog.map.has(key)) {
+                                failedList.push(catalog.map.get(key));
+                            } else {
+                                customFailed.push([bankId, qId]);
+                            }
+                        });
+                    } catch(e) {}
                 }
             }
 
@@ -1652,6 +1780,8 @@
                 customQuestions = JSON.parse(localStorage.getItem('ai_quiz_custom_q') || '[]');
             } catch(e) {}
 
+            const uniqueFail = Array.from(new Set(failedList)).sort((a, b) => a - b);
+
             const payload = {
                 app: "quiz_simulator",
                 v: 3,
@@ -1661,7 +1791,8 @@
                 bm: uniqueBm
             };
 
-            // Solo adjuntar si existen preguntas o respuestas personalizadas para mantener el enlace < 250 chars
+            if (uniqueFail.length > 0) payload.f = uniqueFail;
+            if (customFailed.length > 0) payload.cf = customFailed;
             if (customAnswers.length > 0) payload.ca = customAnswers;
             if (customBookmarks.length > 0) payload.cbm = customBookmarks;
             if (customQuestions.length > 0) payload.cq = customQuestions;
@@ -1928,9 +2059,30 @@
                     });
                 }
 
+                const incomingByBankFail = {};
+                if (Array.isArray(payload.f)) {
+                    payload.f.forEach(idx => {
+                        const meta = catalog.list[idx];
+                        if (meta) {
+                            if (!incomingByBankFail[meta.bankId]) incomingByBankFail[meta.bankId] = new Set();
+                            incomingByBankFail[meta.bankId].add(String(meta.qId));
+                        }
+                    });
+                }
+
+                if (Array.isArray(payload.cf)) {
+                    payload.cf.forEach(item => {
+                        const bankId = item[0];
+                        const qId = item[1];
+                        if (!incomingByBankFail[bankId]) incomingByBankFail[bankId] = new Set();
+                        incomingByBankFail[bankId].add(String(qId));
+                    });
+                }
+
                 const allBankIds = new Set([
                     ...Object.keys(incomingByBankAns),
-                    ...Object.keys(incomingByBankBm)
+                    ...Object.keys(incomingByBankBm),
+                    ...Object.keys(incomingByBankFail)
                 ]);
 
                 for (let i = 0; i < localStorage.length; i++) {
@@ -1972,6 +2124,23 @@
                     const arrBm = Array.from(mergedBmSet);
                     localStorage.setItem(keyBm, JSON.stringify(arrBm));
                     bookmarksCount += arrBm.length;
+
+                    // Fusionar historial persistente de fallos
+                    const keyFail = 'ai_quiz_fail_' + bankId + '_v3';
+                    const incomingFail = incomingByBankFail[bankId] || new Set();
+                    const existingFailList = JSON.parse(localStorage.getItem(keyFail) || '[]');
+                    const mergedFailSet = new Set();
+                    existingFailList.forEach(id => mergedFailSet.add(String(id)));
+                    incomingFail.forEach(id => mergedFailSet.add(String(id)));
+
+                    // Auto-registrar en el historial secundario cualquier respuesta que haya quedado errada
+                    for (const qId in mergedAns) {
+                        const correctOpt = correctMap[qId] !== undefined ? correctMap[qId] : correctMap[String(qId)];
+                        if (correctOpt !== undefined && Number(mergedAns[qId]) !== Number(correctOpt)) {
+                            mergedFailSet.add(String(qId));
+                        }
+                    }
+                    localStorage.setItem(keyFail, JSON.stringify(Array.from(mergedFailSet)));
                 }
 
                 if (Array.isArray(payload.cq) && payload.cq.length > 0) {
@@ -2022,6 +2191,14 @@
                         const arr = Array.from(mergedSet);
                         localStorage.setItem(k, JSON.stringify(arr));
                         bookmarksCount += arr.length;
+                    } else if (k.startsWith('ai_quiz_fail_')) {
+                        const existingVal = localStorage.getItem(k);
+                        const existingArr = existingVal ? JSON.parse(existingVal) : [];
+                        const incomingArr = JSON.parse(incomingVal || '[]');
+                        const mergedSet = new Set();
+                        existingArr.forEach(id => mergedSet.add(String(id)));
+                        incomingArr.forEach(id => mergedSet.add(String(id)));
+                        localStorage.setItem(k, JSON.stringify(Array.from(mergedSet)));
                     } else {
                         localStorage.setItem(k, incomingVal);
                     }
@@ -2106,7 +2283,7 @@
                 if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                     baseUrl = 'https://alex171215.github.io/repasoIARDA1/index.html';
                 }
-                const magicUrl = baseUrl + '?v=16#sync=' + currentCompressedCode;
+                const magicUrl = baseUrl + '?v=17#sync=' + currentCompressedCode;
                 syncMagicUrlInput.value = magicUrl;
 
                 if (copySuccessMsg) copySuccessMsg.classList.add('hidden');
