@@ -555,7 +555,7 @@
                     </div>
                 </div>
                 <div class="space-y-2">
-                    <textarea id="syncDirectInput" rows="3" placeholder="Pega aquí el enlace completo de WhatsApp (ej: https://alex171215.github.io/repasoIARDA1/index.html?v=20#sync=...) o el código de sincronización..."
+                    <textarea id="syncDirectInput" rows="3" placeholder="Pega aquí el enlace de WhatsApp o el código de sincronización..."
                         class="w-full bg-slate-950 border border-indigo-500/60 rounded-xl p-3 text-xs font-mono text-slate-100 placeholder-slate-500 focus:outline-none focus:ring-2 focus:ring-indigo-400 select-all"></textarea>
                     <button id="btnApplyDirectSync"
                         class="w-full py-2.5 bg-gradient-to-r from-indigo-600 to-violet-600 hover:from-indigo-500 hover:to-violet-500 text-white font-bold text-xs sm:text-sm rounded-xl shadow-lg shadow-indigo-600/30 flex items-center justify-center gap-2 transition active:scale-[0.98]">
@@ -572,23 +572,33 @@
                     <div class="w-7 h-7 rounded-lg bg-emerald-500/20 text-emerald-300 flex items-center justify-center font-bold text-sm">🔗</div>
                     <div>
                         <h4 class="text-sm font-semibold text-slate-200">2. Compartir Progreso de este Equipo</h4>
-                        <p class="text-xs text-slate-400">Copia el enlace para enviarlo a tu celular por WhatsApp o chat:</p>
+                        <p class="text-xs text-slate-400">Copia el enlace para abrirlo en tu celular o enviar tu progreso:</p>
                     </div>
                 </div>
-                <div class="flex gap-2">
-                    <input id="syncMagicUrlInput" type="text" readonly
-                        class="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-slate-300 truncate select-all focus:outline-none focus:border-emerald-500">
-                    <button id="copyMagicUrlBtn"
-                        class="px-4 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shrink-0 shadow-md shadow-emerald-600/20">
-                        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
-                        </svg>
-                        <span>Copiar Enlace</span>
-                    </button>
+                <div class="space-y-2">
+                    <div class="flex gap-2">
+                        <input id="syncMagicUrlInput" type="text" readonly
+                            class="flex-1 bg-slate-950 border border-slate-700 rounded-lg px-3 py-2 text-xs font-mono text-slate-300 truncate select-all focus:outline-none focus:border-emerald-500"
+                            placeholder="Generando enlace...">
+                        <button id="copyMagicUrlBtn"
+                            class="px-3.5 py-2 bg-emerald-600 hover:bg-emerald-500 text-white rounded-lg text-xs font-semibold flex items-center gap-1.5 transition shrink-0 shadow-md shadow-emerald-600/20">
+                            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 5H6a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2v-1M8 5a2 2 0 002 2h2a2 2 0 002-2M8 5a2 2 0 012-2h2a2 2 0 012 2m0 0h2a2 2 0 012 2v3m2 4H10m0 0l3-3m-3 3l3 3" />
+                            </svg>
+                            <span>Copiar Enlace</span>
+                        </button>
+                    </div>
+                    <div class="flex items-center justify-between pt-1">
+                        <span class="text-[11px] text-slate-400">¿El enlace se cortó en el chat? Usa el código directo:</span>
+                        <button id="copyOnlyCodeBtn" type="button"
+                            class="text-xs text-indigo-400 hover:text-indigo-300 font-semibold underline decoration-indigo-500/50 hover:decoration-indigo-300 transition">
+                            📋 Copiar Solo Código
+                        </button>
+                    </div>
                 </div>
                 <div id="copySuccessMsg" class="text-xs text-emerald-400 font-medium hidden flex items-center gap-1">
                     <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" /></svg>
-                    <span>¡Enlace copiado! Envíatelo por WhatsApp y ábrelo o pégalo en la opción 1 de tu celular.</span>
+                    <span id="copySuccessMsgText">¡Copiado al portapapeles! Envíatelo y pégalo en la opción 1 de tu celular.</span>
                 </div>
             </div>
 
@@ -628,7 +638,7 @@
 
 
         <!-- Cargar banco de preguntas (con versión para forzar recarga) -->
-    <script src="data/banco_preguntas_v7.js?v=20"></script>
+    <script src="data/banco_preguntas_v7.js?v=21"></script>
     <script>
         // Sistema de Audio Sintetizado Web Audio API (Sin dependencias externas)
         class SoundFX {
@@ -1959,16 +1969,22 @@
 
         function resilientLZDecompress(raw) {
             if (!raw || !window.LZString) return null;
+            // Eliminar espacios, saltos de línea y caracteres invisibles (zero-width) pegados por WhatsApp/móvil
+            const cleaned = String(raw).replace(/[\s\r\n\t\u200B-\u200D\uFEFF]/g, '');
             const candidates = [
-                raw,
-                raw.replace(/ /g, '+'),
-                raw.replace(/%20/g, '+'),
-                raw.replace(/%2B/gi, '+')
+                cleaned,
+                cleaned.replace(/ /g, '+'),
+                cleaned.replace(/%20/g, '+'),
+                cleaned.replace(/%2B/gi, '+'),
+                cleaned.replace(/\+/g, '-')
             ];
-            try { candidates.push(decodeURIComponent(raw)); } catch(e) {}
-            try { candidates.push(decodeURIComponent(raw).replace(/ /g, '+')); } catch(e) {}
-            try { candidates.push(decodeURIComponent(raw).replace(/%20/g, '+')); } catch(e) {}
-            try { candidates.push(decodeURIComponent(raw).replace(/%2B/gi, '+')); } catch(e) {}
+            try {
+                const dec = decodeURIComponent(cleaned);
+                candidates.push(dec);
+                candidates.push(dec.replace(/ /g, '+'));
+                candidates.push(dec.replace(/%20/g, '+'));
+                candidates.push(dec.replace(/%2B/gi, '+'));
+            } catch(e) {}
 
             // Prioridad 1: Validar descompresión como JSON válido
             for (const cand of candidates) {
@@ -2012,7 +2028,7 @@
 
         function extractSyncPayload(inputStr) {
             if (!inputStr) throw new Error("Por favor ingresa un enlace o código de sincronización.");
-            let str = inputStr.trim();
+            let str = String(inputStr).trim();
 
             // Limpiar comillas iniciales y finales si el usuario copió con comillas
             str = str.replace(/^["'`]|["'`]$/g, '').trim();
@@ -2022,21 +2038,34 @@
                 return JSON.parse(str);
             }
 
-            // 2. Extraer fragmento sync si viene en URL o texto de chat
+            // 2. Extraer fragmento sync si viene en URL o texto de chat (con o sin codificación URI)
             if (str.includes('sync=')) {
                 str = str.split('sync=')[1];
-                str = str.split(/\s+/)[0]; // Cortar si hay espacios o texto posterior
-            } else {
-                const hashIdx = str.indexOf('#');
-                if (hashIdx !== -1 && hashIdx < str.length - 1) {
-                    str = str.substring(hashIdx + 1).split(/\s+/)[0];
-                }
+            } else if (str.includes('sync%3D') || str.includes('sync%3d')) {
+                str = str.split(/sync%3d/i)[1];
+            } else if (str.includes('#')) {
+                str = str.substring(str.indexOf('#') + 1);
+            } else if (str.includes('%23')) {
+                str = str.substring(str.indexOf('%23') + 3);
             }
+
+            // Cortar si hay parámetros posteriores
             if (str.includes('&')) str = str.split('&')[0];
+            if (str.includes('%26')) str = str.split(/%26/i)[0];
+
             if (str.startsWith('#')) str = str.substring(1);
+            if (str.startsWith('%23')) str = str.substring(3);
 
             // Limpiar posibles signos de puntuación pegados al final (.,;!) típicos al compartir por WhatsApp
-            str = str.replace(/[.,;!?]+$/, '');
+            str = str.replace(/[.,;!?)\}\]>]+$/, '');
+
+            // Limpiar saltos de línea, espacios intermedios y caracteres invisibles de formato
+            str = str.replace(/[\s\r\n\t\u200B-\u200D\uFEFF]/g, '');
+
+            // Normalizar si el prefijo lz: vino con percent-encoding (lz%3A)
+            if (str.startsWith('lz%3A') || str.startsWith('lz%3a')) {
+                str = 'lz:' + str.substring(5);
+            }
 
             // 3. Probar con prefijo lz:
             if (str.startsWith('lz:')) {
@@ -2396,7 +2425,9 @@
         const syncStatsSummary = document.getElementById('syncStatsSummary');
         const syncMagicUrlInput = document.getElementById('syncMagicUrlInput');
         const copyMagicUrlBtn = document.getElementById('copyMagicUrlBtn');
+        const copyOnlyCodeBtn = document.getElementById('copyOnlyCodeBtn');
         const copySuccessMsg = document.getElementById('copySuccessMsg');
+        const copySuccessMsgText = document.getElementById('copySuccessMsgText');
         const syncDirectInput = document.getElementById('syncDirectInput');
         const btnApplyDirectSync = document.getElementById('btnApplyDirectSync');
         const syncResultBanner = document.getElementById('syncResultBanner');
@@ -2421,7 +2452,7 @@
                 if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                     baseUrl = 'https://alex171215.github.io/repasoIARDA1/index.html';
                 }
-                const magicUrl = baseUrl + '?v=20#sync=' + currentCompressedCode;
+                const magicUrl = baseUrl + '?v=21#sync=' + currentCompressedCode;
                 syncMagicUrlInput.value = magicUrl;
 
                 if (copySuccessMsg) copySuccessMsg.classList.add('hidden');
@@ -2477,8 +2508,24 @@
         if (copyMagicUrlBtn) {
             copyMagicUrlBtn.addEventListener('click', () => {
                 copyToClipboard(syncMagicUrlInput.value, () => {
-                    if (copySuccessMsg) copySuccessMsg.classList.remove('hidden');
+                    if (copySuccessMsg) {
+                        if (copySuccessMsgText) copySuccessMsgText.textContent = "¡Enlace copiado! Envíatelo y pégalo o ábrelo en tu celular.";
+                        copySuccessMsg.classList.remove('hidden');
+                    }
                     showToast("🔗 ¡Enlace copiado! Envíatelo a tu celular y ábrelo o pégalo en la opción 1.");
+                    if (sound && sound.playClick) sound.playClick();
+                });
+            });
+        }
+
+        if (copyOnlyCodeBtn) {
+            copyOnlyCodeBtn.addEventListener('click', () => {
+                copyToClipboard(currentCompressedCode, () => {
+                    if (copySuccessMsg) {
+                        if (copySuccessMsgText) copySuccessMsgText.textContent = "¡Código copiado! Pégalo directamente en la opción 1 de tu celular.";
+                        copySuccessMsg.classList.remove('hidden');
+                    }
+                    showToast("📋 ¡Código copiado! Pégalo en la opción 1 de tu celular.");
                     if (sound && sound.playClick) sound.playClick();
                 });
             });
