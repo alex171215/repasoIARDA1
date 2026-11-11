@@ -62,11 +62,11 @@
         },
         {
           "value": "semana10arq",
-          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (35)"
         },
         {
           "value": "semana11fa",
-          "label": "Semana 11 · Funciones de Activación (30)"
+          "label": "Semana 11 · Funciones de Activación (35)"
         },
         {
           "value": "incorrect",
@@ -2042,11 +2042,11 @@
         },
         {
           "value": "semana10arq",
-          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (35)"
         },
         {
           "value": "semana11fa",
-          "label": "Semana 11 · Funciones de Activación (30)"
+          "label": "Semana 11 · Funciones de Activación (35)"
         },
         {
           "value": "incorrect",
@@ -3106,11 +3106,11 @@
         },
         {
           "value": "semana10arq",
-          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (35)"
         },
         {
           "value": "semana11fa",
-          "label": "Semana 11 · Funciones de Activación (30)"
+          "label": "Semana 11 · Funciones de Activación (35)"
         },
         {
           "value": "incorrect",
@@ -3794,11 +3794,11 @@
         },
         {
           "value": "semana10arq",
-          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (35)"
         },
         {
           "value": "semana11fa",
-          "label": "Semana 11 · Funciones de Activación (30)"
+          "label": "Semana 11 · Funciones de Activación (35)"
         },
         {
           "value": "incorrect",
@@ -4584,11 +4584,11 @@
         },
         {
           "value": "semana10arq",
-          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (35)"
         },
         {
           "value": "semana11fa",
-          "label": "Semana 11 · Funciones de Activación (30)"
+          "label": "Semana 11 · Funciones de Activación (35)"
         },
         {
           "value": "incorrect",
@@ -4720,11 +4720,11 @@
         },
         {
           "value": "semana10arq",
-          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (35)"
         },
         {
           "value": "semana11fa",
-          "label": "Semana 11 · Funciones de Activación (30)"
+          "label": "Semana 11 · Funciones de Activación (35)"
         },
         {
           "value": "incorrect",
@@ -5251,11 +5251,11 @@
         },
         {
           "value": "semana10arq",
-          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (35)"
         },
         {
           "value": "semana11fa",
-          "label": "Semana 11 · Funciones de Activación (30)"
+          "label": "Semana 11 · Funciones de Activación (35)"
         },
         {
           "value": "incorrect",
@@ -9641,11 +9641,11 @@
         },
         {
           "value": "semana10arq",
-          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (35)"
         },
         {
           "value": "semana11fa",
-          "label": "Semana 11 · Funciones de Activación (30)"
+          "label": "Semana 11 · Funciones de Activación (35)"
         },
         {
           "value": "incorrect",
@@ -10373,11 +10373,11 @@
         },
         {
           "value": "semana10arq",
-          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (35)"
         },
         {
           "value": "semana11fa",
-          "label": "Semana 11 · Funciones de Activación (30)"
+          "label": "Semana 11 · Funciones de Activación (35)"
         },
         {
           "value": "incorrect",
@@ -10965,11 +10965,11 @@
         },
         {
           "value": "semana10arq",
-          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (35)"
         },
         {
           "value": "semana11fa",
-          "label": "Semana 11 · Funciones de Activación (30)"
+          "label": "Semana 11 · Funciones de Activación (35)"
         },
         {
           "value": "incorrect",
@@ -11697,11 +11697,11 @@
         },
         {
           "value": "semana10arq",
-          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (35)"
         },
         {
           "value": "semana11fa",
-          "label": "Semana 11 · Funciones de Activación (30)"
+          "label": "Semana 11 · Funciones de Activación (35)"
         },
         {
           "value": "incorrect",
@@ -12471,11 +12471,11 @@
         },
         {
           "value": "semana10arq",
-          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (35)"
         },
         {
           "value": "semana11fa",
-          "label": "Semana 11 · Funciones de Activación (30)"
+          "label": "Semana 11 · Funciones de Activación (35)"
         },
         {
           "value": "incorrect",
@@ -13560,6 +13560,76 @@
           ],
           "correct": 1,
           "feedback": "Correcto. Cuando la loss de entrenamiento disminuye pero la loss de validación aumenta, el modelo está sobreajustando (overfitting): ha memorizado los patrones específicos del training set incluyendo el ruido, y ya no generaliza bien a datos nuevos. Las soluciones incluyen: regularización L1/L2, Dropout (desactivar neuronas aleatoriamente), reducir la arquitectura (menos capas/neuronas), Early Stopping (detener el entrenamiento cuando la val_loss deja de mejorar), o aumentar los datos de entrenamiento."
+        },
+        {
+          "id": "668709bd-a08e-4908-9345-0465d4e5bf65",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "¿Cuál de las siguientes describe con mayor precisión el rol de una red neuronal artificial en el contexto del aprendizaje supervisado?",
+          "options": [
+            "Un sistema de reglas if-else anidadas que el programador codifica manualmente para clasificar entradas.",
+            "Un modelo paramétrico que aprende una función f(x)≈y ajustando pesos y sesgos iterativamente para minimizar el error entre predicción y etiqueta.",
+            "Un algoritmo que memoriza el training set completo y recupera la etiqueta más cercana para cada nueva entrada.",
+            "Un grafo de decisión donde cada nodo aplica un umbral fijo sobre una sola característica de entrada."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Una red neuronal es un aproximador de funciones: dados pares (x, y), ajusta sus parámetros (W, b) mediante backpropagation y descenso de gradiente para que f(x;W,b)≈y. No usa reglas manuales (eso sería un sistema experto), no memoriza (eso sería KNN con k=1) ni divide por umbrales fijos en un único atributo (eso sería un árbol de decisión). Su potencia reside en aprender representaciones jerárquicas a través de capas."
+        },
+        {
+          "id": "8777ee93-fe1f-435e-a98b-6cbbac12c24f",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "Un perceptrón simple recibe dos características (x1, x2) y produce una salida binaria. ¿Cuál de las siguientes afirmaciones describe correctamente su limitación fundamental?",
+          "options": [
+            "Solo puede procesar una característica a la vez porque su vector de pesos tiene dimensión 1.",
+            "No puede representar ninguna función booleana, ni siquiera las más simples como AND u OR.",
+            "Solo puede aprender fronteras de decisión lineales, siendo incapaz de resolver problemas como XOR sin capas adicionales.",
+            "No admite función de activación sigmoid porque su salida está restringida a valores enteros {0, 1}."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. El perceptrón simple calcula ŷ = f(W·x + b), que define una frontera lineal (un hiperplano). Puede resolver AND y OR porque estos son linealmente separables, pero no puede resolver XOR, que requiere una frontera no lineal (curva). Agregar capas ocultas con activaciones no lineales supera esta limitación. La opción b es incorrecta: el perceptrón sí representa AND y OR. La opción a es incorrecta: W puede tener cualquier dimensión."
+        },
+        {
+          "id": "120deb21-4dba-4a4f-911e-1e56ef171bd0",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "Al diseñar una red neuronal para predecir el precio de una vivienda (valor continuo), ¿cuál es la configuración correcta de la capa de salida y por qué?",
+          "options": [
+            "1 neurona con activación sigmoid, porque sigmoid acota la salida en (0,1) normalizando el precio.",
+            "2 neuronas con softmax, porque el precio se modela como una distribución de probabilidad entre dos categorías.",
+            "1 neurona sin activación (lineal), porque el precio puede tomar cualquier valor real positivo sin restricciones de rango.",
+            "1 neurona con ReLU, porque ReLU garantiza salidas positivas y los precios siempre son no negativos."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Para regresión (predicción de un valor continuo), la capa de salida usa 1 neurona sin función de activación (activación lineal), permitiendo que ŷ ∈ (-∞, +∞). Si los precios son siempre positivos, ReLU (opción d) podría usarse, pero la convención general es activación lineal. Sigmoid (opción a) restringe la salida a (0,1), inútil para precios en miles de dólares. Softmax (opción b) es para clasificación multiclase, no para regresión."
+        },
+        {
+          "id": "00da0ce4-d803-42b0-936c-4cb1891735a9",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "Al diseñar la arquitectura de una red neuronal, ¿cuáles son los hiperparámetros de arquitectura que el diseñador debe decidir ANTES del entrenamiento?",
+          "options": [
+            "Los valores de W1, b1, W2, b2 — porque determinan la capacidad del modelo desde el inicio.",
+            "El número de capas ocultas, el número de neuronas por capa, las funciones de activación y la función de pérdida.",
+            "La tasa de aprendizaje, el número de épocas y el tamaño del batch — porque controlan el proceso de optimización.",
+            "El accuracy de entrenamiento y la loss final — porque son los objetivos que definen la arquitectura óptima."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Los hiperparámetros de arquitectura son decisiones de diseño previas al entrenamiento: (1) número de capas ocultas (profundidad), (2) número de neuronas por capa (ancho), (3) función de activación por capa (ReLU, Tanh, Sigmoid, etc.), (4) función de activación de salida y número de neuronas de salida según la tarea. Los valores de W y b (opción a) son parámetros que el modelo aprende. La tasa de aprendizaje y épocas (opción c) son hiperparámetros de entrenamiento (optimización), no de arquitectura."
+        },
+        {
+          "id": "646a6e45-c3b6-4024-a6f4-fd91a716dc98",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "En la notación W1 y b1 de una red neuronal, ¿cuál es la diferencia conceptual entre un peso (W) y un sesgo (b)?",
+          "options": [
+            "W escala las entradas según su importancia relativa; b desplaza la activación permitiendo que la neurona active incluso cuando todas las entradas son cero.",
+            "W controla la velocidad de aprendizaje de cada neurona; b almacena el error acumulado de las iteraciones anteriores.",
+            "W y b son equivalentes: ambos son multiplicadores lineales de las entradas que se optimizan con gradiente descendente.",
+            "W define el umbral de activación de cada neurona; b amplifica la señal de entrada antes de aplicar la función de activación."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. Los pesos W (weight) determinan cuánto contribuye cada entrada xi a la activación de la neurona: zi = Σ(Wij · xj) + bi. Un peso grande indica que esa característica es muy relevante para la neurona. El sesgo b (bias) es una constante añadida que permite desplazar la función de activación horizontalmente: sin b, la neurona solo puede activarse cuando Σ(Wij·xj)>0, limitando los patrones que puede aprender. Con b, la neurona puede activarse incluso con entradas nulas si b>0."
         }
 
       ]
@@ -14005,6 +14075,76 @@
           ],
           "correct": 1,
           "feedback": "Correcto. Al usar los mismos pesos iniciales (misma semilla aleatoria), el único factor que varía entre experimentos es la función de activación. Si se usaran pesos aleatorios diferentes, las diferencias en accuracy podrían deberse a la inicialización y no a la función de activación. Este es el principio del control experimental: aislar la variable de interés (función de activación) manteniendo todo lo demás constante. La opción a es incorrecta: los mismos pesos iniciales no garantizan convergencia al mismo mínimo global."
+        },
+        {
+          "id": "50cc5abc-4edb-478c-89f8-d88dea8c9458",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "¿Cuál es el propósito fundamental de una función de activación en una neurona artificial?",
+          "options": [
+            "Normalizar los valores de los pesos W al rango (0,1) antes de multiplicarlos por las entradas.",
+            "Calcular el gradiente del error respecto a cada parámetro durante el backpropagation.",
+            "Introducir no linealidad en la transformación, permitiendo que la red aprenda patrones que un modelo lineal no puede capturar.",
+            "Reducir la dimensionalidad de las activaciones para acelerar el forward pass en capas profundas."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Sin función de activación, una red de múltiples capas colapsaría en una sola transformación lineal (W*·x + b*), sin importar cuántas capas se apilen. La función de activación —ReLU, Tanh, Sigmoid— introduce no linealidad en cada neurona, permitiendo que la red aprenda representaciones complejas y fronteras de decisión curvas. Es el ingrediente que da a las redes neuronales su capacidad de aproximar cualquier función continua (teorema de aproximación universal)."
+        },
+        {
+          "id": "210d7932-edb3-4762-8d0d-4d15c9d559f4",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "¿Por qué la derivada de la función de activación es un componente crítico durante el entrenamiento de una red neuronal?",
+          "options": [
+            "Porque backpropagation usa la regla de la cadena multiplicando la derivada de la activación en cada capa; si es cercana a cero, el gradiente desaparece y los pesos no aprenden.",
+            "Porque la derivada determina el rango de salida de la función, limitando los valores que puede tomar la activación.",
+            "Porque la derivada indica la velocidad máxima de convergencia, y una derivada alta siempre garantiza entrenamiento más rápido.",
+            "Porque la derivada de la activación es el único factor que diferencia a una red neuronal de un modelo de regresión logística clásica."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. Durante backpropagation, la regla de la cadena multiplica las derivadas de cada capa hacia atrás: dL/dW1 = dL/dŷ · (derivadas de capas intermedias) · dz1/dW1. Si la derivada de la activación es muy pequeña (como 0.25 de Sigmoid en cada capa), el producto se acerca a cero exponencialmente en capas profundas: 0.25^8 ≈ 0.000015. Los pesos de las primeras capas casi no se actualizan (gradiente evanescente). Por eso ReLU (derivada=1 para z>0) es preferida en capas ocultas profundas."
+        },
+        {
+          "id": "72d2c65a-5ff9-4297-a747-ed8c84fed28a",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "La tabla de funciones de activación indica que Tanh se usa preferentemente en 'ocultas de RNN / LSTM'. ¿Por qué Tanh es la función estándar en redes recurrentes, en lugar de ReLU?",
+          "options": [
+            "Porque Tanh tiene derivada máxima 1.0 y no satura nunca, garantizando gradiente constante en cualquier red recurrente.",
+            "Porque ReLU no es diferenciable en z=0, lo que rompe el backward pass en las conexiones temporales de las RNN.",
+            "Porque Tanh tiene rango (0,1) como Sigmoid pero con mayor velocidad de convergencia en datos secuenciales.",
+            "Porque Tanh produce salidas en (-1, 1) centradas en cero, estabilizando los estados ocultos recurrentes que se acumulan en el tiempo y evitando que crezcan indefinidamente."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. En las RNN, el estado oculto h_t = f(W·x_t + U·h_{t-1} + b) se recalcula en cada paso de tiempo multiplicándose consigo mismo repetidamente. Con ReLU, una activación grande se amplifica en cada paso temporal pudiendo explotar (gradiente explosivo). Tanh acota las salidas a (-1,1) y está centrada en 0, estabilizando estos estados recurrentes. LSTM usa Tanh para el estado de celda precisamente por esta propiedad de acotamiento y centrado. La opción a es incorrecta: Tanh satura para |z| grande."
+        },
+        {
+          "id": "311a34ee-2e9c-4371-a701-639e69094982",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "Según la tabla-resumen de funciones de activación, ¿cuál de las siguientes afirmaciones sobre rangos y problemas principales es CORRECTA?",
+          "options": [
+            "Sigmoid tiene rango (0,1) con problema de gradiente evanescente; ReLU tiene rango [0,+∞) con problema Dying ReLU; Ninguna (lineal) tiene rango (-∞,+∞) con problema de colapso lineal en ocultas.",
+            "ReLU tiene rango (-∞,+∞), Sigmoid tiene problema 'Dying ReLU' y Leaky ReLU tiene rango (0,1).",
+            "Tanh tiene rango (0,1), Softmax tiene problema de gradiente evanescente y Leaky ReLU se usa en la capa de salida para regresión.",
+            "Sigmoid tiene rango (-1,1), ReLU tiene derivada siempre 0.25 y Softmax se usa en capas ocultas para normalización."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La tabla establece: Sigmoid → rango (0,1), problema: gradiente evanescente, uso: salida clasificación binaria. ReLU → rango [0,+∞), problema: Dying ReLU, uso: capas ocultas (opción por defecto). Ninguna (lineal) → rango (-∞,+∞), problema: colapso lineal en ocultas, uso: salida regresión. Leaky ReLU → rango (-∞,+∞), problema: hiperparámetro extra α. Tanh → rango (-1,1), uso: ocultas en RNN/LSTM. Softmax → rango (0,1) sumando 1, uso: salida clasificación multiclase."
+        },
+        {
+          "id": "3138e0ab-a65f-4c5f-ae17-60f2940e2963",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "Un ingeniero debe elegir la función de activación para la capa de salida de tres redes diferentes: (A) clasificación binaria, (B) clasificación entre 4 clases excluyentes, (C) predicción de temperatura. ¿Cuál combinación es correcta?",
+          "options": [
+            "A: ReLU, B: Sigmoid, C: Softmax — porque ReLU es la más eficiente y Sigmoid puede usarse en multiclase.",
+            "A: Tanh (1 neurona), B: Softmax (4 neuronas), C: Sigmoid (1 neurona) — porque Tanh es más estable que Sigmoid.",
+            "A: Sigmoid (1 neurona), B: Sigmoid (4 neuronas), C: ReLU (1 neurona) — usando Sigmoid independiente para cada clase.",
+            "A: Sigmoid (1 neurona), B: Softmax (4 neuronas), C: Ninguna/lineal (1 neurona) — según el tipo de tarea de cada red."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. La regla es: (A) clasificación binaria → 1 neurona + Sigmoid, produce P(clase=1) ∈ (0,1). (B) clasificación multiclase con K clases excluyentes → K neuronas + Softmax, produce distribución de probabilidad que suma 1. (C) regresión continua → 1 neurona sin activación (lineal), permite cualquier valor real. La opción c usa Sigmoid independiente para 4 clases: esto sirve para clasificación multietiqueta (varias clases simultáneas posibles), no para multiclase excluyente, porque las probabilidades no garantizan sumar 1."
         }
 
       ]
