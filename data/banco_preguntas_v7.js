@@ -1,4 +1,4 @@
-window.QUIZ_DATA = {
+﻿window.QUIZ_DATA = {
   "RDA1": [
     {
       "id": "mega_banco",
@@ -59,6 +59,14 @@ window.QUIZ_DATA = {
         {
           "value": "teoria_extra",
           "label": "Preguntas de Refuerzo"
+        },
+        {
+          "value": "semana10arq",
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+        },
+        {
+          "value": "semana11fa",
+          "label": "Semana 11 · Funciones de Activación (30)"
         },
         {
           "value": "incorrect",
@@ -2033,6 +2041,14 @@ window.QUIZ_DATA = {
           "label": "Taller: Python para Datos"
         },
         {
+          "value": "semana10arq",
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+        },
+        {
+          "value": "semana11fa",
+          "label": "Semana 11 · Funciones de Activación (30)"
+        },
+        {
           "value": "incorrect",
           "label": "Solo Preguntas Erradas"
         },
@@ -3089,6 +3105,14 @@ window.QUIZ_DATA = {
           "label": "Pipeline de Scikit-Learn"
         },
         {
+          "value": "semana10arq",
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+        },
+        {
+          "value": "semana11fa",
+          "label": "Semana 11 · Funciones de Activación (30)"
+        },
+        {
           "value": "incorrect",
           "label": "Solo Preguntas Erradas"
         },
@@ -3767,6 +3791,14 @@ window.QUIZ_DATA = {
         {
           "value": "comandos",
           "label": "Implementación en Scikit-Learn"
+        },
+        {
+          "value": "semana10arq",
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+        },
+        {
+          "value": "semana11fa",
+          "label": "Semana 11 · Funciones de Activación (30)"
         },
         {
           "value": "incorrect",
@@ -4551,6 +4583,14 @@ window.QUIZ_DATA = {
           "label": "Teoría Básica"
         },
         {
+          "value": "semana10arq",
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+        },
+        {
+          "value": "semana11fa",
+          "label": "Semana 11 · Funciones de Activación (30)"
+        },
+        {
           "value": "incorrect",
           "label": "Solo Preguntas Erradas"
         },
@@ -4677,6 +4717,14 @@ window.QUIZ_DATA = {
         {
           "value": "repaso_extra",
           "label": "Refuerzo Semana 4"
+        },
+        {
+          "value": "semana10arq",
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+        },
+        {
+          "value": "semana11fa",
+          "label": "Semana 11 · Funciones de Activación (30)"
         },
         {
           "value": "incorrect",
@@ -5200,6 +5248,14 @@ window.QUIZ_DATA = {
         {
           "value": "semana9",
           "label": "Semana 9 · Clustering Basado en Densidad (DBSCAN) (45)"
+        },
+        {
+          "value": "semana10arq",
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+        },
+        {
+          "value": "semana11fa",
+          "label": "Semana 11 · Funciones de Activación (30)"
         },
         {
           "value": "incorrect",
@@ -9584,6 +9640,14 @@ window.QUIZ_DATA = {
           "label": "SVM (Antiguas del Mega Banco)"
         },
         {
+          "value": "semana10arq",
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+        },
+        {
+          "value": "semana11fa",
+          "label": "Semana 11 · Funciones de Activación (30)"
+        },
+        {
           "value": "incorrect",
           "label": "Solo Preguntas Erradas"
         },
@@ -10308,6 +10372,14 @@ window.QUIZ_DATA = {
           "label": "GridSearch · Conceptos y Código"
         },
         {
+          "value": "semana10arq",
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+        },
+        {
+          "value": "semana11fa",
+          "label": "Semana 11 · Funciones de Activación (30)"
+        },
+        {
           "value": "incorrect",
           "label": "Solo Preguntas Erradas"
         },
@@ -10890,6 +10962,14 @@ window.QUIZ_DATA = {
         {
           "value": "semana7",
           "label": "Árboles y Random Forest · Conceptos y Código"
+        },
+        {
+          "value": "semana10arq",
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+        },
+        {
+          "value": "semana11fa",
+          "label": "Semana 11 · Funciones de Activación (30)"
         },
         {
           "value": "incorrect",
@@ -11614,6 +11694,14 @@ window.QUIZ_DATA = {
         {
           "value": "semana8",
           "label": "PCA y Clustering K-Means (53)"
+        },
+        {
+          "value": "semana10arq",
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+        },
+        {
+          "value": "semana11fa",
+          "label": "Semana 11 · Funciones de Activación (30)"
         },
         {
           "value": "incorrect",
@@ -12382,6 +12470,14 @@ window.QUIZ_DATA = {
           "label": "DBSCAN · Densidad, Ruido y Parámetros (45)"
         },
         {
+          "value": "semana10arq",
+          "label": "Semana 10 · Arquitectura de Redes Neuronales (30)"
+        },
+        {
+          "value": "semana11fa",
+          "label": "Semana 11 · Funciones de Activación (30)"
+        },
+        {
           "value": "incorrect",
           "label": "Solo Preguntas Erradas"
         },
@@ -13021,6 +13117,896 @@ window.QUIZ_DATA = {
           "feedback": "Correcto. La etiqueta −1 agrupa a todos los puntos que no cumplieron las condiciones de densidad de DBSCAN. Estas muestras están aisladas y no tienen relación geográfica ni similitud de comportamiento entre sí (por ejemplo, un destino a 4 650 m de altitud y otro con 25 000 visitantes a nivel del mar). Promediarlas carece de sentido conceptual y no representa ningún perfil coherente de mercado.",
           "id": "790cb46b-1d0a-48cd-9100-df88091cb821"
         }
+      ]
+    },
+    {
+      "id": "semana10_arquitectura_rn",
+      "titulo": "Semana 10 · Arquitectura de Redes Neuronales",
+      "categorias": [
+        {
+          "value": "all",
+          "label": "Todas (Semana 10 Arq.)"
+        },
+        {
+          "value": "semana10arq",
+          "label": "Semana 10 · Arquitectura de Redes Neuronales"
+        },
+        {
+          "value": "incorrect",
+          "label": "Solo Preguntas Erradas"
+        },
+        {
+          "value": "bookmarked",
+          "label": "Solo Preguntas Marcadas"
+        }
+      ],
+      "preguntas": [
+        {
+          "id": "a740c68a-71a6-47bf-b8f0-b8fd938605b9",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "En el taller se construye una red con la topología 2→2→1. ¿Cuántos parámetros entrenables tiene en total esta arquitectura?",
+          "options": [
+            "7, porque la capa oculta aporta 4 pesos y 2 sesgos, y la capa de salida aporta 2 pesos sin sesgo.",
+            "9, porque W1 tiene 4 pesos, b1 tiene 2 sesgos, W2 tiene 2 pesos y b2 tiene 1 sesgo.",
+            "9, porque W1 tiene 2 pesos, b1 tiene 2 sesgos, W2 tiene 4 pesos y b2 tiene 1 sesgo.",
+            "11, porque cada neurona en la red tiene un sesgo adicional compartido entre capas."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. La red 2→2→1 tiene: W1 de forma (2,2)=4 parámetros, b1 de forma (2,)=2 parámetros, W2 de forma (1,2)=2 parámetros, b2 de forma (1,)=1 parámetro. Total: 4+2+2+1=9 parámetros. La opción c invierte las formas de W1 y W2 —error conceptual frecuente— ya que W1 conecta 2 entradas con 2 neuronas ocultas, dando forma (ocultas, entradas)=(2,2), y W2 conecta 2 neuronas ocultas con 1 salida, dando forma (1,2)."
+        },
+        {
+          "id": "343ff70b-41fb-480c-a6e6-864a5bf7c1e1",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "El taller define el forward pass de la red como: z1 = W1 @ x + b1 / a1 = relu(z1) / z2 = W2 @ a1 + b2 / y_hat = sigmoid(z2). ¿Qué ocurriría si se elimina la función relu y se sustituye por la identidad f(x)=x en a1?",
+          "options": [
+            "La red seguiría siendo equivalente porque sigmoid en la salida preserva la no linealidad entre capas.",
+            "La red colapsaría a un modelo lineal, pues W2@(W1@x+b1)+b2 puede reescribirse como W*@x+b*.",
+            "La red perdería únicamente la capacidad de clasificación binaria, pero mantendría clasificaciones multiclase.",
+            "El gradiente explotaría durante el backpropagation porque la derivada de la identidad es indefinida."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Sin activación no lineal en la capa oculta, la composición de capas lineales W2@(W1@x+b1)+b2 = (W2@W1)@x + (W2@b1+b2) se reduce a W*@x+b*, es decir un único modelo lineal equivalente. La capa oculta adicional no añade capacidad expresiva. La opción a es incorrecta: sigmoid solo introduce no linealidad en la última salida, no entre capas ocultas."
+        },
+        {
+          "id": "dd6a00d4-fc40-4bdd-a824-875a2fff5dad",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "Al entrenar la red con capa oculta sobre los datos del taller se obtiene accuracy=0.92, mientras que sin capa oculta (modelo logístico directo) se obtiene accuracy=0.705. ¿Cuál es la explicación más precisa de esta diferencia?",
+          "options": [
+            "La capa oculta agrega más parámetros, y más parámetros siempre garantizan mayor accuracy en cualquier conjunto de datos.",
+            "La capa oculta introduce no linealidad que permite aprender una frontera de decisión curva, imposible con un modelo logístico directo.",
+            "La función sigmoid de salida trabaja de manera más eficiente cuando recibe activaciones previas de ReLU en lugar de entradas crudas.",
+            "El modelo sin capa oculta sufre underfitting exclusivamente por el número reducido de épocas de entrenamiento utilizadas."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Los datos del taller no son linealmente separables. Sin capa oculta, el modelo logístico solo puede trazar una frontera lineal (una recta), lo que limita su accuracy al 70.5%. Con la capa oculta+ReLU, la red aprende transformaciones no lineales del espacio de entrada y traza fronteras curvas que capturan mejor la distribución real, elevando el accuracy al 92%. La opción a es incorrecta: más parámetros pueden provocar overfitting y reducir la generalización."
+        },
+        {
+          "id": "a4d0fdb5-92c0-4384-b581-44d237b21c4e",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "En el Bloque B1 del taller se normaliza con: X_norm = (X - X.min(axis=0)) / (X.max(axis=0) - X.min(axis=0)). ¿Cuál es el rango de salida garantizado por esta transformación?",
+          "options": [
+            "(-1, 1), porque se centra en cero antes de dividir por el rango total.",
+            "(0, 1), porque el mínimo mapea a 0 y el máximo mapea a 1.",
+            "(0, 1), pero solo si todas las variables tienen la misma desviación estándar.",
+            "(-∞, +∞), ya que el rango depende de los valores extremos del conjunto de prueba."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Esta es la normalización Min-Max. Al restar X.min(axis=0), el valor mínimo de cada columna queda en 0. Al dividir por (max-min), el valor máximo queda en 1. Todos los demás valores caen en [0,1]. No requiere igual desviación estándar (eso lo exige la estandarización z-score). Los datos de prueba pueden salir del rango (0,1) si tienen valores fuera del rango de entrenamiento, pero los de entrenamiento siempre quedan en [0,1]."
+        },
+        {
+          "id": "f8fbb878-3906-46d2-a2d2-aa417dd7303e",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "La red 3→3→1 del taller aumenta a 16 parámetros totales. ¿Cuál es el desglose correcto de esos 16 parámetros?",
+          "options": [
+            "W1(3,3)=9, b1(3)=3, W2(1,3)=3, b2(1)=1 — total: 16.",
+            "W1(3,3)=9, b1(3)=3, W2(3,1)=3, b2(3)=1 — total: 16.",
+            "W1(2,3)=6, b1(3)=3, W2(1,3)=4, b2(1)=1 — total: 14.",
+            "W1(3,3)=9, b1(1)=1, W2(1,3)=3, b2(3)=3 — total: 16."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. Con entrada de 3 características y capa oculta de 3 neuronas: W1 tiene forma (3,3)=9 pesos, b1 tiene 3 sesgos. La capa de salida conecta 3 neuronas ocultas con 1 salida: W2 tiene forma (1,3)=3 pesos, b2=1 sesgo. Total: 9+3+3+1=16. La opción b invierte la forma de W2 a (3,1) y coloca 3 sesgos en b2, lo cual es incorrecto: el sesgo de salida tiene exactamente 1 elemento porque hay 1 neurona de salida."
+        },
+        {
+          "id": "59e194f9-b6b3-4baf-be1f-adcae29fae79",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "En el Bloque B2 del taller se inicializan los pesos con np.random.randn. ¿Por qué es preferible inicializar los pesos aleatoriamente en lugar de inicializarlos todos en cero?",
+          "options": [
+            "Porque la inicialización en cero provoca que el gradiente sea siempre positivo, lo que impide la convergencia del optimizador.",
+            "Porque si todos los pesos son cero, todas las neuronas de una misma capa aprenden exactamente la misma función y la red no gana expresividad.",
+            "Porque NumPy genera valores en (0,1) con randn, y los valores positivos aceleran la convergencia del gradiente descendente.",
+            "Porque los pesos en cero saturan la función sigmoid produciendo gradientes de exactamente 1.0 durante todo el entrenamiento."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Este fenómeno se llama 'problema de simetría'. Si W=0 y b=0, entonces z=0 para todas las neuronas, todas reciben el mismo gradiente y actualizan igual, lo que las hace indistinguibles. La red equivale a tener una sola neurona por capa. La inicialización aleatoria rompe la simetría: cada neurona aprende características diferentes. La opción c es incorrecta: np.random.randn genera valores con distribución normal estándar (media=0), no en (0,1)."
+        },
+        {
+          "id": "4141becd-5bac-47fd-97d1-fa3240af7792",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "La función de pérdida utilizada en el taller para clasificación binaria es Binary Cross-Entropy: L = -[y·log(ŷ) + (1-y)·log(1-ŷ)]. ¿Qué valor toma L cuando ŷ=1.0 e y=1 (predicción perfecta)?",
+          "options": [
+            "1.0, porque sigmoid(z)=1 corresponde a probabilidad máxima.",
+            "0.0, porque log(1)=0 y el término negativo desaparece.",
+            "0.5, porque la pérdida promedia el error entre las dos clases.",
+            "-1.0, porque el logaritmo de 1 multiplicado por el signo negativo da -1."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Con ŷ=1 e y=1: L = -[1·log(1) + (1-1)·log(1-1)] = -[1·0 + 0·log(0)] = 0. El término log(1)=0, y el segundo término es 0·log(0) que por convenio se trata como 0 (límite). Por eso la pérdida es 0 ante una predicción perfectamente correcta. La opción d es incorrecta: -1·log(1) = -1·0 = 0, no -1."
+        },
+        {
+          "id": "8d64652a-27ba-4f08-93e7-49060c1e2c4e",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "En el Bloque B4 del taller se implementa manualmente el backward pass para calcular los gradientes. ¿Cuál es el orden correcto de cálculo en la retropropagación para la red 2→2→1?",
+          "options": [
+            "dL/dW1 → dL/db1 → dL/dW2 → dL/db2, siguiendo el orden de las capas desde entrada hasta salida.",
+            "dL/db2 → dL/dW2 → dL/db1 → dL/dW1, aplicando la regla de la cadena desde la salida hacia la entrada.",
+            "dL/dW2 → dL/dW1 → dL/db2 → dL/db1, calculando primero todos los pesos y luego todos los sesgos.",
+            "dL/dz1 → dL/da1 → dL/dz2 → dL/dŷ, siguiendo el flujo de activaciones en orden ascendente."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. La retropropagación aplica la regla de la cadena desde la capa de salida hacia la capa de entrada (de derecha a izquierda). Primero se calcula dL/dz2 (error en la salida), luego dL/dW2 y dL/db2 con ese error, luego dL/da1 (error propagado hacia atrás), luego dL/dz1 aplicando la derivada de ReLU, y finalmente dL/dW1 y dL/db1. El orden de la opción a es el del forward pass, no el del backward pass."
+        },
+        {
+          "id": "f8e54a97-6e20-46ad-be18-35f3acce526f",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "En el Bloque B3 del taller se calcula el accuracy comparando (y_hat > 0.5).astype(int) con y. ¿Qué representa el umbral 0.5 en este contexto?",
+          "options": [
+            "El valor medio del rango de sigmoid, usado para normalizar las predicciones antes de comparar con las etiquetas.",
+            "El punto de corte de probabilidad a partir del cual la red clasifica una muestra como positiva (clase 1).",
+            "El umbral mínimo de confianza para que la predicción sea válida; predicciones menores se descartan del cálculo.",
+            "La probabilidad a priori que se asume para la clase mayoritaria cuando el dataset está balanceado."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Sigmoid produce valores en (0,1) que representan la probabilidad estimada P(y=1|x). El umbral 0.5 es el punto de decisión estándar: si ŷ≥0.5, la red predice clase 1; si ŷ<0.5, predice clase 0. No es un valor de normalización ni de confianza mínima. En problemas desbalanceados, puede ser conveniente ajustar el umbral a un valor diferente de 0.5 según la curva ROC."
+        },
+        {
+          "id": "19169835-30ae-4387-88e6-f76889855304",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "En el Bloque B5 se ejecuta el bucle de entrenamiento durante 1000 épocas con tasa de aprendizaje lr=0.1. ¿Cuál sería el efecto de aumentar lr a 10.0?",
+          "options": [
+            "El modelo convergería 100 veces más rápido sin afectar la calidad final de los pesos aprendidos.",
+            "Los pesos oscilarían o divergirían porque los pasos de actualización superarían el mínimo de la función de pérdida.",
+            "El gradiente descendente se volvería estocástico, eligiendo aleatoriamente la dirección de actualización en cada paso.",
+            "La función de pérdida convergería al mismo mínimo pero con mayor precisión numérica en los pesos."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Con lr=10.0, en cada iteración los pesos se actualizan con pasos enormes: W = W - 10.0 * dL/dW. Si estos pasos superan el ancho del valle del mínimo de la función de pérdida, los pesos 'saltan' de un lado al otro sin converger (oscilación) o incluso se alejan indefinidamente (divergencia). La loss puede crecer en lugar de decrecer. Una lr adecuada requiere que los pasos sean lo suficientemente pequeños para descender gradualmente."
+        },
+        {
+          "id": "91299625-851f-4bed-b26f-e05958a89ca4",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "Al visualizar la frontera de decisión en el Bloque B6, la red con capa oculta produce una frontera curva. ¿Qué forma produce la red sin capa oculta (modelo logístico directo)?",
+          "options": [
+            "Una curva parabólica, porque sigmoid transforma la entrada lineal en una curva de segundo grado.",
+            "Una frontera circular, porque la distancia euclidiana al centroide define la región de decisión.",
+            "Una recta (frontera lineal), porque sin capa oculta la predicción es sigmoid(W@x+b), que es lineal en x.",
+            "Una frontera escalonada, porque la discretización del threshold 0.5 produce regiones rectangulares."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Sin capa oculta, el modelo calcula ŷ=sigmoid(W@x+b). La frontera de decisión se define donde ŷ=0.5, es decir sigmoid(W@x+b)=0.5, lo que implica W@x+b=0 — una ecuación lineal en x, que en 2D define una recta. Sigmoid no curva la frontera, solo transforma la salida a probabilidad. La curvatura de la frontera requiere transformaciones no lineales del espacio de entrada, que solo la capa oculta con activación no lineal puede proveer."
+        },
+        {
+          "id": "1355b1f0-4484-4c98-b3a4-000b4067480e",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "La línea `dz2 = y_hat - y` en el backward pass es la derivada de la Binary Cross-Entropy con respecto a z2. ¿Qué hace que esta expresión sea computacionalmente conveniente?",
+          "options": [
+            "Que su valor siempre está acotado entre -1 y 1, evitando el problema de gradiente explosivo sin necesidad de clipping.",
+            "Que su cálculo es O(1) en tiempo constante independientemente del tamaño del batch, mejorando la escalabilidad.",
+            "Que las derivadas de la pérdida y de sigmoid se cancelan algebraicamente, dejando solo la diferencia entre predicción y etiqueta.",
+            "Que permite omitir el cálculo de la derivada de ReLU en la capa oculta, simplificando el backward a una sola operación."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. La derivada de Binary Cross-Entropy respecto a z2 resulta de aplicar la regla de la cadena: dL/dz2 = dL/dŷ · dŷ/dz2 = [-y/ŷ + (1-y)/(1-ŷ)] · ŷ(1-ŷ). Al simplificar algebraicamente, los términos se cancelan y el resultado es simplemente ŷ-y. Esta cancelación elegante evita calcular explícitamente las derivadas de sigmoid y de la cross-entropy por separado, reduciendo operaciones y mejorando la estabilidad numérica."
+        },
+        {
+          "id": "7ba2bcde-5866-45e7-842c-87e37ccf56e3",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "En el Bloque C del taller se replica la red con Keras usando model.add(Dense(2, activation='relu')). ¿Qué ventaja principal ofrece Keras sobre la implementación manual del Bloque B?",
+          "options": [
+            "Keras calcula automáticamente los gradientes mediante diferenciación automática, eliminando la necesidad de implementar el backward pass manualmente.",
+            "Keras usa exclusivamente GPU para los cálculos, mientras que la implementación manual con NumPy siempre usa CPU.",
+            "Keras garantiza que el modelo nunca sobreajuste porque incluye regularización L2 por defecto en todas las capas.",
+            "Keras ejecuta el entrenamiento en paralelo sobre múltiples datasets simultáneamente para acelerar la convergencia."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La principal ventaja de frameworks como Keras/TensorFlow es la diferenciación automática (autodiff): el sistema rastrea todas las operaciones del forward pass en un grafo computacional y calcula automáticamente los gradientes para el backward pass. En el Bloque B, el estudiante tuvo que derivar e implementar manualmente cada gradiente (dz2, dW2, db2, da1, dz1, dW1, db1). Con Keras, model.fit() hace todo eso internamente. La opción b es incorrecta: Keras puede ejecutarse en CPU sin GPU."
+        },
+        {
+          "id": "678f47d1-7b2e-47d9-b7f0-3de6cafc9090",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "La línea del backward pass `dz1 = da1 * (z1 > 0).astype(float)` implementa la derivada de ReLU. ¿Por qué se usa z1>0 en lugar de a1>0?",
+          "options": [
+            "Porque a1 ya tiene los valores positivos activados y usarla generaría una doble aplicación de ReLU durante el backward.",
+            "Porque z1>0 identifica qué entradas a ReLU eran positivas (antes de la activación), que es exactamente donde la derivada de ReLU vale 1.",
+            "Porque a1 puede contener valores NaN generados por la exponencial de sigmoid, que contaminan el cálculo del gradiente.",
+            "Porque z1>0 comprueba si la entrada supera el umbral del bias, lo que activa la neurona en la capa oculta."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. La derivada de ReLU es: d/dz[max(0,z)] = 1 si z>0, 0 si z≤0. Para aplicar esta derivada necesitamos saber qué elementos de z1 (la entrada a ReLU, antes de la activación) eran positivos. a1=relu(z1)=max(0,z1) ya tiene los negativos convertidos en 0, por lo que a1>0 y z1>0 darían el mismo resultado booleano, pero usar z1 es semánticamente más correcto: estamos evaluando la derivada en el punto de entrada a la función, no en la salida."
+        },
+        {
+          "id": "37f10fa0-1757-4b7e-a6ca-610174363ff4",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "En el Bloque B4, el gradiente de W1 se calcula como `dW1 = X.T @ dz1 / m`. ¿Cuál es el propósito de dividir entre m (tamaño del batch)?",
+          "options": [
+            "Para normalizar el gradiente al rango (0,1) y evitar que los pesos crezcan más allá de 1 durante el entrenamiento.",
+            "Para obtener el gradiente promedio sobre todas las muestras, haciendo la actualización independiente del tamaño del dataset.",
+            "Para transformar el gradiente de forma matricial a forma vectorial compatible con la operación de actualización de pesos.",
+            "Para que la tasa de aprendizaje tenga el mismo efecto sin importar si se usa batch completo o mini-batches de diferente tamaño."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Al procesar m muestras simultáneamente (batch gradient descent), X.T @ dz1 suma los gradientes de las m muestras. Sin dividir entre m, el gradiente efectivo sería m veces mayor cuando se usa el dataset completo que cuando se usa una sola muestra, haciendo que lr tenga un efecto diferente según el tamaño del batch. Dividir entre m promedia el gradiente: cada actualización de peso representa el 'efecto promedio' de un ejemplo de entrenamiento, independientemente de m."
+        },
+        {
+          "id": "b68cb639-8efd-4343-a46d-07283c24db37",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "Al comparar los resultados del Bloque B (implementación manual) y el Bloque C (Keras), ambos deberían llegar a un accuracy similar (~0.92). Sin embargo, puede haber diferencias menores. ¿Cuál es la causa más probable de pequeñas discrepancias entre ambas implementaciones?",
+          "options": [
+            "Keras utiliza una función de pérdida diferente a Binary Cross-Entropy, lo que modifica la dirección de los gradientes calculados.",
+            "Diferente inicialización aleatoria de pesos: cada ejecución parte de pesos distintos y puede converger a mínimos locales ligeramente diferentes.",
+            "Keras no admite activación ReLU en capas ocultas, por lo que usa una aproximación polinómica que genera resultados distintos.",
+            "La normalización Min-Max aplicada en el Bloque B no es compatible con el optimizador Adam usado internamente por Keras."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Las redes neuronales se inicializan con pesos aleatorios (np.random.randn en el Bloque B, inicialización Glorot/He en Keras por defecto). Diferentes semillas aleatorias llevan a diferentes pesos iniciales, lo que puede resultar en convergencia a mínimos locales distintos con pequeñas diferencias en accuracy final. Para resultados reproducibles se debe fijar np.random.seed() y tf.random.set_seed(). La opción c es incorrecta: Keras sí admite 'relu' como parámetro de activación."
+        },
+        {
+          "id": "9207ba3d-9c3b-428a-b609-d4134dc46b4e",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "En el Bloque B5, después de cada iteración se ejecuta la actualización: W1 -= lr * dW1. ¿Qué significa el operador -= en este contexto?",
+          "options": [
+            "Resta el gradiente completo de W1, reiniciando los pesos a cero antes de cada actualización.",
+            "Actualiza W1 en su lugar restándole lr*dW1, equivalente a W1 = W1 - lr*dW1.",
+            "Aplica el gradiente con signo negativo para escalar la función de pérdida en dirección contraria.",
+            "Disminuye la tasa de aprendizaje lr en cada iteración multiplicándola por el gradiente dW1."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El operador -= es la asignación compuesta de sustracción: W1 -= lr * dW1 es exactamente equivalente a W1 = W1 - lr * dW1. Esto implementa el paso de gradiente descendente: los pesos se mueven en la dirección opuesta al gradiente (que apunta hacia el máximo de la función), con magnitud lr*dW1. No reinicia los pesos ni modifica lr. Es una operación in-place que modifica el array NumPy directamente sin crear una copia."
+        },
+        {
+          "id": "d77681ee-bc08-46ac-aa36-ec6f66f3a449",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "El taller muestra que la red sin capa oculta (Bloque A) alcanza accuracy=0.705. ¿Qué significa que un modelo tenga accuracy=0.705 con datos binarios?",
+          "options": [
+            "Que el modelo clasifica correctamente el 70.5% de las muestras del conjunto evaluado.",
+            "Que la función de pérdida tiene valor 0.705, indicando que el modelo está al 70.5% de convergencia.",
+            "Que la probabilidad promedio de las predicciones sigmoid es 0.705, reflejando sesgo hacia la clase positiva.",
+            "Que el modelo comete 70.5 errores por cada 100 predicciones, equivalente a un error rate del 29.5%."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. Accuracy = (predicciones correctas) / (total de muestras). Un accuracy=0.705 significa que el 70.5% de las muestras fueron clasificadas correctamente (es decir, (y_hat>0.5)==y). La opción d confunde accuracy con error rate: si accuracy=0.705, entonces error rate=1-0.705=0.295=29.5% (el modelo falla en el 29.5%, no en el 70.5%)."
+        },
+        {
+          "id": "632766c6-2f30-48e7-ad16-6af0821aed38",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "En el Bloque B2 se inicializan los sesgos con np.zeros. ¿Por qué es aceptable inicializar los sesgos en cero aunque los pesos se inicialicen aleatoriamente?",
+          "options": [
+            "Porque el sesgo no afecta el gradiente durante el backpropagation y solo ajusta la constante de desplazamiento al final.",
+            "Porque el sesgo es un escalar en cada neurona y su simetría no importa; la ruptura de simetría la proveen los pesos aleatorios.",
+            "Porque NumPy inicializa automáticamente los sesgos en su valor óptimo antes de comenzar el entrenamiento.",
+            "Porque inicializar sesgos en cero equivale a no tener sesgo, simplificando el modelo para facilitar la convergencia."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El problema de simetría afecta a los pesos porque múltiples neuronas en la misma capa reciben las mismas entradas y, si tienen los mismos pesos, aprenden lo mismo. Los sesgos no tienen este problema: cada neurona tiene su propio sesgo independiente, y aunque todos empiecen en 0, los gradientes distintos (por los pesos aleatorios diferentes) los actualizarán a valores diferentes desde la primera iteración. Inicializar b=0 es práctica estándar y funciona correctamente."
+        },
+        {
+          "id": "75483454-62ab-4d32-a598-63e1799abc6d",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "Al visualizar la curva de pérdida en el Bloque B5, se observa que la loss decrece rápidamente en las primeras épocas y luego se aplana. ¿Cuál es el nombre de este fenómeno y qué indica?",
+          "options": [
+            "Plateau de gradiente — indica que los pesos alcanzaron el valor máximo permitido por la inicialización aleatoria.",
+            "Convergencia — el gradiente descendente está encontrando un mínimo (local o global) donde los gradientes son cercanos a cero.",
+            "Saturación de sigmoid — la función de activación saturó todos los pesos, bloqueando las actualizaciones futuras.",
+            "Overfitting temprano — el modelo memorizó el training set en las primeras épocas y dejó de generalizar."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El aplanamiento de la curva de pérdida indica convergencia: en zonas cercanas al mínimo de la función de pérdida, los gradientes son pequeños (la pendiente es casi cero), por lo que las actualizaciones de peso son ínfimas y la loss ya no disminuye apreciablemente. No indica que el modelo saturó ni que sobreajustó; simplemente que el gradiente descendente encontró un punto de equilibrio. Para detectar overfitting se necesita monitorizar también la loss de validación."
+        },
+        {
+          "id": "ce476dd6-34e5-4429-9eb4-7e6e087a5d52",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "La operación `z1 = W1 @ x + b1` usa el operador @ de NumPy. Si W1 tiene forma (2,2) y x tiene forma (2,100) representando 100 muestras, ¿cuál es la forma de z1?",
+          "options": [
+            "(2,100), porque la multiplicación matricial (2,2)@(2,100) produce (2,100).",
+            "(100,2), porque NumPy transpone automáticamente el resultado para mantener las muestras en filas.",
+            "(4,100), porque la multiplicación combina todas las combinaciones de las 2 neuronas con las 2 entradas.",
+            "(2,2), porque el resultado siempre hereda la forma de la primera matriz en la operación matricial."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La multiplicación matricial (m,n)@(n,p) produce (m,p). Con W1(2,2) y x(2,100): el resultado z1 tiene forma (2,100). Cada columna de z1 corresponde a las activaciones pre-ReLU de las 2 neuronas ocultas para una muestra específica. Luego al sumar b1 de forma (2,), NumPy hace broadcasting: b1 se suma a cada una de las 100 columnas, manteniendo la forma (2,100)."
+        },
+        {
+          "id": "ce9cbe66-49b5-4a75-8717-36117a52e0f0",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "En el Bloque C se usa model.compile(optimizer='adam', loss='binary_crossentropy', metrics=['accuracy']). ¿Qué ventaja tiene Adam sobre el gradiente descendente clásico (SGD) usado en el Bloque B?",
+          "options": [
+            "Adam garantiza encontrar el mínimo global de la función de pérdida, mientras que SGD solo encuentra mínimos locales.",
+            "Adam adapta la tasa de aprendizaje individualmente para cada parámetro usando momentos de primer y segundo orden, convergiendo más rápido.",
+            "Adam elimina la necesidad de normalizar los datos de entrada porque ajusta automáticamente la escala de cada característica.",
+            "Adam ejecuta el backpropagation en paralelo sobre múltiples CPUs, reduciendo el tiempo de entrenamiento en factor O(n)."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Adam (Adaptive Moment Estimation) mantiene dos momentos para cada parámetro: la media de los gradientes recientes (m, primer momento) y la varianza de los gradientes recientes (v, segundo momento). La tasa de aprendizaje efectiva se ajusta por parámetro como lr/√v, siendo mayor para parámetros con gradientes pequeños y menor para parámetros con gradientes grandes. Esto produce convergencia más rápida y robusta que SGD puro con lr fijo. La opción a es incorrecta: ningún optimizador garantiza mínimo global en redes no convexas."
+        },
+        {
+          "id": "b03eb88e-ea34-4f09-ae06-711848f095c1",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "El Bloque B implementa batch gradient descent (procesa todas las muestras en cada iteración). ¿Cuál es la principal desventaja de este enfoque frente a mini-batch gradient descent?",
+          "options": [
+            "Batch GD no puede usar la función Binary Cross-Entropy porque esta requiere procesar las muestras de una en una.",
+            "Batch GD requiere cargar todo el dataset en memoria y calcula gradientes más lentos cuando el dataset es muy grande.",
+            "Batch GD produce gradientes ruidosos que impiden la convergencia cuando el learning rate es menor a 0.01.",
+            "Batch GD solo funciona con funciones de activación lineales y no admite ReLU en capas ocultas."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Batch GD calcula el gradiente sobre todas las m muestras en cada paso. Para datasets grandes (millones de ejemplos), esto implica: (1) cargar todo el dataset en RAM en cada iteración, lo que puede ser imposible, y (2) realizar cálculos costosos antes de hacer una sola actualización de pesos. Mini-batch GD divide el dataset en subconjuntos (batches de 32, 64, 128 muestras) y actualiza los pesos con más frecuencia, usando menos memoria y convergiendo más rápido en la práctica."
+        },
+        {
+          "id": "c4fb71d2-cc59-42e4-869c-7a4497e30ed9",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "Al comparar la red 2→2→1 con la red 3→3→1 en el taller, ¿cuál sería el efecto esperado de agregar más neuronas a las capas ocultas en datos relativamente simples?",
+          "options": [
+            "El accuracy siempre aumenta porque más neuronas implican más capacidad de representación sin ningún costo.",
+            "Mayor capacidad puede mejorar el ajuste en entrenamiento, pero puede causar overfitting si el dataset es pequeño.",
+            "El modelo se vuelve más lento de entrenar pero sin ningún riesgo adicional de sobreajuste al dataset de entrenamiento.",
+            "Más neuronas hacen que la red aprenda más lento porque los gradientes deben propagarse por más conexiones."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Aumentar el número de neuronas incrementa la capacidad del modelo (más parámetros). En datos simples o datasets pequeños, esta mayor capacidad puede llevar a overfitting: el modelo memoriza el training set en lugar de aprender patrones generalizables, resultando en alta accuracy de entrenamiento pero baja accuracy de validación/test. El equilibrio entre capacidad del modelo y tamaño del dataset es fundamental. La opción a ignora el problema de overfitting."
+        },
+        {
+          "id": "ad6c2de2-8469-460c-a796-8e854349838d",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "En el Bloque B se imprime la pérdida cada 100 épocas con `if epoch % 100 == 0`. ¿Qué hace el operador % en Python?",
+          "options": [
+            "Calcula el porcentaje de epoch respecto a 100, mostrando el progreso en términos porcentuales del entrenamiento.",
+            "Calcula el módulo (resto de la división entera): epoch % 100 == 0 es True cuando epoch es múltiplo de 100.",
+            "Verifica si epoch es mayor o igual a 100, activando el monitoreo solo después de las primeras 100 épocas.",
+            "Divide epoch entre 100 con decimales y compara con 0.0, siendo True solo cuando epoch vale exactamente 0."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. % es el operador módulo en Python: devuelve el resto de la división entera. 100%100=0 (True), 200%100=0 (True), 150%100=50 (False). La condición epoch%100==0 se cumple exactamente cuando epoch es múltiplo de 100: 0, 100, 200, ..., 1000. Esto permite imprimir el progreso del entrenamiento solo 11 veces durante las 1000 épocas en lugar de imprimirlo en cada iteración (que llenarían la pantalla de output)."
+        },
+        {
+          "id": "eb16ac6b-fc97-4ec1-912d-1b1abd3bd5ae",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "La función sigmoid se usa como activación de salida para clasificación binaria. ¿Por qué NO se usa sigmoid como activación de las capas ocultas en redes profundas modernas?",
+          "options": [
+            "Porque sigmoid produce valores en (0,1) que son demasiado pequeños para servir como entrada a las siguientes capas.",
+            "Porque sigmoid satura para valores grandes de |z|, generando gradientes cercanos a cero que impiden el aprendizaje en capas profundas.",
+            "Porque sigmoid es computacionalmente más costosa que ReLU al requerir el cálculo de una exponencial en cada neurona.",
+            "Porque sigmoid no es diferenciable en z=0, lo que rompe el backward pass cuando los valores pre-activación son cercanos a cero."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Este es el problema del gradiente evanescente (vanishing gradient). Sigmoid satura cuando |z|>>0: su derivada σ'(z)=σ(z)(1-σ(z)) alcanza máximo 0.25 en z=0 y se acerca a 0 para z grandes. En redes profundas, el gradiente se multiplica por σ'(z) en cada capa hacia atrás: con 8 capas, el gradiente puede reducirse a (0.25)^8 ≈ 0.000015, haciendo que las primeras capas casi no aprendan. ReLU no tiene este problema porque su derivada es 1 para z>0."
+        },
+        {
+          "id": "87758de3-ff05-4317-a940-968a591f1186",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "En el Bloque B1 se genera el dataset con make_classification de sklearn. ¿Qué parámetro controla la dificultad del problema de clasificación generado?",
+          "options": [
+            "n_samples controla la dificultad porque más muestras hacen el problema más complejo para el clasificador.",
+            "class_sep controla la separación entre clases: valores bajos acercan las clases, aumentando la dificultad de clasificación.",
+            "random_state controla la dificultad porque diferentes semillas generan distribuciones de diferente complejidad intrínseca.",
+            "n_features controla la dificultad exclusivamente porque más características siempre implican un espacio de búsqueda más complejo."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El parámetro class_sep (separación de clases) en make_classification controla cuán separadas están las distribuciones de cada clase: con class_sep=2.0 las clases están bien diferenciadas y son fáciles de clasificar; con class_sep=0.5 las distribuciones se solapan mucho y el problema es difícil. n_samples solo afecta la cantidad de datos disponibles, no la complejidad intrínseca del patrón. random_state asegura reproducibilidad pero no cambia la complejidad."
+        },
+        {
+          "id": "3df803fa-8a79-4bf9-b35f-5868d4b9272f",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "Al usar model.summary() en Keras para la red 2→2→1, el número total de parámetros mostrado debería ser 9. ¿Cómo los cuenta Keras internamente?",
+          "options": [
+            "Cuenta solo las conexiones entre capas (aristas del grafo), excluyendo los sesgos por considerarlos parámetros auxiliares.",
+            "Suma los parámetros de cada capa: Dense(2) tiene 2×2+2=6 (pesos+sesgos), Dense(1) tiene 1×2+1=3 — total: 9.",
+            "Multiplica el número de neuronas de cada capa y suma el resultado: 2×2×1=4 pesos, más 5 sesgos globales = 9.",
+            "Suma los parámetros de las capas de activación (relu y sigmoid) más los pesos de la capa densa principal."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Keras cuenta los parámetros por capa. La primera capa Dense(2) recibe 2 inputs y tiene 2 neuronas: 2×2=4 pesos + 2 sesgos = 6 parámetros. La segunda capa Dense(1) recibe 2 inputs (de las 2 neuronas ocultas) y tiene 1 neurona: 1×2=2 pesos + 1 sesgo = 3 parámetros. Total: 6+3=9. Exactamente el mismo cálculo manual del Bloque B. Las funciones de activación (relu, sigmoid) no tienen parámetros propios."
+        },
+        {
+          "id": "6ac848d0-7c53-431a-bcf1-e5098135dcde",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "En el taller se usa train_test_split con test_size=0.2. Si el dataset tiene 500 muestras, ¿cuántas muestras quedan para entrenamiento y para test?",
+          "options": [
+            "400 entrenamiento, 100 test.",
+            "100 entrenamiento, 400 test.",
+            "250 entrenamiento, 250 test.",
+            "480 entrenamiento, 20 test."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. test_size=0.2 significa que el 20% de las muestras se reservan para test y el 80% para entrenamiento. Con 500 muestras: test=500×0.2=100 muestras, train=500×0.8=400 muestras. La división 80/20 es convencional para datasets medianos. La opción b invierte la proporción. La opción d correspondería a test_size=0.04 (4%)."
+        },
+        {
+          "id": "fb6917ba-8cb3-44ac-8058-cdb11aed2078",
+          "category": "semana10arq",
+          "categoryName": "Semana 10 · Arquitectura de Redes Neuronales",
+          "text": "Tras entrenar en el Bloque C con Keras durante 100 épocas, si la loss de entrenamiento sigue bajando pero la loss de validación comienza a subir, ¿cómo se llama este fenómeno y cuál es la señal de acción?",
+          "options": [
+            "Underfitting — se debe aumentar el número de capas o neuronas para darle más capacidad al modelo.",
+            "Overfitting — el modelo está memorizando el training set; se recomienda aplicar regularización, dropout o reducir la complejidad.",
+            "Convergencia prematura — el learning rate es demasiado bajo; se debe aumentar para escapar del mínimo local.",
+            "Gradient explosion — los pesos están divergiendo; se debe aplicar gradient clipping antes de cada actualización."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Cuando la loss de entrenamiento disminuye pero la loss de validación aumenta, el modelo está sobreajustando (overfitting): ha memorizado los patrones específicos del training set incluyendo el ruido, y ya no generaliza bien a datos nuevos. Las soluciones incluyen: regularización L1/L2, Dropout (desactivar neuronas aleatoriamente), reducir la arquitectura (menos capas/neuronas), Early Stopping (detener el entrenamiento cuando la val_loss deja de mejorar), o aumentar los datos de entrenamiento."
+        }
+
+      ]
+    },
+    {
+      "id": "semana11_funciones_activacion",
+      "titulo": "Semana 11 · Funciones de Activación",
+      "categorias": [
+        {
+          "value": "all",
+          "label": "Todas (Semana 11 Func. Activ.)"
+        },
+        {
+          "value": "semana11fa",
+          "label": "Semana 11 · Funciones de Activación"
+        },
+        {
+          "value": "incorrect",
+          "label": "Solo Preguntas Erradas"
+        },
+        {
+          "value": "bookmarked",
+          "label": "Solo Preguntas Marcadas"
+        }
+      ],
+      "preguntas": [
+        {
+          "id": "453c7bc1-9b54-409e-ad6c-5af0cd94d4de",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "¿Cuál es el rango de salida de la función Sigmoid σ(z) = 1/(1+e^{-z})?",
+          "options": [
+            "(-1, 1), porque está centrada en cero como la función Tanh.",
+            "(0, 1), porque los límites son asintóticos y nunca se alcanzan para z finito.",
+            "[0, 1], porque los valores extremos sí se alcanzan cuando z=±∞.",
+            "(-∞, +∞), porque es equivalente a una función lineal sin acotamiento."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Sigmoid produce valores en el intervalo abierto (0, 1). Cuando z→-∞, σ→0 sin alcanzar 0; cuando z→+∞, σ→1 sin alcanzar 1. Los límites son asintóticos. La opción c usa corchetes cerrados [0,1] que implican que los extremos se alcanzan, lo cual es incorrecto. La opción a describe el rango de Tanh. La opción d describe una función sin activación."
+        },
+        {
+          "id": "2c698d2a-43f0-46bc-97e6-6487cba10381",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "El taller define `def d_sigmoid(z): s = sigmoid(z); return s * (1 - s)`. ¿Cuál es el valor máximo que puede alcanzar esta derivada?",
+          "options": [
+            "1.0, que se alcanza cuando z=0 y sigmoid(0)=1.",
+            "0.50, que se alcanza cuando sigmoid(z)=1 exactamente.",
+            "0.25, que se alcanza en z=0 donde sigmoid(0)=0.5.",
+            "0.75, que se alcanza cuando la función no ha saturado aún."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. La derivada de sigmoid es s·(1-s). Para maximizarla, se deriva respecto a s y se iguala a cero: d/ds[s(1-s)] = 1-2s = 0 → s=0.5. Esto ocurre cuando z=0 (sigmoid(0)=0.5), dando 0.5·0.5=0.25. Este valor máximo relativamente pequeño es la causa del gradiente evanescente: en 8 capas el gradiente puede reducirse a 0.25^8 ≈ 0.000015. La opción a confunde el valor de sigmoid(0)=0.5 con la derivada."
+        },
+        {
+          "id": "7ce982c9-057e-4e6c-818e-68ffd9fa465e",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "En el experimento del Taller 16 con el dataset de estudiantes (arquitectura 2→2→1), ¿qué función de activación obtuvo el mayor accuracy?",
+          "options": [
+            "Tanh con accuracy = 0.780.",
+            "Sigmoid con accuracy = 0.920.",
+            "ReLU con accuracy = 0.920.",
+            "Leaky ReLU con accuracy = 0.920."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. El ranking exacto en el dataset de estudiantes fue: ReLU (0.920) > Leaky ReLU (0.900) > Sigmoid (0.780) > Ninguna/lineal (0.735) > Tanh (0.665). Aunque tanto ReLU como Leaky ReLU son opciones plausibles con valores similares, el ganador exacto con 0.920 es ReLU; Leaky ReLU obtuvo 0.900. La opción b asigna 0.920 a Sigmoid cuando en realidad Sigmoid obtuvo solo 0.780."
+        },
+        {
+          "id": "716739ab-8575-43f1-ad4a-5842dcc4e79f",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "Una red neuronal sin función de activación en sus capas ocultas (activación lineal) colapsa algebraicamente. Según el taller, el resultado equivalente es una sola capa con:",
+          "options": [
+            "W*=W1@W2 y b*=W1@b2+b1, invirtiendo el orden de multiplicación.",
+            "W*=W2@W1 y b*=W2@b1+b2, combinando ambas capas en una sola transformación lineal.",
+            "W*=W2+W1 y b*=b1+b2, sumando los parámetros de ambas capas.",
+            "W*=W2@W1 y b*=b1+b2, combinando los sesgos sin la transformación de W2."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Sin activación no lineal: z2 = W2(W1·x + b1) + b2 = (W2@W1)·x + (W2@b1 + b2). Esto equivale a W*·x + b* con W*=W2@W1 y b*=W2@b1+b2. El taller verificó esto con np.allclose(), obteniendo W*=[[5. 5.]] y b*=[-6.8]. La opción a invierte el orden de multiplicación (W1@W2 ≠ W2@W1). La opción d olvida que b2 se suma DESPUÉS de transformar b1 por W2."
+        },
+        {
+          "id": "f95cd4c8-abaf-456e-946a-719498fe7cf9",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "El Taller 16 implementa Leaky ReLU como `np.where(z > 0, z, alpha * z)` con alpha=0.1. ¿Qué retorna para z = np.array([-3.0, 0.0, 5.0])?",
+          "options": [
+            "[-3.0, 0.0, 5.0], porque Leaky ReLU no modifica ningún valor.",
+            "[-0.3, 0.0, 5.0], porque para z=-3.0 retorna 0.1×(-3.0)=-0.3; z=0.0 retorna 0.0; z=5.0 retorna 5.0.",
+            "[-0.3, 0.1, 5.0], porque z=0.0 no es estrictamente positivo y retorna alpha=0.1.",
+            "[0.0, 0.0, 5.0], porque valores negativos y cero se anulan como en ReLU estándar."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. np.where(z>0, z, alpha*z): para z=-3.0 (no >0) → alpha*z = 0.1×(-3.0) = -0.3; para z=0.0 (no >0) → alpha*z = 0.1×0.0 = 0.0; para z=5.0 (>0) → z = 5.0. Resultado: [-0.3, 0.0, 5.0]. La opción c es incorrecta: para z=0.0, alpha*z = 0.1×0 = 0.0, no alpha=0.1. La opción d describe ReLU estándar, no Leaky ReLU."
+        },
+        {
+          "id": "904fef1b-440e-4655-a7bd-ebb747d5a325",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "¿Cuál es la derivada de Tanh implementada en el Taller 16?",
+          "options": [
+            "`1 + np.tanh(z)**2`, con signo positivo antes del cuadrado.",
+            "`np.tanh(z) * (1 - np.tanh(z))`, análoga a la derivada de Sigmoid.",
+            "`1 - np.tanh(z)**2`, que se maximiza en z=0 con valor 1.0.",
+            "`(1 - np.tanh(z)) * (1 + np.tanh(z))`, expresión equivalente pero diferente a la del taller."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. La derivada de tanh(z) es 1 - tanh²(z), implementada en el taller como `return 1 - np.tanh(z)**2`. Su valor máximo es 1.0 (cuando z=0, tanh(0)=0, dando 1-0=1). Nótese que las opciones c y d son matemáticamente equivalentes (diferencia de cuadrados), pero la implementación exacta del taller es la opción c. La opción a tiene signo incorrecto. La opción b corresponde a la derivada de Sigmoid, no de Tanh."
+        },
+        {
+          "id": "b121ff20-68c3-44db-85b4-b55b9d5c7f8b",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "La función `forward_act` del Taller 16 recibe un parámetro `activacion` que cambia la función usada en la capa oculta. ¿Qué función de activación usa SIEMPRE la capa de SALIDA, independientemente del parámetro?",
+          "options": [
+            "La misma función pasada como parámetro, para mantener consistencia entre capas.",
+            "ReLU, porque produce valores positivos compatibles con la clasificación binaria.",
+            "Sigmoid, porque el problema es clasificación binaria y necesita una probabilidad en (0,1).",
+            "Softmax, porque normaliza la salida a una distribución de probabilidad que suma 1."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. En el código del taller, la última línea siempre es `return sigmoid(z2)`, independientemente del parámetro `activacion` pasado. La clasificación binaria requiere una sola probabilidad en (0,1), que solo Sigmoid proporciona con 1 neurona de salida. Softmax se usaría para clasificación multiclase con K neuronas de salida, donde las probabilidades deben sumar 1 entre K clases. ReLU no produce probabilidades acotadas."
+        },
+        {
+          "id": "5287996f-5905-4072-8c3e-6a0164c93876",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "El taller describe el problema del 'Dying ReLU'. ¿Cuándo ocurre exactamente este problema?",
+          "options": [
+            "Cuando la derivada de ReLU es siempre 1, saturando el gradiente hacia arriba de forma indefinida.",
+            "Cuando una neurona recibe entradas que siempre producen z≤0, haciendo que su gradiente sea 0 y nunca actualice sus pesos.",
+            "Cuando una neurona recibe entradas que siempre producen z>0, haciendo que su derivada sea 1 y el gradiente explote.",
+            "Cuando el learning rate es demasiado alto y los pesos oscilan entre valores positivos y negativos indefinidamente."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El Dying ReLU ocurre cuando una neurona recibe entradas que siempre producen z≤0: en esa región la derivada de ReLU es 0, el gradiente no se propaga hacia atrás, y los pesos nunca se actualizan. La neurona queda 'muerta' de forma permanente. En el taller, con ReLU en el dataset de crédito, h1 tenía 105/200=52.5% de activaciones en cero. La solución es Leaky ReLU: para z≤0 retorna alpha·z (≠0), manteniendo un gradiente no nulo."
+        },
+        {
+          "id": "f72d5557-1e89-4878-9114-bc9672972cb3",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "En el dataset de crédito (3→3→1) del Taller 16, ¿cuántas neuronas de la capa oculta estaban 'apagadas' (output=0) cuando se usó Leaky ReLU con alpha=0.1?",
+          "options": [
+            "h1=105, h2=102, h3=109 — mismo resultado que con ReLU estándar.",
+            "h1=52, h2=51, h3=54 — exactamente la mitad respecto a ReLU.",
+            "h1=0, h2=0, h3=0 — ninguna neurona quedó apagada.",
+            "h1=1, h2=0, h3=1 — casi ninguna, pero no exactamente cero."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Con Leaky ReLU, el conteo de neuronas apagadas fue 0 en las tres neuronas ocultas. Esto es porque Leaky ReLU nunca devuelve exactamente 0: para z≤0 retorna alpha·z = 0.1·z, que es distinto de cero mientras z≠0. La opción a corresponde a los resultados de ReLU estándar en ese mismo dataset. La opción b no tiene sustento numérico. Esta es la ventaja clave de Leaky ReLU: elimina completamente el Dying ReLU."
+        },
+        {
+          "id": "d6733a18-2d26-44f5-956f-7c80db7ec626",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "¿Cuál es la fórmula de la función Softmax para el elemento i de un vector z?",
+          "options": [
+            "e^zi / max(e^zj para j en todos), normalizando por el máximo exponencial.",
+            "zi / Σzj, normalizando linealmente cada logit por la suma total.",
+            "e^zi / Σe^zj, donde la suma recorre todos los elementos j del vector.",
+            "log(e^zi) / Σlog(e^zj), aplicando logaritmo antes de normalizar."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Softmax(zi) = e^zi / Σe^zj — se exponencia cada logit y se divide entre la suma de todos los exponenciales. Esto garantiza: (1) todas las salidas son positivas (e^z > 0), y (2) todas las salidas suman 1 (es una distribución de probabilidad). La opción a usa el máximo en el denominador, que no es Softmax. La opción b es normalización lineal simple y no garantiza positividad ni suma=1 si hay logits negativos."
+        },
+        {
+          "id": "947da870-7aac-4a71-8792-c93689fe0c1b",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "El taller implementa Softmax como `def softmax(z): e = np.exp(z - z.max()); return e / e.sum()`. ¿Por qué se resta `z.max()` antes de exponenciar?",
+          "options": [
+            "Para que la suma de probabilidades resultante sea exactamente 1.0 en todos los casos posibles.",
+            "Para cambiar la distribución de probabilidad y favorecer la clase con mayor logit.",
+            "Para evitar desbordamiento numérico (overflow), ya que e^z puede ser enorme para z muy grandes.",
+            "Para centrar los logits en 0 y mejorar la precisión del gradiente durante el backpropagation."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. e^z puede desbordarse (overflow) para z muy grandes, generando Inf en Python/NumPy. Al restar z.max(), el exponente más alto se convierte en e^0=1, y todos los demás son <1, eliminando el riesgo de overflow. Matemáticamente, e^(zi-max)/Σe^(zj-max) = e^zi/Σe^zj (el max se cancela en numerador y denominador), así que el resultado no cambia. La suma de probabilidades siempre es 1 sin este truco también (descartando a)."
+        },
+        {
+          "id": "aa38c6d7-b1ac-46b5-817b-aa4a36e230ff",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "En el taller se aplica Softmax a `logits_riesgo = np.array([-1.0, 0.5, 2.5])`. ¿Cuál opción describe correctamente el resultado aproximado?",
+          "options": [
+            "[0.333, 0.333, 0.333] — distribución uniforme porque Softmax normaliza igual.",
+            "[0.858, 0.116, 0.026] — el primer elemento domina porque tiene el logit menor.",
+            "[0.026, 0.116, 0.858] — el tercer elemento (2.5) domina con ~85.8% de probabilidad.",
+            "[0.116, 0.858, 0.026] — el segundo elemento (0.5) domina por ser intermedio."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Con logits [-1.0, 0.5, 2.5], el tercer elemento (2.5) es mucho mayor que los demás. Softmax amplifica estas diferencias mediante la exponencial: e^2.5 ≈ 12.18, e^0.5 ≈ 1.65, e^(-1) ≈ 0.37. Total ≈ 14.2. Probabilidades: [0.37/14.2, 1.65/14.2, 12.18/14.2] ≈ [0.026, 0.116, 0.858]. La distribución uniforme solo ocurre cuando todos los logits son iguales. Softmax preserva el orden relativo de los logits."
+        },
+        {
+          "id": "2bea7ba2-a3af-4267-8f85-0feabcc7c177",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "¿Cuál es el rango de salida de la función Tanh?",
+          "options": [
+            "(0, 1), igual que Sigmoid pero reescalada.",
+            "[-1, 1], incluyendo los extremos exactamente en sus límites.",
+            "(-1, 1), intervalo abierto con límites asintóticos que no se alcanzan.",
+            "(-∞, +∞), porque puede tomar cualquier valor real."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Tanh produce valores en el intervalo abierto (-1, 1); cuando z→-∞, tanh→-1 sin alcanzarlo; cuando z→+∞, tanh→1 sin alcanzarlo. La opción b usa corchetes cerrados [-1,1], lo que implicaría que los extremos se alcanzan para algún z finito, lo cual es incorrecto. Tanh es una versión reescalada de Sigmoid: tanh(z) = 2σ(2z) - 1. La opción a describe el rango de Sigmoid."
+        },
+        {
+          "id": "6720ccb8-5e3b-4ae9-a9a1-a3e8aa61e691",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "En el experimento del Taller 16 con el dataset de crédito (3→3→1), ¿qué función de activación tuvo el PEOR desempeño?",
+          "options": [
+            "Ninguna (lineal) con accuracy = 0.735.",
+            "Sigmoid con accuracy = 0.800.",
+            "Tanh con accuracy = 0.745.",
+            "Ninguna (lineal) con accuracy = 0.795."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. En el dataset de crédito, Tanh obtuvo el menor accuracy: 0.745. El ranking fue: ReLU (0.850) > Leaky ReLU (0.830) > Sigmoid (0.800) > Ninguna/lineal (0.795) > Tanh (0.745). Atención: en el dataset de estudiantes los valores son distintos (Tanh: 0.665, Ninguna: 0.735). Las opciones a y d confunden los valores de uno con otro dataset. En crédito, la activación lineal obtuvo 0.795, superior a Tanh."
+        },
+        {
+          "id": "69713c50-ac15-46dd-ab37-ad009a9206e9",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "Si se apilan 8 capas con función Sigmoid, ¿cuál es el límite superior aproximado por el que el gradiente se multiplica al atravesar todas las capas hacia atrás?",
+          "options": [
+            "0.25^8 ≈ 0.000015 — el gradiente prácticamente desaparece.",
+            "0.50^8 ≈ 0.004 — reducción moderada pero controlable.",
+            "1.0^8 = 1.0 — sin reducción, igual que ReLU.",
+            "0.25^4 ≈ 0.004 — solo se aplica el límite en la mitad de las capas."
+          ],
+          "correct": 0,
+          "feedback": "Correcto. La derivada máxima de Sigmoid es 0.25. Durante backpropagation, el gradiente se multiplica por la derivada de la función de activación en cada capa. Con 8 capas de Sigmoid, en el peor caso el gradiente total se multiplica por 0.25^8 ≈ 1.5×10^{-5}. Este valor extremadamente pequeño hace que las primeras capas reciban gradientes casi nulos y no aprendan, lo que se conoce como gradiente evanescente (vanishing gradient)."
+        },
+        {
+          "id": "dfbba775-b3e4-4da0-be6f-aab79e3e90bc",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "Para un problema de regresión continua donde la salida puede tomar cualquier valor real, ¿qué función de activación se recomienda en la capa de salida?",
+          "options": [
+            "Sigmoid, porque acota la salida en (0,1) y facilita la interpretación.",
+            "Softmax, porque normaliza las salidas a una distribución de probabilidad.",
+            "Ninguna (activación lineal), porque permite cualquier valor real de salida en (-∞,+∞).",
+            "ReLU, porque produce valores positivos y acelera la convergencia del gradiente."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Para regresión continua se usa activación lineal (ninguna), permitiendo que la salida tome cualquier valor real en (-∞,+∞). Sigmoid acota a (0,1) y no es adecuada salvo que la variable objetivo esté en ese rango. Softmax produce distribución de probabilidad, solo para clasificación multiclase. ReLU acotaría la salida a [0,+∞), útil si la variable objetivo es siempre positiva (como precios o temperaturas absolutas), pero no para valores reales arbitrarios."
+        },
+        {
+          "id": "a1abf436-b5ef-467c-9e9a-5b0f675d66cb",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "El taller define `def d_relu(z): return (z > 0).astype(float)`. Para z = np.array([-2.0, 0.0, 3.0]), ¿qué retorna esta función?",
+          "options": [
+            "[-1.0, 0.0, 1.0] — retorna -1 para negativos, 0 en cero y 1 para positivos.",
+            "[0.0, 1.0, 1.0] — retorna 0 para negativos y 1 para z≥0.",
+            "[0.0, 0.0, 1.0] — retorna 0 para z≤0 y 1 para z>0 (condición estricta).",
+            "[-2.0, 0.0, 3.0] — retorna el valor original sin modificar."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. La condición `z > 0` es estricta: z=-2.0 → False→0.0; z=0.0 → False→0.0 (cero NO es estrictamente mayor que cero); z=3.0 → True→1.0. Resultado: [0.0, 0.0, 1.0]. La opción b asume que z=0 retorna 1, usando implícitamente z≥0 en lugar de z>0. La opción a sería la derivada con valores negativos para z<0, lo cual no corresponde a ninguna función estándar."
+        },
+        {
+          "id": "a3b5be7b-9e97-4bc8-ac9f-b4422b036bf1",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "¿Cuál es la principal ventaja de Leaky ReLU frente a ReLU estándar, según el experimento del taller?",
+          "options": [
+            "Leaky ReLU tiene rango acotado (-1,1), lo que estabiliza el entrenamiento frente a valores extremos.",
+            "La derivada de Leaky ReLU nunca es exactamente 0, resolviendo el problema de neuronas muertas (Dying ReLU).",
+            "La derivada de Leaky ReLU es siempre 1 en toda la región real, eliminando el gradiente evanescente completamente.",
+            "Leaky ReLU produce salidas probabilísticas que pueden usarse directamente en la capa de salida binaria."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. La ventaja clave de Leaky ReLU es que su derivada es alpha (0.1 en el taller) para z≤0, nunca exactamente 0. Esto resuelve el Dying ReLU: incluso cuando z≤0, el gradiente se propaga (multiplicado por alpha) y los pesos pueden actualizarse. El taller confirmó: con ReLU había 105 neuronas apagadas en h1; con Leaky ReLU, 0 neuronas apagadas. La opción c es incorrecta: la derivada de Leaky ReLU es 1 para z>0 y alpha=0.1 para z≤0, no siempre 1."
+        },
+        {
+          "id": "a9193c25-dc57-480c-9a12-fc7f28a46277",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "Para un problema de clasificación multiclase con 5 categorías excluyentes, ¿qué configuración de capa de salida es la correcta?",
+          "options": [
+            "1 neurona con Sigmoid, usando umbral 0.2 para separar las 5 clases.",
+            "5 neuronas con Sigmoid independientes, una por clase.",
+            "5 neuronas con Softmax, que convierte los logits en distribución de probabilidad que suma 1.",
+            "5 neuronas con ReLU, para garantizar activaciones positivas en todas las clases."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Para clasificación multiclase con K clases excluyentes se usan K neuronas con Softmax, que convierte logits en probabilidades que suman exactamente 1 (garantizando exclusividad mutua). La opción b usaría Sigmoid independiente para cada clase, útil en clasificación multietiqueta (una muestra puede pertenecer a múltiples clases simultáneamente), pero no garantiza que las probabilidades sumen 1. Con 1 neurona + Sigmoid solo se modela clasificación binaria."
+        },
+        {
+          "id": "d0aff03e-bc59-4143-b7f9-932f79a45bf2",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "En el experimento del taller, el ranking de accuracy en el dataset de estudiantes de mayor a menor fue:",
+          "options": [
+            "ReLU > Leaky ReLU > Sigmoid > Tanh > Ninguna.",
+            "ReLU > Leaky ReLU > Sigmoid > Ninguna > Tanh.",
+            "Leaky ReLU > ReLU > Sigmoid > Ninguna > Tanh.",
+            "ReLU > Sigmoid > Leaky ReLU > Ninguna > Tanh."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. El ranking exacto fue: ReLU (0.920) > Leaky ReLU (0.900) > Sigmoid (0.780) > Ninguna/lineal (0.735) > Tanh (0.665). La opción a invierte el orden de Tanh y Ninguna: Tanh (0.665) fue peor que Ninguna (0.735). La opción c pone Leaky ReLU antes que ReLU, cuando ReLU fue superior. La opción d coloca Sigmoid entre ReLU y Leaky ReLU incorrectamente."
+        },
+        {
+          "id": "1878010a-0d05-4bd3-b38c-afd1efa14b0a",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "¿Por qué Softmax no es adecuada como función de activación en capas ocultas intermedias de una red neuronal?",
+          "options": [
+            "Porque Softmax produce valores en (0,1) que son demasiado pequeños para propagarse a las siguientes capas.",
+            "Porque Softmax acopla todas las salidas: cambiar el logit de una neurona afecta las activaciones de todas las demás.",
+            "Porque Softmax no es diferenciable, lo que impide calcular gradientes durante el backpropagation.",
+            "Porque Softmax tiene derivada siempre cercana a 0, lo que causa gradiente evanescente severo."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Softmax crea dependencia entre todas las salidas de una capa: e^zi/Σe^zj significa que cada salida depende de todos los logits. Esto es deseable en la capa de salida (las clases compiten entre sí sumando 1), pero en capas ocultas crea acoplamiento indeseado que dificulta que cada neurona aprenda representaciones independientes. Softmax sí es diferenciable (descartando c). No tiene el problema de gradiente evanescente severo de Sigmoid/Tanh (descartando d)."
+        },
+        {
+          "id": "2cddad50-9eef-4c41-9c4a-bd5554ddf1df",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "El taller verifica algebraicamente que sin activación, la red 2→2→1 equivale a una sola neurona. Se ejecuta `np.allclose(y_red, y_neurona)` que retorna True. ¿Qué concluye el taller de este resultado?",
+          "options": [
+            "Que agregar más capas lineales siempre mejora la capacidad del modelo, con o sin activaciones.",
+            "Que sin no-linealidad, agregar capas ocultas no aumenta la capacidad expresiva de la red.",
+            "Que la red sin activación es equivalente a una red con activación Sigmoid de una sola capa.",
+            "Que los valores de W* y b* encontrados son el mínimo global de la función de pérdida."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. La equivalencia algebraica con W*=W2@W1=[[5. 5.]] y b*=W2@b1+b2=[-6.8] demuestra que múltiples capas lineales se colapsan en una sola transformación lineal. Independientemente de cuántas capas lineales se apilen, el modelo sigue siendo equivalente a una sola neurona. Las no-linealidades (ReLU, Tanh, Sigmoid) son las que aportan la capacidad expresiva adicional. La opción a es exactamente lo contrario de lo que el experimento demuestra."
+        },
+        {
+          "id": "0caf58d3-439f-4296-a56a-84299e759f93",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "La función `d_leaky_relu(z, alpha=0.1)` del taller usa `np.where(z > 0, 1.0, alpha)`. Para z = np.array([-1.0, 0.0, 2.0]), ¿cuál es el resultado?",
+          "options": [
+            "[-0.1, 0.1, 1.0] — retorna -alpha para negativos, alpha para cero y 1 para positivos.",
+            "[0.1, 1.0, 1.0] — retorna alpha para negativos y 1 para z≥0.",
+            "[0.1, 0.1, 1.0] — retorna alpha para z≤0 y 1.0 para z>0 (condición estricta).",
+            "[-1.0, 0.0, 1.0] — retorna el valor original para negativos y 1 para positivos."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. np.where(z>0, 1.0, alpha): para z=-1.0 (no >0) → alpha=0.1; para z=0.0 (no >0, condición estricta) → alpha=0.1; para z=2.0 (>0) → 1.0. Resultado: [0.1, 0.1, 1.0]. La opción b asume que z=0 retorna 1.0, ignorando que la condición es estricta (z>0, no z≥0). La opción a usa valores negativos (-0.1) que no aparecen en d_leaky_relu ya que la función retorna siempre alpha (positivo) para z≤0."
+        },
+        {
+          "id": "6e982cbb-da5b-4237-9982-1f3bc8943fb8",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "¿Por qué Tanh es preferible a Sigmoid en capas ocultas, aunque ambas sufren gradiente evanescente?",
+          "options": [
+            "Porque Tanh no satura nunca para ningún valor de z, a diferencia de Sigmoid.",
+            "Porque Tanh tiene salidas centradas en 0, evitando el sesgo de gradiente que ocurre con salidas siempre positivas.",
+            "Porque Tanh tiene derivada máxima 0.25, mayor que la derivada máxima 0.1 de Sigmoid.",
+            "Porque Tanh tiene rango (0,2), más amplio que el rango (0,1) de Sigmoid."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Tanh produce salidas en (-1,1) centradas en 0. Sigmoid produce salidas siempre positivas en (0,1). Cuando las activaciones son siempre positivas, los gradientes de los pesos de una capa tienen todos el mismo signo, forzando al optimizador a moverse en zigzag y ralentizando la convergencia. Las salidas centradas en 0 de Tanh evitan este sesgo. La opción c invierte los valores: la derivada máxima de Tanh es 1.0 (no 0.25) y la de Sigmoid es 0.25 (no 0.1)."
+        },
+        {
+          "id": "7f83b05b-b379-4545-a026-7447d5c1b596",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "En el dataset de crédito (3→3→1), con ReLU, ¿qué porcentaje aproximado de activaciones en la neurona h1 estaban apagadas (valor=0)?",
+          "options": [
+            "0% — ReLU no apaga neuronas en datos financieros.",
+            "54.5% — 109 de 200 activaciones en h1 eran cero.",
+            "51.0% — 102 de 200 activaciones en h1 eran cero.",
+            "52.5% — 105 de 200 activaciones en h1 eran cero."
+          ],
+          "correct": 3,
+          "feedback": "Correcto. En h1 con ReLU estándar, 105 de las 200 muestras producían z1[0]≤0, resultando en activación 0. 105/200 = 52.5%. En h2 fueron 102/200 = 51.0% (opción c) y en h3 fueron 109/200 = 54.5% (opción b). La opción a es incorrecta: ReLU sí apaga neuronas cuando z≤0, que es exactamente el Dying ReLU que Leaky ReLU soluciona (0 neuronas apagadas)."
+        },
+        {
+          "id": "a0aab4bc-03d7-49ff-9175-43e68dcf4e55",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "Comparando el gradiente evanescente, ¿cuál afirmación compara CORRECTAMENTE la derivada de Sigmoid y la de ReLU (zona activa)?",
+          "options": [
+            "Sigmoid tiene derivada máxima 1.0; ReLU tiene derivada 0.25 en z>0 — Sigmoid evita mejor el problema.",
+            "Sigmoid tiene derivada máxima 0.25; ReLU tiene derivada 1.0 en z>0 — ReLU evita el gradiente evanescente.",
+            "Ambas tienen derivada máxima 0.25; ReLU lo evita porque tiene rango de salida más amplio.",
+            "Sigmoid tiene derivada máxima 0.25; ReLU tiene derivada 0.5 en z>0 — ambas sufren el problema."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Sigmoid: derivada máxima = 0.25 (en z=0). ReLU: derivada = 1.0 para todo z>0, constante y sin degradación. Con muchas capas, los gradientes de Sigmoid se multiplican por 0.25 repetidamente → se acercan a 0. Con ReLU, el gradiente en la zona activa (z>0) se multiplica por 1.0 → se mantiene estable. La opción a invierte completamente los valores: 1.0 pertenece a ReLU/Tanh, no a Sigmoid. La opción d asigna incorrectamente 0.5 a ReLU."
+        },
+        {
+          "id": "5415c6c1-6d59-4ab1-b933-eb124528ffe5",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "Si se tienen logits `z = np.array([1.2, 0.4, -0.8])` y se aplica Softmax, ¿qué clase recibirá la mayor probabilidad?",
+          "options": [
+            "La segunda clase (0.4), porque es el logit más cercano a cero y más equilibrado.",
+            "La tercera clase (-0.8), porque Softmax invierte el orden favoreciendo los logits menores.",
+            "La primera clase (1.2), porque es el logit más alto y Softmax preserva el orden relativo.",
+            "Todas reciben la misma probabilidad porque Softmax normaliza uniformemente."
+          ],
+          "correct": 2,
+          "feedback": "Correcto. Softmax preserva el orden relativo de los logits: el logit más alto (1.2) produce la mayor probabilidad. Calculando: e^1.2≈3.32, e^0.4≈1.49, e^(-0.8)≈0.45. Total≈5.26. Probabilidades: [3.32/5.26, 1.49/5.26, 0.45/5.26] ≈ [0.631, 0.283, 0.086]. La clase 1 (logit=1.2) tiene ~63.1%. Softmax amplifica las diferencias mediante la función exponencial, no las invierte (descartando b). La distribución uniforme solo ocurre cuando todos los logits son iguales (descartando d)."
+        },
+        {
+          "id": "f27aca30-2569-4a3a-b2a9-a9dff0bf31ef",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "Un ingeniero diseña una red para predecir si un cliente pagará su crédito (Sí/No). Según el Taller 16, ¿cuál es la configuración correcta de la capa de salida?",
+          "options": [
+            "2 neuronas con Softmax, una por clase (Sí y No).",
+            "1 neurona con Sigmoid, produciendo P(Sí) ∈ (0,1); implícitamente P(No) = 1 - P(Sí).",
+            "1 neurona con ReLU, para producir un score positivo de propensión al pago.",
+            "2 neuronas con Sigmoid independientes, una para P(Sí) y otra para P(No)."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Para clasificación binaria (Sí/No), la convención estándar es 1 neurona + Sigmoid, que produce P(Sí) ∈ (0,1). Implícitamente P(No) = 1 - P(Sí), garantizando que las probabilidades sumen 1. Esta es exactamente la configuración de forward_act del taller: `return sigmoid(z2)` con 1 neurona de salida. La opción a (2 neuronas + Softmax) funcionaría matemáticamente pero es redundante y no es la convención estándar para binaria. ReLU no produce probabilidades acotadas."
+        },
+        {
+          "id": "295b28bf-016b-4995-9e21-8179ec4a0364",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "En el taller se calcula σ(z)·(1-σ(z)) para la derivada de Sigmoid. Si σ(z) = 0.8, ¿cuánto vale la derivada en ese punto?",
+          "options": [
+            "0.20, que es 1 - σ(z) directamente.",
+            "0.16, que es σ(z) · (1 - σ(z)) = 0.8 × 0.2.",
+            "0.64, que es σ(z)² = 0.8².",
+            "0.80, que es el valor de σ(z) sin modificar."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. La derivada de Sigmoid en un punto es σ(z)·(1-σ(z)). Con σ(z)=0.8: derivada = 0.8 × (1-0.8) = 0.8 × 0.2 = 0.16. Este valor (0.16) es menor que el máximo posible (0.25 en z=0), lo que ilustra que cuando Sigmoid se aleja de 0.5 (es decir, cuando |z| crece), su derivada decrece y el gradiente se atenúa. La opción a calcula solo (1-σ), sin multiplicar por σ."
+        },
+        {
+          "id": "2a51cdce-d29e-4b35-ba66-b25152161629",
+          "category": "semana11fa",
+          "categoryName": "Semana 11 · Funciones de Activación",
+          "text": "El experimento del Taller 16 usó los MISMOS pesos iniciales para comparar todas las funciones de activación. ¿Por qué es importante este control experimental?",
+          "options": [
+            "Para garantizar que todas las redes converjan al mismo mínimo global de la función de pérdida.",
+            "Para que las diferencias en accuracy se deban exclusivamente a la función de activación, no a la inicialización aleatoria.",
+            "Para que el tiempo de entrenamiento sea idéntico en todos los experimentos comparados.",
+            "Para que el gradiente descendente no quede atrapado en mínimos locales durante los primeros pasos."
+          ],
+          "correct": 1,
+          "feedback": "Correcto. Al usar los mismos pesos iniciales (misma semilla aleatoria), el único factor que varía entre experimentos es la función de activación. Si se usaran pesos aleatorios diferentes, las diferencias en accuracy podrían deberse a la inicialización y no a la función de activación. Este es el principio del control experimental: aislar la variable de interés (función de activación) manteniendo todo lo demás constante. La opción a es incorrecta: los mismos pesos iniciales no garantizan convergencia al mismo mínimo global."
+        }
+
       ]
     }
   ]
