@@ -638,7 +638,7 @@
 
 
         <!-- Cargar banco de preguntas (con versión para forzar recarga) -->
-    <script src="data/banco_preguntas_v7.js?v=21"></script>
+    <script src="data/banco_preguntas_v7.js?v=22"></script>
     <script>
         // Sistema de Audio Sintetizado Web Audio API (Sin dependencias externas)
         class SoundFX {
@@ -870,24 +870,20 @@
         // ESTADO DE LA APLICACIÓN
         let currentQuestions = [];
         let currentIndex = 0;
-        let userAnswers = {}; // { qId: selectedOptionIndex }
+        let userAnswers = {}; // { qId: selectedOptionIndex (canónico 0..3) }
+        let optionsPermutations = {}; // { qId: [p0, p1, p2, p3] } permutación de opciones para visualización
         let bookmarked = new Set();
         let failedHistory = new Set(); // Historial persistente de preguntas respondidas erróneamente
         let examFinished = false;
         let immediateFeedback = true;
 
         function getQuestionCorrect(q) {
-            if (!q) return undefined;
-            if (q.canonicalCorrect !== undefined) return q.canonicalCorrect;
-            return q.correct;
+            return q ? q.correct : undefined;
         }
 
         function ensureCanonicalQuestion(q) {
-            if (!q) return;
-            if (!q.canonicalOptions) {
-                q.canonicalOptions = [...q.options];
-                q.canonicalCorrect = q.correct;
-            }
+            // q.options y q.correct en QUIZ_DATA son inmutables
+            return;
         }
 
         function isQuestionFailed(qId) {
@@ -1006,6 +1002,7 @@
                 localStorage.setItem(getBankStorageKey('cat'), categoryFilter.value);
                 localStorage.setItem(getBankStorageKey('idx'), currentIndex.toString());
                 localStorage.setItem(getBankStorageKey('order'), JSON.stringify(currentQuestions.map(q => q.id)));
+                localStorage.setItem(getBankStorageKey('opt_order'), JSON.stringify(optionsPermutations || {}));
             } catch (e) {
                 console.error("Error saving state:", e);
             }
@@ -1053,6 +1050,11 @@
                     currentIndex = savedIdx ? (parseInt(savedIdx, 10) || 0) : 0;
                     if (currentIndex >= currentQuestions.length) currentIndex = 0;
 
+                    try {
+                        const savedOpt = localStorage.getItem(getBankStorageKey('opt_order'));
+                        optionsPermutations = savedOpt ? JSON.parse(savedOpt) : {};
+                    } catch(e) { optionsPermutations = {}; }
+
                     updateHeaderStats();
                     renderGrid();
                     renderCurrentQuestion();
@@ -1086,12 +1088,16 @@
                         failedHistory.add(String(id));
                     });
                 }
-                // Activar estado secundario para preguntas actualmente erradas
+                try {
+                    const savedOpt = localStorage.getItem(getBankStorageKey('opt_order'));
+                    optionsPermutations = savedOpt ? JSON.parse(savedOpt) : {};
+                } catch(e) { optionsPermutations = {}; }
+
+                // Activar estado secundario para preguntas con respuesta actualmente errada
                 var bankQuestions = getBankQuestions();
                 bankQuestions.forEach(q => {
-                    ensureCanonicalQuestion(q);
                     var ans = userAnswers[q.id];
-                    if (ans !== undefined && Number(ans) !== Number(getQuestionCorrect(q))) {
+                    if (ans !== undefined && q.correct !== undefined && Number(ans) !== Number(q.correct)) {
                         recordFailedQuestion(q.id);
                     }
                 });
@@ -1170,7 +1176,7 @@
                 const isMarked = isQuestionBookmarked(q.id);
                 const showFeedback = examFinished || immediateFeedback;
 
-                const isCorrect = isAnswered && (Number(ans) === Number(getQuestionCorrect(q)));
+                const isCorrect = isAnswered && q.correct !== undefined && (Number(ans) === Number(q.correct));
 
                 // 1. Estilos según estado de respuesta y marca de duda
                 if (isMarked && isAnswered && showFeedback) {
@@ -1293,33 +1299,31 @@
                 bookmarkText.className = "text-slate-400";
             }
 
-            // Renderizar Opciones (Canónicas y Resistentes al Barajado)
+            // Renderizar Opciones (Inmutables con permutación de visualización independiente)
             optionsContainer.innerHTML = '';
             const letters = ['A', 'B', 'C', 'D'];
             const currentAnswer = userAnswers[q.id];
             const hasAnswered = currentAnswer !== undefined;
             const showCorrection = hasAnswered && (immediateFeedback || examFinished);
-            const canonCorrect = getQuestionCorrect(q);
+            const canonCorrect = q.correct;
 
-            // Si displayOptions existe (tras barajar opciones), se usa; de lo contrario se deriva de canonicalOptions
-            let optsToRender = q.displayOptions;
-            if (!optsToRender) {
-                ensureCanonicalQuestion(q);
-                optsToRender = q.canonicalOptions.map((text, idx) => ({
-                    text: text,
-                    canonIdx: idx,
-                    isCorrect: idx === canonCorrect
-                }));
+            // Obtener permutación de opciones guardada para esta pregunta (o [0, 1, 2, 3] por defecto)
+            const optLen = (q.options && q.options.length) ? q.options.length : 4;
+            let perm = (optionsPermutations && optionsPermutations[q.id]);
+            if (!Array.isArray(perm) || perm.length !== optLen) {
+                perm = [];
+                for (let i = 0; i < optLen; i++) perm.push(i);
+                if (!optionsPermutations) optionsPermutations = {};
+                optionsPermutations[q.id] = perm;
             }
 
-            optsToRender.forEach((optItem, dispIdx) => {
+            perm.forEach((canonIdx, dispIdx) => {
                 const optBtn = document.createElement('button');
                 optBtn.className = `w-full text-left p-4 rounded-xl border transition-all duration-200 flex items-start gap-3 text-xs sm:text-sm `;
 
-                const canonIdx = optItem.canonIdx;
-                const optText = optItem.text;
+                const optText = q.options[canonIdx];
                 let isThisSelected = hasAnswered && (Number(currentAnswer) === Number(canonIdx));
-                let isThisCorrect = (Number(canonIdx) === Number(canonCorrect));
+                let isThisCorrect = (q.correct !== undefined && Number(canonIdx) === Number(canonCorrect));
 
                 if (showCorrection) {
                     if (isThisCorrect) {
@@ -1403,12 +1407,11 @@
         }
 
         function selectOption(qId, canonOptIdx) {
-            const q = currentQuestions.find(item => item.id === qId);
-            ensureCanonicalQuestion(q);
+            const q = currentQuestions.find(item => String(item.id) === String(qId));
+            if (!q) return;
             userAnswers[qId] = canonOptIdx;
 
-            const canonCorrect = getQuestionCorrect(q);
-            const isCorrect = (canonCorrect !== undefined && Number(canonOptIdx) === Number(canonCorrect));
+            const isCorrect = (q.correct !== undefined && Number(canonOptIdx) === Number(q.correct));
 
             // Si respondió incorrectamente, se activa de forma permanente el estado secundario de error
             if (!isCorrect) {
@@ -1568,25 +1571,21 @@
             // 1. Barajar el orden de las preguntas visualmente en pantalla
             currentQuestions = shuffleArray([...currentQuestions]);
 
-            // 2. Barajar opciones de visualización preservando el índice canónico oficial
-            currentQuestions.forEach(q => {
-                ensureCanonicalQuestion(q);
-                const optItems = q.canonicalOptions.map((text, idx) => ({
-                    text: text,
-                    canonIdx: idx,
-                    isCorrect: idx === q.canonicalCorrect
-                }));
-                shuffleArray(optItems);
-                q.displayOptions = optItems;
-                // Mantener q.options y q.correct alineados para compatibilidad
-                q.options = optItems.map(o => o.text);
-                q.correct = optItems.findIndex(o => o.isCorrect);
+            // 2. Barajar opciones para TODAS las preguntas del banco activo de forma limpia
+            if (!optionsPermutations) optionsPermutations = {};
+            const bankQuestions = getBankQuestions();
+            bankQuestions.forEach(q => {
+                const optLen = (q.options && q.options.length) ? q.options.length : 4;
+                const perm = [];
+                for (let i = 0; i < optLen; i++) perm.push(i);
+                optionsPermutations[q.id] = shuffleArray(perm);
             });
 
-            // 3. Reiniciar respuestas SOLO de las preguntas de la lista actual
+            // 3. Reiniciar respuestas SOLO de las preguntas del cuestionario actual (comportamiento confirmado)
             currentQuestions.forEach(q => {
                 delete userAnswers[q.id];
             });
+
             currentIndex = 0;
             examFinished = false;
             saveState();
@@ -1809,12 +1808,45 @@
         // SISTEMA DE SINCRONIZACIÓN Y COMPARTIR PROGRESO MULTI-DISPOSITIVO
         // ==========================================================
 
+        // Catálogo determinístico global ordenado alfabéticamente por q.id (Inmune a orden de bancos o subbancos)
+        function getDeterministicQuestionCatalog() {
+            const uniqueMap = new Map();
+            const uniqueIds = [];
+            if (window.QUIZ_DATA) {
+                const materias = Object.keys(window.QUIZ_DATA).sort();
+                for (const mat of materias) {
+                    const banks = window.QUIZ_DATA[mat];
+                    if (!Array.isArray(banks)) continue;
+                    for (const b of banks) {
+                        if (!Array.isArray(b.preguntas)) continue;
+                        for (const q of b.preguntas) {
+                            if (q.id === undefined) continue;
+                            const sId = String(q.id);
+                            if (!uniqueMap.has(sId)) {
+                                uniqueMap.set(sId, { qId: q.id, correct: q.correct, bankIds: new Set([b.id]) });
+                                uniqueIds.push(sId);
+                            } else {
+                                uniqueMap.get(sId).bankIds.add(b.id);
+                            }
+                        }
+                    }
+                }
+            }
+            uniqueIds.sort(); // 100% determinístico en cualquier navegador y dispositivo
+            const idToIdx = new Map();
+            const idxToId = [];
+            uniqueIds.forEach((id, idx) => {
+                idToIdx.set(id, idx);
+                idxToId.push(id);
+            });
+            return { uniqueMap, uniqueIds, idToIdx, idxToId };
+        }
+
+        // Catálogo heredado para compatibilidad con respaldos V3
         function getBankQuestionCatalog() {
             const list = [];
             const map = new Map();
             if (!window.QUIZ_DATA) return { list, map };
-            
-            // Ordenar materias alfabéticamente para que el catálogo sea 100% determinístico e idéntico en PC y móvil
             const materias = Object.keys(window.QUIZ_DATA).sort();
             for (const mat of materias) {
                 const banks = window.QUIZ_DATA[mat];
@@ -1825,99 +1857,91 @@
                         const idx = list.length;
                         const key = bank.id + '::' + String(q.id);
                         map.set(key, idx);
-                        list.push({
-                            idx,
-                            bankId: bank.id,
-                            materia: mat,
-                            qId: q.id,
-                            correct: q.correct
-                        });
+                        list.push({ idx, bankId: bank.id, materia: mat, qId: q.id, correct: q.correct });
                     }
                 }
             }
             return { list, map };
         }
 
-        // Exportación V3 Ultracompacta (< 250 caracteres, inmune a recortes de WhatsApp)
+        // Exportación V4 Ultracompacta (< 400 caracteres, universal e inmune al orden o barajado)
         function exportAllQuizData() {
-            const catalog = getBankQuestionCatalog();
-            const answers = [];
-            const bookmarks = [];
-            const failedList = [];
-            const customAnswers = [];
-            const customBookmarks = [];
-            const customFailed = [];
+            const { idToIdx } = getDeterministicQuestionCatalog();
+            const answersMap = new Map(); // sId -> canonOpt
+            const failedSet = new Set();
+            const bookmarkSet = new Set();
 
+            // 1. Escanear todo el localStorage de todas las materias y bancos
             for (let i = 0; i < localStorage.length; i++) {
                 const k = localStorage.key(i);
                 if (!k) continue;
 
                 if (k.startsWith('ai_quiz_ans_') && k.endsWith('_v3')) {
-                    const bankId = k.replace('ai_quiz_ans_', '').replace('_v3', '');
                     try {
                         const obj = JSON.parse(localStorage.getItem(k) || '{}');
                         for (const qId in obj) {
-                            const key = bankId + '::' + String(qId);
-                            if (catalog.map.has(key)) {
-                                answers.push([catalog.map.get(key), Number(obj[qId])]);
-                            } else {
-                                customAnswers.push([bankId, qId, Number(obj[qId])]);
-                            }
+                            answersMap.set(String(qId), Number(obj[qId]));
                         }
                     } catch(e) {}
                 } else if (k.startsWith('ai_quiz_bm_') && k.endsWith('_v3')) {
-                    const bankId = k.replace('ai_quiz_bm_', '').replace('_v3', '');
                     try {
                         const arr = JSON.parse(localStorage.getItem(k) || '[]');
-                        arr.forEach(qId => {
-                            const key = bankId + '::' + String(qId);
-                            if (catalog.map.has(key)) {
-                                bookmarks.push(catalog.map.get(key));
-                            } else {
-                                customBookmarks.push([bankId, qId]);
-                            }
-                        });
+                        arr.forEach(id => bookmarkSet.add(String(id)));
                     } catch(e) {}
                 } else if (k.startsWith('ai_quiz_fail_') && k.endsWith('_v3')) {
-                    const bankId = k.replace('ai_quiz_fail_', '').replace('_v3', '');
                     try {
                         const arr = JSON.parse(localStorage.getItem(k) || '[]');
-                        arr.forEach(qId => {
-                            const key = bankId + '::' + String(qId);
-                            if (catalog.map.has(key)) {
-                                failedList.push(catalog.map.get(key));
-                            } else {
-                                customFailed.push([bankId, qId]);
-                            }
-                        });
+                        arr.forEach(id => failedSet.add(String(id)));
                     } catch(e) {}
                 }
             }
 
-            // Ordenamiento por índice global determinístico para máxima compresión LZString
-            answers.sort((a, b) => a[0] - b[0]);
-            const uniqueBm = Array.from(new Set(bookmarks)).sort((a, b) => a - b);
+            // 2. Incluir respuestas y estados activos de la sesión actual en memoria
+            for (const qId in userAnswers) {
+                answersMap.set(String(qId), Number(userAnswers[qId]));
+            }
+            if (failedHistory) {
+                failedHistory.forEach(id => failedSet.add(String(id)));
+            }
+            if (bookmarked) {
+                bookmarked.forEach(id => bookmarkSet.add(String(id)));
+            }
+
+            // 3. Empaquetar usando índices enteros determinísticos compactos
+            const a = [];
+            for (const [sId, opt] of answersMap.entries()) {
+                if (idToIdx.has(sId)) {
+                    a.push([idToIdx.get(sId), opt]);
+                }
+            }
+            a.sort((x, y) => x[0] - y[0]);
+
+            const f = [];
+            for (const sId of failedSet) {
+                if (idToIdx.has(sId)) f.push(idToIdx.get(sId));
+            }
+            f.sort((x, y) => x - y);
+
+            const bm = [];
+            for (const sId of bookmarkSet) {
+                if (idToIdx.has(sId)) bm.push(idToIdx.get(sId));
+            }
+            bm.sort((x, y) => x - y);
 
             let customQuestions = [];
             try {
                 customQuestions = JSON.parse(localStorage.getItem('ai_quiz_custom_q') || '[]');
             } catch(e) {}
 
-            const uniqueFail = Array.from(new Set(failedList)).sort((a, b) => a - b);
-
             const payload = {
                 app: "quiz_simulator",
-                v: 3,
-                m: localStorage.getItem('ai_quiz_active_materia') || activeMateria || 'RDA1',
-                b: localStorage.getItem('ai_quiz_active_bank') || activeBank || 'mega_banco',
-                a: answers,
-                bm: uniqueBm
+                v: 4,
+                m: localStorage.getItem('ai_quiz_active_materia') || activeMateria || 'RDA2',
+                b: localStorage.getItem('ai_quiz_active_bank') || activeBank || 'mega_banco_rda2',
+                a,
+                bm
             };
-
-            if (uniqueFail.length > 0) payload.f = uniqueFail;
-            if (customFailed.length > 0) payload.cf = customFailed;
-            if (customAnswers.length > 0) payload.ca = customAnswers;
-            if (customBookmarks.length > 0) payload.cbm = customBookmarks;
+            if (f.length > 0) payload.f = f;
             if (customQuestions.length > 0) payload.cq = customQuestions;
 
             return payload;
@@ -1929,6 +1953,7 @@
             let totalCorrect = 0;
             let totalIncorrect = 0;
             const correctMap = getQuestionCorrectAnswerMap();
+            const countedQ = new Set();
 
             for (let i = 0; i < localStorage.length; i++) {
                 const k = localStorage.key(i);
@@ -1936,20 +1961,23 @@
                 if (k.startsWith('ai_quiz_ans_') && k.endsWith('_v3')) {
                     try {
                         const obj = JSON.parse(localStorage.getItem(k) || '{}');
-                        totalAns += Object.keys(obj).length;
                         for (const qId in obj) {
-                            const c = correctMap[qId] !== undefined ? correctMap[qId] : correctMap[String(qId)];
-                            if (c !== undefined) {
-                                if (Number(obj[qId]) === Number(c)) totalCorrect++;
-                                else totalIncorrect++;
+                            const sId = String(qId);
+                            if (!countedQ.has(sId)) {
+                                countedQ.add(sId);
+                                totalAns++;
+                                const c = correctMap[sId];
+                                if (c !== undefined) {
+                                    if (Number(obj[qId]) === Number(c)) totalCorrect++;
+                                    else totalIncorrect++;
+                                }
                             }
                         }
                     } catch(e) {}
                 } else if (k.startsWith('ai_quiz_bm_') && k.endsWith('_v3')) {
                     try {
                         const arr = JSON.parse(localStorage.getItem(k) || '[]');
-                        const unique = new Set(arr.map(id => String(id)));
-                        totalBm += unique.size;
+                        arr.forEach(id => totalBm++);
                     } catch(e) {}
                 }
             }
@@ -1969,58 +1997,42 @@
 
         function resilientLZDecompress(raw) {
             if (!raw || !window.LZString) return null;
-            // Eliminar espacios, saltos de línea y caracteres invisibles (zero-width) pegados por WhatsApp/móvil
-            const cleaned = String(raw).replace(/[\s\r\n\t\u200B-\u200D\uFEFF]/g, '');
+            // 1. Limpiar espacios, saltos de línea y caracteres invisibles (zero-width) pegados por WhatsApp/móvil
+            let cleaned = String(raw).trim()
+                .replace(/[\s\r\n\t\u200B-\u200D\uFEFF]/g, '')
+                .replace(/^["'`]|["'`]$/g, '');
+
             const candidates = [
                 cleaned,
-                cleaned.replace(/ /g, '+'),
                 cleaned.replace(/%20/g, '+'),
-                cleaned.replace(/%2B/gi, '+'),
-                cleaned.replace(/\+/g, '-')
+                cleaned.replace(/ /g, '+'),
+                cleaned.replace(/%2B/gi, '+')
             ];
             try {
                 const dec = decodeURIComponent(cleaned);
                 candidates.push(dec);
                 candidates.push(dec.replace(/ /g, '+'));
-                candidates.push(dec.replace(/%20/g, '+'));
-                candidates.push(dec.replace(/%2B/gi, '+'));
             } catch(e) {}
 
-            // Prioridad 1: Validar descompresión como JSON válido
             for (const cand of candidates) {
+                if (!cand) continue;
                 try {
                     const res = LZString.decompressFromEncodedURIComponent(cand);
-                    if (res && res.trim().startsWith('{')) {
+                    if (res) {
+                        try {
+                            JSON.parse(res); // Validar ESTRICTAMENTE que sea JSON parseable
+                            return res;
+                        } catch(err) {}
+                    }
+                } catch(e) {}
+                try {
+                    const res = LZString.decompressFromBase64(cand);
+                    if (res) {
                         try {
                             JSON.parse(res);
                             return res;
                         } catch(err) {}
                     }
-                } catch(e) {}
-            }
-            for (const cand of candidates) {
-                try {
-                    const res = LZString.decompressFromBase64(cand);
-                    if (res && res.trim().startsWith('{')) {
-                        try {
-                            JSON.parse(res);
-                            return res;
-                        } catch(err) {}
-                    }
-                } catch(e) {}
-            }
-
-            // Prioridad 2: Fallback tolerante si no parsea directamente
-            for (const cand of candidates) {
-                try {
-                    const res = LZString.decompressFromEncodedURIComponent(cand);
-                    if (res && res.trim().startsWith('{')) return res;
-                } catch(e) {}
-            }
-            for (const cand of candidates) {
-                try {
-                    const res = LZString.decompressFromBase64(cand);
-                    if (res && res.trim().startsWith('{')) return res;
                 } catch(e) {}
             }
             return null;
@@ -2029,40 +2041,30 @@
         function extractSyncPayload(inputStr) {
             if (!inputStr) throw new Error("Por favor ingresa un enlace o código de sincronización.");
             let str = String(inputStr).trim();
-
-            // Limpiar comillas iniciales y finales si el usuario copió con comillas
             str = str.replace(/^["'`]|["'`]$/g, '').trim();
 
             // 1. JSON crudo directo
             if (str.startsWith('{') && str.endsWith('}')) {
-                return JSON.parse(str);
+                try { return JSON.parse(str); } catch(e) {}
             }
 
-            // 2. Extraer fragmento sync si viene en URL o texto de chat (con o sin codificación URI)
+            // 2. Extraer fragmento sync si viene en URL o texto de chat
             if (str.includes('sync=')) {
                 str = str.split('sync=')[1];
             } else if (str.includes('sync%3D') || str.includes('sync%3d')) {
                 str = str.split(/sync%3d/i)[1];
             } else if (str.includes('#')) {
                 str = str.substring(str.indexOf('#') + 1);
-            } else if (str.includes('%23')) {
-                str = str.substring(str.indexOf('%23') + 3);
             }
 
             // Cortar si hay parámetros posteriores
             if (str.includes('&')) str = str.split('&')[0];
             if (str.includes('%26')) str = str.split(/%26/i)[0];
 
-            if (str.startsWith('#')) str = str.substring(1);
-            if (str.startsWith('%23')) str = str.substring(3);
-
-            // Limpiar posibles signos de puntuación pegados al final (.,;!) típicos al compartir por WhatsApp
-            str = str.replace(/[.,;!?)\}\]>]+$/, '');
-
-            // Limpiar saltos de línea, espacios intermedios y caracteres invisibles de formato
+            // Limpiar signos de puntuación pegados por chat al final
+            str = str.replace(/[.,;!?)\}\}>]+$/, '').trim();
             str = str.replace(/[\s\r\n\t\u200B-\u200D\uFEFF]/g, '');
 
-            // Normalizar si el prefijo lz: vino con percent-encoding (lz%3A)
             if (str.startsWith('lz%3A') || str.startsWith('lz%3a')) {
                 str = 'lz:' + str.substring(5);
             }
@@ -2079,9 +2081,8 @@
 
             // Si tiene prefijo b64:
             if (str.startsWith('b64:')) {
-                const raw = str.substring(4);
                 try {
-                    const decoded = decodeURIComponent(escape(atob(decodeURIComponent(raw))));
+                    const decoded = decodeURIComponent(escape(atob(decodeURIComponent(str.substring(4)))));
                     return JSON.parse(decoded);
                 } catch(e) {}
             }
@@ -2129,251 +2130,168 @@
             return map;
         }
 
-        function mergeAnswersWithPriority(existing, incoming, correctMap) {
-            const allQIds = new Set([...Object.keys(existing), ...Object.keys(incoming)]);
-            const result = {};
-
-            for (const qId of allQIds) {
-                const has1 = existing[qId] !== undefined;
-                const has2 = incoming[qId] !== undefined;
-
-                if (has1 && !has2) {
-                    result[qId] = existing[qId];
-                } else if (!has1 && has2) {
-                    result[qId] = incoming[qId];
-                } else {
-                    const ans1 = existing[qId];
-                    const ans2 = incoming[qId];
-                    const correctOpt = correctMap[qId] !== undefined ? correctMap[qId] : correctMap[String(qId)];
-
-                    if (correctOpt !== undefined) {
-                        const isWrong1 = (Number(ans1) !== Number(correctOpt));
-                        const isWrong2 = (Number(ans2) !== Number(correctOpt));
-
-                        // Prioridad absoluta al error: si en cualquiera de los dos dispositivos falló, GANA EL ERROR
-                        if (isWrong1 && !isWrong2) {
-                            result[qId] = ans1;
-                        } else if (!isWrong1 && isWrong2) {
-                            result[qId] = ans2;
-                        } else {
-                            result[qId] = ans2;
-                        }
-                    } else {
-                        result[qId] = ans2;
-                    }
-                }
-            }
-            return result;
-        }
-
         function importQuizData(payload, mode = 'merge') {
             if (!payload || typeof payload !== 'object') {
                 throw new Error("El archivo o código no contiene datos de progreso válidos.");
             }
 
-            const catalog = getBankQuestionCatalog();
+            const { idxToId } = getDeterministicQuestionCatalog();
             const correctMap = getQuestionCorrectAnswerMap();
+
             let answersCount = 0;
             let bookmarksCount = 0;
             let correctCount = 0;
             let incorrectCount = 0;
 
-            // FORMATO V3 ULTRACOMPACTO
-            if (payload.v === 3 || (Array.isArray(payload.a) && Array.isArray(payload.bm))) {
-                if (payload.m) localStorage.setItem('ai_quiz_active_materia', payload.m);
-                if (payload.b) localStorage.setItem('ai_quiz_active_bank', payload.b);
+            const incomingAnswers = new Map(); // sId -> canonOpt
+            const incomingFailed = new Set();  // sId
+            const incomingBm = new Set();      // sId
 
-                const incomingByBankAns = {};
+            // FORMATO V4 (Ultracompacto Universal por ID Determinístico)
+            if (payload.v === 4) {
                 if (Array.isArray(payload.a)) {
                     payload.a.forEach(item => {
-                        const idx = item[0];
-                        const opt = item[1];
-                        const meta = catalog.list[idx];
-                        if (meta) {
-                            if (!incomingByBankAns[meta.bankId]) incomingByBankAns[meta.bankId] = {};
-                            incomingByBankAns[meta.bankId][meta.qId] = opt;
-                        }
+                        const sId = idxToId[item[0]];
+                        if (sId) incomingAnswers.set(sId, Number(item[1]));
                     });
                 }
-
-                if (Array.isArray(payload.ca)) {
-                    payload.ca.forEach(item => {
-                        const bankId = item[0];
-                        const qId = item[1];
-                        const opt = item[2];
-                        if (!incomingByBankAns[bankId]) incomingByBankAns[bankId] = {};
-                        incomingByBankAns[bankId][qId] = opt;
-                    });
-                }
-
-                const incomingByBankBm = {};
-                if (Array.isArray(payload.bm)) {
-                    payload.bm.forEach(idx => {
-                        const meta = catalog.list[idx];
-                        if (meta) {
-                            if (!incomingByBankBm[meta.bankId]) incomingByBankBm[meta.bankId] = new Set();
-                            incomingByBankBm[meta.bankId].add(String(meta.qId));
-                        }
-                    });
-                }
-
-                if (Array.isArray(payload.cbm)) {
-                    payload.cbm.forEach(item => {
-                        const bankId = item[0];
-                        const qId = item[1];
-                        if (!incomingByBankBm[bankId]) incomingByBankBm[bankId] = new Set();
-                        incomingByBankBm[bankId].add(String(qId));
-                    });
-                }
-
-                const incomingByBankFail = {};
                 if (Array.isArray(payload.f)) {
                     payload.f.forEach(idx => {
-                        const meta = catalog.list[idx];
-                        if (meta) {
-                            if (!incomingByBankFail[meta.bankId]) incomingByBankFail[meta.bankId] = new Set();
-                            incomingByBankFail[meta.bankId].add(String(meta.qId));
+                        const sId = idxToId[idx];
+                        if (sId) incomingFailed.add(sId);
+                    });
+                }
+                if (Array.isArray(payload.bm)) {
+                    payload.bm.forEach(idx => {
+                        const sId = idxToId[idx];
+                        if (sId) incomingBm.add(sId);
+                    });
+                }
+            } 
+            // COMPATIBILIDAD RETROACTIVA V3
+            else if (payload.v === 3 || (Array.isArray(payload.a) && Array.isArray(payload.bm))) {
+                const legacyCatalog = getBankQuestionCatalog();
+                if (Array.isArray(payload.a)) {
+                    payload.a.forEach(item => {
+                        const meta = legacyCatalog.list[item[0]];
+                        if (meta && meta.qId !== undefined) {
+                            incomingAnswers.set(String(meta.qId), Number(item[1]));
                         }
                     });
                 }
-
-                if (Array.isArray(payload.cf)) {
-                    payload.cf.forEach(item => {
-                        const bankId = item[0];
-                        const qId = item[1];
-                        if (!incomingByBankFail[bankId]) incomingByBankFail[bankId] = new Set();
-                        incomingByBankFail[bankId].add(String(qId));
+                if (Array.isArray(payload.f)) {
+                    payload.f.forEach(idx => {
+                        const meta = legacyCatalog.list[idx];
+                        if (meta && meta.qId !== undefined) {
+                            incomingFailed.add(String(meta.qId));
+                        }
                     });
                 }
-
-                const allBankIds = new Set([
-                    ...Object.keys(incomingByBankAns),
-                    ...Object.keys(incomingByBankBm),
-                    ...Object.keys(incomingByBankFail)
-                ]);
-
-                for (let i = 0; i < localStorage.length; i++) {
-                    const k = localStorage.key(i);
-                    if (k && k.startsWith('ai_quiz_ans_') && k.endsWith('_v3')) {
-                        allBankIds.add(k.replace('ai_quiz_ans_', '').replace('_v3', ''));
-                    }
-                }
-
-                for (const bankId of allBankIds) {
-                    const keyAns = 'ai_quiz_ans_' + bankId + '_v3';
-                    const keyBm = 'ai_quiz_bm_' + bankId + '_v3';
-
-                    const incomingAns = incomingByBankAns[bankId] || {};
-                    const existingAns = JSON.parse(localStorage.getItem(keyAns) || '{}');
-
-                    const mergedAns = mergeAnswersWithPriority(existingAns, incomingAns, correctMap);
-                    localStorage.setItem(keyAns, JSON.stringify(mergedAns));
-                    answersCount += Object.keys(mergedAns).length;
-
-                    // Contar aciertos y errores en las respuestas finales fusionadas
-                    for (const qId in mergedAns) {
-                        const correctOpt = correctMap[qId] !== undefined ? correctMap[qId] : correctMap[String(qId)];
-                        if (correctOpt !== undefined) {
-                            if (Number(mergedAns[qId]) === Number(correctOpt)) {
-                                correctCount++;
-                            } else {
-                                incorrectCount++;
-                            }
+                if (Array.isArray(payload.bm)) {
+                    payload.bm.forEach(idx => {
+                        const meta = legacyCatalog.list[idx];
+                        if (meta && meta.qId !== undefined) {
+                            incomingBm.add(String(meta.qId));
                         }
-                    }
-
-                    const incomingBm = incomingByBankBm[bankId] || new Set();
-                    const existingBmList = JSON.parse(localStorage.getItem(keyBm) || '[]');
-                    const mergedBmSet = new Set();
-                    existingBmList.forEach(id => mergedBmSet.add(String(id)));
-                    incomingBm.forEach(id => mergedBmSet.add(String(id)));
-
-                    const arrBm = Array.from(mergedBmSet);
-                    localStorage.setItem(keyBm, JSON.stringify(arrBm));
-                    bookmarksCount += arrBm.length;
-
-                    // Fusionar historial persistente de fallos
-                    const keyFail = 'ai_quiz_fail_' + bankId + '_v3';
-                    const incomingFail = incomingByBankFail[bankId] || new Set();
-                    const existingFailList = JSON.parse(localStorage.getItem(keyFail) || '[]');
-                    const mergedFailSet = new Set();
-                    existingFailList.forEach(id => mergedFailSet.add(String(id)));
-                    incomingFail.forEach(id => mergedFailSet.add(String(id)));
-
-                    // Auto-registrar en el historial secundario cualquier respuesta que haya quedado errada
-                    for (const qId in mergedAns) {
-                        const correctOpt = correctMap[qId] !== undefined ? correctMap[qId] : correctMap[String(qId)];
-                        if (correctOpt !== undefined && Number(mergedAns[qId]) !== Number(correctOpt)) {
-                            mergedFailSet.add(String(qId));
-                        }
-                    }
-                    localStorage.setItem(keyFail, JSON.stringify(Array.from(mergedFailSet)));
+                    });
                 }
-
-                if (Array.isArray(payload.cq) && payload.cq.length > 0) {
-                    try {
-                        const existCustom = JSON.parse(localStorage.getItem('ai_quiz_custom_q') || '[]');
-                        const existIds = new Set(existCustom.map(q => q.id));
-                        payload.cq.forEach(q => {
-                            if (!existIds.has(q.id)) {
-                                existCustom.push(q);
-                                existIds.add(q.id);
-                            }
-                        });
-                        localStorage.setItem('ai_quiz_custom_q', JSON.stringify(existCustom));
-                    } catch(e) {}
-                }
-
-                return { answersCount, bookmarksCount, correctCount, incorrectCount };
             }
 
-            // FORMATO LEGACY CON STORE DIRECTO (.json backups)
-            if (payload.app === 'ai_quiz_simulator' && payload.store) {
-                if (payload.activeMateria) localStorage.setItem('ai_quiz_active_materia', payload.activeMateria);
-                if (payload.activeBank) localStorage.setItem('ai_quiz_active_bank', payload.activeBank);
+            if (payload.m) localStorage.setItem('ai_quiz_active_materia', payload.m);
+            if (payload.b) localStorage.setItem('ai_quiz_active_bank', payload.b);
 
-                for (const k in payload.store) {
-                    const incomingVal = payload.store[k];
-                    if (k.startsWith('ai_quiz_ans_')) {
-                        const existingVal = localStorage.getItem(k);
-                        const existingObj = existingVal ? JSON.parse(existingVal) : {};
-                        const incomingObj = JSON.parse(incomingVal || '{}');
-                        const mergedObj = mergeAnswersWithPriority(existingObj, incomingObj, correctMap);
-                        localStorage.setItem(k, JSON.stringify(mergedObj));
-                        answersCount += Object.keys(mergedObj).length;
-                        for (const qId in mergedObj) {
-                            const correctOpt = correctMap[qId] !== undefined ? correctMap[qId] : correctMap[String(qId)];
-                            if (correctOpt !== undefined) {
-                                if (Number(mergedObj[qId]) === Number(correctOpt)) correctCount++;
-                                else incorrectCount++;
-                            }
+            // Identificar todos los bancos en QUIZ_DATA y en localStorage
+            const allBankIds = new Set();
+            if (window.QUIZ_DATA) {
+                for (const m in window.QUIZ_DATA) {
+                    if (Array.isArray(window.QUIZ_DATA[m])) {
+                        window.QUIZ_DATA[m].forEach(b => allBankIds.add(b.id));
+                    }
+                }
+            }
+            for (let i = 0; i < localStorage.length; i++) {
+                const k = localStorage.key(i);
+                if (k && k.startsWith('ai_quiz_ans_') && k.endsWith('_v3')) {
+                    allBankIds.add(k.replace('ai_quiz_ans_', '').replace('_v3', ''));
+                }
+            }
+
+            // Distribuir respuestas de forma consistente a todos los bancos
+            for (const bankId of allBankIds) {
+                const keyAns = 'ai_quiz_ans_' + bankId + '_v3';
+                const keyBm = 'ai_quiz_bm_' + bankId + '_v3';
+                const keyFail = 'ai_quiz_fail_' + bankId + '_v3';
+
+                const existingAns = JSON.parse(localStorage.getItem(keyAns) || '{}');
+                const mergedAns = { ...existingAns };
+
+                // Fusión con prioridad de error (confirmada por el usuario)
+                for (const [sId, newOpt] of incomingAnswers.entries()) {
+                    const cOpt = correctMap[sId];
+                    const prevOpt = existingAns[sId];
+
+                    if (prevOpt === undefined) {
+                        mergedAns[sId] = newOpt;
+                    } else if (cOpt !== undefined) {
+                        const prevIsWrong = (Number(prevOpt) !== Number(cOpt));
+                        const newIsWrong = (Number(newOpt) !== Number(cOpt));
+                        if (prevIsWrong && !newIsWrong) {
+                            // Mantiene respuesta errada previa según preferencia del usuario
+                            mergedAns[sId] = prevOpt;
+                        } else {
+                            mergedAns[sId] = newOpt;
                         }
-                    } else if (k.startsWith('ai_quiz_bm_')) {
-                        const existingVal = localStorage.getItem(k);
-                        const existingArr = existingVal ? JSON.parse(existingVal) : [];
-                        const incomingArr = JSON.parse(incomingVal || '[]');
-                        const mergedSet = new Set();
-                        existingArr.forEach(id => mergedSet.add(String(id)));
-                        incomingArr.forEach(id => mergedSet.add(String(id)));
-                        const arr = Array.from(mergedSet);
-                        localStorage.setItem(k, JSON.stringify(arr));
-                        bookmarksCount += arr.length;
-                    } else if (k.startsWith('ai_quiz_fail_')) {
-                        const existingVal = localStorage.getItem(k);
-                        const existingArr = existingVal ? JSON.parse(existingVal) : [];
-                        const incomingArr = JSON.parse(incomingVal || '[]');
-                        const mergedSet = new Set();
-                        existingArr.forEach(id => mergedSet.add(String(id)));
-                        incomingArr.forEach(id => mergedSet.add(String(id)));
-                        localStorage.setItem(k, JSON.stringify(Array.from(mergedSet)));
                     } else {
-                        localStorage.setItem(k, incomingVal);
+                        mergedAns[sId] = newOpt;
                     }
                 }
-                return { answersCount, bookmarksCount, correctCount, incorrectCount };
+
+                localStorage.setItem(keyAns, JSON.stringify(mergedAns));
+
+                // Fusión de dudas (Bookmarks)
+                const existingBm = new Set(JSON.parse(localStorage.getItem(keyBm) || '[]').map(String));
+                incomingBm.forEach(id => existingBm.add(String(id)));
+                localStorage.setItem(keyBm, JSON.stringify(Array.from(existingBm)));
+
+                // Fusión del historial de fallos (Fail History)
+                const existingFail = new Set(JSON.parse(localStorage.getItem(keyFail) || '[]').map(String));
+                incomingFailed.forEach(id => existingFail.add(String(id)));
+
+                // Cualquier respuesta que haya quedado incorrecta se registra en failedHistory
+                for (const sId in mergedAns) {
+                    const cOpt = correctMap[sId];
+                    if (cOpt !== undefined && Number(mergedAns[sId]) !== Number(cOpt)) {
+                        existingFail.add(String(sId));
+                    }
+                }
+                localStorage.setItem(keyFail, JSON.stringify(Array.from(existingFail)));
+
+                // Conteo estadístico para el banco activo
+                if (bankId === (payload.b || activeBank)) {
+                    for (const sId in mergedAns) {
+                        answersCount++;
+                        const cOpt = correctMap[sId];
+                        if (cOpt !== undefined) {
+                            if (Number(mergedAns[sId]) === Number(cOpt)) correctCount++;
+                            else incorrectCount++;
+                        }
+                    }
+                    bookmarksCount = existingBm.size;
+                }
             }
 
-            throw new Error("El archivo o código no contiene datos de progreso válidos.");
+            // Actualizar memoria activa inmediatamente
+            activeMateria = payload.m || activeMateria;
+            activeBank = payload.b || activeBank;
+            const curAnsKey = getBankStorageKey('ans');
+            const curFailKey = getBankStorageKey('fail');
+            const curBmKey = getBankStorageKey('bm');
+
+            userAnswers = JSON.parse(localStorage.getItem(curAnsKey) || '{}');
+            failedHistory = new Set(JSON.parse(localStorage.getItem(curFailKey) || '[]').map(String));
+            bookmarked = new Set(JSON.parse(localStorage.getItem(curBmKey) || '[]').map(String));
+
+            return { answersCount, bookmarksCount, correctCount, incorrectCount };
         }
 
         function refreshStateAfterImport() {
@@ -2414,7 +2332,7 @@
                 }, 400);
             } catch (err) {
                 console.error("Error al procesar sincronización entrante:", err);
-                alert("Aviso de sincronización automática: No se pudo cargar el progreso desde la URL (" + err.message + ").\nPuedes presionar 'Sincronizar' en la barra superior y pegar el enlace manualmente en la Opción 1.");
+                alert("Aviso de sincronización automática: No se pudo cargar el progreso desde la URL (" + err.message + ").\nPuedes presionar 'Sincronizar' en la barra superior y pegar el código en el cuadro de texto.");
             }
         }
 
@@ -2452,7 +2370,7 @@
                 if (window.location.protocol === 'file:' || window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
                     baseUrl = 'https://alex171215.github.io/repasoIARDA1/index.html';
                 }
-                const magicUrl = baseUrl + '?v=21#sync=' + currentCompressedCode;
+                const magicUrl = baseUrl + '?v=22#sync=' + currentCompressedCode;
                 syncMagicUrlInput.value = magicUrl;
 
                 if (copySuccessMsg) copySuccessMsg.classList.add('hidden');

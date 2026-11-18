@@ -1,0 +1,820 @@
+{
+  "informacion_general": {
+    "tema": "Evaluación de Machine Learning con Scikit-Learn (Clasificación, Clustering, Reducción de Dimensionalidad, Pipelines)",
+    "nota_faltantes": "Las preguntas 27 y 28 no se encuentran en las imágenes proporcionadas."
+  },
+  "preguntas_scikit_learn": [
+    {
+      "id": 1,
+      "enunciado": "Antes de calcular el Silhouette de un DBSCAN se escribe validos = labels != -1. ¿Para qué sirve?",
+      "opciones": [
+        "a. Para quedarse con el cluster más grande.",
+        "b. Para eliminar los puntos core, que distorsionan el cálculo final del Silhouette.",
+        "c. Para excluir del cálculo los puntos de ruido.",
+        "d. Para convertir todas las etiquetas de cluster en valores enteros positivos."
+      ],
+      "tu_respuesta": "c",
+      "correcta": "c",
+      "resultado": "V",
+      "retroalimentacion": "El ruido no es un cluster; incluirlo como si fuera un grupo más falsearía el Silhouette. Se calcula con silhouette_score(X_esc[validos], labels[validos])."
+    },
+    {
+      "id": 2,
+      "enunciado": "¿Qué caracteriza al aprendizaje no supervisado?",
+      "opciones": [
+        "a. El algoritmo recibe X e y, pero los datos no se dividen en entrenamiento y prueba.",
+        "b. El algoritmo recibe solo X, sin y, y busca estructura en los datos.",
+        "c. El algoritmo predice una y continua.",
+        "d. El algoritmo aprende sin datos, aplicando únicamente reglas definidas por el usuario."
+      ],
+      "tu_respuesta": "b",
+      "correcta": "b",
+      "resultado": "V",
+      "retroalimentacion": "Sin y no hay una \"respuesta correcta\" contra la cual calcular accuracy o F1. Se evalúa con métricas propias, como la varianza explicada o el Silhouette, y con interpretación."
+    },
+    {
+      "id": 3,
+      "enunciado": "¿Por qué el escalador debe ir dentro de un Pipeline que se entrega a GridSearchCV, y no aplicarse antes?",
+      "opciones": [
+        "a. Porque el Pipeline elige automáticamente el mejor tipo de escalador para cada uno de los folds.",
+        "b. Porque así se ajusta solo con los folds de entrenamiento y no hay fuga de datos.",
+        "c. Porque GridSearchCV no acepta datos escalados.",
+        "d. Porque escalar antes de la búsqueda duplica el tiempo total de entrenamiento de los modelos."
+      ],
+      "tu_respuesta": "b",
+      "correcta": "b",
+      "resultado": "V",
+      "retroalimentacion": "Si se escala todo X_train antes, el fold de validación ya \"vio\" su media y desviación y el score CV sale optimista. Regla: todo paso que usa fit() va dentro del Pipeline."
+    },
+    {
+      "id": 4,
+      "enunciado": "En un clasificador como DecisionTreeClassifier, ¿qué devuelve arbol.score(X_test, y_test)?",
+      "opciones": [
+        "a. El accuracy de las predicciones.",
+        "b. La suma de todos los valores de feature_importances_.",
+        "c. El F1-score de la clase positiva del problema.",
+        "d. El Gini promedio de las hojas."
+      ],
+      "tu_respuesta": "c",
+      "correcta": "a",
+      "resultado": "X",
+      "retroalimentacion": "En los clasificadores de scikit-learn, score() devuelve el accuracy (proporción de aciertos). Comparar score() en train y en test es una forma rápida de detectar sobreajuste."
+    },
+    {
+      "id": 5,
+      "enunciado": "Un archivo .pkl con un Pipeline de scikit-learn se guardó con joblib. ¿Qué precaución hay que tener al cargarlo en otro programa?",
+      "opciones": [
+        "a. Reentrenarlo con fit() al cargarlo.",
+        "b. Escalar manualmente los datos nuevos antes de cargar el archivo .pkl.",
+        "c. Convertir el archivo a formato CSV antes de poder usarlo para predecir.",
+        "d. Cargarlo con la misma versión de scikit-learn."
+      ],
+      "tu_respuesta": "d",
+      "correcta": "d",
+      "resultado": "V",
+      "retroalimentacion": "Entre versiones de scikit-learn la estructura interna de los objetos puede cambiar. Cargar con otra versión puede fallar o dar advertencias."
+    },
+    {
+      "id": 6,
+      "enunciado": "¿Qué optimiza cada modelo al entrenarse: Regresión Logística frente a SVM?",
+      "opciones": [
+        "a. Ambos maximizan directamente el accuracy obtenido sobre el conjunto de entrenamiento.",
+        "b. La logística, el margen; la SVM, la verosimilitud.",
+        "c. La logística maximiza la verosimilitud; la SVM, el margen.",
+        "d. Ambos minimizan el error cuadrático medio entre la clase real y la clase predicha."
+      ],
+      "tu_respuesta": "c",
+      "correcta": "c",
+      "resultado": "V",
+      "retroalimentacion": "Por eso la Regresión Logística entrega probabilidades de forma natural y la SVM no, a menos que se active probability=True."
+    },
+    {
+      "id": 7,
+      "enunciado": "¿Qué diferencia a RandomizedSearchCV de GridSearchCV?",
+      "opciones": [
+        "a. No usa validación cruzada: evalúa cada combinación directamente sobre el conjunto X_test.",
+        "b. Elige al azar sin evaluar las combinaciones.",
+        "c. Prueba todas las combinaciones de la rejilla, pero en un orden aleatorio para evitar sesgos.",
+        "d. Prueba solo n_iter combinaciones al azar: es más rápido, sin garantizar el óptimo."
+      ],
+      "tu_respuesta": "d",
+      "correcta": "d",
+      "resultado": "V",
+      "retroalimentacion": "Es útil cuando el espacio de combinaciones es muy grande. Sacrifica la garantía de encontrar la mejor combinación a cambio de tiempo."
+    },
+    {
+      "id": 8,
+      "enunciado": "En una muestra bootstrap de n filas con n grande, ¿qué proporción aproximada de filas originales no aparece (muestras Out-of-Bag)?",
+      "opciones": [
+        "a. ≈ 0%",
+        "b. ≈ 10%",
+        "c. ≈ 50.0%",
+        "d. ≈ 36.8%"
+      ],
+      "tu_respuesta": "d",
+      "correcta": "d",
+      "resultado": "V",
+      "retroalimentacion": "La probabilidad de que una fila no salga en n sorteos es (1 - 1/n)^n ≈ e^-1 ≈ 0.368. Cada árbol ve en promedio ≈ 63.2% de filas distintas."
+    },
+    {
+      "id": 9,
+      "enunciado": "¿Qué hace el código OneVsRestClassifier(LogisticRegression(max_iter=1000))?",
+      "opciones": [
+        "a. Activa el modo Softmax de LogisticRegression.",
+        "b. Crea un modelo distinto que reemplaza por completo a LogisticRegression en problemas multiclase.",
+        "c. Convierte el problema multiclase en binario uniendo todas las clases minoritarias en una sola.",
+        "d. Envuelve el clasificador y entrena una copia por clase (\"clase vs. resto\")."
+      ],
+      "tu_respuesta": "d",
+      "correcta": "d",
+      "resultado": "V",
+      "retroalimentacion": "OneVsRestClassifier es un meta-estimador de sklearn.multiclass. Reutiliza el estimador binario que recibe y lo entrena K veces."
+    },
+    {
+      "id": 10,
+      "enunciado": "Se ejecuta distancias, indices = NearestNeighbors(n_neighbors=5).fit(X_esc).kneighbors(X_esc). ¿Qué contiene la columna distancias[:, 0]?",
+      "opciones": [
+        "a. La distancia de cada punto al centroide de su cluster.",
+        "b. Ceros: el primer vecino es el propio punto.",
+        "c. La distancia de cada punto a su 5.º vecino más cercano.",
+        "d. La distancia promedio a los 5 vecinos."
+      ],
+      "tu_respuesta": "b",
+      "correcta": "b",
+      "resultado": "V",
+      "retroalimentacion": "Al consultar con los mismos datos del fit, cada punto se encuentra a sí mismo primero, igual que min_samples lo cuenta en DBSCAN. Por eso el 5.º vecino está en distancias[:, 4]."
+    },
+    {
+      "id": 11,
+      "enunciado": "Después de grid.fit(X_train, y_train) con refit=True, ¿qué es grid.best_estimator_?",
+      "opciones": [
+        "a. El modelo con la mejor combinación, ya reentrenado con todo X_train.",
+        "b. El mejor modelo entrenado con X_train y X_test.",
+        "c. La lista de todas las combinaciones probadas, cada una con sus scores por fold.",
+        "d. El diccionario que contiene los valores de la mejor combinación de hiperparámetros."
+      ],
+      "tu_respuesta": "a",
+      "correcta": "a",
+      "resultado": "V",
+      "retroalimentacion": "grid.predict() usa internamente best_estimator_. El diccionario de valores es best_params_ y el detalle de todas las combinaciones está en cv_results_."
+    },
+    {
+      "id": 12,
+      "enunciado": "En el método del codo, ¿qué valor de K se elige?",
+      "opciones": [
+        "a. El K desde el cual la inercia ya casi no baja.",
+        "b. El K con la menor inercia.",
+        "c. El K que coincide con el número de variables que tiene el dataset.",
+        "d. El K que obtiene la mayor inercia de todos los valores probados."
+      ],
+      "tu_respuesta": "a",
+      "correcta": "a",
+      "resultado": "V",
+      "retroalimentacion": "Antes del codo, cada cluster adicional reduce mucho la inercia; después, la mejora es marginal y no justifica más grupos."
+    },
+    {
+      "id": 13,
+      "enunciado": "X_test tiene 360 filas y el modelo fue entrenado con 3 clases. ¿Qué forma (shape) tiene modelo.predict_proba(X_test)?",
+      "opciones": [
+        "a. (360, 2): la probabilidad de la clase predicha y la del resto de clases.",
+        "b. (360, 1): una probabilidad por fila, la de la clase predicha.",
+        "c. (360, 3): una fila por observación y una columna por clase.",
+        "d. (3, 360): una fila por clase y una columna por observación."
+      ],
+      "tu_respuesta": "c",
+      "correcta": "c",
+      "resultado": "V",
+      "retroalimentacion": "predict_proba devuelve una fila por observación y K columnas, una por clase, y cada fila suma 1."
+    },
+    {
+      "id": 14,
+      "enunciado": "Se entrena modelo = SVC(kernel='rbf') y luego se llama modelo.predict_proba(X_test). ¿Qué ocurre?",
+      "opciones": [
+        "a. Devuelve la distancia con signo de cada punto al hiperplano de decisión aprendido.",
+        "b. Devuelve las probabilidades de cada clase, igual que lo hace la Regresión Logística.",
+        "c. Lanza un error: SVC no calcula probabilidades por defecto.",
+        "d. Devuelve la clase predicha, como predict()."
+      ],
+      "tu_respuesta": "c",
+      "correcta": "c",
+      "resultado": "V",
+      "retroalimentacion": "Para tener predict_proba hay que crear el modelo con SVC(probability=True), que añade una calibración interna y hace el entrenamiento más lento."
+    },
+    {
+      "id": 15,
+      "enunciado": "¿Por qué las fronteras de decisión de un árbol tienen forma de escalón?",
+      "opciones": [
+        "a. Porque cada corte usa una variable y queda paralelo a un eje.",
+        "b. Porque el criterio Gini solo permite realizar cortes en valores numéricos enteros.",
+        "c. Porque scikit-learn redondea todas las variables numéricas antes de dividir los nodos.",
+        "d. Porque usa sigmoides superpuestas."
+      ],
+      "tu_respuesta": "a",
+      "correcta": "a",
+      "resultado": "V",
+      "retroalimentacion": "Cada pregunta \"¿Xj ≤ t?\" corta el espacio con una línea perpendicular a un eje. Una frontera diagonal se aproxima con muchos escalones."
+    },
+    {
+      "id": 16,
+      "enunciado": "Para un punto i, la distancia media a su propio cluster es a(i) = 2 y la distancia media al cluster vecino más cercano es b(i) = 5. ¿Cuál es su Silhouette?",
+      "opciones": [
+        "a. 0.40",
+        "b. 1.50",
+        "c. 0.60",
+        "d. -0.60"
+      ],
+      "tu_respuesta": "c",
+      "correcta": "c",
+      "resultado": "V",
+      "retroalimentacion": "s(i) = (b - a) / max(a, b) = (5 - 2) / 5 = 0.60. El rango es de -1 a 1 y lo deseable es acercarse a 1."
+    },
+    {
+      "id": 17,
+      "enunciado": "Sobre un clasificador multiclase ya entrenado, ¿qué expresión da el mismo resultado que modelo.predict(X)?",
+      "opciones": [
+        "a. modelo.classes_[np.argmax(modelo.predict_proba(X), axis=0)]",
+        "b. modelo.classes_[np.argmax(modelo.predict_proba(X), axis=1)]",
+        "c. modelo.classes_[np.argmax(modelo.predict_proba(X).sum(axis=1))]",
+        "d. np.max(modelo.predict_proba(X), axis=1) * len(modelo.classes_)"
+      ],
+      "tu_respuesta": "b",
+      "correcta": "b",
+      "resultado": "V",
+      "retroalimentacion": "argmax por filas (axis=1) da el índice de la columna con mayor probabilidad, y ese índice se traduce a etiqueta con classes_. np.max devuelve probabilidades, no clases."
+    },
+    {
+      "id": 18,
+      "enunciado": "¿Qué indica PCA(n_components=0.80)?",
+      "opciones": [
+        "a. Las componentes necesarias para acumular el 80% de la varianza.",
+        "b. Que se conserven exactamente 80 componentes principales en el resultado.",
+        "c. Que se descarte el 80% de las variables.",
+        "d. Que solo se conserven las componentes con varianza individual mayor que 0.80."
+      ],
+      "tu_respuesta": "a",
+      "correcta": "a",
+      "resultado": "V",
+      "retroalimentacion": "Un entero fija el número de componentes; un decimal entre 0 y 1 deja que PCA elija el mínimo k que acumule ese porcentaje de varianza. El valor resultante se lee en n_components_."
+    },
+    {
+      "id": 19,
+      "enunciado": "En un Pipeline ya entrenado, el paso 'preproc' es un ColumnTransformer con OneHotEncoder. ¿Qué devuelve pipeline.named_steps['preproc'].get_feature_names_out()?",
+      "opciones": [
+        "a. Los nombres de las columnas originales de X, tal como estaban antes de codificar.",
+        "b. Los nombres de las columnas de salida, una por cada categoría codificada.",
+        "c. Los nombres de los pasos que componen el Pipeline, en el orden en que se ejecutan.",
+        "d. Las categorías desconocidas vistas en producción."
+      ],
+      "tu_respuesta": "b",
+      "correcta": "b",
+      "resultado": "V",
+      "retroalimentacion": "Por ejemplo, una columna 'color' con valores rojo y azul produce 'color_rojo' y 'color_azul'. Esos nombres permiten asociar cada valor de feature_importances_ con su columna real después del One-Hot Encoding."
+    },
+    {
+      "id": 20,
+      "enunciado": "En SVC(kernel='poly', degree=3, coef0=1, C=5), ¿qué controla el parámetro coef0?",
+      "opciones": [
+        "a. El peso de los términos de grado bajo en el kernel polinómico.",
+        "b. El número máximo de vectores de soporte que el modelo puede llegar a guardar.",
+        "c. El grado del polinomio del kernel.",
+        "d. La penalización de los errores de entrenamiento, igual que el parámetro C."
+      ],
+      "tu_respuesta": "c",
+      "correcta": "a",
+      "resultado": "X",
+      "retroalimentacion": "coef0 es el término independiente del kernel polinómico y regula cuánto pesan los términos de grado bajo frente a los de grado alto. El grado lo fija degree."
+    },
+    {
+      "id": 21,
+      "enunciado": "¿Qué contiene el atributo grid.cv_results_ y para qué es útil?",
+      "opciones": [
+        "a. Parámetros y scores de todas las combinaciones, para analizar la búsqueda.",
+        "b. Las predicciones del mejor modelo sobre X_train.",
+        "c. Solo el score de la mejor combinación, listo para reportarlo como resultado final del modelo.",
+        "d. La matriz de confusión que obtuvo el mejor modelo en cada uno de los folds de validación."
+      ],
+      "tu_respuesta": "a",
+      "correcta": "a",
+      "resultado": "V",
+      "retroalimentacion": "cv_results_ guarda los scores por fold y el promedio de cada combinación. Suele convertirse en un DataFrame para graficar, por ejemplo un mapa de calor de C vs. gamma."
+    },
+    {
+      "id": 22,
+      "enunciado": "¿Qué indica n_jobs=-1 en GridSearchCV(pipe, param_grid, cv=5, n_jobs=-1)?",
+      "opciones": [
+        "a. Que se usen todos los núcleos disponibles en paralelo.",
+        "b. Que se use un solo núcleo del procesador.",
+        "c. Que se descarte la peor combinación antes de terminar la búsqueda completa.",
+        "d. Que no se reentrene el mejor modelo al terminar la búsqueda de hiperparámetros."
+      ],
+      "tu_respuesta": "a",
+      "correcta": "a",
+      "resultado": "V",
+      "retroalimentacion": "Con -1 las combinaciones se entrenan en paralelo usando todos los núcleos. Por defecto (None) se usa 1 núcleo."
+    },
+    {
+      "id": 23,
+      "enunciado": "Con un modelo K-Means exportado, ¿qué hace modelo.predict(nuevos)?",
+      "opciones": [
+        "a. Asigna cada fila nueva al centroide más cercano, sin reentrenar.",
+        "b. Reentrena el modelo incluyendo las filas nuevas junto con las anteriores.",
+        "c. Crea un cluster nuevo para cada una de las filas que recibe como entrada.",
+        "d. Devuelve la distancia de cada fila al origen."
+      ],
+      "tu_respuesta": "a",
+      "correcta": "a",
+      "resultado": "V",
+      "retroalimentacion": "Si el modelo es un Pipeline, predict primero escala con las medias aprendidas y luego asigna cada fila al centroide más cercano. Los centroides no cambian."
+    },
+    {
+      "id": 24,
+      "enunciado": "¿Qué describe la maldición de la dimensionalidad?",
+      "opciones": [
+        "a. Con pocas variables los modelos de aprendizaje automático no pueden entrenarse correctamente.",
+        "b. Con más filas el modelo se vuelve más lento que cuando se agregan más variables al dataset.",
+        "c. Con más variables los datos quedan dispersos y se necesitan muchas más filas para aprender.",
+        "d. Con más variables el modelo siempre mejora su accuracy en el conjunto de prueba, sin excepción."
+      ],
+      "tu_respuesta": "c",
+      "correcta": "c",
+      "resultado": "V",
+      "retroalimentacion": "A medida que crece el número de dimensiones, el espacio se \"vacía\", se necesitan más datos para aprender patrones confiables y las distancias pierden capacidad de discriminar."
+    },
+    {
+      "id": 25,
+      "enunciado": "Se entrega a GridSearchCV un DecisionTreeClassifier() sin Pipeline. ¿Cómo se escriben los nombres en el param_grid?",
+      "opciones": [
+        "a. {'max_depth': [3, 5], 'min_samples_leaf': [1, 10]}",
+        "b. {'modelo__max_depth': [3, 5], 'modelo__min_samples_leaf': [1, 10]}",
+        "c. {'DecisionTreeClassifier__max_depth': [3, 5], 'leaf': [1, 10]}",
+        "d. [('max_depth', 3), ('max_depth', 5)]"
+      ],
+      "tu_respuesta": "a",
+      "correcta": "a",
+      "resultado": "V",
+      "retroalimentacion": "El prefijo paso__ solo hace falta cuando el estimador está dentro de un Pipeline. Sin Pipeline, los nombres son directamente los del constructor."
+    },
+    {
+      "id": 26,
+      "enunciado": "En un biplot, dos flechas de variables apuntan casi en la misma dirección. ¿Qué indica?",
+      "opciones": [
+        "a. Que esas variables no tienen ninguna relación entre sí.",
+        "b. Que esas variables deben eliminarse antes de aplicar PCA.",
+        "c. Que esas variables tienen correlación negativa alta.",
+        "d. Que esas variables tienen correlación positiva alta."
+      ],
+      "tu_respuesta": "d",
+      "correcta": "d",
+      "resultado": "V",
+      "retroalimentacion": "Flechas en la misma dirección indican correlación positiva, opuestas indican correlación negativa y perpendiculares, poca relación. Es una lectura aproximada, limitada a la varianza que muestra el plano."
+    },
+    {
+      "id": 29,
+      "enunciado": "En un KMeans ya entrenado, ¿qué contiene cada atributo?",
+      "opciones": [
+        "a. labels_: centroides; cluster_centers_: inercia; inertia_: etiquetas.",
+        "b. labels_: cluster por fila; cluster_centers_: centroides; inertia_: WCSS.",
+        "c. labels_: nombres de las variables; cluster_centers_: filas más cercanas; inertia_: iteraciones.",
+        "d. labels_: cluster por fila; cluster_centers_: tamaño de cada cluster; inertia_: Silhouette."
+      ],
+      "tu_respuesta": "b",
+      "correcta": "b",
+      "resultado": "V",
+      "retroalimentacion": "labels_ indica el cluster asignado a cada fila, cluster_centers_ las coordenadas de los centroides e inertia_ la suma de distancias al cuadrado (WCSS) final."
+    },
+    {
+      "id": 30,
+      "enunciado": "¿Cuál es la regla práctica habitual para elegir k (número de componentes) en PCA?",
+      "opciones": [
+        "a. Conservar tantas componentes como variables originales tenga el dataset estandarizado.",
+        "b. Conservar solo las componentes cuyos loadings sean todos positivos o cercanos a cero.",
+        "c. Conservar siempre exactamente 2 componentes.",
+        "d. Conservar las primeras k que acumulen entre 80% y 90% de la varianza explicada."
+      ],
+      "tu_respuesta": "d",
+      "correcta": "d",
+      "resultado": "V",
+      "retroalimentacion": "Para un mapa visual se usan 2 o 3. Para alimentar un modelo se busca conservar entre 80% y 90% de la información con menos variables."
+    },
+    {
+      "id": 31,
+      "enunciado": "¿Cómo define DBSCAN un cluster?",
+      "opciones": [
+        "a. Como una región densa y conectada, de cualquier forma.",
+        "b. Como un grupo de tamaño fijo.",
+        "c. Como el conjunto de puntos más cercanos a cada uno de los K centroides elegidos.",
+        "d. Como el conjunto de puntos que comparten la misma etiqueta en la variable y."
+      ],
+      "tu_respuesta": "a",
+      "correcta": "a",
+      "resultado": "V",
+      "retroalimentacion": "Las regiones densas se separan por zonas poco densas. DBSCAN no necesita conocer el número de clusters y deja como ruido los puntos de las zonas poco densas."
+    },
+    {
+      "id": 32,
+      "enunciado": "¿Qué kernel y qué valores de C y gamma usa por defecto SVC()?",
+      "opciones": [
+        "a. kernel='rbf', C=1.0, gamma='scale'",
+        "b. kernel='linear', C=1.0, gamma='auto'",
+        "c. kernel='poly', C=0.1, gamma='scale'",
+        "d. kernel='rbf', C=10.0, gamma=1.0"
+      ],
+      "tu_respuesta": "d",
+      "correcta": "a",
+      "resultado": "X",
+      "retroalimentacion": "SVC() usa por defecto el kernel RBF con C=1.0 y gamma='scale'."
+    },
+    {
+      "id": 33,
+      "enunciado": "Con datos de 2 variables, ¿qué valor de MinPts sugieren las reglas prácticas?",
+      "opciones": [
+        "a. Igual al número de filas dividido entre 10",
+        "b. 20 o más",
+        "c. 1 o 2",
+        "d. 4 o 5"
+      ],
+      "tu_respuesta": "d",
+      "correcta": "d",
+      "resultado": "V",
+      "retroalimentacion": "El mínimo es MinPts ≥ D + 1 = 3. Sander et al. sugieren 2·D = 4, y el valor por defecto de scikit-learn es 5. Con mucho ruido se usan valores mayores."
+    },
+    {
+      "id": 34,
+      "enunciado": "Un problema multiclase asigna cada observación a exactamente una de tres o más clases. ¿Qué situación corresponde, en cambio, a un problema multi-etiqueta?",
+      "opciones": [
+        "a. La variable objetivo está guardada como texto.",
+        "b. Un mismo elemento puede pertenecer a varias categorías a la vez.",
+        "c. La variable objetivo tiene más de diez clases distintas posibles en el dataset.",
+        "d. Las clases de la variable objetivo están fuertemente desbalanceadas entre sí."
+      ],
+      "tu_respuesta": "b",
+      "correcta": "b",
+      "resultado": "V",
+      "retroalimentacion": "En multi-etiqueta las categorías no son excluyentes, por ejemplo un paciente con diabetes e hipertensión a la vez. Multiclase exige una sola clase por observación."
+    },
+    {
+      "id": 35,
+      "enunciado": "modelo es un Pipeline entrenado con los pasos 'escalar' y 'dbscan'. ¿Qué devuelve modelo['dbscan']?",
+      "opciones": [
+        "a. Un DBSCAN nuevo sin entrenar.",
+        "b. El objeto DBSCAN ya entrenado.",
+        "c. Un error, porque los pasos solo se pueden recuperar con named_steps.",
+        "d. Las etiquetas de cluster de todos los puntos usados en el entrenamiento."
+      ],
+      "tu_respuesta": "c",
+      "correcta": "b",
+      "resultado": "X",
+      "retroalimentacion": "Un Pipeline admite indexación por el nombre del paso, equivalente a named_steps['dbscan'], y devuelve el objeto entrenado."
+    },
+    {
+      "id": 36,
+      "enunciado": "Si se crea KMeans() sin indicar n_clusters, ¿cuántos clusters busca?",
+      "opciones": [
+        "a. Los elige automáticamente.",
+        "b. 2",
+        "c. 3",
+        "d. 8"
+      ],
+      "tu_respuesta": "a",
+      "correcta": "d",
+      "resultado": "X",
+      "retroalimentacion": "El valor por defecto es n_clusters=8. K-Means nunca elige K por sí mismo: hay que indicarlo, normalmente después del codo y el Silhouette."
+    },
+    {
+      "id": 37,
+      "enunciado": "Una SVM tiene excelente desempeño en entrenamiento pero mucho peor en prueba (overfitting). ¿Qué ajuste del hiperparámetro C es el recomendado?",
+      "opciones": [
+        "a. Aumentar C, para castigar con más fuerza los errores del entrenamiento.",
+        "b. Fijar C en 0, para eliminar por completo la penalización de los errores.",
+        "c. Reducir C, para ampliar el margen y tolerar algunos errores.",
+        "d. Mantener C y aumentar gamma."
+      ],
+      "tu_respuesta": "c",
+      "correcta": "c",
+      "resultado": "V",
+      "retroalimentacion": "Un C alto estrecha el margen y tiende a memorizar el entrenamiento. Reducirlo amplía el margen y simplifica el modelo. Aumentar gamma empeoraría el overfitting en RBF."
+    },
+    {
+      "id": 38,
+      "enunciado": "En un dataset con puntos aislados entre grupos densos, ¿qué diferencia hay entre K-Means y DBSCAN?",
+      "opciones": [
+        "a. Ambos algoritmos crean un cluster nuevo para cada uno de esos puntos aislados.",
+        "b. K-Means los marca como ruido; DBSCAN no.",
+        "c. K-Means los asigna a algún cluster; DBSCAN puede marcarlos como ruido.",
+        "d. Ambos algoritmos marcan esos puntos aislados como ruido con la etiqueta -1."
+      ],
+      "tu_respuesta": "c",
+      "correcta": "c",
+      "resultado": "V",
+      "retroalimentacion": "K-Means obliga a que todo punto pertenezca a un grupo, y los outliers pueden desplazar los centroides. DBSCAN los separa con la etiqueta -1."
+    },
+    {
+      "id": 39,
+      "enunciado": "Con los mismos datos (en el mismo orden), el mismo eps y el mismo MinPts, ¿DBSCAN produce siempre el mismo resultado?",
+      "opciones": [
+        "a. Sí: no tiene inicio aleatorio ni random_state.",
+        "b. No: depende de la semilla aleatoria.",
+        "c. No: en cada ejecución el algoritmo elige un valor de eps ligeramente distinto.",
+        "d. Sí, pero únicamente si se configura el parámetro n_init=10 al crear el objeto."
+      ],
+      "tu_respuesta": "a",
+      "correcta": "a",
+      "resultado": "V",
+      "retroalimentacion": "A diferencia de K-Means, DBSCAN es determinista. Lo único que puede variar si cambia el orden de las filas es a qué cluster se asignan algunos puntos borde."
+    },
+    {
+      "id": 40,
+      "enunciado": "¿Qué diferencia hay entre plot_tree(arbol) y export_text(arbol)?",
+      "opciones": [
+        "a. plot_tree muestra las importancias, mientras que export_text muestra la matriz de confusión.",
+        "b. plot_tree dibuja el árbol; export_text lo escribe como reglas.",
+        "c. Son idénticas: ambas funciones devuelven una imagen PNG con el árbol completo.",
+        "d. plot_tree entrena el árbol; export_text no."
+      ],
+      "tu_respuesta": "b",
+      "correcta": "b",
+      "resultado": "V",
+      "retroalimentacion": "Ambas funciones de sklearn.tree reciben un árbol ya entrenado. El parámetro feature_names permite mostrar los nombres reales de las columnas."
+    },
+    {
+      "id": 41,
+      "enunciado": "Un bosque se entrena con 25 columnas (después del One-Hot) y max_features='sqrt'. ¿Cuántas variables se sortean en cada nodo?",
+      "opciones": [
+        "a. 25",
+        "b. 12",
+        "c. 1",
+        "d. 5"
+      ],
+      "tu_respuesta": "d",
+      "correcta": "d",
+      "resultado": "V",
+      "retroalimentacion": "√25 = 5. En cada nodo se eligen al azar 5 de las 25 columnas y se busca la mejor división solo entre ellas."
+    },
+    {
+      "id": 42,
+      "enunciado": "Se necesita una SVM con frontera lineal sobre un dataset de 500 000 filas. ¿Qué clase de scikit-learn es la más adecuada?",
+      "opciones": [
+        "a. LinearSVC(), una versión más rápida para datos grandes.",
+        "b. SVC(kernel='rbf'), porque el kernel RBF también puede aprender fronteras lineales.",
+        "c. SVC(kernel='linear', probability=True), para acelerar la convergencia del ajuste.",
+        "d. SVC(kernel='poly', degree=1)"
+      ],
+      "tu_respuesta": "a",
+      "correcta": "a",
+      "resultado": "V",
+      "retroalimentacion": "LinearSVC implementa el kernel lineal con un optimizador especializado que escala mucho mejor con el número de filas. probability=True, al contrario, hace el entrenamiento más lento."
+    },
+    {
+      "id": 43,
+      "enunciado": "¿Qué contiene el atributo rf.estimators_ de un bosque ya entrenado?",
+      "opciones": [
+        "a. El valor de n_estimators.",
+        "b. Los nombres de todas las variables que usó cada uno de los árboles del bosque.",
+        "c. Las predicciones que hizo cada uno de los árboles sobre el conjunto X_test.",
+        "d. La lista de árboles que forman el bosque."
+      ],
+      "tu_respuesta": "d",
+      "correcta": "d",
+      "resultado": "V",
+      "retroalimentacion": "Con n_estimators=100, estimators_ es una lista de 100 DecisionTreeClassifier entrenados, que pueden inspeccionarse uno a uno."
+    },
+    {
+      "id": 44,
+      "enunciado": "¿Qué hace la inicialización k-means++ (la que usa scikit-learn por defecto)?",
+      "opciones": [
+        "a. Elige centroides iniciales bien separados entre sí.",
+        "b. Coloca los K centroides iniciales exactamente sobre las K primeras filas del dataset.",
+        "c. Elige automáticamente el valor de K.",
+        "d. Coloca todos los centroides iniciales en el promedio global de todos los datos."
+      ],
+      "tu_respuesta": "a",
+      "correcta": "a",
+      "resultado": "V",
+      "retroalimentacion": "Un inicio con centroides muy juntos puede llevar a una solución pobre. k-means++ los dispersa para reducir ese riesgo, pero no elige K."
+    },
+    {
+      "id": 45,
+      "enunciado": "¿Qué son las componentes principales que produce PCA?",
+      "opciones": [
+        "a. Combinaciones lineales nuevas, no correlacionadas, ordenadas por varianza.",
+        "b. Las variables originales con más varianza.",
+        "c. Variables nuevas construidas para que tengan la máxima correlación posible con la variable objetivo y.",
+        "d. Grupos de observaciones parecidas entre sí, que se ordenan de mayor a menor según su número de filas."
+      ],
+      "tu_respuesta": "a",
+      "correcta": "a",
+      "resultado": "V",
+      "retroalimentacion": "PCA no elimina ni selecciona variables originales: crea combinaciones lineales nuevas de ellas. PC1 captura la mayor varianza, PC2 la siguiente, etc."
+    },
+    {
+      "id": 46,
+      "enunciado": "¿Qué ocurre si se aplica PCA sin estandarizar a un dataset donde una variable va de 0 a 1 y otra de 100 000 a 250 000?",
+      "opciones": [
+        "a. PCA lanza un error por la diferencia de rangos.",
+        "b. PC1 queda dominada casi solo por la variable de valores grandes.",
+        "c. Todas las componentes explican exactamente la misma proporción de la varianza.",
+        "d. PCA detecta e ignora automáticamente las diferencias de escala entre variables."
+      ],
+      "tu_respuesta": "b",
+      "correcta": "b",
+      "resultado": "V",
+      "retroalimentacion": "PCA busca direcciones de máxima varianza, y la variable con unidades grandes tiene una varianza enorme. Regla: StandardScaler antes de PCA."
+    },
+    {
+      "id": 47,
+      "enunciado": "¿Qué efecto tiene aumentar min_samples_leaf en un árbol de decisión?",
+      "opciones": [
+        "a. No tiene ningún efecto mientras el parámetro max_depth se mantenga en None.",
+        "b. El árbol pasa a usar una mayor cantidad de variables en cada una de sus divisiones.",
+        "c. El árbol se vuelve más simple, con hojas más grandes.",
+        "d. El árbol se vuelve más complejo."
+      ],
+      "tu_respuesta": "b",
+      "correcta": "c",
+      "resultado": "X",
+      "retroalimentacion": "Exigir más casos por hoja impide crear hojas para unos pocos puntos aislados. Es una forma de poda anticipada que reduce el sobreajuste."
+    },
+    {
+      "id": 48,
+      "enunciado": "Con la estrategia One-vs-Rest (OvR) y K clases, ¿cuántos clasificadores binarios se entrenan y qué distingue cada uno?",
+      "opciones": [
+        "a. Un único clasificador con K salidas cuyas probabilidades siempre suman 1.",
+        "b. K(K-1)/2 clasificadores; cada uno compara un par distinto de clases.",
+        "c. K-1 clasificadores; cada uno separa una clase de una clase de referencia fija.",
+        "d. K clasificadores; cada uno separa una clase de todas las demás juntas."
+      ],
+      "tu_respuesta": "a",
+      "correcta": "d",
+      "resultado": "X",
+      "retroalimentacion": "OvR entrena K modelos binarios (\"esta clase vs. el resto\") y predice la clase cuyo modelo da la probabilidad más alta. Comparar pares de clases es la estrategia One-vs-One, y un único modelo con K salidas es Softmax."
+    },
+    {
+      "id": 49,
+      "enunciado": "¿Cómo calcula scikit-learn el predict_proba() de un RandomForestClassifier?",
+      "opciones": [
+        "a. Cuenta los votos de todos los árboles y divide el resultado entre n_estimators.",
+        "b. Toma directamente la probabilidad del árbol que obtuvo el mejor OOB score.",
+        "c. Aplica una sigmoide a la suma de votos.",
+        "d. Promedia las probabilidades que entrega cada árbol."
+      ],
+      "tu_respuesta": "a",
+      "correcta": "d",
+      "resultado": "X",
+      "retroalimentacion": "Cada árbol entrega la proporción de clases de su hoja y el bosque las promedia; no cuenta votos. Con árboles sin límite cada hoja suele ser pura, y entonces el resultado coincide con la proporción de votos."
+    },
+    {
+      "id": 50,
+      "enunciado": "En un SVC binario entrenado, modelo.decision_function(X_nuevo) devuelve [-1.8, 0.4]. ¿Cómo se interpreta?",
+      "opciones": [
+        "a. Es el número de vectores de soporte que respaldan la predicción de cada una de las filas.",
+        "b. Son distancias con signo: la primera va a la clase 0 y la segunda a la 1.",
+        "c. Es el error esperado de cada fila.",
+        "d. Son probabilidades: la primera fila tiene 0% y la segunda 40% de pertenecer a la clase 1."
+      ],
+      "tu_respuesta": "b",
+      "correcta": "b",
+      "resultado": "V",
+      "retroalimentacion": "decision_function da la distancia con signo al hiperplano. El signo indica el lado (positivo, clase 1) y la magnitud, qué tan lejos de la frontera está el punto."
+    },
+    {
+      "id": 51,
+      "enunciado": "¿Cuáles son los dos pasos que K-Means repite hasta converger?",
+      "opciones": [
+        "a. Unir los dos clusters más cercanos.",
+        "b. Dividir los datos en entrenamiento y prueba, y luego medir el accuracy obtenido en cada parte.",
+        "c. Asignar cada punto al centroide más cercano y recalcular cada centroide.",
+        "d. Eliminar el punto más lejano de cada grupo, y recalcular la distancia entre todos los clusters."
+      ],
+      "tu_respuesta": "c",
+      "correcta": "c",
+      "resultado": "V",
+      "retroalimentacion": "Cada centroide se mueve al promedio de sus puntos y el ciclo asignar -> actualizar termina cuando ningún punto cambia de cluster. Unir los clusters más cercanos describe el clustering jerárquico."
+    },
+    {
+      "id": 52,
+      "enunciado": "¿Qué ocurre con el desempeño en prueba al aumentar mucho el número de árboles (n_estimators)?",
+      "opciones": [
+        "a. Mejora al inicio y luego se estabiliza, sin aumentar el sobreajuste.",
+        "b. Empeora, porque cada árbol adicional aumenta el sobreajuste del bosque completo.",
+        "c. No cambia: 1 árbol rinde igual que 300.",
+        "d. Mejora sin límite: cada árbol nuevo sube el accuracy en la misma medida que el anterior."
+      ],
+      "tu_respuesta": "a",
+      "correcta": "a",
+      "resultado": "V",
+      "retroalimentacion": "Promediar más árboles reduce la varianza hasta estabilizarse. El costo de agregar árboles es tiempo y memoria, no sobreajuste."
+    },
+    {
+      "id": 53,
+      "enunciado": "Varios hiperplanos separan sin errores los datos de entrenamiento. ¿Por qué SVM elige el de margen máximo?",
+      "opciones": [
+        "a. Porque minimiza el número de vectores de soporte que el modelo debe guardar.",
+        "b. Porque al quedar más lejos de ambas clases tolera mejor los datos nuevos.",
+        "c. Porque garantiza 100% de accuracy en prueba.",
+        "d. Porque es el que usa menos variables predictoras para separar las dos clases."
+      ],
+      "tu_respuesta": "b",
+      "correcta": "b",
+      "resultado": "V",
+      "retroalimentacion": "Un margen amplio deja más distancia entre la frontera y los puntos de cada clase, y eso mejora la generalización. No garantiza un accuracy perfecto en prueba."
+    },
+    {
+      "id": 54,
+      "enunciado": "¿Cuántas combinaciones evalúa GridSearchCV con este param_grid? param_grid = [ {'modelo__kernel': ['rbf'], 'modelo__C': [0.1, 1, 10], 'modelo__gamma': [0.01, 0.1]}, {'modelo__kernel': ['linear'], 'modelo__C': [0.1, 1, 10]}, ]",
+      "opciones": [
+        "a. 12",
+        "b. 18",
+        "c. 9",
+        "d. 6"
+      ],
+      "tu_respuesta": "b",
+      "correcta": "c",
+      "resultado": "X",
+      "retroalimentacion": "El primer diccionario genera 1 × 3 × 2 = 6 combinaciones y el segundo 1 × 3 = 3, en total 9. Con una lista de diccionarios se evita combinar gamma con el kernel lineal, que lo ignora."
+    },
+    {
+      "id": 55,
+      "enunciado": "En un DBSCAN entrenado, ¿qué contienen core_sample_indices_ y components_?",
+      "opciones": [
+        "a. Los centroides y su inercia.",
+        "b. El número de clusters encontrados y el valor de ε utilizado.",
+        "c. Los índices de los puntos de ruido y sus distancias al core.",
+        "d. Los índices y las coordenadas de los puntos core."
+      ],
+      "tu_respuesta": "d",
+      "correcta": "d",
+      "resultado": "V",
+      "retroalimentacion": "Se usan para asignar datos nuevos: se busca el core más cercano y se toma su etiqueta con labels_[core_sample_indices_]."
+    },
+    {
+      "id": 56,
+      "enunciado": "Un Random Forest con árboles sin límite obtiene accuracy 1.000 en entrenamiento. ¿Cómo debe interpretarse?",
+      "opciones": [
+        "a. Garantiza ese accuracy con datos nuevos.",
+        "b. Es una señal segura de sobreajuste y el modelo debe descartarse por completo.",
+        "c. Indica que hubo fuga de datos entre los conjuntos de entrenamiento y prueba.",
+        "d. Es normal; se juzga con el test y el OOB."
+      ],
+      "tu_respuesta": "c",
+      "correcta": "d",
+      "resultado": "X",
+      "retroalimentacion": "Cada árbol crece hasta tener hojas puras y por eso el bosque \"acierta todo\" en train. Lo relevante es su capacidad de generalizar, medida con el conjunto de prueba y el OOB."
+    },
+    {
+      "id": 57,
+      "enunciado": "¿En qué escenario una SVM con kernel RBF resulta poco práctica?",
+      "opciones": [
+        "a. Con variables numéricas que ya fueron estandarizadas previamente con StandardScaler.",
+        "b. Con datasets pequeños y muchas variables.",
+        "c. Con datasets de cientos de miles de filas, por su tiempo de entrenamiento.",
+        "d. Con fronteras de decisión no lineales y curvas entre las clases del problema."
+      ],
+      "tu_respuesta": "c",
+      "correcta": "c",
+      "resultado": "V",
+      "retroalimentacion": "El costo de entrenamiento de SVC crece rápido con el número de filas (más de ~100 000). Para datos muy grandes con frontera lineal se usa LinearSVC."
+    },
+    {
+      "id": 58,
+      "enunciado": "¿Qué indica n_init=10 en KMeans(n_clusters=3, n_init=10, random_state=42)?",
+      "opciones": [
+        "a. Que se hacen como máximo 10 iteraciones del ciclo asignar -> actualizar.",
+        "b. Que se usan 10 núcleos del procesador para acelerar el entrenamiento.",
+        "c. Que se prueban automáticamente los valores K = 1 a 10 y se elige el mejor.",
+        "d. Que se ejecuta 10 veces con otros inicios y se queda con la menor inercia."
+      ],
+      "tu_respuesta": "d",
+      "correcta": "d",
+      "resultado": "V",
+      "retroalimentacion": "K-Means puede quedar en un óptimo local según el inicio, y repetirlo aumenta la probabilidad de una buena solución. El límite de iteraciones se fija con max_iter (300 por defecto). Con n_init='auto' (valor por defecto) y k-means++, el algoritmo se ejecuta una sola vez."
+    },
+    {
+      "id": 59,
+      "enunciado": "¿Qué mide la inercia (WCSS) de un modelo K-Means?",
+      "opciones": [
+        "a. El número de puntos que cambian de cluster en cada iteración del algoritmo.",
+        "b. La proporción de puntos que fueron clasificados correctamente por el modelo.",
+        "c. La distancia promedio entre centroides.",
+        "d. La suma de distancias al cuadrado de cada punto a su centroide."
+      ],
+      "tu_respuesta": "d",
+      "correcta": "d",
+      "resultado": "V",
+      "retroalimentacion": "Una inercia menor indica clusters más compactos. Es la función que K-Means minimiza y en scikit-learn está en inertia_."
+    },
+    {
+      "id": 60,
+      "enunciado": "En el k-dist graph se escribe k_dist = np.sort(distancias[:, 4])[::-1]. ¿Qué hace [::-1]?",
+      "opciones": [
+        "a. Invierte el orden (de mayor a menor).",
+        "b. Toma solo los valores ubicados en posiciones impares.",
+        "c. Elimina el último elemento.",
+        "d. Convierte todas las distancias a valores negativos."
+      ],
+      "tu_respuesta": "a",
+      "correcta": "a",
+      "resultado": "V",
+      "retroalimentacion": "np.sort ordena de menor a mayor y [::-1] invierte el orden. Los puntos más aislados quedan al inicio de la curva y el codo se identifica mejor."
+    }
+  ]
+}
