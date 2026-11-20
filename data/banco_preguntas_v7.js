@@ -10647,10 +10647,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En el backward pass de clasificación binaria con BCE y activación sigmoid en la capa de salida, el gradiente respecto a z2 (antes de sigmoid) se calcula como d2 = y_hat - y. ¿Por qué esta expresión es tan sencilla?",
           "options": [
-            "Porque BCE y sigmoid son inversas matemáticas; sus derivadas se cancelan dejando solo y_hat - y.",
-            "Porque se aplica la regla de la cadena solo a la última capa ignorando las anteriores.",
-            "Porque la derivada de BCE respecto a y_hat multiplicada por la derivada de sigmoid respecto a z2 se simplifica a y_hat - y.",
-            "Porque en clasificación binaria los errores son la diferencia directa entre predicción y etiqueta."
+            "Porque BCE y sigmoid son inversas matemáticas; sus derivadas se cancelan dejando solo y_hat - y al operar juntas.",
+            "Porque se aplica la regla de la cadena solo a la última capa ignorando las anteriores para simplificar el cálculo.",
+            "Porque la derivada de BCE respecto a y_hat multiplicada por la de sigmoid respecto a z2 simplifica a ŷ - y.",
+            "Porque en clasificación binaria los errores son la diferencia directa entre predicción y etiqueta real siempre."
           ],
           "correct": 2,
           "feedback": "Por la regla de la cadena: dBCE/dz2 = (dBCE/dy_hat) * (dy_hat/dz2). La derivada de BCE respecto a y_hat es (-y/y_hat + (1-y)/(1-y_hat)) y la derivada de sigmoid es y_hat*(1-y_hat). Al multiplicar y simplificar algebraicamente se obtiene exactamente y_hat - y. Esta cancelación elegante es una razón por la que se usa BCE+sigmoid juntos."
@@ -10675,10 +10675,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En el backward pass, al propagar el error hacia la capa oculta se calcula d1 = (d2 @ W2.T) * d_relu. ¿Por qué es necesario multiplicar por d_relu?",
           "options": [
-            "Para normalizar el gradiente y evitar que explote cuando los valores de activación son muy grandes.",
-            "Para desactivar las neuronas cuyo peso sea negativo y mantener la estabilidad del entrenamiento.",
-            "Porque d_relu convierte el gradiente de salida al espacio oculto cambiando sus dimensiones.",
-            "Porque la regla de la cadena exige multiplicar por la derivada de ReLU al retropropagar a través de ella."
+            "Para normalizar el gradiente y evitar que explote cuando los valores de activación son demasiado grandes en profundidad.",
+            "Para desactivar las neuronas cuyo peso sea negativo y mantener la estabilidad numérica del proceso de entrenamiento.",
+            "Porque d_relu convierte el gradiente de la capa de salida al espacio oculto cambiando sus dimensiones matriciales.",
+            "Porque la regla de la cadena exige multiplicar por la derivada de ReLU al retropropagar a través de esa activación."
           ],
           "correct": 3,
           "feedback": "La regla de la cadena: dL/dz1 = (dL/da1) * (da1/dz1). La derivada de ReLU es d_relu = (z1 > 0).astype(float): vale 1 donde la neurona estaba activa y 0 donde estaba inactiva. Multiplicar por d_relu 'bloquea' el gradiente en las neuronas que ReLU apagó, implementando correctamente la cadena."
@@ -10689,10 +10689,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En la función backward del taller, los gradientes dW y db se calculan dividiendo entre n (número de ejemplos). Si se eliminara esa división, ¿qué consecuencia directa tendría sobre el entrenamiento?",
           "options": [
-            "El modelo convergería más rápido porque gradientes n veces más grandes reducen las épocas necesarias.",
-            "Solo afectaría al sesgo (bias) porque los pesos se actualizan con momento independientemente de n.",
-            "Los gradientes escalarían con n, haciendo que la tasa de aprendizaje efectiva dependa del tamaño del batch.",
-            "El modelo no aprendería nada porque sin la normalización los pesos no cambiarían en la dirección correcta."
+            "El modelo convergería más rápido porque gradientes n veces más grandes reducen el número de épocas necesarias.",
+            "Solo afectaría al sesgo (bias) porque los pesos se actualizan con momento de forma independiente de n.",
+            "Los gradientes escalarían con n, haciendo la tasa de aprendizaje efectiva dependiente del tamaño del batch.",
+            "El modelo no aprendería nada porque sin la normalización los pesos no cambiarían en la dirección correcta del mínimo."
           ],
           "correct": 2,
           "feedback": "Sin dividir entre n, el gradiente es la suma (no el promedio) sobre todos los ejemplos. Esto hace que gradientes sean n veces mayores: con n=100 equivale a usar learning_rate*100. El entrenamiento se vuelve sensible al tamaño del batch y es necesario reajustar la tasa de aprendizaje cada vez que cambia n. Dividir por n da el gradiente promedio, que es consistente."
@@ -10703,10 +10703,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "El taller implementa una función gradient_check que compara el gradiente analítico con una aproximación numérica. ¿Cuál es el propósito principal de esta verificación?",
           "options": [
-            "Sustituir el backward analítico por uno numérico más preciso cuando el dataset es pequeño.",
+            "Sustituir el backward analítico por uno numérico más preciso para datasets pequeños donde el tiempo no importa.",
             "Verificar que el backward es correcto comparando su resultado con la derivada numérica por diferencias finitas.",
-            "Medir la velocidad de convergencia comparando gradientes en épocas sucesivas del entrenamiento.",
-            "Detectar neuronas muertas de ReLU comparando si el gradiente analítico difiere del numérico en más de 1e-5."
+            "Medir la velocidad de convergencia del modelo comparando gradientes en épocas sucesivas del entrenamiento.",
+            "Detectar neuronas muertas de ReLU comparando si el gradiente analítico difiere del numérico en más de 1e-5 siempre."
           ],
           "correct": 1,
           "feedback": "gradient_check calcula (L(theta+eps) - L(theta-eps)) / (2*eps) numéricamente para cada parámetro y lo compara con el gradiente analítico del backward pass. Si coinciden (diferencia relativa < 1e-5), el backward está implementado correctamente. Es una herramienta de debugging, no un reemplazo del backward analítico."
@@ -10731,10 +10731,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En backward_regresion del taller, el gradiente de la capa de salida es d2 = 2*(y_hat - y)/n. ¿De dónde viene el factor 2?",
           "options": [
-            "Es una convención para que el gradiente de regresión sea el doble del de clasificación.",
-            "Surge de promediar el gradiente: n ejemplos por (1/n) por derivada = factor 2.",
-            "Viene de la regla de la potencia al derivar MSE = mean((y_hat-y) al cuadrado) respecto a y_hat.",
-            "Es necesario para que el gradiente sea compatible con la función ReLU en capas ocultas."
+            "Es una convención para que el gradiente de regresión sea siempre el doble del de clasificación binaria.",
+            "Surge de promediar el gradiente sobre n ejemplos con factor (1/n) por ejemplo multiplicado por la derivada.",
+            "Viene de la regla de la potencia al derivar MSE respecto a y_hat: d/dy_hat de (y_hat-y)^2 produce el 2.",
+            "Es necesario para que el gradiente de salida sea compatible con la función ReLU que usa la capa oculta."
           ],
           "correct": 2,
           "feedback": "MSE = (1/n)*sum((y_hat-y)^2). Derivando respecto a y_hat: dMSE/dy_hat = (2/n)*(y_hat-y). El factor 2 es simplemente la regla de la potencia aplicada al cuadrado. En algunos libros se define MSE con (1/2n) precisamente para cancelar este 2 y simplificar el gradiente, pero en la implementación directa aparece el factor 2."
@@ -10759,10 +10759,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "El taller compara SGD, Momentum y Adam en el mismo problema. Los resultados muestran que Momentum mejora la accuracy de 0.855 (SGD) a 0.890. ¿Cuál es la explicación correcta de por qué Momentum supera a SGD?",
           "options": [
-            "Momentum usa una tasa de aprendizaje mayor que SGD, dando pasos más grandes en cada iteración.",
-            "Momentum calcula el gradiente sobre un mini-batch mayor, obteniendo una estimación más precisa.",
-            "Momentum acumula un promedio exponencial de gradientes anteriores, amortiguando oscilaciones y acelerando el avance.",
-            "Momentum normaliza los gradientes dividiéndolos entre su magnitud para evitar inestabilidad."
+            "Momentum usa una tasa de aprendizaje mayor que SGD, dando pasos más grandes hacia el mínimo en cada iteración.",
+            "Momentum calcula el gradiente sobre un mini-batch de mayor tamaño, obteniendo una estimación más precisa del gradiente.",
+            "Momentum acumula promedio exponencial de gradientes anteriores, amortiguando oscilaciones y acelerando el avance.",
+            "Momentum normaliza los gradientes dividiéndolos entre su magnitud para evitar que los pasos sean inestables."
           ],
           "correct": 2,
           "feedback": "Momentum mantiene una 'velocidad' v = beta*v + eta*gradL. Esto suaviza el camino: en dimensiones donde el gradiente es consistente el momento se acumula (pasos más grandes), y en dimensiones oscilantes los gradientes opuestos se cancelan (pasos más pequeños). Resultado: menos oscilaciones en valles estrechos y convergencia más rápida."
@@ -10773,10 +10773,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En la implementación de Adam del taller, se calculan m_hat = m / (1 - beta1**t) y v_hat = v / (1 - beta2**t). ¿Por qué es necesaria esta corrección?",
           "options": [
-            "Para que m y v tengan la misma escala que el gradiente crudo y puedan compararse con SGD.",
+            "Para que m y v tengan la misma escala que el gradiente crudo y puedan compararse directamente con SGD puro.",
             "Para normalizar los momentos al rango 0-1 y evitar que los parámetros de Adam crezcan indefinidamente.",
             "Porque beta1 y beta2 son mayores que 1 en las primeras épocas y la corrección los lleva al rango correcto.",
-            "Porque m y v se inicializan en 0 y están sesgados hacia cero en los primeros pasos; la corrección lo compensa."
+            "Porque m y v empiezan en 0 y subestiman el gradiente real; la división corrige ese sesgo inicial."
           ],
           "correct": 3,
           "feedback": "m y v se inicializan en 0. Las primeras actualizaciones son: m = (1-beta1)*g aproximadamente 0.1*g (si beta1=0.9), que subestima g por un factor (1-beta1). La corrección m_hat = m/(1-beta1^t) divide entre un valor pequeño en las primeras épocas, escalando m hacia su valor esperado. Sin corrección, Adam daría pasos muy pequeños al inicio."
@@ -10815,10 +10815,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "El taller distingue tres variantes de descenso de gradiente: batch GD, SGD y mini-batch GD. ¿Cuál describe correctamente las diferencias entre ellas?",
           "options": [
-            "Las tres son equivalentes matemáticamente; solo difieren en cuánta memoria RAM utilizan.",
-            "SGD es el único que puede escapar de mínimos locales; batch GD y mini-batch GD siempre convergen al global.",
+            "Las tres son equivalentes matemáticamente y solo difieren en cuánta memoria RAM utilizan durante el proceso.",
+            "SGD es el único que puede escapar de mínimos locales; batch GD y mini-batch GD siempre van al global.",
             "Mini-batch GD requiere dividir la tasa de aprendizaje entre el tamaño del batch para mantener la misma convergencia.",
-            "Batch GD usa todo el dataset (gradiente exacto, lento), SGD usa un ejemplo (ruidoso, rápido), mini-batch equilibra ambos."
+            "Batch GD usa todo el dataset por época; SGD usa un ejemplo; mini-batch usa subconjuntos equilibrando ambos."
           ],
           "correct": 3,
           "feedback": "Batch GD: gradiente sobre todo el dataset, exacto pero muy lento y requiere toda la RAM. SGD: gradiente sobre 1 ejemplo, muy ruidoso pero actualiza frecuentemente; puede escapar de mínimos locales. Mini-batch GD: gradiente sobre un subconjunto (32-256 ejemplos), balance entre eficiencia computacional (GPU vectorizada) y ruido suficiente para generalizar bien. Es el más usado en la práctica."
@@ -10829,10 +10829,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En la inicialización de pesos del taller se usa np.random.randn(n_input, n_hidden) * 0.01. ¿Por qué NO se inicializan todos los pesos en cero?",
           "options": [
-            "Todas las neuronas de la misma capa calcularían la misma función y nunca se diferenciarían (problema de simetría).",
-            "Pesos en cero producen gradientes infinitos en la primera iteración, causando overflow numérico.",
-            "La inicialización en cero viola las condiciones KKT necesarias para que el descenso de gradiente converja.",
-            "Pesos en cero hacen que ReLU devuelva siempre cero, deteniendo el backward desde la primera época."
+            "Todas las neuronas de la misma capa calcularían la misma función y nunca se diferenciarían (simetría).",
+            "Pesos en cero producen gradientes infinitos en la primera iteración del backward, causando overflow numérico grave.",
+            "La inicialización en cero viola las condiciones KKT necesarias para garantizar la convergencia del descenso.",
+            "Pesos en cero hacen que ReLU devuelva siempre cero, deteniendo por completo el backward desde la primera época."
           ],
           "correct": 0,
           "feedback": "Con W=0, todas las neuronas de una capa computan z_i = 0, activación idéntica, gradiente idéntico, actualización idéntica en cada época. Las neuronas nunca se diferencian: esto se llama 'problema de simetría'. Los pesos aleatorios rompen la simetría, permitiendo que cada neurona aprenda características diferentes. El factor 0.01 mantiene los valores iniciales pequeños para evitar saturar las activaciones."
@@ -10913,9 +10913,9 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En el preprocesamiento del taller, los datos de entrada se normalizan con StandardScaler antes de entrenar. ¿Cuál es el efecto directo de NO normalizar sobre el entrenamiento con descenso de gradiente?",
           "options": [
-            "El modelo no podría calcular la pérdida porque MSE y BCE asumen entradas en el rango 0-1.",
-            "El backward produciría gradientes negativos para características con valores positivos.",
-            "Normalizar o no es equivalente: el modelo aprende automáticamente a escalar cada característica.",
+            "El modelo no podría calcular la pérdida porque MSE y BCE asumen entradas en el rango de 0 a 1 estrictamente.",
+            "El backward produciría gradientes negativos para características con valores positivos, invirtiendo la actualización.",
+            "Normalizar o no es equivalente: el modelo aprende automáticamente a escalar cada característica con sus pesos.",
             "Las características de mayor escala dominarán el gradiente, haciendo la superficie de pérdida elongada e ineficiente."
           ],
           "correct": 3,
@@ -10941,10 +10941,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "La retropropagación (backpropagation) aplica sistemáticamente la regla de la cadena. Si la red tiene capas L1 -> L2 -> L3 -> salida, ¿en qué orden se calculan los gradientes y por qué?",
           "options": [
-            "De L1 hacia la salida, porque los gradientes de capas anteriores se necesitan para calcular los de posteriores.",
-            "En paralelo para todas las capas usando el gradiente total dividido entre el número de capas.",
-            "De la salida hacia L1, porque la regla de la cadena requiere el gradiente de la capa siguiente para calcular el de la anterior.",
-            "En el mismo orden del forward pass, usando los valores almacenados del forward para calcular las derivadas."
+            "De L1 hacia la salida, porque los gradientes de capas anteriores son necesarios para calcular los de las posteriores.",
+            "En paralelo para todas las capas simultáneamente, usando el gradiente total dividido entre el número de capas.",
+            "De la salida hacia L1, porque la regla de la cadena requiere el gradiente de la siguiente capa para calcular el anterior.",
+            "En el mismo orden del forward pass (L1 hacia salida), usando los valores almacenados del forward para las derivadas."
           ],
           "correct": 2,
           "feedback": "La regla de la cadena: dL/dW1 = (dL/da3)*(da3/da2)*(da2/da1)*(da1/dW1). Para calcular dL/dW1 necesitamos dL/da2, que a su vez necesita dL/da3. Por eso se empieza desde la salida y se propaga 'hacia atrás' (de ahí el nombre backpropagation): cada capa usa el gradiente calculado por la capa siguiente para calcular el suyo."
@@ -10969,10 +10969,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En la implementación de Adam del taller, el denominador incluye el término 1e-8: theta -= lr * m_hat / (np.sqrt(v_hat) + 1e-8). ¿Por qué es necesario este pequeño valor?",
           "options": [
-            "Para evitar división por cero cuando v_hat es 0, garantizando estabilidad numérica.",
-            "Para que la lr efectiva de Adam sea 1e-8 veces menor que la lr global especificada.",
-            "Para implementar la corrección de sesgo sin calcular m_hat y v_hat por separado.",
-            "Para que Adam sea equivalente a SGD cuando los gradientes son muy pequeños."
+            "Para evitar división por cero cuando v_hat es 0, garantizando estabilidad numérica del cálculo.",
+            "Para que la tasa de aprendizaje efectiva de Adam sea exactamente 1e-8 veces menor que la lr global.",
+            "Para implementar la corrección de sesgo de forma implícita sin calcular m_hat y v_hat por separado.",
+            "Para que Adam funcione igual que SGD cuando los gradientes son muy pequeños, como fallback seguro."
           ],
           "correct": 0,
           "feedback": "v_hat = E[g^2] >= 0. Si un parámetro no recibe gradiente (g=0 siempre), v_hat=0 y np.sqrt(0)=0, causando división por cero. El término eps=1e-8 (epsilon) añade un mínimo no nulo al denominador, garantizando que la división sea numéricamente estable. Es una constante estándar en todas las implementaciones de Adam (el paper original recomienda eps=1e-8)."
@@ -10985,8 +10985,8 @@ window.QUIZ_DATA = {
           "options": [
             "beta1 controla la lr global y beta2 la regularización L2; beta2 es mayor para aplicar más regularización.",
             "beta1 y beta2 controlan el momentum pero en capas distintas: beta1 para ocultas y beta2 para la de salida.",
-            "Son iguales en función pero beta2 es mayor para evitar que el segundo momento domine al primero.",
-            "beta1 controla el primer momento (dirección); beta2 el segundo (magnitud cuadrada); beta2 es mayor porque la varianza necesita historial más largo."
+            "Son iguales en función pero beta2 es mayor para evitar que el segundo momento domine al primero en magnitud.",
+            "beta1 controla el primer momento (dirección); beta2 el segundo (magnitud cuadrada); beta2 mayor por estabilidad."
           ],
           "correct": 3,
           "feedback": "beta1=0.9: decaimiento del primer momento m (promedio exponencial del gradiente, como momentum). Ventana efectiva aprox. 1/(1-0.9) = 10 pasos. beta2=0.999: decaimiento del segundo momento v (promedio del gradiente^2). Ventana efectiva aprox. 1/(1-0.999) = 1000 pasos. v necesita un historial más largo porque la varianza de los gradientes es más ruidosa y requiere más datos para estimarla establemente."
@@ -10997,10 +10997,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "El taller tiene dos implementaciones de backward: backward (para clasificación BCE) y backward_regresion (para regresión MSE). ¿Cuál es la diferencia clave entre ellas?",
           "options": [
-            "Solo difieren en dW2 y db2; d1 de la capa oculta es idéntico en ambas porque ReLU es igual.",
-            "En backward_regresion no se calcula d1 porque la capa de salida lineal no necesita retropropagar más.",
-            "El gradiente de salida: backward usa d2=y_hat-y (BCE+sigmoid); backward_regresion usa d2=2*(y_hat-y)/n (MSE). El resto es igual.",
-            "La diferencia es que backward usa W2.T para retropropagar, mientras que backward_regresion usa W2 directamente."
+            "Solo difieren en dW2 y db2; d1 de la capa oculta es idéntico en ambas porque la función ReLU es la misma.",
+            "En backward_regresion no se calcula d1 porque la capa de salida lineal no necesita retropropagar más niveles.",
+            "El gradiente de salida: backward usa d2=ŷ-y (BCE+sigmoid); backward_regresion usa d2=2(ŷ-y)/n (MSE). El resto igual.",
+            "La diferencia es que backward usa W2.T para retropropagar hacia la oculta, mientras backward_regresion usa W2 directa."
           ],
           "correct": 2,
           "feedback": "La única diferencia es el gradiente de la capa de salida: BCE+sigmoid da d2 = y_hat-y (algebraicamente simplificado); MSE+lineal da d2 = 2*(y_hat-y)/n (derivada directa de MSE). A partir de d2, el resto del backward es idéntico: d1 = (d2 @ W2.T) * d_relu, dW2 = A1.T @ d2 / n, etc."
@@ -11011,10 +11011,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "Un estudiante pregunta: '¿Por qué el algoritmo se llama backPROPAGATION y no simplemente gradient descent?'. ¿Cuál es la explicación correcta?",
           "options": [
-            "Backpropagation calcula los gradientes con la regla de la cadena; gradient descent es el paso de actualización que los usa.",
-            "Backpropagation y gradient descent son sinónimos; el nombre varía según si se usa en redes neuronales u otros modelos.",
-            "Backpropagation es el nombre del algoritmo completo, que incluye tanto el forward pass como el descenso de gradiente.",
-            "Backpropagation propaga los datos hacia atrás durante el forward pass para calcular activaciones en orden inverso."
+            "Backpropagation calcula los gradientes con la regla de la cadena; gradient descent es el paso de actualización.",
+            "Son sinónimos en la práctica; el nombre backpropagation se usa en redes neuronales y gradient descent en otros modelos.",
+            "Backpropagation es el nombre del proceso completo, que incluye tanto el forward pass como el descenso de gradiente.",
+            "Backpropagation propaga los datos hacia atrás (del output al input) durante el forward pass para calcular activaciones."
           ],
           "correct": 0,
           "feedback": "Backpropagation es el algoritmo para calcular dL/dtheta eficientemente en redes multicapa, propagando el error desde la salida hacia la entrada mediante la regla de la cadena. Gradient descent es el algoritmo de optimización que usa esos gradientes para actualizar theta. Son etapas distintas: backprop calcula los gradientes, gradient descent los usa."
@@ -15591,10 +15591,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "Dada la red del Bloque A3 (arquitectura 2→2→1) con x = (0.7, 0.5), y = 1, la predicción es ŷ. ¿Cuál es la expresión correcta del gradiente d2 respecto a la capa de salida con BCE?",
           "options": [
-            "Porque BCE y sigmoid son inversas matemáticas; sus derivadas se cancelan dejando solo y_hat - y.",
-            "Porque se aplica la regla de la cadena solo a la última capa ignorando las anteriores.",
-            "Porque la derivada de BCE respecto a y_hat multiplicada por la derivada de sigmoid respecto a z2 se simplifica a y_hat - y.",
-            "Porque en clasificación binaria los errores son la diferencia directa entre predicción y etiqueta."
+            "Porque BCE y sigmoid son inversas matemáticas; sus derivadas se cancelan dejando solo y_hat - y al operar juntas.",
+            "Porque se aplica la regla de la cadena solo a la última capa ignorando las anteriores para simplificar el cálculo.",
+            "Porque la derivada de BCE respecto a y_hat multiplicada por la de sigmoid respecto a z2 simplifica a ŷ - y.",
+            "Porque en clasificación binaria los errores son la diferencia directa entre predicción y etiqueta real siempre."
           ],
           "correct": 2,
           "feedback": "Para BCE + sigmoid en la capa de salida, la derivada combinada simplifica elegantemente a d2 = ŷ − y. Esto se debe a que la derivada de la entropía cruzada respecto a z2 (antes de sigmoid) colapsa a esta forma simple gracias a la propiedad de sigmoid: σ'(z) = σ(z)(1−σ(z)). La opción b es la derivada de MSE. La opción c es la derivada de BCE respecto a ŷ antes de combinar con sigmoid. La opción d mezcla incorrectamente ambas derivadas."
@@ -15619,10 +15619,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En el Bloque A3, el gradiente de la capa oculta se calcula como:\n\n```python\nd1 = (d2 @ W2.T) * d_relu(z1)\n```\n\n¿Por qué se multiplica por `d_relu(z1)` y no simplemente por `relu(z1)`?",
           "options": [
-            "Para normalizar el gradiente y evitar que explote cuando los valores de activación son muy grandes.",
-            "Para desactivar las neuronas cuyo peso sea negativo y mantener la estabilidad del entrenamiento.",
-            "Porque d_relu convierte el gradiente de salida al espacio oculto cambiando sus dimensiones.",
-            "Porque la regla de la cadena exige multiplicar por la derivada de ReLU al retropropagar a través de ella."
+            "Para normalizar el gradiente y evitar que explote cuando los valores de activación son demasiado grandes en profundidad.",
+            "Para desactivar las neuronas cuyo peso sea negativo y mantener la estabilidad numérica del proceso de entrenamiento.",
+            "Porque d_relu convierte el gradiente de la capa de salida al espacio oculto cambiando sus dimensiones matriciales.",
+            "Porque la regla de la cadena exige multiplicar por la derivada de ReLU al retropropagar a través de esa activación."
           ],
           "correct": 3,
           "feedback": "La regla de la cadena (backpropagation) requiere multiplicar por la derivada de la función de activación en cada capa. d_relu(z) devuelve 1 si z > 0 y 0 si z ≤ 0 —exactamente la derivada de ReLU. Al multiplicar (d2 @ W2.T) por d_relu(z1), se 'detiene' la propagación del gradiente hacia las neuronas que estaban inactivas (z1 ≤ 0), pues su derivada es 0. relu(z1) sería la activación, no su derivada, y usarla sería matemáticamente incorrecto."
@@ -15633,10 +15633,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En el Bloque A4, la función `backward()` divide el gradiente por n (tamaño del lote): `dW2 = a1.T @ d2 / n`. ¿Por qué se divide por n?",
           "options": [
-            "El modelo convergería más rápido porque gradientes n veces más grandes reducen las épocas necesarias.",
-            "Solo afectaría al sesgo (bias) porque los pesos se actualizan con momento independientemente de n.",
-            "Los gradientes escalarían con n, haciendo que la tasa de aprendizaje efectiva dependa del tamaño del batch.",
-            "El modelo no aprendería nada porque sin la normalización los pesos no cambiarían en la dirección correcta."
+            "El modelo convergería más rápido porque gradientes n veces más grandes reducen el número de épocas necesarias.",
+            "Solo afectaría al sesgo (bias) porque los pesos se actualizan con momento de forma independiente de n.",
+            "Los gradientes escalarían con n, haciendo la tasa de aprendizaje efectiva dependiente del tamaño del batch.",
+            "El modelo no aprendería nada porque sin la normalización los pesos no cambiarían en la dirección correcta del mínimo."
           ],
           "correct": 2,
           "feedback": "La función de pérdida calcula el promedio sobre n ejemplos: L = (1/n)·Σ loss_i. Al derivar respecto a los pesos, el factor 1/n también aparece en el gradiente. Dividir dW2 por n equivale a tomar el gradiente promedio del lote, lo que hace que la escala de la actualización sea independiente del tamaño del lote. Sin esta división, usar un lote de 32 produciría gradientes 32 veces mayores que usar un ejemplo, complicando la elección de η."
@@ -15647,10 +15647,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "El taller implementa una verificación numérica del gradiente usando la fórmula:\n\n```python\ngrad_num = (L(w + h) - L(w - h)) / (2 * h)\n```\n\n¿Cuál es el propósito de este cálculo?",
           "options": [
-            "Sustituir el backward analítico por uno numérico más preciso cuando el dataset es pequeño.",
+            "Sustituir el backward analítico por uno numérico más preciso para datasets pequeños donde el tiempo no importa.",
             "Verificar que el backward es correcto comparando su resultado con la derivada numérica por diferencias finitas.",
-            "Medir la velocidad de convergencia comparando gradientes en épocas sucesivas del entrenamiento.",
-            "Detectar neuronas muertas de ReLU comparando si el gradiente analítico difiere del numérico en más de 1e-5."
+            "Medir la velocidad de convergencia del modelo comparando gradientes en épocas sucesivas del entrenamiento.",
+            "Detectar neuronas muertas de ReLU comparando si el gradiente analítico difiere del numérico en más de 1e-5 siempre."
           ],
           "correct": 1,
           "feedback": "El gradient check numérico es una herramienta de debugging: se calcula una aproximación de la derivada usando diferencias finitas centrales (muy precisa con h pequeño, e.g. 1e-5) y se compara con el gradiente analítico de backpropagation. Si ambos coinciden (diferencia relativa < 1e-5), backpropagation está implementado correctamente. Es demasiado lento para usar en producción (requiere una evaluación de L por cada parámetro), pero invaluable para detectar bugs."
@@ -15675,10 +15675,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En el Bloque B2, la función `backward_regresion()` calcula el gradiente de la capa de salida así:\n\n```python\nd2 = 2 * (y_hat - y) / n\n```\n\n¿De dónde proviene el factor 2?",
           "options": [
-            "Es una convención para que el gradiente de regresión sea el doble del de clasificación.",
-            "Surge de promediar el gradiente: n ejemplos por (1/n) por derivada = factor 2.",
-            "Viene de la regla de la potencia al derivar MSE = mean((y_hat-y) al cuadrado) respecto a y_hat.",
-            "Es necesario para que el gradiente sea compatible con la función ReLU en capas ocultas."
+            "Es una convención para que el gradiente de regresión sea siempre el doble del de clasificación binaria.",
+            "Surge de promediar el gradiente sobre n ejemplos con factor (1/n) por ejemplo multiplicado por la derivada.",
+            "Viene de la regla de la potencia al derivar MSE respecto a y_hat: d/dy_hat de (y_hat-y)^2 produce el 2.",
+            "Es necesario para que el gradiente de salida sea compatible con la función ReLU que usa la capa oculta."
           ],
           "correct": 2,
           "feedback": "MSE = (1/n)·Σ(ŷ−y)². Al derivar respecto a ŷ: ∂MSE/∂ŷ = (2/n)·(ŷ−y). El factor 2 surge de la regla de potencias: d(u²)/du = 2u. Algunos libros absorben el 2 definiendo MSE como (1/2n)·Σ(ŷ−y)² para cancelarlo, pero el taller usa la definición estándar (1/n) y mantiene el 2 explícitamente. No tiene nada que ver con hacer el gradiente positivo ni con aceleración."
@@ -15703,10 +15703,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En el Bloque A5, el optimizador SGD actualiza los pesos con:\n\n```python\nparams[k] -= lr * grads[k]\n```\n\nEl optimizador Momentum lo hace con:\n\n```python\nv[k] = 0.9 * v[k] + grads[k]\nparams[k] -= lr * v[k]\n```\n\n¿Cuál es la ventaja del Momentum sobre SGD puro?",
           "options": [
-            "Momentum usa una tasa de aprendizaje mayor que SGD, dando pasos más grandes en cada iteración.",
-            "Momentum calcula el gradiente sobre un mini-batch mayor, obteniendo una estimación más precisa.",
-            "Momentum acumula un promedio exponencial de gradientes anteriores, amortiguando oscilaciones y acelerando el avance.",
-            "Momentum normaliza los gradientes dividiéndolos entre su magnitud para evitar inestabilidad."
+            "Momentum usa una tasa de aprendizaje mayor que SGD, dando pasos más grandes hacia el mínimo en cada iteración.",
+            "Momentum calcula el gradiente sobre un mini-batch de mayor tamaño, obteniendo una estimación más precisa del gradiente.",
+            "Momentum acumula promedio exponencial de gradientes anteriores, amortiguando oscilaciones y acelerando el avance.",
+            "Momentum normaliza los gradientes dividiéndolos entre su magnitud para evitar que los pasos sean inestables."
           ],
           "correct": 2,
           "feedback": "El vector v acumula un promedio exponencial de los gradientes pasados (con factor 0.9). Si los gradientes apuntan consistentemente en la misma dirección, v crece (acelera). Si oscilan, se cancelan parcialmente (suaviza). Esto permite avanzar más rápido por valles y reducir las oscilaciones en superficies muy curvadas. No usa tasa de aprendizaje mayor —de hecho el taller usa η=0.05 para Momentum vs η=0.1 para SGD. No es Adam (que sí adapta por parámetro)."
@@ -15717,10 +15717,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "El optimizador Adam combina Momentum y RMSProp. En el taller, la actualización de Adam incluye:\n\n```python\nm[k] = 0.9 * m[k] + 0.1 * g\nv[k] = 0.999 * v[k] + 0.001 * g**2\nm_hat = m[k] / (1 - 0.9**t)\nv_hat = v[k] / (1 - 0.999**t)\nparams[k] -= lr * m_hat / (np.sqrt(v_hat) + 1e-8)\n```\n\n¿Para qué sirven `m_hat` y `v_hat`?",
           "options": [
-            "Para que m y v tengan la misma escala que el gradiente crudo y puedan compararse con SGD.",
+            "Para que m y v tengan la misma escala que el gradiente crudo y puedan compararse directamente con SGD puro.",
             "Para normalizar los momentos al rango 0-1 y evitar que los parámetros de Adam crezcan indefinidamente.",
             "Porque beta1 y beta2 son mayores que 1 en las primeras épocas y la corrección los lleva al rango correcto.",
-            "Porque m y v se inicializan en 0 y están sesgados hacia cero en los primeros pasos; la corrección lo compensa."
+            "Porque m y v empiezan en 0 y subestiman el gradiente real; la división corrige ese sesgo inicial."
           ],
           "correct": 3,
           "feedback": "Al inicializar m y v en cero, en las primeras iteraciones ambos están fuertemente subestimados (sesgados hacia cero). La corrección de sesgo divide por (1 − β^t): cuando t es pequeño, (1 − 0.9^1) = 0.1, por lo que m_hat = m / 0.1 = 10m —corrige la subestimación. Conforme t → ∞, (1 − β^t) → 1 y la corrección desaparece. Esta técnica es parte del paper original de Adam (Kingma & Ba, 2014) y es esencial para que el optimizador funcione bien desde la primera iteración."
@@ -15759,10 +15759,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "¿Cuál es la diferencia entre el descenso de gradiente por lotes (batch GD), el estocástico (SGD) y el mini-batch GD?",
           "options": [
-            "Las tres son equivalentes matemáticamente; solo difieren en cuánta memoria RAM utilizan.",
-            "SGD es el único que puede escapar de mínimos locales; batch GD y mini-batch GD siempre convergen al global.",
+            "Las tres son equivalentes matemáticamente y solo difieren en cuánta memoria RAM utilizan durante el proceso.",
+            "SGD es el único que puede escapar de mínimos locales; batch GD y mini-batch GD siempre van al global.",
             "Mini-batch GD requiere dividir la tasa de aprendizaje entre el tamaño del batch para mantener la misma convergencia.",
-            "Batch GD usa todo el dataset (gradiente exacto, lento), SGD usa un ejemplo (ruidoso, rápido), mini-batch equilibra ambos."
+            "Batch GD usa todo el dataset por época; SGD usa un ejemplo; mini-batch usa subconjuntos equilibrando ambos."
           ],
           "correct": 3,
           "feedback": "Las tres variantes definen cuántos ejemplos se usan para calcular cada gradiente y actualizar los pesos: Batch GD usa todos los datos (gradiente exacto, muy lento), SGD usa 1 ejemplo (gradiente muy ruidoso, rápido pero errático), mini-batch usa n ejemplos (compromiso: algo de ruido que ayuda a salir de mínimos locales, pero lo suficientemente estable para converger). El taller usa mini-batch de 32 ejemplos, que es la práctica estándar."
@@ -15773,10 +15773,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En el Bloque A4, `inicializar_pesos()` usa `np.random.normal(0, 0.5)`. ¿Por qué se inicializan los pesos con valores pequeños aleatorios y no todos en cero?",
           "options": [
-            "Todas las neuronas de la misma capa calcularían la misma función y nunca se diferenciarían (problema de simetría).",
-            "Pesos en cero producen gradientes infinitos en la primera iteración, causando overflow numérico.",
-            "La inicialización en cero viola las condiciones KKT necesarias para que el descenso de gradiente converja.",
-            "Pesos en cero hacen que ReLU devuelva siempre cero, deteniendo el backward desde la primera época."
+            "Todas las neuronas de la misma capa calcularían la misma función y nunca se diferenciarían (simetría).",
+            "Pesos en cero producen gradientes infinitos en la primera iteración del backward, causando overflow numérico grave.",
+            "La inicialización en cero viola las condiciones KKT necesarias para garantizar la convergencia del descenso.",
+            "Pesos en cero hacen que ReLU devuelva siempre cero, deteniendo por completo el backward desde la primera época."
           ],
           "correct": 0,
           "feedback": "El problema de inicializar todos los pesos en cero se llama 'problema de la simetría'. Si W1 = 0, todas las neuronas de la capa oculta calculan la misma salida (a1 = relu(0·x + 0) = 0) y reciben el mismo gradiente durante backpropagation. Por tanto aprenden lo mismo y se mantienen idénticas para siempre —la capa oculta colapsa a una sola neurona efectiva. Los pesos aleatorios rompen esta simetría desde el inicio, permitiendo que cada neurona aprenda características distintas."
@@ -15857,9 +15857,9 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En el Bloque A1, los datos se normalizan con min-max antes de entrenar. ¿Por qué es importante normalizar las entradas para redes neuronales entrenadas con gradiente descendente?",
           "options": [
-            "El modelo no podría calcular la pérdida porque MSE y BCE asumen entradas en el rango 0-1.",
-            "El backward produciría gradientes negativos para características con valores positivos.",
-            "Normalizar o no es equivalente: el modelo aprende automáticamente a escalar cada característica.",
+            "El modelo no podría calcular la pérdida porque MSE y BCE asumen entradas en el rango de 0 a 1 estrictamente.",
+            "El backward produciría gradientes negativos para características con valores positivos, invirtiendo la actualización.",
+            "Normalizar o no es equivalente: el modelo aprende automáticamente a escalar cada característica con sus pesos.",
             "Las características de mayor escala dominarán el gradiente, haciendo la superficie de pérdida elongada e ineficiente."
           ],
           "correct": 3,
@@ -15885,10 +15885,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En backpropagation, ¿qué es la 'regla de la cadena' y por qué es fundamental?",
           "options": [
-            "De L1 hacia la salida, porque los gradientes de capas anteriores se necesitan para calcular los de posteriores.",
-            "En paralelo para todas las capas usando el gradiente total dividido entre el número de capas.",
-            "De la salida hacia L1, porque la regla de la cadena requiere el gradiente de la capa siguiente para calcular el de la anterior.",
-            "En el mismo orden del forward pass, usando los valores almacenados del forward para calcular las derivadas."
+            "De L1 hacia la salida, porque los gradientes de capas anteriores son necesarios para calcular los de las posteriores.",
+            "En paralelo para todas las capas simultáneamente, usando el gradiente total dividido entre el número de capas.",
+            "De la salida hacia L1, porque la regla de la cadena requiere el gradiente de la siguiente capa para calcular el anterior.",
+            "En el mismo orden del forward pass (L1 hacia salida), usando los valores almacenados del forward para las derivadas."
           ],
           "correct": 2,
           "feedback": "La regla de la cadena (chain rule) del cálculo establece que para funciones compuestas: si L depende de z2 que depende de W2 que depende de W1 que depende de z1..., entonces ∂L/∂W1 = (∂L/∂z2)·(∂z2/∂a1)·(∂a1/∂z1)·(∂z1/∂W1). Backpropagation es exactamente la aplicación eficiente de esta regla: calcula los gradientes de atrás hacia adelante, reutilizando los cálculos intermedios. Sin la regla de la cadena sería imposible calcular ∂L/∂W1 en una red profunda."
@@ -15913,10 +15913,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En Adam, el término `1e-8` al denominador de la actualización `params[k] -= lr * m_hat / (np.sqrt(v_hat) + 1e-8)` cumple la función de:",
           "options": [
-            "Para evitar división por cero cuando v_hat es 0, garantizando estabilidad numérica.",
-            "Para que la lr efectiva de Adam sea 1e-8 veces menor que la lr global especificada.",
-            "Para implementar la corrección de sesgo sin calcular m_hat y v_hat por separado.",
-            "Para que Adam sea equivalente a SGD cuando los gradientes son muy pequeños."
+            "Para evitar división por cero cuando v_hat es 0, garantizando estabilidad numérica del cálculo.",
+            "Para que la tasa de aprendizaje efectiva de Adam sea exactamente 1e-8 veces menor que la lr global.",
+            "Para implementar la corrección de sesgo de forma implícita sin calcular m_hat y v_hat por separado.",
+            "Para que Adam funcione igual que SGD cuando los gradientes son muy pequeños, como fallback seguro."
           ],
           "correct": 0,
           "feedback": "ε = 1e-8 (epsilon) es un valor diminuto que se suma al denominador para evitar división por cero. Si un parámetro tiene v_hat ≈ 0 (porque sus gradientes recientes han sido casi nulos), np.sqrt(0) = 0 causaría división por cero. Con epsilon: np.sqrt(0) + 1e-8 = 1e-8, que es pequeño pero finito y numéricamente estable. No es regularización (que se implementaría sumando un término de penalización a la pérdida), ni escala η hacia SGD."
@@ -15929,8 +15929,8 @@ window.QUIZ_DATA = {
           "options": [
             "beta1 controla la lr global y beta2 la regularización L2; beta2 es mayor para aplicar más regularización.",
             "beta1 y beta2 controlan el momentum pero en capas distintas: beta1 para ocultas y beta2 para la de salida.",
-            "Son iguales en función pero beta2 es mayor para evitar que el segundo momento domine al primero.",
-            "beta1 controla el primer momento (dirección); beta2 el segundo (magnitud cuadrada); beta2 es mayor porque la varianza necesita historial más largo."
+            "Son iguales en función pero beta2 es mayor para evitar que el segundo momento domine al primero en magnitud.",
+            "beta1 controla el primer momento (dirección); beta2 el segundo (magnitud cuadrada); beta2 mayor por estabilidad."
           ],
           "correct": 3,
           "feedback": "En Adam: m = β1·m + (1−β1)·g acumula el primer momento (media del gradiente, como Momentum con β1=0.9); v = β2·v + (1−β2)·g² acumula el segundo momento (media del cuadrado del gradiente, como RMSProp con β2=0.999). β2 es más cercano a 1 porque la varianza necesita un promedio más largo y estable para escalar correctamente. La división m_hat/√v_hat adapta el paso por parámetro: si un parámetro tiene gradientes consistentes y grandes, el paso se reduce; si son pequeños y consistentes, se amplifica."
@@ -15941,10 +15941,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "El Bloque B2 implementa `backward_regresion()` para una red de regresión. ¿En qué se diferencia fundamentalmente de `backward()` del Bloque A3 (clasificación)?",
           "options": [
-            "Solo difieren en dW2 y db2; d1 de la capa oculta es idéntico en ambas porque ReLU es igual.",
-            "En backward_regresion no se calcula d1 porque la capa de salida lineal no necesita retropropagar más.",
-            "El gradiente de salida: backward usa d2=y_hat-y (BCE+sigmoid); backward_regresion usa d2=2*(y_hat-y)/n (MSE). El resto es igual.",
-            "La diferencia es que backward usa W2.T para retropropagar, mientras que backward_regresion usa W2 directamente."
+            "Solo difieren en dW2 y db2; d1 de la capa oculta es idéntico en ambas porque la función ReLU es la misma.",
+            "En backward_regresion no se calcula d1 porque la capa de salida lineal no necesita retropropagar más niveles.",
+            "El gradiente de salida: backward usa d2=ŷ-y (BCE+sigmoid); backward_regresion usa d2=2(ŷ-y)/n (MSE). El resto igual.",
+            "La diferencia es que backward usa W2.T para retropropagar hacia la oculta, mientras backward_regresion usa W2 directa."
           ],
           "correct": 2,
           "feedback": "La diferencia clave está en el gradiente de la capa de salida (d2), que depende de qué función de pérdida se usa: (1) Clasificación: BCE + sigmoid → d2 = ŷ−y (derivada simplificada). (2) Regresión: MSE + lineal → d2 = 2*(ŷ−y)/n (derivada de MSE, con el factor 2 de la derivada de x² y el 1/n del promedio). El resto del backpropagation es idéntico: d1 = (d2 @ W2.T) * d_relu(z1), dW1 = X.T @ d1, etc."
@@ -15955,10 +15955,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "El taller explica que backpropagation recorre la red 'de atrás hacia adelante'. ¿Cuál es la razón matemática más precisa de por qué debe ir en ese orden?",
           "options": [
-            "Backpropagation calcula los gradientes con la regla de la cadena; gradient descent es el paso de actualización que los usa.",
-            "Backpropagation y gradient descent son sinónimos; el nombre varía según si se usa en redes neuronales u otros modelos.",
-            "Backpropagation es el nombre del algoritmo completo, que incluye tanto el forward pass como el descenso de gradiente.",
-            "Backpropagation propaga los datos hacia atrás durante el forward pass para calcular activaciones en orden inverso."
+            "Backpropagation calcula los gradientes con la regla de la cadena; gradient descent es el paso de actualización.",
+            "Son sinónimos en la práctica; el nombre backpropagation se usa en redes neuronales y gradient descent en otros modelos.",
+            "Backpropagation es el nombre del proceso completo, que incluye tanto el forward pass como el descenso de gradiente.",
+            "Backpropagation propaga los datos hacia atrás (del output al input) durante el forward pass para calcular activaciones."
           ],
           "correct": 0,
           "feedback": "La razón es matemática: por la regla de la cadena, ∂L/∂W1 depende de ∂L/∂z1, que depende de ∂L/∂a1, que depende de ∂L/∂z2 (capa de salida). Cada gradiente depende del gradiente de la capa siguiente (más cercana a la salida). Por tanto, se debe calcular primero el gradiente de la última capa (d2), luego el de la penúltima (d1), etc. Esta dependencia en cadena es exactamente la regla de la cadena y justifica matemáticamente el orden de atrás hacia adelante."
@@ -16023,10 +16023,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "Dada la red del Bloque A3 (arquitectura 2→2→1) con x = (0.7, 0.5), y = 1, la predicción es ŷ. ¿Cuál es la expresión correcta del gradiente d2 respecto a la capa de salida con BCE?",
           "options": [
-            "Porque BCE y sigmoid son inversas matemáticas; sus derivadas se cancelan dejando solo y_hat - y.",
-            "Porque se aplica la regla de la cadena solo a la última capa ignorando las anteriores.",
-            "Porque la derivada de BCE respecto a y_hat multiplicada por la derivada de sigmoid respecto a z2 se simplifica a y_hat - y.",
-            "Porque en clasificación binaria los errores son la diferencia directa entre predicción y etiqueta."
+            "Porque BCE y sigmoid son inversas matemáticas; sus derivadas se cancelan dejando solo y_hat - y al operar juntas.",
+            "Porque se aplica la regla de la cadena solo a la última capa ignorando las anteriores para simplificar el cálculo.",
+            "Porque la derivada de BCE respecto a y_hat multiplicada por la de sigmoid respecto a z2 simplifica a ŷ - y.",
+            "Porque en clasificación binaria los errores son la diferencia directa entre predicción y etiqueta real siempre."
           ],
           "correct": 2,
           "feedback": "Para BCE + sigmoid en la capa de salida, la derivada combinada simplifica elegantemente a d2 = ŷ − y. Esto se debe a que la derivada de la entropía cruzada respecto a z2 (antes de sigmoid) colapsa a esta forma simple gracias a la propiedad de sigmoid: σ'(z) = σ(z)(1−σ(z)). La opción b es la derivada de MSE. La opción c es la derivada de BCE respecto a ŷ antes de combinar con sigmoid. La opción d mezcla incorrectamente ambas derivadas."
@@ -16051,10 +16051,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En el Bloque A3, el gradiente de la capa oculta se calcula como:\n\n```python\nd1 = (d2 @ W2.T) * d_relu(z1)\n```\n\n¿Por qué se multiplica por `d_relu(z1)` y no simplemente por `relu(z1)`?",
           "options": [
-            "Para normalizar el gradiente y evitar que explote cuando los valores de activación son muy grandes.",
-            "Para desactivar las neuronas cuyo peso sea negativo y mantener la estabilidad del entrenamiento.",
-            "Porque d_relu convierte el gradiente de salida al espacio oculto cambiando sus dimensiones.",
-            "Porque la regla de la cadena exige multiplicar por la derivada de ReLU al retropropagar a través de ella."
+            "Para normalizar el gradiente y evitar que explote cuando los valores de activación son demasiado grandes en profundidad.",
+            "Para desactivar las neuronas cuyo peso sea negativo y mantener la estabilidad numérica del proceso de entrenamiento.",
+            "Porque d_relu convierte el gradiente de la capa de salida al espacio oculto cambiando sus dimensiones matriciales.",
+            "Porque la regla de la cadena exige multiplicar por la derivada de ReLU al retropropagar a través de esa activación."
           ],
           "correct": 3,
           "feedback": "La regla de la cadena (backpropagation) requiere multiplicar por la derivada de la función de activación en cada capa. d_relu(z) devuelve 1 si z > 0 y 0 si z ≤ 0 —exactamente la derivada de ReLU. Al multiplicar (d2 @ W2.T) por d_relu(z1), se 'detiene' la propagación del gradiente hacia las neuronas que estaban inactivas (z1 ≤ 0), pues su derivada es 0. relu(z1) sería la activación, no su derivada, y usarla sería matemáticamente incorrecto."
@@ -16065,10 +16065,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En el Bloque A4, la función `backward()` divide el gradiente por n (tamaño del lote): `dW2 = a1.T @ d2 / n`. ¿Por qué se divide por n?",
           "options": [
-            "El modelo convergería más rápido porque gradientes n veces más grandes reducen las épocas necesarias.",
-            "Solo afectaría al sesgo (bias) porque los pesos se actualizan con momento independientemente de n.",
-            "Los gradientes escalarían con n, haciendo que la tasa de aprendizaje efectiva dependa del tamaño del batch.",
-            "El modelo no aprendería nada porque sin la normalización los pesos no cambiarían en la dirección correcta."
+            "El modelo convergería más rápido porque gradientes n veces más grandes reducen el número de épocas necesarias.",
+            "Solo afectaría al sesgo (bias) porque los pesos se actualizan con momento de forma independiente de n.",
+            "Los gradientes escalarían con n, haciendo la tasa de aprendizaje efectiva dependiente del tamaño del batch.",
+            "El modelo no aprendería nada porque sin la normalización los pesos no cambiarían en la dirección correcta del mínimo."
           ],
           "correct": 2,
           "feedback": "La función de pérdida calcula el promedio sobre n ejemplos: L = (1/n)·Σ loss_i. Al derivar respecto a los pesos, el factor 1/n también aparece en el gradiente. Dividir dW2 por n equivale a tomar el gradiente promedio del lote, lo que hace que la escala de la actualización sea independiente del tamaño del lote. Sin esta división, usar un lote de 32 produciría gradientes 32 veces mayores que usar un ejemplo, complicando la elección de η."
@@ -16079,10 +16079,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "El taller implementa una verificación numérica del gradiente usando la fórmula:\n\n```python\ngrad_num = (L(w + h) - L(w - h)) / (2 * h)\n```\n\n¿Cuál es el propósito de este cálculo?",
           "options": [
-            "Sustituir el backward analítico por uno numérico más preciso cuando el dataset es pequeño.",
+            "Sustituir el backward analítico por uno numérico más preciso para datasets pequeños donde el tiempo no importa.",
             "Verificar que el backward es correcto comparando su resultado con la derivada numérica por diferencias finitas.",
-            "Medir la velocidad de convergencia comparando gradientes en épocas sucesivas del entrenamiento.",
-            "Detectar neuronas muertas de ReLU comparando si el gradiente analítico difiere del numérico en más de 1e-5."
+            "Medir la velocidad de convergencia del modelo comparando gradientes en épocas sucesivas del entrenamiento.",
+            "Detectar neuronas muertas de ReLU comparando si el gradiente analítico difiere del numérico en más de 1e-5 siempre."
           ],
           "correct": 1,
           "feedback": "El gradient check numérico es una herramienta de debugging: se calcula una aproximación de la derivada usando diferencias finitas centrales (muy precisa con h pequeño, e.g. 1e-5) y se compara con el gradiente analítico de backpropagation. Si ambos coinciden (diferencia relativa < 1e-5), backpropagation está implementado correctamente. Es demasiado lento para usar en producción (requiere una evaluación de L por cada parámetro), pero invaluable para detectar bugs."
@@ -16107,10 +16107,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En el Bloque B2, la función `backward_regresion()` calcula el gradiente de la capa de salida así:\n\n```python\nd2 = 2 * (y_hat - y) / n\n```\n\n¿De dónde proviene el factor 2?",
           "options": [
-            "Es una convención para que el gradiente de regresión sea el doble del de clasificación.",
-            "Surge de promediar el gradiente: n ejemplos por (1/n) por derivada = factor 2.",
-            "Viene de la regla de la potencia al derivar MSE = mean((y_hat-y) al cuadrado) respecto a y_hat.",
-            "Es necesario para que el gradiente sea compatible con la función ReLU en capas ocultas."
+            "Es una convención para que el gradiente de regresión sea siempre el doble del de clasificación binaria.",
+            "Surge de promediar el gradiente sobre n ejemplos con factor (1/n) por ejemplo multiplicado por la derivada.",
+            "Viene de la regla de la potencia al derivar MSE respecto a y_hat: d/dy_hat de (y_hat-y)^2 produce el 2.",
+            "Es necesario para que el gradiente de salida sea compatible con la función ReLU que usa la capa oculta."
           ],
           "correct": 2,
           "feedback": "MSE = (1/n)·Σ(ŷ−y)². Al derivar respecto a ŷ: ∂MSE/∂ŷ = (2/n)·(ŷ−y). El factor 2 surge de la regla de potencias: d(u²)/du = 2u. Algunos libros absorben el 2 definiendo MSE como (1/2n)·Σ(ŷ−y)² para cancelarlo, pero el taller usa la definición estándar (1/n) y mantiene el 2 explícitamente. No tiene nada que ver con hacer el gradiente positivo ni con aceleración."
@@ -16135,10 +16135,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En el Bloque A5, el optimizador SGD actualiza los pesos con:\n\n```python\nparams[k] -= lr * grads[k]\n```\n\nEl optimizador Momentum lo hace con:\n\n```python\nv[k] = 0.9 * v[k] + grads[k]\nparams[k] -= lr * v[k]\n```\n\n¿Cuál es la ventaja del Momentum sobre SGD puro?",
           "options": [
-            "Momentum usa una tasa de aprendizaje mayor que SGD, dando pasos más grandes en cada iteración.",
-            "Momentum calcula el gradiente sobre un mini-batch mayor, obteniendo una estimación más precisa.",
-            "Momentum acumula un promedio exponencial de gradientes anteriores, amortiguando oscilaciones y acelerando el avance.",
-            "Momentum normaliza los gradientes dividiéndolos entre su magnitud para evitar inestabilidad."
+            "Momentum usa una tasa de aprendizaje mayor que SGD, dando pasos más grandes hacia el mínimo en cada iteración.",
+            "Momentum calcula el gradiente sobre un mini-batch de mayor tamaño, obteniendo una estimación más precisa del gradiente.",
+            "Momentum acumula promedio exponencial de gradientes anteriores, amortiguando oscilaciones y acelerando el avance.",
+            "Momentum normaliza los gradientes dividiéndolos entre su magnitud para evitar que los pasos sean inestables."
           ],
           "correct": 2,
           "feedback": "El vector v acumula un promedio exponencial de los gradientes pasados (con factor 0.9). Si los gradientes apuntan consistentemente en la misma dirección, v crece (acelera). Si oscilan, se cancelan parcialmente (suaviza). Esto permite avanzar más rápido por valles y reducir las oscilaciones en superficies muy curvadas. No usa tasa de aprendizaje mayor —de hecho el taller usa η=0.05 para Momentum vs η=0.1 para SGD. No es Adam (que sí adapta por parámetro)."
@@ -16149,10 +16149,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "El optimizador Adam combina Momentum y RMSProp. En el taller, la actualización de Adam incluye:\n\n```python\nm[k] = 0.9 * m[k] + 0.1 * g\nv[k] = 0.999 * v[k] + 0.001 * g**2\nm_hat = m[k] / (1 - 0.9**t)\nv_hat = v[k] / (1 - 0.999**t)\nparams[k] -= lr * m_hat / (np.sqrt(v_hat) + 1e-8)\n```\n\n¿Para qué sirven `m_hat` y `v_hat`?",
           "options": [
-            "Para que m y v tengan la misma escala que el gradiente crudo y puedan compararse con SGD.",
+            "Para que m y v tengan la misma escala que el gradiente crudo y puedan compararse directamente con SGD puro.",
             "Para normalizar los momentos al rango 0-1 y evitar que los parámetros de Adam crezcan indefinidamente.",
             "Porque beta1 y beta2 son mayores que 1 en las primeras épocas y la corrección los lleva al rango correcto.",
-            "Porque m y v se inicializan en 0 y están sesgados hacia cero en los primeros pasos; la corrección lo compensa."
+            "Porque m y v empiezan en 0 y subestiman el gradiente real; la división corrige ese sesgo inicial."
           ],
           "correct": 3,
           "feedback": "Al inicializar m y v en cero, en las primeras iteraciones ambos están fuertemente subestimados (sesgados hacia cero). La corrección de sesgo divide por (1 − β^t): cuando t es pequeño, (1 − 0.9^1) = 0.1, por lo que m_hat = m / 0.1 = 10m —corrige la subestimación. Conforme t → ∞, (1 − β^t) → 1 y la corrección desaparece. Esta técnica es parte del paper original de Adam (Kingma & Ba, 2014) y es esencial para que el optimizador funcione bien desde la primera iteración."
@@ -16191,10 +16191,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "¿Cuál es la diferencia entre el descenso de gradiente por lotes (batch GD), el estocástico (SGD) y el mini-batch GD?",
           "options": [
-            "Las tres son equivalentes matemáticamente; solo difieren en cuánta memoria RAM utilizan.",
-            "SGD es el único que puede escapar de mínimos locales; batch GD y mini-batch GD siempre convergen al global.",
+            "Las tres son equivalentes matemáticamente y solo difieren en cuánta memoria RAM utilizan durante el proceso.",
+            "SGD es el único que puede escapar de mínimos locales; batch GD y mini-batch GD siempre van al global.",
             "Mini-batch GD requiere dividir la tasa de aprendizaje entre el tamaño del batch para mantener la misma convergencia.",
-            "Batch GD usa todo el dataset (gradiente exacto, lento), SGD usa un ejemplo (ruidoso, rápido), mini-batch equilibra ambos."
+            "Batch GD usa todo el dataset por época; SGD usa un ejemplo; mini-batch usa subconjuntos equilibrando ambos."
           ],
           "correct": 3,
           "feedback": "Las tres variantes definen cuántos ejemplos se usan para calcular cada gradiente y actualizar los pesos: Batch GD usa todos los datos (gradiente exacto, muy lento), SGD usa 1 ejemplo (gradiente muy ruidoso, rápido pero errático), mini-batch usa n ejemplos (compromiso: algo de ruido que ayuda a salir de mínimos locales, pero lo suficientemente estable para converger). El taller usa mini-batch de 32 ejemplos, que es la práctica estándar."
@@ -16205,10 +16205,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En el Bloque A4, `inicializar_pesos()` usa `np.random.normal(0, 0.5)`. ¿Por qué se inicializan los pesos con valores pequeños aleatorios y no todos en cero?",
           "options": [
-            "Todas las neuronas de la misma capa calcularían la misma función y nunca se diferenciarían (problema de simetría).",
-            "Pesos en cero producen gradientes infinitos en la primera iteración, causando overflow numérico.",
-            "La inicialización en cero viola las condiciones KKT necesarias para que el descenso de gradiente converja.",
-            "Pesos en cero hacen que ReLU devuelva siempre cero, deteniendo el backward desde la primera época."
+            "Todas las neuronas de la misma capa calcularían la misma función y nunca se diferenciarían (simetría).",
+            "Pesos en cero producen gradientes infinitos en la primera iteración del backward, causando overflow numérico grave.",
+            "La inicialización en cero viola las condiciones KKT necesarias para garantizar la convergencia del descenso.",
+            "Pesos en cero hacen que ReLU devuelva siempre cero, deteniendo por completo el backward desde la primera época."
           ],
           "correct": 0,
           "feedback": "El problema de inicializar todos los pesos en cero se llama 'problema de la simetría'. Si W1 = 0, todas las neuronas de la capa oculta calculan la misma salida (a1 = relu(0·x + 0) = 0) y reciben el mismo gradiente durante backpropagation. Por tanto aprenden lo mismo y se mantienen idénticas para siempre —la capa oculta colapsa a una sola neurona efectiva. Los pesos aleatorios rompen esta simetría desde el inicio, permitiendo que cada neurona aprenda características distintas."
@@ -16289,9 +16289,9 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En el Bloque A1, los datos se normalizan con min-max antes de entrenar. ¿Por qué es importante normalizar las entradas para redes neuronales entrenadas con gradiente descendente?",
           "options": [
-            "El modelo no podría calcular la pérdida porque MSE y BCE asumen entradas en el rango 0-1.",
-            "El backward produciría gradientes negativos para características con valores positivos.",
-            "Normalizar o no es equivalente: el modelo aprende automáticamente a escalar cada característica.",
+            "El modelo no podría calcular la pérdida porque MSE y BCE asumen entradas en el rango de 0 a 1 estrictamente.",
+            "El backward produciría gradientes negativos para características con valores positivos, invirtiendo la actualización.",
+            "Normalizar o no es equivalente: el modelo aprende automáticamente a escalar cada característica con sus pesos.",
             "Las características de mayor escala dominarán el gradiente, haciendo la superficie de pérdida elongada e ineficiente."
           ],
           "correct": 3,
@@ -16317,10 +16317,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En backpropagation, ¿qué es la 'regla de la cadena' y por qué es fundamental?",
           "options": [
-            "De L1 hacia la salida, porque los gradientes de capas anteriores se necesitan para calcular los de posteriores.",
-            "En paralelo para todas las capas usando el gradiente total dividido entre el número de capas.",
-            "De la salida hacia L1, porque la regla de la cadena requiere el gradiente de la capa siguiente para calcular el de la anterior.",
-            "En el mismo orden del forward pass, usando los valores almacenados del forward para calcular las derivadas."
+            "De L1 hacia la salida, porque los gradientes de capas anteriores son necesarios para calcular los de las posteriores.",
+            "En paralelo para todas las capas simultáneamente, usando el gradiente total dividido entre el número de capas.",
+            "De la salida hacia L1, porque la regla de la cadena requiere el gradiente de la siguiente capa para calcular el anterior.",
+            "En el mismo orden del forward pass (L1 hacia salida), usando los valores almacenados del forward para las derivadas."
           ],
           "correct": 2,
           "feedback": "La regla de la cadena (chain rule) del cálculo establece que para funciones compuestas: si L depende de z2 que depende de W2 que depende de W1 que depende de z1..., entonces ∂L/∂W1 = (∂L/∂z2)·(∂z2/∂a1)·(∂a1/∂z1)·(∂z1/∂W1). Backpropagation es exactamente la aplicación eficiente de esta regla: calcula los gradientes de atrás hacia adelante, reutilizando los cálculos intermedios. Sin la regla de la cadena sería imposible calcular ∂L/∂W1 en una red profunda."
@@ -16345,10 +16345,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En Adam, el término `1e-8` al denominador de la actualización `params[k] -= lr * m_hat / (np.sqrt(v_hat) + 1e-8)` cumple la función de:",
           "options": [
-            "Para evitar división por cero cuando v_hat es 0, garantizando estabilidad numérica.",
-            "Para que la lr efectiva de Adam sea 1e-8 veces menor que la lr global especificada.",
-            "Para implementar la corrección de sesgo sin calcular m_hat y v_hat por separado.",
-            "Para que Adam sea equivalente a SGD cuando los gradientes son muy pequeños."
+            "Para evitar división por cero cuando v_hat es 0, garantizando estabilidad numérica del cálculo.",
+            "Para que la tasa de aprendizaje efectiva de Adam sea exactamente 1e-8 veces menor que la lr global.",
+            "Para implementar la corrección de sesgo de forma implícita sin calcular m_hat y v_hat por separado.",
+            "Para que Adam funcione igual que SGD cuando los gradientes son muy pequeños, como fallback seguro."
           ],
           "correct": 0,
           "feedback": "ε = 1e-8 (epsilon) es un valor diminuto que se suma al denominador para evitar división por cero. Si un parámetro tiene v_hat ≈ 0 (porque sus gradientes recientes han sido casi nulos), np.sqrt(0) = 0 causaría división por cero. Con epsilon: np.sqrt(0) + 1e-8 = 1e-8, que es pequeño pero finito y numéricamente estable. No es regularización (que se implementaría sumando un término de penalización a la pérdida), ni escala η hacia SGD."
@@ -16361,8 +16361,8 @@ window.QUIZ_DATA = {
           "options": [
             "beta1 controla la lr global y beta2 la regularización L2; beta2 es mayor para aplicar más regularización.",
             "beta1 y beta2 controlan el momentum pero en capas distintas: beta1 para ocultas y beta2 para la de salida.",
-            "Son iguales en función pero beta2 es mayor para evitar que el segundo momento domine al primero.",
-            "beta1 controla el primer momento (dirección); beta2 el segundo (magnitud cuadrada); beta2 es mayor porque la varianza necesita historial más largo."
+            "Son iguales en función pero beta2 es mayor para evitar que el segundo momento domine al primero en magnitud.",
+            "beta1 controla el primer momento (dirección); beta2 el segundo (magnitud cuadrada); beta2 mayor por estabilidad."
           ],
           "correct": 3,
           "feedback": "En Adam: m = β1·m + (1−β1)·g acumula el primer momento (media del gradiente, como Momentum con β1=0.9); v = β2·v + (1−β2)·g² acumula el segundo momento (media del cuadrado del gradiente, como RMSProp con β2=0.999). β2 es más cercano a 1 porque la varianza necesita un promedio más largo y estable para escalar correctamente. La división m_hat/√v_hat adapta el paso por parámetro: si un parámetro tiene gradientes consistentes y grandes, el paso se reduce; si son pequeños y consistentes, se amplifica."
@@ -16373,10 +16373,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "El Bloque B2 implementa `backward_regresion()` para una red de regresión. ¿En qué se diferencia fundamentalmente de `backward()` del Bloque A3 (clasificación)?",
           "options": [
-            "Solo difieren en dW2 y db2; d1 de la capa oculta es idéntico en ambas porque ReLU es igual.",
-            "En backward_regresion no se calcula d1 porque la capa de salida lineal no necesita retropropagar más.",
-            "El gradiente de salida: backward usa d2=y_hat-y (BCE+sigmoid); backward_regresion usa d2=2*(y_hat-y)/n (MSE). El resto es igual.",
-            "La diferencia es que backward usa W2.T para retropropagar, mientras que backward_regresion usa W2 directamente."
+            "Solo difieren en dW2 y db2; d1 de la capa oculta es idéntico en ambas porque la función ReLU es la misma.",
+            "En backward_regresion no se calcula d1 porque la capa de salida lineal no necesita retropropagar más niveles.",
+            "El gradiente de salida: backward usa d2=ŷ-y (BCE+sigmoid); backward_regresion usa d2=2(ŷ-y)/n (MSE). El resto igual.",
+            "La diferencia es que backward usa W2.T para retropropagar hacia la oculta, mientras backward_regresion usa W2 directa."
           ],
           "correct": 2,
           "feedback": "La diferencia clave está en el gradiente de la capa de salida (d2), que depende de qué función de pérdida se usa: (1) Clasificación: BCE + sigmoid → d2 = ŷ−y (derivada simplificada). (2) Regresión: MSE + lineal → d2 = 2*(ŷ−y)/n (derivada de MSE, con el factor 2 de la derivada de x² y el 1/n del promedio). El resto del backpropagation es idéntico: d1 = (d2 @ W2.T) * d_relu(z1), dW1 = X.T @ d1, etc."
@@ -16387,10 +16387,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "El taller explica que backpropagation recorre la red 'de atrás hacia adelante'. ¿Cuál es la razón matemática más precisa de por qué debe ir en ese orden?",
           "options": [
-            "Backpropagation calcula los gradientes con la regla de la cadena; gradient descent es el paso de actualización que los usa.",
-            "Backpropagation y gradient descent son sinónimos; el nombre varía según si se usa en redes neuronales u otros modelos.",
-            "Backpropagation es el nombre del algoritmo completo, que incluye tanto el forward pass como el descenso de gradiente.",
-            "Backpropagation propaga los datos hacia atrás durante el forward pass para calcular activaciones en orden inverso."
+            "Backpropagation calcula los gradientes con la regla de la cadena; gradient descent es el paso de actualización.",
+            "Son sinónimos en la práctica; el nombre backpropagation se usa en redes neuronales y gradient descent en otros modelos.",
+            "Backpropagation es el nombre del proceso completo, que incluye tanto el forward pass como el descenso de gradiente.",
+            "Backpropagation propaga los datos hacia atrás (del output al input) durante el forward pass para calcular activaciones."
           ],
           "correct": 0,
           "feedback": "La razón es matemática: por la regla de la cadena, ∂L/∂W1 depende de ∂L/∂z1, que depende de ∂L/∂a1, que depende de ∂L/∂z2 (capa de salida). Cada gradiente depende del gradiente de la capa siguiente (más cercana a la salida). Por tanto, se debe calcular primero el gradiente de la última capa (d2), luego el de la penúltima (d1), etc. Esta dependencia en cadena es exactamente la regla de la cadena y justifica matemáticamente el orden de atrás hacia adelante."
