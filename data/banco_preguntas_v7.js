@@ -69,6 +69,14 @@ window.QUIZ_DATA = {
           "label": "Semana 11 · Funciones de Activación (35)"
         },
         {
+          "value": "semana12bp",
+          "label": "Semana 12 · Backpropagation y Optimización (30)"
+        },
+        {
+          "value": "semana12bp",
+          "label": "Semana 12 · Backpropagation y Optimización (30)"
+        },
+        {
           "value": "incorrect",
           "label": "Solo Preguntas Erradas"
         },
@@ -5256,6 +5264,10 @@ window.QUIZ_DATA = {
         {
           "value": "semana11fa",
           "label": "Semana 11 · Funciones de Activación (35)"
+        },
+        {
+          "value": "semana12bp",
+          "label": "Semana 12 · Backpropagation y Optimización (30)"
         },
         {
           "value": "incorrect",
@@ -10600,6 +10612,426 @@ window.QUIZ_DATA = {
           ],
           "correct": 3,
           "feedback": "Correcto. La regla es: (A) clasificación binaria → 1 neurona + Sigmoid, produce P(clase=1) ∈ (0,1). (B) clasificación multiclase con K clases excluyentes → K neuronas + Softmax, produce distribución de probabilidad que suma 1. (C) regresión continua → 1 neurona sin activación (lineal), permite cualquier valor real. La opción c usa Sigmoid independiente para 4 clases: esto sirve para clasificación multietiqueta (varias clases simultáneas posibles), no para multiclase excluyente, porque las probabilidades no garantizan sumar 1."
+        },
+        {
+          "id": "s12-bp-001",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "Durante el entrenamiento de una red neuronal para clasificación binaria, se propone usar la exactitud (accuracy) directamente como función de pérdida a minimizar con descenso de gradiente. ¿Por qué esto no funciona?",
+          "options": [
+            "Porque la accuracy no es diferenciable, ya que depende de comparaciones discretas (0 o 1) y su gradiente es cero casi en todas partes.",
+            "Porque la accuracy siempre vale 1.0 al inicio del entrenamiento, lo que hace que el gradiente sea infinito.",
+            "Porque la accuracy requiere normalizar las salidas con softmax antes de calcularla, y eso añade complejidad.",
+            "Porque la accuracy solo se puede calcular en el conjunto de prueba, no en el de entrenamiento."
+          ],
+          "correct": 0,
+          "feedback": "La accuracy cuenta predicciones correctas con una función escalón no diferenciable. El gradiente es cero casi en todas partes (y no existe en los puntos de salto), por lo que el descenso de gradiente no puede actualizarlos pesos. Por eso se usa Binary Cross-Entropy (BCE), que es diferenciable y convexa respecto a la salida de la red."
+        },
+        {
+          "id": "s12-bp-002",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En la implementación de Binary Cross-Entropy del taller, la función incluye la línea y_hat = np.clip(y_hat, 1e-7, 1 - 1e-7) antes de calcular el logaritmo. ¿Cuál es el propósito de esta operación?",
+          "options": [
+            "Normalizar las predicciones al rango [0,1] para que puedan interpretarse como probabilidades válidas.",
+            "Evitar que np.log(0) produzca -inf o nan, lo que haría la pérdida numéricamente inestable.",
+            "Acelerar el cálculo del logaritmo al reducir el rango de valores que numpy debe procesar.",
+            "Garantizar que el gradiente de la pérdida sea siempre positivo durante el entrenamiento."
+          ],
+          "correct": 1,
+          "feedback": "np.clip limita y_hat al intervalo [1e-7, 1-1e-7]. Esto evita evaluar log(0) = -inf o log(1) seguido de log(0) en el segundo término, que producirían nan/inf y romperían el entrenamiento. Es un truco estándar de estabilidad numérica en implementaciones de BCE desde cero."
+        },
+        {
+          "id": "s12-bp-003",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el backward pass de clasificación binaria con BCE y activación sigmoid en la capa de salida, el gradiente respecto a z2 (antes de sigmoid) se calcula como d2 = y_hat - y. ¿Por qué esta expresión es tan sencilla?",
+          "options": [
+            "Porque BCE y sigmoid son inversas matemáticas entre sí, por lo que sus derivadas se cancelan dejando solo y_hat - y.",
+            "Porque la derivada de BCE respecto a y_hat combinada con la derivada de sigmoid respecto a z2 se simplifica algebraicamente a ŷ - y.",
+            "Porque en clasificación binaria los errores siempre son la diferencia directa entre la predicción y la etiqueta real.",
+            "Porque se aplica la regla de la cadena solo a la última capa y se ignoran las capas anteriores para simplificar el cálculo."
+          ],
+          "correct": 1,
+          "feedback": "Por la regla de la cadena: dBCE/dz2 = (dBCE/dy_hat) * (dy_hat/dz2). La derivada de BCE respecto a y_hat es (-y/y_hat + (1-y)/(1-y_hat)) y la derivada de sigmoid es y_hat*(1-y_hat). Al multiplicar y simplificar algebraicamente se obtiene exactamente y_hat - y. Esta cancelación elegante es una razón por la que se usa BCE+sigmoid juntos."
+        },
+        {
+          "id": "s12-bp-004",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el backward pass implementado en el taller, dW1 = (1/n) * A0.T @ d1. ¿Qué representa exactamente este término en el contexto del descenso de gradiente?",
+          "options": [
+            "El gradiente promedio de la función de pérdida respecto a los pesos de la primera capa oculta, calculado sobre todos los ejemplos del batch.",
+            "El error de predicción de la primera capa multiplicado por las activaciones de entrada para escalar la actualización.",
+            "La transpuesta de la matriz de activaciones de entrada multiplicada por el delta de la capa oculta para corregir el sesgo.",
+            "La tasa de cambio de los pesos W1 en función del tiempo, promediada sobre el número de épocas de entrenamiento."
+          ],
+          "correct": 0,
+          "feedback": "dW1 = (1/n) * A0.T @ d1 es el gradiente dL/dW1 promediado sobre los n ejemplos del batch. A0.T @ d1 acumula el producto externo (gradiente por ejemplo), y dividir por n obtiene el promedio. Este gradiente indica en qué dirección y magnitud deben moverse los pesos W1 para reducir la pérdida."
+        },
+        {
+          "id": "s12-bp-005",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el backward pass, al propagar el error hacia la capa oculta se calcula d1 = (d2 @ W2.T) * d_relu. ¿Por qué es necesario multiplicar por d_relu?",
+          "options": [
+            "Para normalizar el gradiente y evitar que explote cuando los valores de activación son grandes.",
+            "Porque la regla de la cadena exige multiplicar por la derivada de ReLU (1 si z>0, 0 si z≤0) al retropropagar a través de esa activación.",
+            "Para desactivar las neuronas cuyo peso sea negativo y así mantener la estabilidad numérica del entrenamiento.",
+            "Porque d_relu convierte el gradiente de la capa de salida al espacio de la capa oculta cambiando sus dimensiones."
+          ],
+          "correct": 1,
+          "feedback": "La regla de la cadena: dL/dz1 = (dL/da1) * (da1/dz1). La derivada de ReLU es d_relu = (z1 > 0).astype(float): vale 1 donde la neurona estaba activa y 0 donde estaba inactiva. Multiplicar por d_relu 'bloquea' el gradiente en las neuronas que ReLU apagó, implementando correctamente la cadena."
+        },
+        {
+          "id": "s12-bp-006",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En la función backward del taller, los gradientes dW y db se calculan dividiendo entre n (número de ejemplos). Si se eliminara esa división, ¿qué consecuencia directa tendría sobre el entrenamiento?",
+          "options": [
+            "El modelo convergería más rápido porque los gradientes serían n veces más grandes, reduciendo el número de épocas necesarias.",
+            "Los gradientes escalarían con el tamaño del dataset, haciendo que la tasa de aprendizaje efectiva dependa de n y el entrenamiento sea inconsistente al cambiar el tamaño del batch.",
+            "El modelo no aprendería nada porque sin la normalización los pesos no cambiarían en la dirección correcta.",
+            "Solo afectaría al sesgo (bias) porque los pesos se actualizan con la regla del momento independientemente de n."
+          ],
+          "correct": 1,
+          "feedback": "Sin dividir entre n, el gradiente es la suma (no el promedio) sobre todos los ejemplos. Esto hace que gradientes sean n veces mayores: con n=100 equivale a usar learning_rate*100. El entrenamiento se vuelve sensible al tamaño del batch y es necesario reajustar la tasa de aprendizaje cada vez que cambia n. Dividir por n da el gradiente promedio, que es consistente."
+        },
+        {
+          "id": "s12-bp-007",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "El taller implementa una función gradient_check que compara el gradiente analítico con una aproximación numérica. ¿Cuál es el propósito principal de esta verificación?",
+          "options": [
+            "Sustituir el backward pass analítico por uno numérico más preciso cuando el dataset es pequeño.",
+            "Verificar que la implementación del backward pass es correcta comparando con la definición de derivada por diferencias finitas.",
+            "Medir la velocidad de convergencia del modelo comparando gradientes en épocas sucesivas del entrenamiento.",
+            "Detectar neuronas muertas de ReLU comparando si su gradiente analítico difiere del numérico en más de 1e-5."
+          ],
+          "correct": 1,
+          "feedback": "gradient_check calcula (L(theta+eps) - L(theta-eps)) / (2*eps) numéricamente para cada parámetro y lo compara con el gradiente analítico del backward pass. Si coinciden (diferencia relativa < 1e-5), el backward está implementado correctamente. Es una herramienta de debugging, no un reemplazo del backward analítico."
+        },
+        {
+          "id": "s12-bp-008",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "Para un problema de regresión, el taller usa MSE como función de pérdida: loss = np.mean((y_hat - y)**2). Si en cambio usara MAE (np.mean(np.abs(y_hat - y))), ¿cuál sería la diferencia principal en el entrenamiento?",
+          "options": [
+            "MAE es más sensible a outliers que MSE porque eleva al cuadrado las diferencias, penalizando más los errores grandes.",
+            "MAE produce gradientes constantes (±1 escalados), lo que puede causar oscilaciones cerca del mínimo, mientras que MSE tiene gradientes que se reducen suavemente al acercarse al mínimo.",
+            "MAE converge más lento que MSE porque su derivada es discontinua en 0, impidiendo el uso del descenso de gradiente estándar.",
+            "No hay diferencia práctica: ambas métricas producen los mismos pesos óptimos aunque la escala de la pérdida varíe."
+          ],
+          "correct": 1,
+          "feedback": "MSE tiene gradiente 2*(y_hat-y)/n que se reduce suavemente al acercarse al mínimo (convergencia suave). MAE tiene gradiente +/-1/n (constante en magnitud), lo que puede causar oscilaciones cerca del óptimo porque el gradiente no se reduce. Además, MAE es más robusto a outliers (penaliza linealmente) mientras MSE los penaliza cuadráticamente."
+        },
+        {
+          "id": "s12-bp-009",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En backward_regresion del taller, el gradiente de la capa de salida es d2 = 2*(y_hat - y)/n. ¿De dónde viene el factor 2?",
+          "options": [
+            "Es una convención para que el gradiente de regresión sea siempre el doble que el de clasificación, facilitando comparar las tasas de aprendizaje.",
+            "Proviene de derivar MSE = mean((y_hat-y)^2) respecto a y_hat: la regla de la potencia produce el factor 2 antes de (y_hat-y).",
+            "Es necesario para que el gradiente sea compatible con la función ReLU de las capas ocultas.",
+            "Surge de promediar el gradiente sobre los n ejemplos: n ejemplos por (1/n) por ejemplo por derivada = 2/n."
+          ],
+          "correct": 1,
+          "feedback": "MSE = (1/n)*sum((y_hat-y)^2). Derivando respecto a y_hat: dMSE/dy_hat = (2/n)*(y_hat-y). El factor 2 es simplemente la regla de la potencia aplicada al cuadrado. En algunos libros se define MSE con (1/2n) precisamente para cancelar este 2 y simplificar el gradiente, pero en la implementación directa aparece el factor 2."
+        },
+        {
+          "id": "s12-bp-010",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En forward_regresion, la capa de salida calcula z2 = A1 @ W2 + b2 y retorna directamente z2 como y_hat, sin aplicar ninguna función de activación. ¿Por qué es correcto omitir la activación en la salida de regresión?",
+          "options": [
+            "Porque ReLU en la salida de regresión produciría los mismos resultados que la salida lineal cuando los valores predichos son positivos.",
+            "Porque la capa de salida lineal permite predecir cualquier valor real sin restricciones de rango, que es exactamente lo que se necesita para regresión.",
+            "Porque la función de pérdida MSE ya incorpora internamente una sigmoid para normalizar las predicciones.",
+            "Porque omitir la activación reduce el tiempo de cómputo del forward pass a la mitad sin afectar la calidad de las predicciones."
+          ],
+          "correct": 1,
+          "feedback": "En regresión, queremos predecir un valor continuo arbitrario (temperatura, precio, etc.) sin restricciones de rango. Una sigmoid limitaría la salida a (0,1) y softmax a distribuciones de probabilidad. La salida lineal (z = Wx+b) permite cualquier valor real en (-inf,+inf), que es el rango correcto para regresión."
+        },
+        {
+          "id": "s12-bp-011",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "El taller compara SGD, Momentum y Adam en el mismo problema. Los resultados muestran que Momentum mejora la accuracy de 0.855 (SGD) a 0.890. ¿Cuál es la explicación correcta de por qué Momentum supera a SGD?",
+          "options": [
+            "Momentum usa una tasa de aprendizaje mayor que SGD, lo que permite dar pasos más grandes en cada iteración.",
+            "Momentum acumula un promedio exponencial de gradientes anteriores, amortiguando oscilaciones y acelerando el avance en direcciones persistentes.",
+            "Momentum calcula el gradiente sobre un mini-batch más grande que SGD, obteniendo una estimación más precisa de la dirección óptima.",
+            "Momentum normaliza los gradientes dividiéndolos entre su magnitud, lo que evita que pasos grandes causen inestabilidad."
+          ],
+          "correct": 1,
+          "feedback": "Momentum mantiene una 'velocidad' v = beta*v + eta*gradL. Esto suaviza el camino: en dimensiones donde el gradiente es consistente el momento se acumula (pasos más grandes), y en dimensiones oscilantes los gradientes opuestos se cancelan (pasos más pequeños). Resultado: menos oscilaciones en valles estrechos y convergencia más rápida."
+        },
+        {
+          "id": "s12-bp-012",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En la implementación de Adam del taller, se calculan m_hat = m / (1 - beta1**t) y v_hat = v / (1 - beta2**t). ¿Por qué es necesaria esta corrección?",
+          "options": [
+            "Para que m y v tengan la misma escala que el gradiente crudo y puedan compararse directamente con el gradiente de SGD.",
+            "Porque al inicio del entrenamiento (t pequeño), m y v están sesgados hacia cero al inicializarse en 0, y la corrección compensa ese sesgo.",
+            "Para normalizar los momentos al rango [0,1] y evitar que los parámetros de Adam crezcan indefinidamente.",
+            "Porque beta1 y beta2 son mayores que 1 en las primeras épocas y la corrección los lleva al rango correcto."
+          ],
+          "correct": 1,
+          "feedback": "m y v se inicializan en 0. Las primeras actualizaciones son: m = (1-beta1)*g aproximadamente 0.1*g (si beta1=0.9), que subestima g por un factor (1-beta1). La corrección m_hat = m/(1-beta1^t) divide entre un valor pequeño en las primeras épocas, escalando m hacia su valor esperado. Sin corrección, Adam daría pasos muy pequeños al inicio."
+        },
+        {
+          "id": "s12-bp-013",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "El taller muestra que Adam alcanza accuracy 0.900 vs 0.890 de Momentum y 0.855 de SGD, con los mismos hiperparámetros base. ¿Qué característica de Adam explica principalmente esta diferencia?",
+          "options": [
+            "Adam usa una tasa de aprendizaje global mayor que los otros optimizadores, permitiendo explorar más el espacio de parámetros.",
+            "Adam adapta la tasa de aprendizaje individualmente para cada parámetro basándose en el historial de sus gradientes, siendo más eficiente en problemas con gradientes dispersos o de distinta escala.",
+            "Adam combina el momento de Momentum con la normalización de RMSProp, pero su ventaja real es que usa todos los ejemplos del dataset en cada paso.",
+            "Adam evita el problema de neuronas muertas de ReLU al ajustar dinámicamente los gradientes de las neuronas inactivas."
+          ],
+          "correct": 1,
+          "feedback": "Adam es Momentum + RMSProp: combina el primer momento (dirección suavizada) con el segundo momento (magnitud de los gradientes por parámetro). Esto da tasas de aprendizaje adaptativas: parámetros con gradientes grandes tienen lr efectivo menor (evita divergencia) y parámetros con gradientes pequeños tienen lr mayor (evita estancamiento)."
+        },
+        {
+          "id": "s12-bp-014",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "Al explorar diferentes tasas de aprendizaje en el taller, se observa que con eta=1.0 la pérdida MSE sube a 36.6 en la época 300 en lugar de converger. ¿Cuál es el fenómeno que ocurre?",
+          "options": [
+            "El modelo converge prematuramente a un mínimo local porque eta=1.0 hace que los pasos sean demasiado precisos y se quede atascado.",
+            "La red diverge porque los pasos del gradiente son tan grandes que sobrepasan el mínimo repetidamente, aumentando la pérdida en lugar de reducirla.",
+            "La tasa de aprendizaje eta=1.0 es exactamente igual al eigenvalor máximo del Hessiano, provocando oscilaciones estacionarias.",
+            "Con eta=1.0, el gradiente numérico y el analítico dejan de coincidir, lo que indica un error en la implementación del backward."
+          ],
+          "correct": 1,
+          "feedback": "Con eta=1.0, el descenso de gradiente da pasos tan grandes que 'salta' por encima del mínimo al otro lado de la curvatura, y en cada iteración el error aumenta en lugar de disminuir. Esto se llama divergencia. La condición teórica de convergencia requiere eta < 2/lambda_max. En la práctica, tasas como 0.1, 0.01 o 0.001 son típicas."
+        },
+        {
+          "id": "s12-bp-015",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "El taller distingue tres variantes de descenso de gradiente: batch GD, SGD y mini-batch GD. ¿Cuál describe correctamente las diferencias entre ellas?",
+          "options": [
+            "Batch GD usa todo el dataset por época (gradiente exacto, lento), SGD usa un ejemplo a la vez (gradiente ruidoso, rápido por paso), mini-batch GD usa subconjuntos (balance entre ambos).",
+            "Las tres son equivalentes matemáticamente; solo difieren en cuánta memoria RAM utilizan durante el entrenamiento.",
+            "SGD es el único que puede escapar de mínimos locales; batch GD y mini-batch GD siempre convergen al mismo mínimo global.",
+            "Mini-batch GD requiere dividir la tasa de aprendizaje entre el tamaño del batch para mantener la misma convergencia que batch GD."
+          ],
+          "correct": 0,
+          "feedback": "Batch GD: gradiente sobre todo el dataset, exacto pero muy lento y requiere toda la RAM. SGD: gradiente sobre 1 ejemplo, muy ruidoso pero actualiza frecuentemente; puede escapar de mínimos locales. Mini-batch GD: gradiente sobre un subconjunto (32-256 ejemplos), balance entre eficiencia computacional (GPU vectorizada) y ruido suficiente para generalizar bien. Es el más usado en la práctica."
+        },
+        {
+          "id": "s12-bp-016",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En la inicialización de pesos del taller se usa np.random.randn(n_input, n_hidden) * 0.01. ¿Por qué NO se inicializan todos los pesos en cero?",
+          "options": [
+            "Porque pesos en cero producen gradientes infinitos en la primera iteración del backward pass, causando overflow numérico.",
+            "Porque si todos los pesos son iguales, todas las neuronas de una misma capa calculan exactamente la misma función y aprenden lo mismo, sin diferenciarse nunca.",
+            "Porque la inicialización en cero viola las condiciones de Karush-Kuhn-Tucker necesarias para que el descenso de gradiente converja.",
+            "Porque pesos en cero hacen que la función de activación ReLU devuelva siempre cero, deteniendo el backward desde la primera época."
+          ],
+          "correct": 1,
+          "feedback": "Con W=0, todas las neuronas de una capa computan z_i = 0, activación idéntica, gradiente idéntico, actualización idéntica en cada época. Las neuronas nunca se diferencian: esto se llama 'problema de simetría'. Los pesos aleatorios rompen la simetría, permitiendo que cada neurona aprenda características diferentes. El factor 0.01 mantiene los valores iniciales pequeños para evitar saturar las activaciones."
+        },
+        {
+          "id": "s12-bp-017",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el forward pass del taller, la multiplicación de matrices A0 @ W1 donde A0 tiene forma (32, 2) y W1 tiene forma (2, 8). ¿Cuál es la forma de la matriz resultante y qué representa cada dimensión?",
+          "options": [
+            "(2, 32) — 2 características transformadas para los 32 ejemplos del mini-batch.",
+            "(8, 32) — 8 neuronas ocultas calculadas para los 32 ejemplos, transpuesta para facilitar el backward.",
+            "(32, 8) — 32 ejemplos del mini-batch, cada uno con 8 activaciones pre-ReLU de las neuronas ocultas.",
+            "(2, 8) — la matriz de pesos reducida al subespacio de las 2 características de entrada."
+          ],
+          "correct": 2,
+          "feedback": "La multiplicación de matrices (m x k) @ (k x n) = (m x n). Aquí (32x2) @ (2x8) = (32x8). Las 32 filas son los 32 ejemplos del mini-batch y las 8 columnas son las 8 neuronas ocultas. Cada elemento [i,j] es la combinación lineal de las 2 características del ejemplo i ponderada por los pesos de la neurona j, antes de aplicar ReLU."
+        },
+        {
+          "id": "s12-bp-018",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En la implementación de mini-batch GD del taller, los datos se barajan (shuffle) antes de dividirlos en batches en cada época. ¿Qué problema específico resuelve este barajado?",
+          "options": [
+            "Garantiza que todos los mini-batches tengan exactamente el mismo número de ejemplos de cada clase.",
+            "Evita que el modelo vea siempre los mismos ejemplos en el mismo orden, lo que podría sesgar los gradientes hacia patrones del orden original del dataset.",
+            "Reduce el tiempo de cómputo del forward pass al organizar los ejemplos por similitud antes de multiplicar matrices.",
+            "Asegura que el gradiente calculado en cada batch sea estadísticamente independiente del gradiente de las épocas anteriores."
+          ],
+          "correct": 1,
+          "feedback": "Sin barajado, si el dataset está ordenado (ej. todos los ejemplos de clase 0 primero), cada mini-batch tendría sesgo de clase. Los gradientes del primer batch siempre empujarían en una dirección y los del último en otra, creando oscilaciones sistemáticas. El barajado garantiza que cada mini-batch sea una muestra representativa aleatoria del dataset completo."
+        },
+        {
+          "id": "s12-bp-019",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "Al comparar las curvas de pérdida de Adam vs SGD en el taller, se observa que Adam reduce la pérdida mucho más rápido en las primeras épocas pero los valores finales son similares. ¿Qué explica este comportamiento?",
+          "options": [
+            "Adam converge más rápido al inicio porque su tasa de aprendizaje efectiva decrece con el tiempo, dando pasos grandes al principio y pequeños al final.",
+            "Las tasas de aprendizaje adaptativas de Adam son especialmente efectivas cuando los gradientes son grandes (inicio del entrenamiento) y se normalizan conforme la red mejora.",
+            "Adam usa todos los datos del dataset en las primeras épocas y luego cambia a mini-batches, lo que explica la velocidad inicial.",
+            "La diferencia inicial es un artefacto de la corrección de sesgo: m_hat y v_hat inflan artificialmente los pasos en las primeras épocas."
+          ],
+          "correct": 0,
+          "feedback": "Adam divide el gradiente entre sqrt(v_hat) + eps, donde v_hat es el segundo momento (magnitud cuadrada de los gradientes). Al inicio, los gradientes son grandes, v_hat crece rápido, y la lr efectiva se modera. Conforme la red mejora, los gradientes se hacen más pequeños y más consistentes, y la diferencia entre Adam y SGD bien ajustado se reduce."
+        },
+        {
+          "id": "s12-bp-020",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "Durante el entrenamiento en el taller, en cierto experimento la pérdida pasa a valer nan después de algunas épocas. ¿Cuál es la causa más probable?",
+          "options": [
+            "El dataset contiene valores faltantes (NaN) que no fueron limpiados en el preprocesamiento de los datos.",
+            "La tasa de aprendizaje es demasiado grande, causando que los pesos exploten a valores muy grandes, lo que lleva a overflow que produce NaN.",
+            "El número de neuronas ocultas es insuficiente para representar la función objetivo, causando error de aproximación infinito.",
+            "La función ReLU tiene derivada indefinida en 0, y cuando muchas neuronas se activan exactamente en 0 el gradiente se vuelve NaN."
+          ],
+          "correct": 1,
+          "feedback": "NaN durante el entrenamiento es la señal clásica de que la tasa de aprendizaje es demasiado grande. Los pesos crecen exponencialmente en cada paso, z2 = W2*a1 + b2 se hace +-inf, sigmoid(inf) = 1, log(1-1) = log(0) = -inf, la suma/resta de -inf produce NaN. La solución es reducir la learning rate. También puede ocurrir si no se usa np.clip en BCE."
+        },
+        {
+          "id": "s12-bp-021",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el backward pass, la función d_relu = (z1 > 0).astype(float) devuelve 0 para neuronas donde z1 <= 0. ¿Qué problema de entrenamiento puede surgir de esto en redes profundas?",
+          "options": [
+            "El gradiente evanescente, donde los gradientes se multiplican repetidamente por valores entre 0 y 1 de la derivada de sigmoid.",
+            "El Dying ReLU: si una neurona tiene z1 <= 0 para todos los ejemplos, su gradiente siempre es 0 y sus pesos nunca se actualizan.",
+            "Explosión de gradientes, porque cuando d_relu=0 el gradiente restante se concentra en las pocas neuronas activas.",
+            "Overfitting, porque las neuronas inactivas actúan como regularización implícita reduciendo la capacidad del modelo."
+          ],
+          "correct": 1,
+          "feedback": "Cuando z1 <= 0 para todos los ejemplos del batch, d_relu=0 implica dW1 y db1 son 0, esa neurona nunca actualiza sus pesos y permanece inactiva para siempre. Esto es el 'Dying ReLU'. Puede ocurrir si los pesos iniciales son muy negativos o si una tasa de aprendizaje grande empuja los pesos a zona negativa. La solución es Leaky ReLU (devuelve alpha*z en lugar de 0), que siempre tiene gradiente no nulo."
+        },
+        {
+          "id": "s12-bp-022",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el preprocesamiento del taller, los datos de entrada se normalizan con StandardScaler antes de entrenar. ¿Cuál es el efecto directo de NO normalizar sobre el entrenamiento con descenso de gradiente?",
+          "options": [
+            "El modelo no podría calcular la función de pérdida porque MSE y BCE asumen entradas en el rango [0,1].",
+            "Las características con mayor escala dominarán el gradiente, haciendo que la superficie de pérdida sea elongada y el descenso de gradiente ineficiente (necesita más épocas o tasa de aprendizaje menor).",
+            "El backward pass produciría gradientes negativos para características con valores positivos, invirtiendo la dirección de actualización.",
+            "Normalizar o no normalizar es equivalente porque el descenso de gradiente aprende automáticamente a escalar cada característica con sus pesos."
+          ],
+          "correct": 1,
+          "feedback": "Sin normalización, si una característica varía en [0,1000] y otra en [0,1], los pesos correspondientes tienen gradientes de magnitudes muy diferentes. La superficie de pérdida en el espacio de parámetros queda elongada (como un valle estrecho y largo). El descenso de gradiente oscila en la dirección de mayor escala y avanza lento en la de menor escala."
+        },
+        {
+          "id": "s12-bp-023",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "El taller implementa dos funciones de pérdida: binary_crossentropy para clasificación y mse_loss para regresión. Un estudiante propone usar MSE también para clasificación binaria. ¿Cuál es el problema principal con esta propuesta?",
+          "options": [
+            "MSE no puede calcularse con etiquetas binarias (0 y 1) porque el logaritmo de 0 es indefinido.",
+            "MSE produce una superficie de pérdida no convexa para la clasificación con sigmoid, con muchos mínimos locales, mientras BCE+sigmoid es convexa.",
+            "MSE es más lenta de calcular que BCE porque requiere elevar al cuadrado cada error, aumentando la complejidad computacional.",
+            "MSE y BCE son matemáticamente equivalentes para clasificación binaria cuando se usa sigmoid, así que la propuesta es válida."
+          ],
+          "correct": 1,
+          "feedback": "MSE+sigmoid crea una función de pérdida no convexa con múltiples mínimos locales, dificultando el entrenamiento. BCE+sigmoid es convexa (un solo mínimo global), lo que garantiza convergencia. Además, el gradiente de MSE+sigmoid sufre gradiente evanescente severo cuando y_hat está cerca de 0 o 1 (derivada de sigmoid aprox. 0), mientras que BCE+sigmoid tiene gradiente (y_hat-y) que siempre es informativo."
+        },
+        {
+          "id": "s12-bp-024",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "La retropropagación (backpropagation) aplica sistemáticamente la regla de la cadena. Si la red tiene capas L1 -> L2 -> L3 -> salida, ¿en qué orden se calculan los gradientes y por qué?",
+          "options": [
+            "De L1 hacia la salida, porque los gradientes de capas anteriores son necesarios para calcular los de capas posteriores.",
+            "De la salida hacia L1, porque la regla de la cadena requiere el gradiente de la capa siguiente (más cercana a la salida) para calcular el de la capa anterior.",
+            "En paralelo para todas las capas simultáneamente, usando el gradiente de la pérdida total dividido entre el número de capas.",
+            "En el mismo orden que el forward pass (L1 hacia salida), pero usando los valores almacenados del forward para calcular las derivadas."
+          ],
+          "correct": 1,
+          "feedback": "La regla de la cadena: dL/dW1 = (dL/da3)*(da3/da2)*(da2/da1)*(da1/dW1). Para calcular dL/dW1 necesitamos dL/da2, que a su vez necesita dL/da3. Por eso se empieza desde la salida y se propaga 'hacia atrás' (de ahí el nombre backpropagation): cada capa usa el gradiente calculado por la capa siguiente para calcular el suyo."
+        },
+        {
+          "id": "s12-bp-025",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "El taller muestra que con eta=0.001 el modelo necesita entre 1500 y 2500 épocas adicionales para alcanzar la misma accuracy que con eta=0.01. ¿Qué trade-off fundamental ilustra este resultado?",
+          "options": [
+            "Tasas de aprendizaje pequeñas siempre convergen a mejores soluciones pero requieren más tiempo, mientras que tasas grandes convergen a peores soluciones más rápido.",
+            "Existe un balance entre velocidad de convergencia y estabilidad: eta pequeño da pasos estables pero lentos, mientras que eta grande converge más rápido pero puede oscilar o divergir.",
+            "Con eta=0.001 el modelo cae en un mínimo local diferente al de eta=0.01, lo que demuestra que la tasa de aprendizaje determina a qué mínimo converge la red.",
+            "La diferencia en épocas se debe a que eta=0.001 requiere más ejemplos por mini-batch para estimar el gradiente con suficiente precisión."
+          ],
+          "correct": 1,
+          "feedback": "eta pequeño: pasos pequeños, actualización estable, difícil divergir, pero cada paso reduce la pérdida muy poco, necesita más épocas para llegar al mínimo. eta grande: pasos grandes, converge rápido, pero si es demasiado grande oscila alrededor del mínimo o diverge. El eta óptimo equilibra velocidad y estabilidad. Técnicas como learning rate scheduling o Adam adaptan eta durante el entrenamiento."
+        },
+        {
+          "id": "s12-bp-026",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En la implementación de Adam del taller, el denominador incluye el término 1e-8: theta -= lr * m_hat / (np.sqrt(v_hat) + 1e-8). ¿Por qué es necesario este pequeño valor?",
+          "options": [
+            "Para que la tasa de aprendizaje efectiva de Adam sea siempre exactamente 1e-8 veces menor que la lr global especificada.",
+            "Para evitar división por cero cuando v_hat es 0 (al inicio o para parámetros con gradiente siempre cero), garantizando estabilidad numérica.",
+            "Para implementar la corrección de sesgo de forma implícita sin necesidad de calcular m_hat y v_hat por separado.",
+            "Para que Adam sea equivalente a SGD cuando los gradientes son muy pequeños, proporcionando un fallback seguro."
+          ],
+          "correct": 1,
+          "feedback": "v_hat = E[g^2] >= 0. Si un parámetro no recibe gradiente (g=0 siempre), v_hat=0 y np.sqrt(0)=0, causando división por cero. El término eps=1e-8 (epsilon) añade un mínimo no nulo al denominador, garantizando que la división sea numéricamente estable. Es una constante estándar en todas las implementaciones de Adam (el paper original recomienda eps=1e-8)."
+        },
+        {
+          "id": "s12-bp-027",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En Adam se usan dos hiperparámetros: beta1=0.9 y beta2=0.999. ¿Qué controla cada uno y por qué beta2 es típicamente mucho mayor que beta1?",
+          "options": [
+            "beta1 controla la tasa de aprendizaje global y beta2 la regularización L2; beta2 es mayor para aplicar más regularización que momentum.",
+            "beta1 controla el decaimiento del primer momento (dirección, como momentum) y beta2 el decaimiento del segundo momento (magnitud cuadrada); beta2 es mayor porque la varianza necesita un historial más largo para ser una estimación estable.",
+            "beta1 y beta2 controlan lo mismo (el momentum) pero en capas diferentes: beta1 para capas ocultas y beta2 para la capa de salida.",
+            "beta1 controla cuántos gradientes pasados se usan en mini-batch GD y beta2 cuántos en batch GD; la diferencia refleja el mayor número de pasos en mini-batch."
+          ],
+          "correct": 1,
+          "feedback": "beta1=0.9: decaimiento del primer momento m (promedio exponencial del gradiente, como momentum). Ventana efectiva aprox. 1/(1-0.9) = 10 pasos. beta2=0.999: decaimiento del segundo momento v (promedio del gradiente^2). Ventana efectiva aprox. 1/(1-0.999) = 1000 pasos. v necesita un historial más largo porque la varianza de los gradientes es más ruidosa y requiere más datos para estimarla establemente."
+        },
+        {
+          "id": "s12-bp-028",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "El taller tiene dos implementaciones de backward: backward (para clasificación BCE) y backward_regresion (para regresión MSE). ¿Cuál es la diferencia clave entre ellas?",
+          "options": [
+            "Solo difieren en el cálculo de dW2 y db2; el gradiente d1 de la capa oculta es idéntico en ambas porque ReLU es la misma.",
+            "En backward el gradiente de salida es d2 = y_hat - y (de BCE+sigmoid), mientras que en backward_regresion es d2 = 2*(y_hat-y)/n (de MSE+lineal); el resto del backward es igual.",
+            "En backward_regresion no se calcula el gradiente de la capa oculta (d1) porque la capa de salida es lineal y no necesita retropropagar más.",
+            "La diferencia es que backward usa la transpuesta de W2 para retropropagar, mientras que backward_regresion usa W2 directamente."
+          ],
+          "correct": 1,
+          "feedback": "La única diferencia es el gradiente de la capa de salida: BCE+sigmoid da d2 = y_hat-y (algebraicamente simplificado); MSE+lineal da d2 = 2*(y_hat-y)/n (derivada directa de MSE). A partir de d2, el resto del backward es idéntico: d1 = (d2 @ W2.T) * d_relu, dW2 = A1.T @ d2 / n, etc."
+        },
+        {
+          "id": "s12-bp-029",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "Un estudiante pregunta: '¿Por qué el algoritmo se llama backPROPAGATION y no simplemente gradient descent?'. ¿Cuál es la explicación correcta?",
+          "options": [
+            "Porque backpropagation es el nombre del algoritmo completo de entrenamiento, que incluye tanto el forward pass como el descenso de gradiente.",
+            "Backpropagation se refiere específicamente al método eficiente de calcular gradientes en redes multicapa usando la regla de la cadena de atrás hacia adelante; el descenso de gradiente es el paso de actualización que usa esos gradientes.",
+            "Backpropagation y gradient descent son sinónimos; el nombre 'backpropagation' se usa en redes neuronales y 'gradient descent' en otros modelos de ML.",
+            "Backpropagation propaga los datos hacia atrás (del output al input) durante el forward pass para calcular las activaciones en orden inverso."
+          ],
+          "correct": 1,
+          "feedback": "Backpropagation es el algoritmo para calcular dL/dtheta eficientemente en redes multicapa, propagando el error desde la salida hacia la entrada mediante la regla de la cadena. Gradient descent es el algoritmo de optimización que usa esos gradientes para actualizar theta. Son etapas distintas: backprop calcula los gradientes, gradient descent los usa."
+        },
+        {
+          "id": "s12-bp-030",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el taller, la pérdida se calcula sobre el dataset completo al final de cada época (no solo sobre el último mini-batch). ¿Por qué es importante medir la pérdida de esta manera?",
+          "options": [
+            "Porque la pérdida del último mini-batch es siempre menor que la del dataset completo, dando una impresión falsa de mejor rendimiento.",
+            "Para obtener una estimación no sesgada del rendimiento real del modelo sobre todos los datos, ya que la pérdida de un mini-batch individual es una estimación ruidosa.",
+            "Para verificar que el modelo no ha memorizado el último mini-batch en detrimento de los datos anteriores de la época.",
+            "Porque calcular la pérdida por mini-batch causaría que el modelo ajuste sus pesos dos veces por época, duplicando la tasa de aprendizaje efectiva."
+          ],
+          "correct": 1,
+          "feedback": "La pérdida sobre el dataset completo es el indicador real de qué tan bien está aprendiendo el modelo. La pérdida de un mini-batch individual tiene alta varianza: puede ser accidentalmente baja o alta dependiendo de qué ejemplos cayeron en ese batch. Al calcular sobre todos los datos al final de cada época, se obtiene una medida estable y representativa que permite trazar curvas de aprendizaje informativas."
         }
       ]
     },
@@ -15124,6 +15556,858 @@ window.QUIZ_DATA = {
           ],
           "correct": 3,
           "feedback": "Correcto. La regla es: (A) clasificación binaria → 1 neurona + Sigmoid, produce P(clase=1) ∈ (0,1). (B) clasificación multiclase con K clases excluyentes → K neuronas + Softmax, produce distribución de probabilidad que suma 1. (C) regresión continua → 1 neurona sin activación (lineal), permite cualquier valor real. La opción c usa Sigmoid independiente para 4 clases: esto sirve para clasificación multietiqueta (varias clases simultáneas posibles), no para multiclase excluyente, porque las probabilidades no garantizan sumar 1."
+        },
+        {
+          "id": "s12-bp-001",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "¿Por qué no se puede usar la exactitud (accuracy) como función de pérdida durante el entrenamiento de una red neuronal?",
+          "options": [
+                    "Porque la exactitud no es diferenciable, por lo que el gradiente no existe y no se puede aplicar backpropagation.",
+                    "Porque la exactitud siempre da 0 cuando la red no ha sido entrenada todavía.",
+                    "Porque la exactitud solo funciona con problemas de regresión, no de clasificación.",
+                    "Porque calcular la exactitud requiere demasiada memoria en redes profundas."
+          ],
+          "correct": 0,
+          "feedback": "La exactitud es una función escalón: solo cambia cuando una predicción pasa de incorrecta a correcta. Al ser no diferenciable, su gradiente es 0 casi en todas partes (y no existe en los puntos de salto), lo que impide calcular cómo ajustar los pesos. Por eso se usan MSE (regresión) o entropía cruzada binaria (clasificación), que sí son diferenciables y permiten calcular gradientes útiles en todo punto."
+        },
+        {
+          "id": "s12-bp-002",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el taller se define la función BCE así:\n\n```python\ndef bce(y, y_hat):\n    y_hat = np.clip(y_hat, 1e-7, 1 - 1e-7)\n    return -np.mean(y * np.log(y_hat) + (1 - y) * np.log(1 - y_hat))\n```\n\n¿Cuál es el propósito de `np.clip(y_hat, 1e-7, 1 - 1e-7)`?",
+          "options": [
+                    "Escalar las predicciones al rango (0, 1) para que sean probabilidades válidas.",
+                    "Evitar que el logaritmo reciba 0 o 1, lo cual produciría −∞ o 0 y generaría NaN en el cálculo.",
+                    "Normalizar la salida de sigmoid cuando los valores están fuera del rango esperado.",
+                    "Acelerar el cálculo evitando exponenciales costosas cerca de los extremos."
+          ],
+          "correct": 1,
+          "feedback": "log(0) = −∞ y log(1) → 0, ambos valores problemáticos. Si y_hat fuera exactamente 0 o 1 (lo cual puede ocurrir por precisión numérica en sigmoid), el resultado sería NaN. np.clip limita los valores al intervalo (1e-7, 1 − 1e-7), manteniéndolos dentro del dominio matemático del logaritmo. No escala los valores a (0,1) —eso lo hace sigmoid—, sino que evita los extremos problemáticos."
+        },
+        {
+          "id": "s12-bp-003",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "Dada la red del Bloque A3 (arquitectura 2→2→1) con x = (0.7, 0.5), y = 1, la predicción es ŷ. ¿Cuál es la expresión correcta del gradiente d2 respecto a la capa de salida con BCE?",
+          "options": [
+                    "d2 = ŷ − y",
+                    "d2 = 2 * (ŷ − y) / n",
+                    "d2 = −y / ŷ + (1 − y) / (1 − ŷ)",
+                    "d2 = (ŷ − y) * ŷ * (1 − ŷ)"
+          ],
+          "correct": 0,
+          "feedback": "Para BCE + sigmoid en la capa de salida, la derivada combinada simplifica elegantemente a d2 = ŷ − y. Esto se debe a que la derivada de la entropía cruzada respecto a z2 (antes de sigmoid) colapsa a esta forma simple gracias a la propiedad de sigmoid: σ'(z) = σ(z)(1−σ(z)). La opción b es la derivada de MSE. La opción c es la derivada de BCE respecto a ŷ antes de combinar con sigmoid. La opción d mezcla incorrectamente ambas derivadas."
+        },
+        {
+          "id": "s12-bp-004",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En backpropagation, ¿qué representa el gradiente dW1 y para qué se usa?",
+          "options": [
+                    "Es la variación de los pesos W1 que minimiza directamente el error en un paso.",
+                    "Indica la dirección y magnitud en que la pérdida cambia al modificar W1; se usa para actualizar W1 restando η·dW1.",
+                    "Es el error propagado desde la capa de salida hasta W1, que reemplaza el valor actual de W1.",
+                    "Indica cuánto varía la predicción ŷ cuando W1 aumenta en una unidad."
+          ],
+          "correct": 1,
+          "feedback": "El gradiente dW1 = ∂L/∂W1 es un tensor de la misma forma que W1 que indica cómo cambia la pérdida L al perturbar cada peso. No es el nuevo valor de W1 ni lo reemplaza: se usa en la regla de actualización W1 ← W1 − η·dW1, restando una fracción (controlada por la tasa de aprendizaje η) para mover los pesos en la dirección que reduce la pérdida."
+        },
+        {
+          "id": "s12-bp-005",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el Bloque A3, el gradiente de la capa oculta se calcula como:\n\n```python\nd1 = (d2 @ W2.T) * d_relu(z1)\n```\n\n¿Por qué se multiplica por `d_relu(z1)` y no simplemente por `relu(z1)`?",
+          "options": [
+                    "Porque d_relu(z1) normaliza el gradiente para que no explote durante el entrenamiento.",
+                    "Porque la regla de la cadena exige multiplicar por la derivada de la función de activación de esa capa, no por su salida.",
+                    "Porque relu(z1) ya fue aplicado en el forward pass y no es necesario repetirlo.",
+                    "Porque d_relu(z1) es una versión escalada de relu que acelera la convergencia."
+          ],
+          "correct": 1,
+          "feedback": "La regla de la cadena (backpropagation) requiere multiplicar por la derivada de la función de activación en cada capa. d_relu(z) devuelve 1 si z > 0 y 0 si z ≤ 0 —exactamente la derivada de ReLU. Al multiplicar (d2 @ W2.T) por d_relu(z1), se 'detiene' la propagación del gradiente hacia las neuronas que estaban inactivas (z1 ≤ 0), pues su derivada es 0. relu(z1) sería la activación, no su derivada, y usarla sería matemáticamente incorrecto."
+        },
+        {
+          "id": "s12-bp-006",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el Bloque A4, la función `backward()` divide el gradiente por n (tamaño del lote): `dW2 = a1.T @ d2 / n`. ¿Por qué se divide por n?",
+          "options": [
+                    "Para que los gradientes sean más pequeños y no se modifiquen mucho los pesos.",
+                    "Para obtener el gradiente promedio sobre el lote, ya que la pérdida es el promedio de las pérdidas individuales.",
+                    "Para compensar el hecho de que se usa mini-batch en lugar de gradiente descendente completo.",
+                    "Porque la función de pérdida MSE ya multiplica por n, y esta división lo cancela."
+          ],
+          "correct": 1,
+          "feedback": "La función de pérdida calcula el promedio sobre n ejemplos: L = (1/n)·Σ loss_i. Al derivar respecto a los pesos, el factor 1/n también aparece en el gradiente. Dividir dW2 por n equivale a tomar el gradiente promedio del lote, lo que hace que la escala de la actualización sea independiente del tamaño del lote. Sin esta división, usar un lote de 32 produciría gradientes 32 veces mayores que usar un ejemplo, complicando la elección de η."
+        },
+        {
+          "id": "s12-bp-007",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "El taller implementa una verificación numérica del gradiente usando la fórmula:\n\n```python\ngrad_num = (L(w + h) - L(w - h)) / (2 * h)\n```\n\n¿Cuál es el propósito de este cálculo?",
+          "options": [
+                    "Es una forma alternativa de calcular el gradiente que reemplaza a backpropagation en producción.",
+                    "Permite verificar que backpropagation está implementado correctamente comparando el gradiente analítico con una aproximación numérica.",
+                    "Calcula el gradiente exacto usando diferencias finitas, con mayor precisión que backpropagation.",
+                    "Sirve para inicializar los pesos de la red antes del entrenamiento con valores óptimos."
+          ],
+          "correct": 1,
+          "feedback": "El gradient check numérico es una herramienta de debugging: se calcula una aproximación de la derivada usando diferencias finitas centrales (muy precisa con h pequeño, e.g. 1e-5) y se compara con el gradiente analítico de backpropagation. Si ambos coinciden (diferencia relativa < 1e-5), backpropagation está implementado correctamente. Es demasiado lento para usar en producción (requiere una evaluación de L por cada parámetro), pero invaluable para detectar bugs."
+        },
+        {
+          "id": "s12-bp-008",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "¿Cuál de las siguientes describe correctamente la función de pérdida MSE para regresión?",
+          "options": [
+                    "MSE = −(1/n) · Σ[y·log(ŷ) + (1−y)·log(1−ŷ)]",
+                    "MSE = (1/n) · Σ(y − ŷ)²",
+                    "MSE = (1/n) · Σ|y − ŷ|",
+                    "MSE = max(0, 1 − y·ŷ)"
+          ],
+          "correct": 1,
+          "feedback": "El Error Cuadrático Medio (MSE) es el promedio de los errores al cuadrado: (1/n)·Σ(y−ŷ)². La opción a es BCE (Binary Cross-Entropy). La opción c es MAE (Mean Absolute Error). La opción d es Hinge Loss (usado en SVM). MSE es preferido para regresión porque penaliza errores grandes más que pequeños, es diferenciable en todo punto y su derivada (el factor 2/n en backward) es simple de calcular."
+        },
+        {
+          "id": "s12-bp-009",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el Bloque B2, la función `backward_regresion()` calcula el gradiente de la capa de salida así:\n\n```python\nd2 = 2 * (y_hat - y) / n\n```\n\n¿De dónde proviene el factor 2?",
+          "options": [
+                    "Es una convención del taller para mantener la escala del gradiente comparable con BCE.",
+                    "Proviene de la derivada de x² = 2x al aplicar la regla de la cadena a la función MSE.",
+                    "Se agrega para que el gradiente sea siempre positivo cuando la predicción supera al valor real.",
+                    "Duplica el gradiente para acelerar la convergencia en problemas de regresión."
+          ],
+          "correct": 1,
+          "feedback": "MSE = (1/n)·Σ(ŷ−y)². Al derivar respecto a ŷ: ∂MSE/∂ŷ = (2/n)·(ŷ−y). El factor 2 surge de la regla de potencias: d(u²)/du = 2u. Algunos libros absorben el 2 definiendo MSE como (1/2n)·Σ(ŷ−y)² para cancelarlo, pero el taller usa la definición estándar (1/n) y mantiene el 2 explícitamente. No tiene nada que ver con hacer el gradiente positivo ni con aceleración."
+        },
+        {
+          "id": "s12-bp-010",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En `forward_regresion()`, la capa de salida NO aplica sigmoid. ¿Cuál es la razón principal?",
+          "options": [
+                    "Porque sigmoid es demasiado lenta computacionalmente para problemas de regresión.",
+                    "Porque para regresión el objetivo es predecir un valor continuo sin restricción de rango, y sigmoid limitaría las predicciones entre 0 y 1.",
+                    "Porque ReLU en la capa de salida ya garantiza que el valor predicho sea no negativo.",
+                    "Porque la entropía cruzada requiere una capa de salida lineal para funcionar correctamente."
+          ],
+          "correct": 1,
+          "feedback": "Sigmoid comprime cualquier valor real al rango (0, 1), lo cual es ideal para predecir probabilidades (clasificación binaria) pero destructivo para regresión. Si el puntaje de crédito real puede ser 0.75 y sigmoid lo limitara a ese rango, aún funcionaría —pero si el target estuviera en otra escala, sigmoid cortaría la capacidad expresiva. La capa lineal (sin activación) permite que ŷ tome cualquier valor real, lo que es lo correcto para regresión. La función de pérdida en regresión es MSE, no BCE."
+        },
+        {
+          "id": "s12-bp-011",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el Bloque A5, el optimizador SGD actualiza los pesos con:\n\n```python\nparams[k] -= lr * grads[k]\n```\n\nEl optimizador Momentum lo hace con:\n\n```python\nv[k] = 0.9 * v[k] + grads[k]\nparams[k] -= lr * v[k]\n```\n\n¿Cuál es la ventaja del Momentum sobre SGD puro?",
+          "options": [
+                    "Momentum usa una tasa de aprendizaje mayor que SGD, convergiendo siempre más rápido.",
+                    "Momentum acumula un promedio exponencial de gradientes pasados, suavizando las oscilaciones y acelerando el avance en direcciones consistentes.",
+                    "Momentum evita completamente los mínimos locales al agregar ruido aleatorio a cada actualización.",
+                    "Momentum adapta la tasa de aprendizaje para cada parámetro individualmente según su historial."
+          ],
+          "correct": 1,
+          "feedback": "El vector v acumula un promedio exponencial de los gradientes pasados (con factor 0.9). Si los gradientes apuntan consistentemente en la misma dirección, v crece (acelera). Si oscilan, se cancelan parcialmente (suaviza). Esto permite avanzar más rápido por valles y reducir las oscilaciones en superficies muy curvadas. No usa tasa de aprendizaje mayor —de hecho el taller usa η=0.05 para Momentum vs η=0.1 para SGD. No es Adam (que sí adapta por parámetro)."
+        },
+        {
+          "id": "s12-bp-012",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "El optimizador Adam combina Momentum y RMSProp. En el taller, la actualización de Adam incluye:\n\n```python\nm[k] = 0.9 * m[k] + 0.1 * g\nv[k] = 0.999 * v[k] + 0.001 * g**2\nm_hat = m[k] / (1 - 0.9**t)\nv_hat = v[k] / (1 - 0.999**t)\nparams[k] -= lr * m_hat / (np.sqrt(v_hat) + 1e-8)\n```\n\n¿Para qué sirven `m_hat` y `v_hat`?",
+          "options": [
+                    "Son versiones normalizadas de m y v que garantizan que los pesos permanezcan en el rango [−1, 1].",
+                    "Son correcciones de sesgo (bias correction) que compensan el hecho de que m y v se inicializan en cero y al principio están sesgados hacia cero.",
+                    "Son promedios móviles independientes que reemplazan m y v para mayor estabilidad numérica.",
+                    "Son los gradientes corregidos por la tasa de aprendizaje para cada parámetro individualmente."
+          ],
+          "correct": 1,
+          "feedback": "Al inicializar m y v en cero, en las primeras iteraciones ambos están fuertemente subestimados (sesgados hacia cero). La corrección de sesgo divide por (1 − β^t): cuando t es pequeño, (1 − 0.9^1) = 0.1, por lo que m_hat = m / 0.1 = 10m —corrige la subestimación. Conforme t → ∞, (1 − β^t) → 1 y la corrección desaparece. Esta técnica es parte del paper original de Adam (Kingma & Ba, 2014) y es esencial para que el optimizador funcione bien desde la primera iteración."
+        },
+        {
+          "id": "s12-bp-013",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el Bloque A6, se entrena la misma red con tres optimizadores. Los resultados al final del entrenamiento son: SGD (η=0.1) → acc=0.855, Momentum (η=0.05) → acc=0.890, Adam (η=0.01) → acc=0.900. ¿Qué conclusión se puede extraer?",
+          "options": [
+                    "SGD es el mejor optimizador porque usa la tasa de aprendizaje más alta y no necesita hiperparámetros adicionales.",
+                    "Adam converge a la mayor exactitud con la menor tasa de aprendizaje, confirmando que adapta eficientemente el paso por parámetro.",
+                    "Momentum es el mejor balance entre velocidad y precisión, por lo que se recomienda siempre sobre Adam.",
+                    "Las diferencias son insignificantes y el optimizador no importa si se entrena suficientes épocas."
+          ],
+          "correct": 1,
+          "feedback": "Adam logra la mayor exactitud (0.900) con la menor tasa de aprendizaje (0.01), lo que muestra su capacidad de adaptar el paso de actualización por parámetro usando el historial de gradientes. Momentum mejora sobre SGD suavizando oscilaciones. Las diferencias no son insignificantes —de 0.855 a 0.900 con los mismos datos y arquitectura es un salto considerable. Adam es la opción predeterminada en la práctica, aunque para datasets muy grandes SGD con Momentum también es competitivo."
+        },
+        {
+          "id": "s12-bp-014",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el Bloque B3, se prueban cuatro tasas de aprendizaje para una red de regresión. ¿Qué ocurre con η = 1.0 según los resultados del taller?",
+          "options": [
+                    "Converge más rápido que η = 0.1 en las primeras épocas pero luego se estabiliza.",
+                    "El MSE diverge (sube a valores enormes como 36.6 en época 300), indicando que η = 1.0 es demasiado grande.",
+                    "El MSE permanece constante porque los gradientes se cancelan mutuamente en cada lote.",
+                    "Funciona igual que η = 0.1 pero requiere más épocas para converger."
+          ],
+          "correct": 1,
+          "feedback": "Con η = 1.0, el MSE en la época 10 ya es 8.859 y sube a 36.642 en la época 300 —muy por encima de la varianza base del target. Los pasos de actualización son tan grandes que los pesos 'saltan' sobre los mínimos repetidamente, haciendo que la pérdida oscile y crezca en lugar de decrecer. Este fenómeno se llama divergencia o explosión del gradiente (en sentido dinámico). La elección correcta en el taller es η = 0.1, que logra MSE = 0.0023 en 300 épocas."
+        },
+        {
+          "id": "s12-bp-015",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "¿Cuál es la diferencia entre el descenso de gradiente por lotes (batch GD), el estocástico (SGD) y el mini-batch GD?",
+          "options": [
+                    "Batch GD usa todos los datos para cada actualización; SGD usa un ejemplo; mini-batch usa un subconjunto fijo (e.g., 32 ejemplos).",
+                    "Solo difieren en la tasa de aprendizaje que usan internamente: batch usa η grande, SGD usa η pequeña.",
+                    "Batch GD y mini-batch son equivalentes; SGD es el único que usa gradientes ruidosos.",
+                    "SGD usa todos los datos y es más lento; mini-batch usa subconjuntos y es más rápido que batch GD."
+          ],
+          "correct": 0,
+          "feedback": "Las tres variantes definen cuántos ejemplos se usan para calcular cada gradiente y actualizar los pesos: Batch GD usa todos los datos (gradiente exacto, muy lento), SGD usa 1 ejemplo (gradiente muy ruidoso, rápido pero errático), mini-batch usa n ejemplos (compromiso: algo de ruido que ayuda a salir de mínimos locales, pero lo suficientemente estable para converger). El taller usa mini-batch de 32 ejemplos, que es la práctica estándar."
+        },
+        {
+          "id": "s12-bp-016",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el Bloque A4, `inicializar_pesos()` usa `np.random.normal(0, 0.5)`. ¿Por qué se inicializan los pesos con valores pequeños aleatorios y no todos en cero?",
+          "options": [
+                    "Porque valores en cero harían la red más lenta pero igual convergería al mismo resultado.",
+                    "Porque si todos los pesos son iguales (por ejemplo, cero), todas las neuronas aprenden exactamente lo mismo y la red nunca rompe la simetría, quedando equivalente a una red con una sola neurona por capa.",
+                    "Porque numpy no puede calcular gradientes con matrices de ceros.",
+                    "Porque la inicialización en cero causaría NaN en la primera época por división por cero en la función de pérdida."
+          ],
+          "correct": 1,
+          "feedback": "El problema de inicializar todos los pesos en cero se llama 'problema de la simetría'. Si W1 = 0, todas las neuronas de la capa oculta calculan la misma salida (a1 = relu(0·x + 0) = 0) y reciben el mismo gradiente durante backpropagation. Por tanto aprenden lo mismo y se mantienen idénticas para siempre —la capa oculta colapsa a una sola neurona efectiva. Los pesos aleatorios rompen esta simetría desde el inicio, permitiendo que cada neurona aprenda características distintas."
+        },
+        {
+          "id": "s12-bp-017",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "El forward pass de la red 2→8→1 del Bloque A4 calcula:\n\n```python\nz1 = X @ W1 + b1\na1 = relu(z1)\nz2 = a1 @ W2 + b2\ny_hat = sigmoid(z2)\n```\n\nSi X tiene forma (32, 2) y W1 tiene forma (2, 8), ¿qué forma tiene z1?",
+          "options": [
+                    "(2, 8)",
+                    "(32, 2)",
+                    "(32, 8)",
+                    "(8, 32)"
+          ],
+          "correct": 2,
+          "feedback": "La multiplicación matricial (32, 2) @ (2, 8) produce (32, 8): las dimensiones internas (2) se cancelan y quedan las externas (32, 8). Cada fila de z1 corresponde a un ejemplo del lote (32 ejemplos) y cada columna corresponde a una de las 8 neuronas de la capa oculta. Esto se mantiene después de relu: a1 también tiene forma (32, 8). La regla general: (m, k) @ (k, n) = (m, n)."
+        },
+        {
+          "id": "s12-bp-018",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el bucle de mini-batches del Bloque A5:\n\n```python\norden = rng.permutation(len(X))\nfor inicio in range(0, len(X), tamano_lote):\n    lote = orden[inicio:inicio + tamano_lote]\n```\n\n¿Por qué se permuta el orden de los datos antes de dividirlos en lotes?",
+          "options": [
+                    "Para que cada lote tenga exactamente `tamano_lote` ejemplos y no queden lotes incompletos.",
+                    "Para evitar que la red memorice el orden de los ejemplos y vea distribuciones más representativas de los datos en cada lote.",
+                    "Para acelerar el acceso a memoria cache al ordenar los datos secuencialmente.",
+                    "Porque backpropagation solo funciona correctamente con datos en orden aleatorio."
+          ],
+          "correct": 1,
+          "feedback": "Barajar (shuffle) los datos antes de dividirlos en lotes tiene dos ventajas: (1) evita que el modelo vea los datos en un patrón fijo que podría sesgar el aprendizaje (si los ejemplos están ordenados por clase, cada lote sería homogéneo), y (2) introduce ruido útil en el gradiente que puede ayudar a escapar de mínimos locales o puntos de ensilladura. El shuffle no garantiza lotes completos (los últimos datos pueden ser menos de tamano_lote), y backpropagation no requiere orden aleatorio matemáticamente."
+        },
+        {
+          "id": "s12-bp-019",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En la comparación del Bloque B5, Adam con η=0.01 logra MSE=0.0049 en la época 10, mientras que SGD con η=0.1 logra MSE=0.0084. Al final (época 300), ambos son similares: Adam=0.0023, SGD=0.0023. ¿Qué implica esto?",
+          "options": [
+                    "Adam es mejor en convergencia inicial (aprende más rápido al principio) pero SGD alcanza la misma calidad final con suficientes épocas.",
+                    "SGD es superior porque logra el mismo resultado con una tasa de aprendizaje mayor.",
+                    "Adam es estrictamente mejor que SGD en todas las situaciones sin excepción.",
+                    "La diferencia en la época 10 se debe al azar y no es estadísticamente significativa."
+          ],
+          "correct": 0,
+          "feedback": "Esta comparación ilustra un hallazgo común en la práctica: Adam suele converger más rápido en las primeras épocas (como se ve en época 10: 0.0049 vs 0.0084), pero los resultados finales pueden ser similares cuando SGD está bien ajustado. En la época 300 la diferencia es mínima (0.002288 vs 0.002331). En datasets grandes y problemas complejos, Adam frecuentemente mantiene la ventaja. SGD con Momentum bien afinado puede igualar a Adam, pero requiere más ajuste de hiperparámetros."
+        },
+        {
+          "id": "s12-bp-020",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "Un compañero entrena una red y la pérdida se convierte en `nan` desde la época 3. ¿Cuál es la causa más probable y el primer parámetro a revisar?",
+          "options": [
+                    "El número de capas ocultas: agregar más capas provoca NaN por acumulación de errores.",
+                    "La tasa de aprendizaje (η): si es demasiado grande, los pesos crecen sin control hasta desbordamiento numérico, produciendo NaN.",
+                    "El tamaño del mini-batch: lotes muy pequeños generan gradientes que no representan el dataset.",
+                    "La función de activación: ReLU en la capa oculta puede producir NaN cuando el gradiente muere."
+          ],
+          "correct": 1,
+          "feedback": "NaN temprano en el entrenamiento (épocas 1-5) es casi siempre señal de explosión numérica causada por una tasa de aprendizaje demasiado grande. Los pesos se actualizan con pasos gigantes, crecen hacia infinito, y las operaciones matriciales producen ∞−∞ o 0·∞, que IEEE 754 define como NaN. La solución es reducir η en uno o dos órdenes de magnitud (e.g., de 1.0 a 0.01). El Dying ReLU produce ceros (no NaN), y un mini-batch pequeño produce gradientes ruidosos pero no NaN."
+        },
+        {
+          "id": "s12-bp-021",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "La función `d_relu(z)` utilizada en backpropagation devuelve:\n\n```python\ndef d_relu(z):\n    return (z > 0).astype(float)\n```\n\n¿Qué propiedad de la derivada de ReLU explica que algunas neuronas no aprendan durante el entrenamiento?",
+          "options": [
+                    "Cuando z > 0, la derivada es 0, por lo que el gradiente no fluye hacia atrás en las neuronas activas.",
+                    "Cuando z ≤ 0, la derivada es 0, por lo que el gradiente no fluye hacia atrás en las neuronas inactivas —fenómeno llamado Dying ReLU.",
+                    "La derivada de ReLU siempre es 1, lo que hace que el gradiente no se atenúe con la profundidad.",
+                    "d_relu devuelve valores binarios (0 o 1) que anulan el gradiente en el 50% de los pesos en promedio."
+          ],
+          "correct": 1,
+          "feedback": "ReLU(z) = max(0, z) tiene derivada = 1 si z > 0, y derivada = 0 si z ≤ 0. Cuando una neurona recibe pre-activación z ≤ 0, su derivada es 0 y el gradiente se detiene completamente: los pesos que alimentan esa neurona no reciben señal de aprendizaje. Si esto ocurre de forma permanente (z ≤ 0 siempre para todos los ejemplos), la neurona 'muere' y deja de aprender —Dying ReLU. Leaky ReLU soluciona esto devolviendo α·z en lugar de 0 cuando z ≤ 0."
+        },
+        {
+          "id": "s12-bp-022",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el Bloque A1, los datos se normalizan con min-max antes de entrenar. ¿Por qué es importante normalizar las entradas para redes neuronales entrenadas con gradiente descendente?",
+          "options": [
+                    "Porque la normalización convierte los datos a valores binarios (0 o 1) que ReLU puede procesar directamente.",
+                    "Porque cuando las features tienen escalas muy distintas, las actualizaciones de pesos son desiguales, el gradiente descendente zigzaguea y la convergencia es más lenta.",
+                    "Porque la normalización elimina los valores atípicos que confundirían a la función sigmoid.",
+                    "Porque sin normalizar, las matrices de pesos no pueden multiplicarse correctamente."
+          ],
+          "correct": 1,
+          "feedback": "Con features en escalas muy distintas (e.g., ingresos en miles vs. edad en decenas), la superficie de pérdida tiene valles muy elongados: el gradiente es mucho mayor en la dirección de la feature con escala grande, lo que obliga a usar tasas de aprendizaje muy pequeñas para no divergir, y hace que el descenso 'zigzaguee' en las direcciones de features pequeñas. Al normalizar a [0,1], todas las features contribuyen de forma proporcional y la superficie es más esférica, permitiendo tasas de aprendizaje mayores y convergencia más directa."
+        },
+        {
+          "id": "s12-bp-023",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "¿Cuál de las siguientes describe correctamente la diferencia entre la pérdida MSE (para regresión) y BCE (para clasificación binaria)?",
+          "options": [
+                    "MSE mide la distancia euclídea entre vectores de probabilidad; BCE mide el error al predecir un valor continuo.",
+                    "MSE penaliza el error al cuadrado y es adecuado cuando el target es un valor continuo; BCE mide divergencia de distribuciones y es adecuado cuando el target es una probabilidad (0 o 1).",
+                    "BCE y MSE son equivalentes matemáticamente para clasificación binaria.",
+                    "MSE es preferido para clasificación porque sus gradientes son más estables que los de BCE."
+          ],
+          "correct": 1,
+          "feedback": "MSE = (1/n)·Σ(y−ŷ)² penaliza la diferencia numérica al cuadrado y funciona bien cuando y ∈ ℝ (regresión). BCE = −(1/n)·Σ[y·log(ŷ) + (1−y)·log(1−ŷ)] mide cuánta información se pierde al predecir la distribución ŷ en lugar de la verdadera y, y funciona bien cuando y ∈ {0,1}. No son equivalentes: usar MSE para clasificación produce gradientes que se saturan con sigmoid (el problema de gradientes pequeños que BCE evita gracias a la cancelación algebraica con sigmoid)."
+        },
+        {
+          "id": "s12-bp-024",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En backpropagation, ¿qué es la 'regla de la cadena' y por qué es fundamental?",
+          "options": [
+                    "Es una regla que encadena las actualizaciones de pesos capa por capa en orden secuencial.",
+                    "Es una regla de cálculo que permite descomponer la derivada de una función compuesta: d(f∘g)/dx = f'(g(x))·g'(x), lo que permite calcular ∂L/∂w para cualquier peso propagando el error capa por capa.",
+                    "Es el principio que garantiza que el gradiente no explote ni se desvanezca en redes profundas.",
+                    "Es la regla que determina en qué orden se actualizan los pesos: primero capa de salida, luego capas ocultas."
+          ],
+          "correct": 1,
+          "feedback": "La regla de la cadena (chain rule) del cálculo establece que para funciones compuestas: si L depende de z2 que depende de W2 que depende de W1 que depende de z1..., entonces ∂L/∂W1 = (∂L/∂z2)·(∂z2/∂a1)·(∂a1/∂z1)·(∂z1/∂W1). Backpropagation es exactamente la aplicación eficiente de esta regla: calcula los gradientes de atrás hacia adelante, reutilizando los cálculos intermedios. Sin la regla de la cadena sería imposible calcular ∂L/∂W1 en una red profunda."
+        },
+        {
+          "id": "s12-bp-025",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "El taller compara tres tasas de aprendizaje para regresión: η=0.1 (MSE final 0.0023), η=0.01 (MSE final 0.0141 en 300 épocas), η=0.001 (convergencia muy lenta). ¿Cuántas épocas aproximadamente necesitaría η=0.001 para alcanzar el rendimiento de η=0.1?",
+          "options": [
+                    "Alrededor de 350 épocas: solo necesita 50 más que η=0.1.",
+                    "Entre 1500 y 2500 épocas adicionales aproximadamente.",
+                    "Exactamente 3000 épocas, ya que converge 10 veces más lento al ser la tasa 10 veces menor.",
+                    "No puede alcanzar ese rendimiento independientemente del número de épocas."
+          ],
+          "correct": 1,
+          "feedback": "El taller establece que con η=0.001, después de 300 épocas el MSE aún es 0.0141 (muy lejos de 0.0023). La relación no es exactamente lineal con la inversa de η porque el descenso de gradiente es no lineal, pero una estimación razonable es entre 1500-2500 épocas adicionales. La respuesta c es incorrecta porque la convergencia no escala linealmente con η en superficies complejas. La d es incorrecta: en principio sí puede converger, pero el costo computacional hace que no valga la pena cuando simplemente subir η resuelve el problema."
+        },
+        {
+          "id": "s12-bp-026",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En Adam, el término `1e-8` al denominador de la actualización `params[k] -= lr * m_hat / (np.sqrt(v_hat) + 1e-8)` cumple la función de:",
+          "options": [
+                    "Regularización L2 que penaliza pesos grandes para evitar sobreajuste.",
+                    "Estabilidad numérica: evitar división por cero cuando v_hat es muy pequeño (gradiente casi nulo).",
+                    "Escalar la tasa de aprendizaje para que sea equivalente a la de SGD.",
+                    "Limitar el tamaño máximo de la actualización de pesos en cada paso."
+          ],
+          "correct": 1,
+          "feedback": "ε = 1e-8 (epsilon) es un valor diminuto que se suma al denominador para evitar división por cero. Si un parámetro tiene v_hat ≈ 0 (porque sus gradientes recientes han sido casi nulos), np.sqrt(0) = 0 causaría división por cero. Con epsilon: np.sqrt(0) + 1e-8 = 1e-8, que es pequeño pero finito y numéricamente estable. No es regularización (que se implementaría sumando un término de penalización a la pérdida), ni escala η hacia SGD."
+        },
+        {
+          "id": "s12-bp-027",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "¿Cuál es la diferencia entre el rol de los parámetros β1=0.9 y β2=0.999 en Adam?",
+          "options": [
+                    "β1 controla la varianza del gradiente; β2 controla la media del gradiente.",
+                    "β1 (0.9) controla el promedio exponencial del gradiente (primer momento/momentum); β2 (0.999) controla el promedio exponencial del gradiente al cuadrado (segundo momento/varianza).",
+                    "β1 y β2 son tasas de aprendizaje separadas para los pesos y los sesgos respectivamente.",
+                    "β1 determina cuánto tiempo Adam recuerda gradientes pasados; β2 determina la velocidad de convergencia."
+          ],
+          "correct": 1,
+          "feedback": "En Adam: m = β1·m + (1−β1)·g acumula el primer momento (media del gradiente, como Momentum con β1=0.9); v = β2·v + (1−β2)·g² acumula el segundo momento (media del cuadrado del gradiente, como RMSProp con β2=0.999). β2 es más cercano a 1 porque la varianza necesita un promedio más largo y estable para escalar correctamente. La división m_hat/√v_hat adapta el paso por parámetro: si un parámetro tiene gradientes consistentes y grandes, el paso se reduce; si son pequeños y consistentes, se amplifica."
+        },
+        {
+          "id": "s12-bp-028",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "El Bloque B2 implementa `backward_regresion()` para una red de regresión. ¿En qué se diferencia fundamentalmente de `backward()` del Bloque A3 (clasificación)?",
+          "options": [
+                    "backward_regresion() usa ReLU en la capa de salida en lugar de ninguna activación.",
+                    "El gradiente d2 en regresión es 2*(ŷ−y)/n (derivada de MSE), mientras que en clasificación es ŷ−y (derivada combinada de BCE+sigmoid).",
+                    "backward_regresion() actualiza los pesos en dirección contraria a backward() de clasificación.",
+                    "La única diferencia es que backward_regresion() no divide por n el gradiente de W1."
+          ],
+          "correct": 1,
+          "feedback": "La diferencia clave está en el gradiente de la capa de salida (d2), que depende de qué función de pérdida se usa: (1) Clasificación: BCE + sigmoid → d2 = ŷ−y (derivada simplificada). (2) Regresión: MSE + lineal → d2 = 2*(ŷ−y)/n (derivada de MSE, con el factor 2 de la derivada de x² y el 1/n del promedio). El resto del backpropagation es idéntico: d1 = (d2 @ W2.T) * d_relu(z1), dW1 = X.T @ d1, etc."
+        },
+        {
+          "id": "s12-bp-029",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "El taller explica que backpropagation recorre la red 'de atrás hacia adelante'. ¿Cuál es la razón matemática más precisa de por qué debe ir en ese orden?",
+          "options": [
+                    "Porque los pesos de la capa de salida son más importantes que los de las capas ocultas y deben actualizarse primero.",
+                    "Porque para calcular ∂L/∂W1 se necesita ∂L/∂a1, que a su vez requiere ∂L/∂z2 (gradiente de la capa posterior), por lo que se debe computar desde la salida hacia la entrada.",
+                    "Porque es más fácil computacionalmente comenzar por la última capa y avanzar hacia atrás.",
+                    "Porque el forward pass ya calculó las activaciones de adelante hacia atrás, y backprop simplemente invierte ese orden."
+          ],
+          "correct": 1,
+          "feedback": "La razón es matemática: por la regla de la cadena, ∂L/∂W1 depende de ∂L/∂z1, que depende de ∂L/∂a1, que depende de ∂L/∂z2 (capa de salida). Cada gradiente depende del gradiente de la capa siguiente (más cercana a la salida). Por tanto, se debe calcular primero el gradiente de la última capa (d2), luego el de la penúltima (d1), etc. Esta dependencia en cadena es exactamente la regla de la cadena y justifica matemáticamente el orden de atrás hacia adelante."
+        },
+        {
+          "id": "s12-bp-030",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el Bloque A5, el historial de pérdida se registra así: `historial.append(bce(y, forward(X, params)[0]))`. Esta línea usa TODOS los datos X, no el mini-batch. ¿Por qué se mide la pérdida sobre el dataset completo y no sobre el último lote?",
+          "options": [
+                    "Porque calcular BCE sobre un mini-batch produce NaN cuando el lote es pequeño.",
+                    "Para obtener una estimación estable de la pérdida real del modelo al final de cada época, ya que la pérdida de un lote individual es muy ruidosa y no representa el rendimiento global.",
+                    "Porque el forward pass sobre X completo es más rápido que sobre un mini-batch.",
+                    "Para detectar cuándo la red ha memorizado exactamente el dataset de entrenamiento."
+          ],
+          "correct": 1,
+          "feedback": "La pérdida de un mini-batch individual es una estimación muy ruidosa: por azar, un lote puede contener ejemplos fáciles (pérdida baja) o difíciles (pérdida alta). Para monitorear el progreso real del entrenamiento se calcula la pérdida sobre todos los datos al final de cada época —esta es la pérdida 'real' (o training loss) que refleja cómo le va al modelo en general. Esto es estándar en todos los frameworks de deep learning. El costo de este forward pass es O(n) y suele ser insignificante comparado con el entrenamiento."
+        }
+      ]
+    },
+    {
+      "id": "semana12_backprop_optimizacion",
+      "titulo": "Semana 12 · Backpropagation y Optimización",
+      "categorias": [
+        {
+          "value": "all",
+          "label": "Todas (30)"
+        }
+      ],
+      "preguntas": [
+        {
+          "id": "s12-bp-001",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "¿Por qué no se puede usar la exactitud (accuracy) como función de pérdida durante el entrenamiento de una red neuronal?",
+          "options": [
+                    "Porque la exactitud no es diferenciable, por lo que el gradiente no existe y no se puede aplicar backpropagation.",
+                    "Porque la exactitud siempre da 0 cuando la red no ha sido entrenada todavía.",
+                    "Porque la exactitud solo funciona con problemas de regresión, no de clasificación.",
+                    "Porque calcular la exactitud requiere demasiada memoria en redes profundas."
+          ],
+          "correct": 0,
+          "feedback": "La exactitud es una función escalón: solo cambia cuando una predicción pasa de incorrecta a correcta. Al ser no diferenciable, su gradiente es 0 casi en todas partes (y no existe en los puntos de salto), lo que impide calcular cómo ajustar los pesos. Por eso se usan MSE (regresión) o entropía cruzada binaria (clasificación), que sí son diferenciables y permiten calcular gradientes útiles en todo punto."
+        },
+        {
+          "id": "s12-bp-002",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el taller se define la función BCE así:\n\n```python\ndef bce(y, y_hat):\n    y_hat = np.clip(y_hat, 1e-7, 1 - 1e-7)\n    return -np.mean(y * np.log(y_hat) + (1 - y) * np.log(1 - y_hat))\n```\n\n¿Cuál es el propósito de `np.clip(y_hat, 1e-7, 1 - 1e-7)`?",
+          "options": [
+                    "Escalar las predicciones al rango (0, 1) para que sean probabilidades válidas.",
+                    "Evitar que el logaritmo reciba 0 o 1, lo cual produciría −∞ o 0 y generaría NaN en el cálculo.",
+                    "Normalizar la salida de sigmoid cuando los valores están fuera del rango esperado.",
+                    "Acelerar el cálculo evitando exponenciales costosas cerca de los extremos."
+          ],
+          "correct": 1,
+          "feedback": "log(0) = −∞ y log(1) → 0, ambos valores problemáticos. Si y_hat fuera exactamente 0 o 1 (lo cual puede ocurrir por precisión numérica en sigmoid), el resultado sería NaN. np.clip limita los valores al intervalo (1e-7, 1 − 1e-7), manteniéndolos dentro del dominio matemático del logaritmo. No escala los valores a (0,1) —eso lo hace sigmoid—, sino que evita los extremos problemáticos."
+        },
+        {
+          "id": "s12-bp-003",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "Dada la red del Bloque A3 (arquitectura 2→2→1) con x = (0.7, 0.5), y = 1, la predicción es ŷ. ¿Cuál es la expresión correcta del gradiente d2 respecto a la capa de salida con BCE?",
+          "options": [
+                    "d2 = ŷ − y",
+                    "d2 = 2 * (ŷ − y) / n",
+                    "d2 = −y / ŷ + (1 − y) / (1 − ŷ)",
+                    "d2 = (ŷ − y) * ŷ * (1 − ŷ)"
+          ],
+          "correct": 0,
+          "feedback": "Para BCE + sigmoid en la capa de salida, la derivada combinada simplifica elegantemente a d2 = ŷ − y. Esto se debe a que la derivada de la entropía cruzada respecto a z2 (antes de sigmoid) colapsa a esta forma simple gracias a la propiedad de sigmoid: σ'(z) = σ(z)(1−σ(z)). La opción b es la derivada de MSE. La opción c es la derivada de BCE respecto a ŷ antes de combinar con sigmoid. La opción d mezcla incorrectamente ambas derivadas."
+        },
+        {
+          "id": "s12-bp-004",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En backpropagation, ¿qué representa el gradiente dW1 y para qué se usa?",
+          "options": [
+                    "Es la variación de los pesos W1 que minimiza directamente el error en un paso.",
+                    "Indica la dirección y magnitud en que la pérdida cambia al modificar W1; se usa para actualizar W1 restando η·dW1.",
+                    "Es el error propagado desde la capa de salida hasta W1, que reemplaza el valor actual de W1.",
+                    "Indica cuánto varía la predicción ŷ cuando W1 aumenta en una unidad."
+          ],
+          "correct": 1,
+          "feedback": "El gradiente dW1 = ∂L/∂W1 es un tensor de la misma forma que W1 que indica cómo cambia la pérdida L al perturbar cada peso. No es el nuevo valor de W1 ni lo reemplaza: se usa en la regla de actualización W1 ← W1 − η·dW1, restando una fracción (controlada por la tasa de aprendizaje η) para mover los pesos en la dirección que reduce la pérdida."
+        },
+        {
+          "id": "s12-bp-005",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el Bloque A3, el gradiente de la capa oculta se calcula como:\n\n```python\nd1 = (d2 @ W2.T) * d_relu(z1)\n```\n\n¿Por qué se multiplica por `d_relu(z1)` y no simplemente por `relu(z1)`?",
+          "options": [
+                    "Porque d_relu(z1) normaliza el gradiente para que no explote durante el entrenamiento.",
+                    "Porque la regla de la cadena exige multiplicar por la derivada de la función de activación de esa capa, no por su salida.",
+                    "Porque relu(z1) ya fue aplicado en el forward pass y no es necesario repetirlo.",
+                    "Porque d_relu(z1) es una versión escalada de relu que acelera la convergencia."
+          ],
+          "correct": 1,
+          "feedback": "La regla de la cadena (backpropagation) requiere multiplicar por la derivada de la función de activación en cada capa. d_relu(z) devuelve 1 si z > 0 y 0 si z ≤ 0 —exactamente la derivada de ReLU. Al multiplicar (d2 @ W2.T) por d_relu(z1), se 'detiene' la propagación del gradiente hacia las neuronas que estaban inactivas (z1 ≤ 0), pues su derivada es 0. relu(z1) sería la activación, no su derivada, y usarla sería matemáticamente incorrecto."
+        },
+        {
+          "id": "s12-bp-006",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el Bloque A4, la función `backward()` divide el gradiente por n (tamaño del lote): `dW2 = a1.T @ d2 / n`. ¿Por qué se divide por n?",
+          "options": [
+                    "Para que los gradientes sean más pequeños y no se modifiquen mucho los pesos.",
+                    "Para obtener el gradiente promedio sobre el lote, ya que la pérdida es el promedio de las pérdidas individuales.",
+                    "Para compensar el hecho de que se usa mini-batch en lugar de gradiente descendente completo.",
+                    "Porque la función de pérdida MSE ya multiplica por n, y esta división lo cancela."
+          ],
+          "correct": 1,
+          "feedback": "La función de pérdida calcula el promedio sobre n ejemplos: L = (1/n)·Σ loss_i. Al derivar respecto a los pesos, el factor 1/n también aparece en el gradiente. Dividir dW2 por n equivale a tomar el gradiente promedio del lote, lo que hace que la escala de la actualización sea independiente del tamaño del lote. Sin esta división, usar un lote de 32 produciría gradientes 32 veces mayores que usar un ejemplo, complicando la elección de η."
+        },
+        {
+          "id": "s12-bp-007",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "El taller implementa una verificación numérica del gradiente usando la fórmula:\n\n```python\ngrad_num = (L(w + h) - L(w - h)) / (2 * h)\n```\n\n¿Cuál es el propósito de este cálculo?",
+          "options": [
+                    "Es una forma alternativa de calcular el gradiente que reemplaza a backpropagation en producción.",
+                    "Permite verificar que backpropagation está implementado correctamente comparando el gradiente analítico con una aproximación numérica.",
+                    "Calcula el gradiente exacto usando diferencias finitas, con mayor precisión que backpropagation.",
+                    "Sirve para inicializar los pesos de la red antes del entrenamiento con valores óptimos."
+          ],
+          "correct": 1,
+          "feedback": "El gradient check numérico es una herramienta de debugging: se calcula una aproximación de la derivada usando diferencias finitas centrales (muy precisa con h pequeño, e.g. 1e-5) y se compara con el gradiente analítico de backpropagation. Si ambos coinciden (diferencia relativa < 1e-5), backpropagation está implementado correctamente. Es demasiado lento para usar en producción (requiere una evaluación de L por cada parámetro), pero invaluable para detectar bugs."
+        },
+        {
+          "id": "s12-bp-008",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "¿Cuál de las siguientes describe correctamente la función de pérdida MSE para regresión?",
+          "options": [
+                    "MSE = −(1/n) · Σ[y·log(ŷ) + (1−y)·log(1−ŷ)]",
+                    "MSE = (1/n) · Σ(y − ŷ)²",
+                    "MSE = (1/n) · Σ|y − ŷ|",
+                    "MSE = max(0, 1 − y·ŷ)"
+          ],
+          "correct": 1,
+          "feedback": "El Error Cuadrático Medio (MSE) es el promedio de los errores al cuadrado: (1/n)·Σ(y−ŷ)². La opción a es BCE (Binary Cross-Entropy). La opción c es MAE (Mean Absolute Error). La opción d es Hinge Loss (usado en SVM). MSE es preferido para regresión porque penaliza errores grandes más que pequeños, es diferenciable en todo punto y su derivada (el factor 2/n en backward) es simple de calcular."
+        },
+        {
+          "id": "s12-bp-009",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el Bloque B2, la función `backward_regresion()` calcula el gradiente de la capa de salida así:\n\n```python\nd2 = 2 * (y_hat - y) / n\n```\n\n¿De dónde proviene el factor 2?",
+          "options": [
+                    "Es una convención del taller para mantener la escala del gradiente comparable con BCE.",
+                    "Proviene de la derivada de x² = 2x al aplicar la regla de la cadena a la función MSE.",
+                    "Se agrega para que el gradiente sea siempre positivo cuando la predicción supera al valor real.",
+                    "Duplica el gradiente para acelerar la convergencia en problemas de regresión."
+          ],
+          "correct": 1,
+          "feedback": "MSE = (1/n)·Σ(ŷ−y)². Al derivar respecto a ŷ: ∂MSE/∂ŷ = (2/n)·(ŷ−y). El factor 2 surge de la regla de potencias: d(u²)/du = 2u. Algunos libros absorben el 2 definiendo MSE como (1/2n)·Σ(ŷ−y)² para cancelarlo, pero el taller usa la definición estándar (1/n) y mantiene el 2 explícitamente. No tiene nada que ver con hacer el gradiente positivo ni con aceleración."
+        },
+        {
+          "id": "s12-bp-010",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En `forward_regresion()`, la capa de salida NO aplica sigmoid. ¿Cuál es la razón principal?",
+          "options": [
+                    "Porque sigmoid es demasiado lenta computacionalmente para problemas de regresión.",
+                    "Porque para regresión el objetivo es predecir un valor continuo sin restricción de rango, y sigmoid limitaría las predicciones entre 0 y 1.",
+                    "Porque ReLU en la capa de salida ya garantiza que el valor predicho sea no negativo.",
+                    "Porque la entropía cruzada requiere una capa de salida lineal para funcionar correctamente."
+          ],
+          "correct": 1,
+          "feedback": "Sigmoid comprime cualquier valor real al rango (0, 1), lo cual es ideal para predecir probabilidades (clasificación binaria) pero destructivo para regresión. Si el puntaje de crédito real puede ser 0.75 y sigmoid lo limitara a ese rango, aún funcionaría —pero si el target estuviera en otra escala, sigmoid cortaría la capacidad expresiva. La capa lineal (sin activación) permite que ŷ tome cualquier valor real, lo que es lo correcto para regresión. La función de pérdida en regresión es MSE, no BCE."
+        },
+        {
+          "id": "s12-bp-011",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el Bloque A5, el optimizador SGD actualiza los pesos con:\n\n```python\nparams[k] -= lr * grads[k]\n```\n\nEl optimizador Momentum lo hace con:\n\n```python\nv[k] = 0.9 * v[k] + grads[k]\nparams[k] -= lr * v[k]\n```\n\n¿Cuál es la ventaja del Momentum sobre SGD puro?",
+          "options": [
+                    "Momentum usa una tasa de aprendizaje mayor que SGD, convergiendo siempre más rápido.",
+                    "Momentum acumula un promedio exponencial de gradientes pasados, suavizando las oscilaciones y acelerando el avance en direcciones consistentes.",
+                    "Momentum evita completamente los mínimos locales al agregar ruido aleatorio a cada actualización.",
+                    "Momentum adapta la tasa de aprendizaje para cada parámetro individualmente según su historial."
+          ],
+          "correct": 1,
+          "feedback": "El vector v acumula un promedio exponencial de los gradientes pasados (con factor 0.9). Si los gradientes apuntan consistentemente en la misma dirección, v crece (acelera). Si oscilan, se cancelan parcialmente (suaviza). Esto permite avanzar más rápido por valles y reducir las oscilaciones en superficies muy curvadas. No usa tasa de aprendizaje mayor —de hecho el taller usa η=0.05 para Momentum vs η=0.1 para SGD. No es Adam (que sí adapta por parámetro)."
+        },
+        {
+          "id": "s12-bp-012",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "El optimizador Adam combina Momentum y RMSProp. En el taller, la actualización de Adam incluye:\n\n```python\nm[k] = 0.9 * m[k] + 0.1 * g\nv[k] = 0.999 * v[k] + 0.001 * g**2\nm_hat = m[k] / (1 - 0.9**t)\nv_hat = v[k] / (1 - 0.999**t)\nparams[k] -= lr * m_hat / (np.sqrt(v_hat) + 1e-8)\n```\n\n¿Para qué sirven `m_hat` y `v_hat`?",
+          "options": [
+                    "Son versiones normalizadas de m y v que garantizan que los pesos permanezcan en el rango [−1, 1].",
+                    "Son correcciones de sesgo (bias correction) que compensan el hecho de que m y v se inicializan en cero y al principio están sesgados hacia cero.",
+                    "Son promedios móviles independientes que reemplazan m y v para mayor estabilidad numérica.",
+                    "Son los gradientes corregidos por la tasa de aprendizaje para cada parámetro individualmente."
+          ],
+          "correct": 1,
+          "feedback": "Al inicializar m y v en cero, en las primeras iteraciones ambos están fuertemente subestimados (sesgados hacia cero). La corrección de sesgo divide por (1 − β^t): cuando t es pequeño, (1 − 0.9^1) = 0.1, por lo que m_hat = m / 0.1 = 10m —corrige la subestimación. Conforme t → ∞, (1 − β^t) → 1 y la corrección desaparece. Esta técnica es parte del paper original de Adam (Kingma & Ba, 2014) y es esencial para que el optimizador funcione bien desde la primera iteración."
+        },
+        {
+          "id": "s12-bp-013",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el Bloque A6, se entrena la misma red con tres optimizadores. Los resultados al final del entrenamiento son: SGD (η=0.1) → acc=0.855, Momentum (η=0.05) → acc=0.890, Adam (η=0.01) → acc=0.900. ¿Qué conclusión se puede extraer?",
+          "options": [
+                    "SGD es el mejor optimizador porque usa la tasa de aprendizaje más alta y no necesita hiperparámetros adicionales.",
+                    "Adam converge a la mayor exactitud con la menor tasa de aprendizaje, confirmando que adapta eficientemente el paso por parámetro.",
+                    "Momentum es el mejor balance entre velocidad y precisión, por lo que se recomienda siempre sobre Adam.",
+                    "Las diferencias son insignificantes y el optimizador no importa si se entrena suficientes épocas."
+          ],
+          "correct": 1,
+          "feedback": "Adam logra la mayor exactitud (0.900) con la menor tasa de aprendizaje (0.01), lo que muestra su capacidad de adaptar el paso de actualización por parámetro usando el historial de gradientes. Momentum mejora sobre SGD suavizando oscilaciones. Las diferencias no son insignificantes —de 0.855 a 0.900 con los mismos datos y arquitectura es un salto considerable. Adam es la opción predeterminada en la práctica, aunque para datasets muy grandes SGD con Momentum también es competitivo."
+        },
+        {
+          "id": "s12-bp-014",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el Bloque B3, se prueban cuatro tasas de aprendizaje para una red de regresión. ¿Qué ocurre con η = 1.0 según los resultados del taller?",
+          "options": [
+                    "Converge más rápido que η = 0.1 en las primeras épocas pero luego se estabiliza.",
+                    "El MSE diverge (sube a valores enormes como 36.6 en época 300), indicando que η = 1.0 es demasiado grande.",
+                    "El MSE permanece constante porque los gradientes se cancelan mutuamente en cada lote.",
+                    "Funciona igual que η = 0.1 pero requiere más épocas para converger."
+          ],
+          "correct": 1,
+          "feedback": "Con η = 1.0, el MSE en la época 10 ya es 8.859 y sube a 36.642 en la época 300 —muy por encima de la varianza base del target. Los pasos de actualización son tan grandes que los pesos 'saltan' sobre los mínimos repetidamente, haciendo que la pérdida oscile y crezca en lugar de decrecer. Este fenómeno se llama divergencia o explosión del gradiente (en sentido dinámico). La elección correcta en el taller es η = 0.1, que logra MSE = 0.0023 en 300 épocas."
+        },
+        {
+          "id": "s12-bp-015",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "¿Cuál es la diferencia entre el descenso de gradiente por lotes (batch GD), el estocástico (SGD) y el mini-batch GD?",
+          "options": [
+                    "Batch GD usa todos los datos para cada actualización; SGD usa un ejemplo; mini-batch usa un subconjunto fijo (e.g., 32 ejemplos).",
+                    "Solo difieren en la tasa de aprendizaje que usan internamente: batch usa η grande, SGD usa η pequeña.",
+                    "Batch GD y mini-batch son equivalentes; SGD es el único que usa gradientes ruidosos.",
+                    "SGD usa todos los datos y es más lento; mini-batch usa subconjuntos y es más rápido que batch GD."
+          ],
+          "correct": 0,
+          "feedback": "Las tres variantes definen cuántos ejemplos se usan para calcular cada gradiente y actualizar los pesos: Batch GD usa todos los datos (gradiente exacto, muy lento), SGD usa 1 ejemplo (gradiente muy ruidoso, rápido pero errático), mini-batch usa n ejemplos (compromiso: algo de ruido que ayuda a salir de mínimos locales, pero lo suficientemente estable para converger). El taller usa mini-batch de 32 ejemplos, que es la práctica estándar."
+        },
+        {
+          "id": "s12-bp-016",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el Bloque A4, `inicializar_pesos()` usa `np.random.normal(0, 0.5)`. ¿Por qué se inicializan los pesos con valores pequeños aleatorios y no todos en cero?",
+          "options": [
+                    "Porque valores en cero harían la red más lenta pero igual convergería al mismo resultado.",
+                    "Porque si todos los pesos son iguales (por ejemplo, cero), todas las neuronas aprenden exactamente lo mismo y la red nunca rompe la simetría, quedando equivalente a una red con una sola neurona por capa.",
+                    "Porque numpy no puede calcular gradientes con matrices de ceros.",
+                    "Porque la inicialización en cero causaría NaN en la primera época por división por cero en la función de pérdida."
+          ],
+          "correct": 1,
+          "feedback": "El problema de inicializar todos los pesos en cero se llama 'problema de la simetría'. Si W1 = 0, todas las neuronas de la capa oculta calculan la misma salida (a1 = relu(0·x + 0) = 0) y reciben el mismo gradiente durante backpropagation. Por tanto aprenden lo mismo y se mantienen idénticas para siempre —la capa oculta colapsa a una sola neurona efectiva. Los pesos aleatorios rompen esta simetría desde el inicio, permitiendo que cada neurona aprenda características distintas."
+        },
+        {
+          "id": "s12-bp-017",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "El forward pass de la red 2→8→1 del Bloque A4 calcula:\n\n```python\nz1 = X @ W1 + b1\na1 = relu(z1)\nz2 = a1 @ W2 + b2\ny_hat = sigmoid(z2)\n```\n\nSi X tiene forma (32, 2) y W1 tiene forma (2, 8), ¿qué forma tiene z1?",
+          "options": [
+                    "(2, 8)",
+                    "(32, 2)",
+                    "(32, 8)",
+                    "(8, 32)"
+          ],
+          "correct": 2,
+          "feedback": "La multiplicación matricial (32, 2) @ (2, 8) produce (32, 8): las dimensiones internas (2) se cancelan y quedan las externas (32, 8). Cada fila de z1 corresponde a un ejemplo del lote (32 ejemplos) y cada columna corresponde a una de las 8 neuronas de la capa oculta. Esto se mantiene después de relu: a1 también tiene forma (32, 8). La regla general: (m, k) @ (k, n) = (m, n)."
+        },
+        {
+          "id": "s12-bp-018",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el bucle de mini-batches del Bloque A5:\n\n```python\norden = rng.permutation(len(X))\nfor inicio in range(0, len(X), tamano_lote):\n    lote = orden[inicio:inicio + tamano_lote]\n```\n\n¿Por qué se permuta el orden de los datos antes de dividirlos en lotes?",
+          "options": [
+                    "Para que cada lote tenga exactamente `tamano_lote` ejemplos y no queden lotes incompletos.",
+                    "Para evitar que la red memorice el orden de los ejemplos y vea distribuciones más representativas de los datos en cada lote.",
+                    "Para acelerar el acceso a memoria cache al ordenar los datos secuencialmente.",
+                    "Porque backpropagation solo funciona correctamente con datos en orden aleatorio."
+          ],
+          "correct": 1,
+          "feedback": "Barajar (shuffle) los datos antes de dividirlos en lotes tiene dos ventajas: (1) evita que el modelo vea los datos en un patrón fijo que podría sesgar el aprendizaje (si los ejemplos están ordenados por clase, cada lote sería homogéneo), y (2) introduce ruido útil en el gradiente que puede ayudar a escapar de mínimos locales o puntos de ensilladura. El shuffle no garantiza lotes completos (los últimos datos pueden ser menos de tamano_lote), y backpropagation no requiere orden aleatorio matemáticamente."
+        },
+        {
+          "id": "s12-bp-019",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En la comparación del Bloque B5, Adam con η=0.01 logra MSE=0.0049 en la época 10, mientras que SGD con η=0.1 logra MSE=0.0084. Al final (época 300), ambos son similares: Adam=0.0023, SGD=0.0023. ¿Qué implica esto?",
+          "options": [
+                    "Adam es mejor en convergencia inicial (aprende más rápido al principio) pero SGD alcanza la misma calidad final con suficientes épocas.",
+                    "SGD es superior porque logra el mismo resultado con una tasa de aprendizaje mayor.",
+                    "Adam es estrictamente mejor que SGD en todas las situaciones sin excepción.",
+                    "La diferencia en la época 10 se debe al azar y no es estadísticamente significativa."
+          ],
+          "correct": 0,
+          "feedback": "Esta comparación ilustra un hallazgo común en la práctica: Adam suele converger más rápido en las primeras épocas (como se ve en época 10: 0.0049 vs 0.0084), pero los resultados finales pueden ser similares cuando SGD está bien ajustado. En la época 300 la diferencia es mínima (0.002288 vs 0.002331). En datasets grandes y problemas complejos, Adam frecuentemente mantiene la ventaja. SGD con Momentum bien afinado puede igualar a Adam, pero requiere más ajuste de hiperparámetros."
+        },
+        {
+          "id": "s12-bp-020",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "Un compañero entrena una red y la pérdida se convierte en `nan` desde la época 3. ¿Cuál es la causa más probable y el primer parámetro a revisar?",
+          "options": [
+                    "El número de capas ocultas: agregar más capas provoca NaN por acumulación de errores.",
+                    "La tasa de aprendizaje (η): si es demasiado grande, los pesos crecen sin control hasta desbordamiento numérico, produciendo NaN.",
+                    "El tamaño del mini-batch: lotes muy pequeños generan gradientes que no representan el dataset.",
+                    "La función de activación: ReLU en la capa oculta puede producir NaN cuando el gradiente muere."
+          ],
+          "correct": 1,
+          "feedback": "NaN temprano en el entrenamiento (épocas 1-5) es casi siempre señal de explosión numérica causada por una tasa de aprendizaje demasiado grande. Los pesos se actualizan con pasos gigantes, crecen hacia infinito, y las operaciones matriciales producen ∞−∞ o 0·∞, que IEEE 754 define como NaN. La solución es reducir η en uno o dos órdenes de magnitud (e.g., de 1.0 a 0.01). El Dying ReLU produce ceros (no NaN), y un mini-batch pequeño produce gradientes ruidosos pero no NaN."
+        },
+        {
+          "id": "s12-bp-021",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "La función `d_relu(z)` utilizada en backpropagation devuelve:\n\n```python\ndef d_relu(z):\n    return (z > 0).astype(float)\n```\n\n¿Qué propiedad de la derivada de ReLU explica que algunas neuronas no aprendan durante el entrenamiento?",
+          "options": [
+                    "Cuando z > 0, la derivada es 0, por lo que el gradiente no fluye hacia atrás en las neuronas activas.",
+                    "Cuando z ≤ 0, la derivada es 0, por lo que el gradiente no fluye hacia atrás en las neuronas inactivas —fenómeno llamado Dying ReLU.",
+                    "La derivada de ReLU siempre es 1, lo que hace que el gradiente no se atenúe con la profundidad.",
+                    "d_relu devuelve valores binarios (0 o 1) que anulan el gradiente en el 50% de los pesos en promedio."
+          ],
+          "correct": 1,
+          "feedback": "ReLU(z) = max(0, z) tiene derivada = 1 si z > 0, y derivada = 0 si z ≤ 0. Cuando una neurona recibe pre-activación z ≤ 0, su derivada es 0 y el gradiente se detiene completamente: los pesos que alimentan esa neurona no reciben señal de aprendizaje. Si esto ocurre de forma permanente (z ≤ 0 siempre para todos los ejemplos), la neurona 'muere' y deja de aprender —Dying ReLU. Leaky ReLU soluciona esto devolviendo α·z en lugar de 0 cuando z ≤ 0."
+        },
+        {
+          "id": "s12-bp-022",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el Bloque A1, los datos se normalizan con min-max antes de entrenar. ¿Por qué es importante normalizar las entradas para redes neuronales entrenadas con gradiente descendente?",
+          "options": [
+                    "Porque la normalización convierte los datos a valores binarios (0 o 1) que ReLU puede procesar directamente.",
+                    "Porque cuando las features tienen escalas muy distintas, las actualizaciones de pesos son desiguales, el gradiente descendente zigzaguea y la convergencia es más lenta.",
+                    "Porque la normalización elimina los valores atípicos que confundirían a la función sigmoid.",
+                    "Porque sin normalizar, las matrices de pesos no pueden multiplicarse correctamente."
+          ],
+          "correct": 1,
+          "feedback": "Con features en escalas muy distintas (e.g., ingresos en miles vs. edad en decenas), la superficie de pérdida tiene valles muy elongados: el gradiente es mucho mayor en la dirección de la feature con escala grande, lo que obliga a usar tasas de aprendizaje muy pequeñas para no divergir, y hace que el descenso 'zigzaguee' en las direcciones de features pequeñas. Al normalizar a [0,1], todas las features contribuyen de forma proporcional y la superficie es más esférica, permitiendo tasas de aprendizaje mayores y convergencia más directa."
+        },
+        {
+          "id": "s12-bp-023",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "¿Cuál de las siguientes describe correctamente la diferencia entre la pérdida MSE (para regresión) y BCE (para clasificación binaria)?",
+          "options": [
+                    "MSE mide la distancia euclídea entre vectores de probabilidad; BCE mide el error al predecir un valor continuo.",
+                    "MSE penaliza el error al cuadrado y es adecuado cuando el target es un valor continuo; BCE mide divergencia de distribuciones y es adecuado cuando el target es una probabilidad (0 o 1).",
+                    "BCE y MSE son equivalentes matemáticamente para clasificación binaria.",
+                    "MSE es preferido para clasificación porque sus gradientes son más estables que los de BCE."
+          ],
+          "correct": 1,
+          "feedback": "MSE = (1/n)·Σ(y−ŷ)² penaliza la diferencia numérica al cuadrado y funciona bien cuando y ∈ ℝ (regresión). BCE = −(1/n)·Σ[y·log(ŷ) + (1−y)·log(1−ŷ)] mide cuánta información se pierde al predecir la distribución ŷ en lugar de la verdadera y, y funciona bien cuando y ∈ {0,1}. No son equivalentes: usar MSE para clasificación produce gradientes que se saturan con sigmoid (el problema de gradientes pequeños que BCE evita gracias a la cancelación algebraica con sigmoid)."
+        },
+        {
+          "id": "s12-bp-024",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En backpropagation, ¿qué es la 'regla de la cadena' y por qué es fundamental?",
+          "options": [
+                    "Es una regla que encadena las actualizaciones de pesos capa por capa en orden secuencial.",
+                    "Es una regla de cálculo que permite descomponer la derivada de una función compuesta: d(f∘g)/dx = f'(g(x))·g'(x), lo que permite calcular ∂L/∂w para cualquier peso propagando el error capa por capa.",
+                    "Es el principio que garantiza que el gradiente no explote ni se desvanezca en redes profundas.",
+                    "Es la regla que determina en qué orden se actualizan los pesos: primero capa de salida, luego capas ocultas."
+          ],
+          "correct": 1,
+          "feedback": "La regla de la cadena (chain rule) del cálculo establece que para funciones compuestas: si L depende de z2 que depende de W2 que depende de W1 que depende de z1..., entonces ∂L/∂W1 = (∂L/∂z2)·(∂z2/∂a1)·(∂a1/∂z1)·(∂z1/∂W1). Backpropagation es exactamente la aplicación eficiente de esta regla: calcula los gradientes de atrás hacia adelante, reutilizando los cálculos intermedios. Sin la regla de la cadena sería imposible calcular ∂L/∂W1 en una red profunda."
+        },
+        {
+          "id": "s12-bp-025",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "El taller compara tres tasas de aprendizaje para regresión: η=0.1 (MSE final 0.0023), η=0.01 (MSE final 0.0141 en 300 épocas), η=0.001 (convergencia muy lenta). ¿Cuántas épocas aproximadamente necesitaría η=0.001 para alcanzar el rendimiento de η=0.1?",
+          "options": [
+                    "Alrededor de 350 épocas: solo necesita 50 más que η=0.1.",
+                    "Entre 1500 y 2500 épocas adicionales aproximadamente.",
+                    "Exactamente 3000 épocas, ya que converge 10 veces más lento al ser la tasa 10 veces menor.",
+                    "No puede alcanzar ese rendimiento independientemente del número de épocas."
+          ],
+          "correct": 1,
+          "feedback": "El taller establece que con η=0.001, después de 300 épocas el MSE aún es 0.0141 (muy lejos de 0.0023). La relación no es exactamente lineal con la inversa de η porque el descenso de gradiente es no lineal, pero una estimación razonable es entre 1500-2500 épocas adicionales. La respuesta c es incorrecta porque la convergencia no escala linealmente con η en superficies complejas. La d es incorrecta: en principio sí puede converger, pero el costo computacional hace que no valga la pena cuando simplemente subir η resuelve el problema."
+        },
+        {
+          "id": "s12-bp-026",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En Adam, el término `1e-8` al denominador de la actualización `params[k] -= lr * m_hat / (np.sqrt(v_hat) + 1e-8)` cumple la función de:",
+          "options": [
+                    "Regularización L2 que penaliza pesos grandes para evitar sobreajuste.",
+                    "Estabilidad numérica: evitar división por cero cuando v_hat es muy pequeño (gradiente casi nulo).",
+                    "Escalar la tasa de aprendizaje para que sea equivalente a la de SGD.",
+                    "Limitar el tamaño máximo de la actualización de pesos en cada paso."
+          ],
+          "correct": 1,
+          "feedback": "ε = 1e-8 (epsilon) es un valor diminuto que se suma al denominador para evitar división por cero. Si un parámetro tiene v_hat ≈ 0 (porque sus gradientes recientes han sido casi nulos), np.sqrt(0) = 0 causaría división por cero. Con epsilon: np.sqrt(0) + 1e-8 = 1e-8, que es pequeño pero finito y numéricamente estable. No es regularización (que se implementaría sumando un término de penalización a la pérdida), ni escala η hacia SGD."
+        },
+        {
+          "id": "s12-bp-027",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "¿Cuál es la diferencia entre el rol de los parámetros β1=0.9 y β2=0.999 en Adam?",
+          "options": [
+                    "β1 controla la varianza del gradiente; β2 controla la media del gradiente.",
+                    "β1 (0.9) controla el promedio exponencial del gradiente (primer momento/momentum); β2 (0.999) controla el promedio exponencial del gradiente al cuadrado (segundo momento/varianza).",
+                    "β1 y β2 son tasas de aprendizaje separadas para los pesos y los sesgos respectivamente.",
+                    "β1 determina cuánto tiempo Adam recuerda gradientes pasados; β2 determina la velocidad de convergencia."
+          ],
+          "correct": 1,
+          "feedback": "En Adam: m = β1·m + (1−β1)·g acumula el primer momento (media del gradiente, como Momentum con β1=0.9); v = β2·v + (1−β2)·g² acumula el segundo momento (media del cuadrado del gradiente, como RMSProp con β2=0.999). β2 es más cercano a 1 porque la varianza necesita un promedio más largo y estable para escalar correctamente. La división m_hat/√v_hat adapta el paso por parámetro: si un parámetro tiene gradientes consistentes y grandes, el paso se reduce; si son pequeños y consistentes, se amplifica."
+        },
+        {
+          "id": "s12-bp-028",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "El Bloque B2 implementa `backward_regresion()` para una red de regresión. ¿En qué se diferencia fundamentalmente de `backward()` del Bloque A3 (clasificación)?",
+          "options": [
+                    "backward_regresion() usa ReLU en la capa de salida en lugar de ninguna activación.",
+                    "El gradiente d2 en regresión es 2*(ŷ−y)/n (derivada de MSE), mientras que en clasificación es ŷ−y (derivada combinada de BCE+sigmoid).",
+                    "backward_regresion() actualiza los pesos en dirección contraria a backward() de clasificación.",
+                    "La única diferencia es que backward_regresion() no divide por n el gradiente de W1."
+          ],
+          "correct": 1,
+          "feedback": "La diferencia clave está en el gradiente de la capa de salida (d2), que depende de qué función de pérdida se usa: (1) Clasificación: BCE + sigmoid → d2 = ŷ−y (derivada simplificada). (2) Regresión: MSE + lineal → d2 = 2*(ŷ−y)/n (derivada de MSE, con el factor 2 de la derivada de x² y el 1/n del promedio). El resto del backpropagation es idéntico: d1 = (d2 @ W2.T) * d_relu(z1), dW1 = X.T @ d1, etc."
+        },
+        {
+          "id": "s12-bp-029",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "El taller explica que backpropagation recorre la red 'de atrás hacia adelante'. ¿Cuál es la razón matemática más precisa de por qué debe ir en ese orden?",
+          "options": [
+                    "Porque los pesos de la capa de salida son más importantes que los de las capas ocultas y deben actualizarse primero.",
+                    "Porque para calcular ∂L/∂W1 se necesita ∂L/∂a1, que a su vez requiere ∂L/∂z2 (gradiente de la capa posterior), por lo que se debe computar desde la salida hacia la entrada.",
+                    "Porque es más fácil computacionalmente comenzar por la última capa y avanzar hacia atrás.",
+                    "Porque el forward pass ya calculó las activaciones de adelante hacia atrás, y backprop simplemente invierte ese orden."
+          ],
+          "correct": 1,
+          "feedback": "La razón es matemática: por la regla de la cadena, ∂L/∂W1 depende de ∂L/∂z1, que depende de ∂L/∂a1, que depende de ∂L/∂z2 (capa de salida). Cada gradiente depende del gradiente de la capa siguiente (más cercana a la salida). Por tanto, se debe calcular primero el gradiente de la última capa (d2), luego el de la penúltima (d1), etc. Esta dependencia en cadena es exactamente la regla de la cadena y justifica matemáticamente el orden de atrás hacia adelante."
+        },
+        {
+          "id": "s12-bp-030",
+          "category": "semana12bp",
+          "categoryName": "Semana 12 · Backpropagation y Optimización",
+          "text": "En el Bloque A5, el historial de pérdida se registra así: `historial.append(bce(y, forward(X, params)[0]))`. Esta línea usa TODOS los datos X, no el mini-batch. ¿Por qué se mide la pérdida sobre el dataset completo y no sobre el último lote?",
+          "options": [
+                    "Porque calcular BCE sobre un mini-batch produce NaN cuando el lote es pequeño.",
+                    "Para obtener una estimación estable de la pérdida real del modelo al final de cada época, ya que la pérdida de un lote individual es muy ruidosa y no representa el rendimiento global.",
+                    "Porque el forward pass sobre X completo es más rápido que sobre un mini-batch.",
+                    "Para detectar cuándo la red ha memorizado exactamente el dataset de entrenamiento."
+          ],
+          "correct": 1,
+          "feedback": "La pérdida de un mini-batch individual es una estimación muy ruidosa: por azar, un lote puede contener ejemplos fáciles (pérdida baja) o difíciles (pérdida alta). Para monitorear el progreso real del entrenamiento se calcula la pérdida sobre todos los datos al final de cada época —esta es la pérdida 'real' (o training loss) que refleja cómo le va al modelo en general. Esto es estándar en todos los frameworks de deep learning. El costo de este forward pass es O(n) y suele ser insignificante comparado con el entrenamiento."
         }
       ]
     }
