@@ -10717,10 +10717,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "Para un problema de regresión, el taller usa MSE como función de pérdida: loss = np.mean((y_hat - y)**2). Si en cambio usara MAE (np.mean(np.abs(y_hat - y))), ¿cuál sería la diferencia principal en el entrenamiento?",
           "options": [
-            "MAE es más sensible a outliers porque eleva al cuadrado las diferencias, penalizándolos más.",
-            "No hay diferencia práctica: ambas métricas producen los mismos pesos óptimos aunque la escala varíe.",
-            "MAE converge más lento porque su derivada es discontinua en 0, dificultando el descenso de gradiente.",
-            "MAE produce gradientes constantes de magnitud 1/n, lo que causa oscilaciones cerca del mínimo."
+            "MSE = mean(|y_hat - y|), promedia el error absoluto y es equivalente a BCE para valores continuos.",
+            "MSE = mean(y_hat - y), simplemente promedia la diferencia entre predicción y valor real.",
+            "MSE acumula el error sin importar su signo, por lo que errores positivos y negativos se cancelan.",
+            "MSE = mean((y_hat - y)²), eleva al cuadrado el error penalizando más los errores grandes."
           ],
           "correct": 3,
           "feedback": "MSE tiene gradiente 2*(y_hat-y)/n que se reduce suavemente al acercarse al mínimo (convergencia suave). MAE tiene gradiente +/-1/n (constante en magnitud), lo que puede causar oscilaciones cerca del óptimo porque el gradiente no se reduce. Además, MAE es más robusto a outliers (penaliza linealmente) mientras MSE los penaliza cuadráticamente."
@@ -10941,10 +10941,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "La retropropagación (backpropagation) aplica sistemáticamente la regla de la cadena. Si la red tiene capas L1 -> L2 -> L3 -> salida, ¿en qué orden se calculan los gradientes y por qué?",
           "options": [
-            "De L1 hacia la salida, porque los gradientes de capas anteriores son necesarios para calcular los de las posteriores.",
-            "En paralelo para todas las capas simultáneamente, usando el gradiente total dividido entre el número de capas.",
-            "De la salida hacia L1, porque la regla de la cadena requiere el gradiente de la siguiente capa para calcular el anterior.",
-            "En el mismo orden del forward pass (L1 hacia salida), usando los valores almacenados del forward para las derivadas."
+            "Es la regla que indica que el gradiente de una capa solo depende de los pesos de esa capa, sin importar las demás.",
+            "Es una aproximación numérica del gradiente usando diferencias finitas: (L(w+h)-L(w-h))/(2h).",
+            "Permite derivar funciones compuestas: si L depende de z que depende de w, entonces dL/dw = (dL/dz)·(dz/dw).",
+            "Es el método que iguala el gradiente de entrada y el de salida en cada capa para garantizar consistencia."
           ],
           "correct": 2,
           "feedback": "La regla de la cadena: dL/dW1 = (dL/da3)*(da3/da2)*(da2/da1)*(da1/dW1). Para calcular dL/dW1 necesitamos dL/da2, que a su vez necesita dL/da3. Por eso se empieza desde la salida y se propaga 'hacia atrás' (de ahí el nombre backpropagation): cada capa usa el gradiente calculado por la capa siguiente para calcular el suyo."
@@ -15661,10 +15661,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "¿Cuál de las siguientes describe correctamente la función de pérdida MSE para regresión?",
           "options": [
-            "MAE es más sensible a outliers porque eleva al cuadrado las diferencias, penalizándolos más.",
-            "No hay diferencia práctica: ambas métricas producen los mismos pesos óptimos aunque la escala varíe.",
-            "MAE converge más lento porque su derivada es discontinua en 0, dificultando el descenso de gradiente.",
-            "MAE produce gradientes constantes de magnitud 1/n, lo que causa oscilaciones cerca del mínimo."
+            "MSE = mean(|y_hat - y|), promedia el error absoluto y es equivalente a BCE para valores continuos.",
+            "MSE = mean(y_hat - y), simplemente promedia la diferencia entre predicción y valor real.",
+            "MSE acumula el error sin importar su signo, por lo que errores positivos y negativos se cancelan.",
+            "MSE = mean((y_hat - y)²), eleva al cuadrado el error penalizando más los errores grandes."
           ],
           "correct": 3,
           "feedback": "El Error Cuadrático Medio (MSE) es el promedio de los errores al cuadrado: (1/n)·Σ(y−ŷ)². La opción a es BCE (Binary Cross-Entropy). La opción c es MAE (Mean Absolute Error). La opción d es Hinge Loss (usado en SVM). MSE es preferido para regresión porque penaliza errores grandes más que pequeños, es diferenciable en todo punto y su derivada (el factor 2/n en backward) es simple de calcular."
@@ -15885,10 +15885,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En backpropagation, ¿qué es la 'regla de la cadena' y por qué es fundamental?",
           "options": [
-            "De L1 hacia la salida, porque los gradientes de capas anteriores son necesarios para calcular los de las posteriores.",
-            "En paralelo para todas las capas simultáneamente, usando el gradiente total dividido entre el número de capas.",
-            "De la salida hacia L1, porque la regla de la cadena requiere el gradiente de la siguiente capa para calcular el anterior.",
-            "En el mismo orden del forward pass (L1 hacia salida), usando los valores almacenados del forward para las derivadas."
+            "Es la regla que indica que el gradiente de una capa solo depende de los pesos de esa capa, sin importar las demás.",
+            "Es una aproximación numérica del gradiente usando diferencias finitas: (L(w+h)-L(w-h))/(2h).",
+            "Permite derivar funciones compuestas: si L depende de z que depende de w, entonces dL/dw = (dL/dz)·(dz/dw).",
+            "Es el método que iguala el gradiente de entrada y el de salida en cada capa para garantizar consistencia."
           ],
           "correct": 2,
           "feedback": "La regla de la cadena (chain rule) del cálculo establece que para funciones compuestas: si L depende de z2 que depende de W2 que depende de W1 que depende de z1..., entonces ∂L/∂W1 = (∂L/∂z2)·(∂z2/∂a1)·(∂a1/∂z1)·(∂z1/∂W1). Backpropagation es exactamente la aplicación eficiente de esta regla: calcula los gradientes de atrás hacia adelante, reutilizando los cálculos intermedios. Sin la regla de la cadena sería imposible calcular ∂L/∂W1 en una red profunda."
@@ -16093,10 +16093,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "¿Cuál de las siguientes describe correctamente la función de pérdida MSE para regresión?",
           "options": [
-            "MAE es más sensible a outliers porque eleva al cuadrado las diferencias, penalizándolos más.",
-            "No hay diferencia práctica: ambas métricas producen los mismos pesos óptimos aunque la escala varíe.",
-            "MAE converge más lento porque su derivada es discontinua en 0, dificultando el descenso de gradiente.",
-            "MAE produce gradientes constantes de magnitud 1/n, lo que causa oscilaciones cerca del mínimo."
+            "MSE = mean(|y_hat - y|), promedia el error absoluto y es equivalente a BCE para valores continuos.",
+            "MSE = mean(y_hat - y), simplemente promedia la diferencia entre predicción y valor real.",
+            "MSE acumula el error sin importar su signo, por lo que errores positivos y negativos se cancelan.",
+            "MSE = mean((y_hat - y)²), eleva al cuadrado el error penalizando más los errores grandes."
           ],
           "correct": 3,
           "feedback": "El Error Cuadrático Medio (MSE) es el promedio de los errores al cuadrado: (1/n)·Σ(y−ŷ)². La opción a es BCE (Binary Cross-Entropy). La opción c es MAE (Mean Absolute Error). La opción d es Hinge Loss (usado en SVM). MSE es preferido para regresión porque penaliza errores grandes más que pequeños, es diferenciable en todo punto y su derivada (el factor 2/n en backward) es simple de calcular."
@@ -16317,10 +16317,10 @@ window.QUIZ_DATA = {
           "categoryName": "Semana 12 · Backpropagation y Optimización",
           "text": "En backpropagation, ¿qué es la 'regla de la cadena' y por qué es fundamental?",
           "options": [
-            "De L1 hacia la salida, porque los gradientes de capas anteriores son necesarios para calcular los de las posteriores.",
-            "En paralelo para todas las capas simultáneamente, usando el gradiente total dividido entre el número de capas.",
-            "De la salida hacia L1, porque la regla de la cadena requiere el gradiente de la siguiente capa para calcular el anterior.",
-            "En el mismo orden del forward pass (L1 hacia salida), usando los valores almacenados del forward para las derivadas."
+            "Es la regla que indica que el gradiente de una capa solo depende de los pesos de esa capa, sin importar las demás.",
+            "Es una aproximación numérica del gradiente usando diferencias finitas: (L(w+h)-L(w-h))/(2h).",
+            "Permite derivar funciones compuestas: si L depende de z que depende de w, entonces dL/dw = (dL/dz)·(dz/dw).",
+            "Es el método que iguala el gradiente de entrada y el de salida en cada capa para garantizar consistencia."
           ],
           "correct": 2,
           "feedback": "La regla de la cadena (chain rule) del cálculo establece que para funciones compuestas: si L depende de z2 que depende de W2 que depende de W1 que depende de z1..., entonces ∂L/∂W1 = (∂L/∂z2)·(∂z2/∂a1)·(∂a1/∂z1)·(∂z1/∂W1). Backpropagation es exactamente la aplicación eficiente de esta regla: calcula los gradientes de atrás hacia adelante, reutilizando los cálculos intermedios. Sin la regla de la cadena sería imposible calcular ∂L/∂W1 en una red profunda."
